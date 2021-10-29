@@ -1,0 +1,677 @@
+ 
+cpldfit:  version P.20131013                        Xilinx Inc.
+                                  Fitter Report
+Design Name: MXSE                                Date: 10-24-2021,  7:13AM
+Device Used: XC95144XL-10-TQ100
+Fitting Status: Successful
+
+*************************  Mapped Resource Summary  **************************
+
+Macrocells     Product Terms    Function Block   Registers      Pins           
+Used/Tot       Used/Tot         Inps Used/Tot    Used/Tot       Used/Tot       
+108/144 ( 75%) 448 /720  ( 62%) 237/432 ( 55%)   82 /144 ( 57%) 67 /81  ( 83%)
+
+** Function Block Resources **
+
+Function    Mcells      FB Inps     Pterms      IO          
+Block       Used/Tot    Used/Tot    Used/Tot    Used/Tot    
+FB1           9/18       39/54       82/90      11/11*
+FB2          18/18*      38/54       33/90       6/10
+FB3          18/18*      29/54       51/90       7/10
+FB4          12/18       36/54       81/90      10/10*
+FB5           8/18       21/54       81/90       3/10
+FB6          14/18       41/54       75/90      10/10*
+FB7          18/18*      20/54       35/90      10/10*
+FB8          11/18       13/54       10/90      10/10*
+             -----       -----       -----      -----    
+            108/144     237/432     448/720     67/81 
+
+* - Resource is exhausted
+
+** Global Control Resources **
+
+Signal 'CLK2X_IOB' mapped onto global clock net GCK1.
+Signal 'CLK_FSB' mapped onto global clock net GCK2.
+Signal 'CLK_IOB' mapped onto global clock net GCK3.
+Global output enable net(s) unused.
+Signal 'nRES' mapped onto global set/reset net GSR.
+
+** Pin Resources **
+
+Signal Type    Required     Mapped  |  Pin Type            Used    Total 
+------------------------------------|------------------------------------
+Input         :   31          31    |  I/O              :    63      73
+Output        :   32          32    |  GCK/IO           :     3       3
+Bidirectional :    0           0    |  GTS/IO           :     0       4
+GCK           :    3           3    |  GSR/IO           :     1       1
+GTS           :    0           0    |
+GSR           :    1           1    |
+                 ----        ----
+        Total     67          67
+
+** Power Data **
+
+There are 108 macrocells in high performance mode (MCHP).
+There are 0 macrocells in low power mode (MCLP).
+End of Mapped Resource Summary
+**************************  Errors and Warnings  ***************************
+
+WARNING:Cpld - Unable to retrieve the path to the iSE Project Repository. Will
+   use the default filename of 'MXSE.ise'.
+*************************  Summary of Mapped Logic  ************************
+
+** 32 Outputs **
+
+Signal                                Total Total Loc     Pin  Pin     Pin     Pwr  Slew Reg Init
+Name                                  Pts   Inps          No.  Type    Use     Mode Rate State
+nDTACK_FSB                            23    32    FB1_2   11   I/O     O       STD  FAST RESET
+nBERR_FSB                             3     9     FB1_6   14   I/O     O       STD  FAST 
+RA<0>                                 2     3     FB1_11  17   I/O     O       STD  FAST 
+RA<3>                                 2     3     FB2_11  6    I/O     O       STD  FAST 
+RA<4>                                 2     3     FB2_14  8    I/O     O       STD  FAST 
+RA<6>                                 2     3     FB2_17  10   I/O     O       STD  FAST 
+nLDS_IOB                              3     7     FB3_5   24   I/O     O       STD  FAST RESET
+nDoutOE                               2     7     FB3_11  29   I/O     O       STD  FAST RESET
+nAS_IOB                               1     5     FB3_14  32   I/O     O       STD  FAST RESET
+nUDS_IOB                              3     7     FB3_17  34   I/O     O       STD  FAST RESET
+nRAS                                  3     8     FB4_2   87   I/O     O       STD  FAST 
+RA<1>                                 2     3     FB4_6   90   I/O     O       STD  FAST 
+RA<2>                                 2     3     FB4_9   92   I/O     O       STD  FAST 
+RA<5>                                 2     3     FB4_12  94   I/O     O       STD  FAST 
+nVMA_IOB                              2     9     FB4_15  96   I/O     O       STD  FAST RESET
+nDinOE                                2     6     FB5_8   39   I/O     O       STD  FAST 
+nROMCS                                2     5     FB5_11  41   I/O     O       STD  FAST 
+nADoutLE1                             14    18    FB5_14  43   I/O     O       STD  FAST SET
+nCAS                                  1     1     FB6_2   74   I/O     O       STD  FAST RESET
+nOE                                   1     2     FB6_6   77   I/O     O       STD  FAST 
+nRAMLWE                               1     5     FB6_9   79   I/O     O       STD  FAST 
+nRAMUWE                               1     5     FB6_12  81   I/O     O       STD  FAST 
+nROMWE                                1     2     FB6_15  85   I/O     O       STD  FAST 
+nVPA_FSB                              1     2     FB6_17  86   I/O     O       STD  FAST 
+RA<7>                                 2     3     FB7_2   50   I/O     O       STD  FAST 
+RA<8>                                 2     3     FB7_8   54   I/O     O       STD  FAST 
+RA<9>                                 2     3     FB7_12  58   I/O     O       STD  FAST 
+RA<11>                                1     1     FB7_17  61   I/O     O       STD  FAST 
+RA<10>                                1     1     FB8_2   63   I/O     O       STD  FAST 
+nADoutLE0                             1     2     FB8_8   66   I/O     O       STD  FAST 
+nAoutOE                               0     0     FB8_12  70   I/O     O       STD  FAST 
+nDinLE                                1     2     FB8_17  73   I/O     O       STD  FAST RESET
+
+** 76 Buried Nodes **
+
+Signal                                Total Total Loc     Pwr  Reg Init
+Name                                  Pts   Inps          Mode State
+cs/nOverlay1                          2     3     FB1_5   STD  RESET
+fsb/Ready2r                           9     22    FB1_7   STD  RESET
+fsb/VPA__or00001/fsb/VPA__or00001_D2  8     20    FB1_8   STD  
+fsb/Ready1r                           7     17    FB1_9   STD  RESET
+fsb/VPA                               22    30    FB1_13  STD  RESET
+$OpTx$FX_DC$607                       6     12    FB1_16  STD  
+cnt/RefCnt<7>                         1     7     FB2_1   STD  RESET
+cnt/RefCnt<6>                         1     6     FB2_2   STD  RESET
+cnt/RefCnt<5>                         1     5     FB2_3   STD  RESET
+cnt/RefCnt<4>                         1     4     FB2_4   STD  RESET
+cnt/RefCnt<3>                         1     3     FB2_5   STD  RESET
+cnt/RefCnt<2>                         1     2     FB2_6   STD  RESET
+cnt/RefCnt<1>                         1     1     FB2_7   STD  RESET
+iobs/PS_FSM_FFd1                      2     3     FB2_8   STD  RESET
+fsb/BERR1r                            2     4     FB2_9   STD  RESET
+cs/nOverlay0                          2     7     FB2_10  STD  RESET
+cnt/RefDone                           2     10    FB2_12  STD  RESET
+$OpTx$FX_DC$603                       2     5     FB2_13  STD  
+IOU0                                  3     5     FB2_15  STD  RESET
+IOL0                                  3     5     FB2_16  STD  RESET
+iobs/IOReady                          4     8     FB2_18  STD  RESET
+iobm/IOS_FSM_FFd7                     1     3     FB3_1   STD  RESET
+iobm/IOS_FSM_FFd6                     1     1     FB3_2   STD  RESET
+iobm/IOS_FSM_FFd5                     1     1     FB3_3   STD  RESET
+iobm/IOS_FSM_FFd4                     1     1     FB3_4   STD  RESET
+iobm/IOS_FSM_FFd1                     1     1     FB3_6   STD  RESET
+iobm/BERRrr                           1     1     FB3_7   STD  RESET
+iobm/BERRrf                           1     1     FB3_8   STD  RESET
+iobm/IOS_FSM_FFd8                     2     4     FB3_9   STD  SET
+ALE0M                                 2     7     FB3_10  STD  RESET
+iobm/IOS_FSM_FFd2                     4     9     FB3_12  STD  RESET
+BERR_IOBS                             4     8     FB3_13  STD  RESET
+iobm/IOS_FSM_FFd3                     5     10    FB3_15  STD  RESET
+IOBERR                                8     11    FB3_16  STD  RESET
+IOACT                                 10    15    FB3_18  STD  RESET
+ram/RASEL                             20    15    FB4_1   STD  RESET
+fsb/Ready0r                           3     8     FB4_3   STD  RESET
+iobm/ETACK                            1     6     FB4_5   STD  RESET
+ram/RAMReady                          16    15    FB4_7   STD  RESET
+ram/RAMDIS2                           7     15    FB4_11  STD  RESET
+
+Signal                                Total Total Loc     Pwr  Reg Init
+Name                                  Pts   Inps          Mode State
+ram/RAMDIS1                           18    15    FB4_13  STD  RESET
+ram/Once                              5     10    FB4_16  STD  RESET
+IORW0                                 18    20    FB5_3   STD  RESET
+iobs/PS_FSM_FFd2                      14    19    FB5_7   STD  RESET
+IOREQ                                 14    19    FB5_9   STD  RESET
+ALE0S                                 1     2     FB5_15  STD  RESET
+iobs/IORW1                            16    19    FB5_17  STD  RESET
+iobs/Once                             17    18    FB6_1   STD  RESET
+fsb/BERR0r                            3     8     FB6_3   STD  RESET
+ram/RS_FSM_FFd3                       11    14    FB6_4   STD  RESET
+TimeoutB                              3     12    FB6_5   STD  RESET
+TimeoutA                              3     11    FB6_7   STD  RESET
+ram/RS_FSM_FFd1                       5     10    FB6_8   STD  RESET
+ram/RS_FSM_FFd2                       13    14    FB6_10  STD  RESET
+iobs/Load1                            14    18    FB6_13  STD  RESET
+iobm/VPArr                            1     1     FB7_1   STD  RESET
+iobm/VPArf                            1     1     FB7_3   STD  RESET
+iobm/RESrr                            1     1     FB7_4   STD  RESET
+iobm/RESrf                            1     1     FB7_5   STD  RESET
+iobm/IOREQr                           1     1     FB7_6   STD  RESET
+iobm/Er2                              1     1     FB7_7   STD  RESET
+iobm/DTACKrr                          1     1     FB7_9   STD  RESET
+iobm/DTACKrf                          1     1     FB7_10  STD  RESET
+iobs/IOL1                             2     2     FB7_11  STD  RESET
+iobm/ES<3>                            3     6     FB7_13  STD  RESET
+iobm/ES<1>                            3     4     FB7_14  STD  RESET
+iobm/ES<0>                            3     7     FB7_15  STD  RESET
+iobm/ES<4>                            4     7     FB7_16  STD  RESET
+iobm/ES<2>                            5     7     FB7_18  STD  RESET
+ram/BACTr                             1     2     FB8_10  STD  RESET
+iobs/IOACTr                           1     1     FB8_11  STD  RESET
+iobm/Er                               1     1     FB8_13  STD  RESET
+fsb/ASrf                              1     1     FB8_14  STD  RESET
+cnt/RefCnt<0>                         0     0     FB8_15  STD  RESET
+RefAck                                1     2     FB8_16  STD  RESET
+iobs/IOU1                             2     2     FB8_18  STD  RESET
+
+** 35 Inputs **
+
+Signal                                Loc     Pin  Pin     Pin     
+Name                                          No.  Type    Use     
+A_FSB<15>                             FB1_3   12   I/O     I
+A_FSB<1>                              FB1_5   13   I/O     I
+A_FSB<9>                              FB1_8   15   I/O     I
+A_FSB<5>                              FB1_9   16   I/O     I
+A_FSB<2>                              FB1_12  18   I/O     I
+A_FSB<6>                              FB1_14  19   I/O     I
+nBERR_IOB                             FB1_15  20   I/O     I
+CLK2X_IOB                             FB1_17  22~  GCK/I/O GCK
+nRES                                  FB2_2   99~  GSR/I/O GSR/I
+nAS_FSB                               FB2_12  7    I/O     I
+nUDS_FSB                              FB2_15  9    I/O     I
+CLK_FSB                               FB3_2   23~  GCK/I/O GCK
+nVPA_IOB                              FB3_6   25   I/O     I
+CLK_IOB                               FB3_8   27~  GCK/I/O GCK/I
+A_FSB<13>                             FB4_5   89   I/O     I
+A_FSB<14>                             FB4_8   91   I/O     I
+A_FSB<17>                             FB4_11  93   I/O     I
+A_FSB<19>                             FB4_14  95   I/O     I
+A_FSB<21>                             FB4_17  97   I/O     I
+A_FSB<22>                             FB6_5   76   I/O     I
+A_FSB<20>                             FB6_8   78   I/O     I
+A_FSB<18>                             FB6_11  80   I/O     I
+A_FSB<16>                             FB6_14  82   I/O     I
+E_IOB                                 FB7_5   52   I/O     I
+nDTACK_IOB                            FB7_6   53   I/O     I
+A_FSB<3>                              FB7_9   55   I/O     I
+A_FSB<7>                              FB7_11  56   I/O     I
+A_FSB<4>                              FB7_14  59   I/O     I
+A_FSB<8>                              FB7_15  60   I/O     I
+nWE_FSB                               FB8_5   64   I/O     I
+A_FSB<12>                             FB8_6   65   I/O     I
+A_FSB<11>                             FB8_9   67   I/O     I
+nLDS_FSB                              FB8_11  68   I/O     I
+A_FSB<23>                             FB8_14  71   I/O     I
+A_FSB<10>                             FB8_15  72   I/O     I
+
+Legend:
+Pin No. - ~ - User Assigned
+**************************  Function Block Details  ************************
+Legend:
+Total Pt     - Total product terms used by the macrocell signal
+Imp Pt       - Product terms imported from other macrocells
+Exp Pt       - Product terms exported to other macrocells
+               in direction shown
+Unused Pt    - Unused local product terms remaining in macrocell
+Loc          - Location where logic was mapped in device
+Pin Type/Use - I  - Input             GCK - Global Clock
+               O  - Output            GTS - Global Output Enable
+              (b) - Buried macrocell  GSR - Global Set/Reset
+X            - Signal used as input to the macrocell logic.
+Pin No.      - ~  - User Assigned
+*********************************** FB1  ***********************************
+Number of function block inputs used/remaining:               39/15
+Number of signals used by logic mapping into function block:  39
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0   \/5   0     FB1_1         (b)     (b)
+nDTACK_FSB           23      18<-   0   0     FB1_2   11    I/O     O
+(unused)              0       0   /\5   0     FB1_3   12    I/O     I
+(unused)              0       0   /\5   0     FB1_4         (b)     (b)
+cs/nOverlay1          2       0   \/2   1     FB1_5   13    I/O     I
+nBERR_FSB             3       2<- \/4   0     FB1_6   14    I/O     O
+fsb/Ready2r           9       4<-   0   0     FB1_7         (b)     (b)
+fsb/VPA__or00001/fsb/VPA__or00001_D2
+                      8       3<-   0   0     FB1_8   15    I/O     I
+fsb/Ready1r           7       5<- /\3   0     FB1_9   16    I/O     I
+(unused)              0       0   /\5   0     FB1_10        (b)     (b)
+RA<0>                 2       0   \/2   1     FB1_11  17    I/O     O
+(unused)              0       0   \/5   0     FB1_12  18    I/O     I
+fsb/VPA              22      17<-   0   0     FB1_13        (b)     (b)
+(unused)              0       0   /\5   0     FB1_14  19    I/O     I
+(unused)              0       0   /\5   0     FB1_15  20    I/O     I
+$OpTx$FX_DC$607       6       1<-   0   0     FB1_16        (b)     (b)
+(unused)              0       0   /\1   4     FB1_17  22    GCK/I/O GCK
+(unused)              0       0   \/3   2     FB1_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: $OpTx$FX_DC$603   14: A_FSB<20>         27: fsb/BERR1r 
+  2: $OpTx$FX_DC$607   15: A_FSB<21>         28: fsb/Ready0r 
+  3: A_FSB<10>         16: A_FSB<22>         29: fsb/Ready1r 
+  4: A_FSB<11>         17: A_FSB<23>         30: fsb/Ready2r 
+  5: A_FSB<12>         18: A_FSB<8>          31: fsb/VPA 
+  6: A_FSB<13>         19: A_FSB<9>          32: fsb/VPA__or00001/fsb/VPA__or00001_D2 
+  7: A_FSB<14>         20: BERR_IOBS         33: iobs/IOReady 
+  8: A_FSB<15>         21: TimeoutA          34: nADoutLE1 
+  9: A_FSB<16>         22: TimeoutB          35: nAS_FSB 
+ 10: A_FSB<17>         23: cs/nOverlay0      36: nDTACK_FSB 
+ 11: A_FSB<18>         24: cs/nOverlay1      37: nWE_FSB 
+ 12: A_FSB<19>         25: fsb/ASrf          38: ram/RAMReady 
+ 13: A_FSB<1>          26: fsb/BERR0r        39: ram/RASEL 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+nDTACK_FSB           X.XXXXXXXXXX.XXXXXXXX..XXXXXXX..XXXXXX.. 32
+cs/nOverlay1         ......................X.X.........X..... 3
+nBERR_FSB            .............XXXX..X.X...XX.......X..... 9
+fsb/Ready2r          ..XXXXXXXXXX.XXXXXX.X..XX....X....X.X... 22
+fsb/VPA__or00001/fsb/VPA__or00001_D2 
+                     ..XXXXXXXXXX.XXXXXX.X..X.....X......X... 20
+fsb/Ready1r          .....XX.XXXX.XXXX......XX...X...XXX.X... 17
+RA<0>                ..X.........X.........................X. 3
+fsb/VPA              XXXXXXXXXXXX.XXXXXXX...XXXXXX.XXX.X..X.. 30
+$OpTx$FX_DC$607      .....XX.XXXX.XXX.......X.........X..X... 12
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB2  ***********************************
+Number of function block inputs used/remaining:               38/16
+Number of signals used by logic mapping into function block:  38
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+cnt/RefCnt<7>         1       0     0   4     FB2_1         (b)     (b)
+cnt/RefCnt<6>         1       0     0   4     FB2_2   99    GSR/I/O GSR/I
+cnt/RefCnt<5>         1       0     0   4     FB2_3         (b)     (b)
+cnt/RefCnt<4>         1       0     0   4     FB2_4         (b)     (b)
+cnt/RefCnt<3>         1       0     0   4     FB2_5   1     GTS/I/O (b)
+cnt/RefCnt<2>         1       0     0   4     FB2_6   2     GTS/I/O (b)
+cnt/RefCnt<1>         1       0     0   4     FB2_7         (b)     (b)
+iobs/PS_FSM_FFd1      2       0     0   3     FB2_8   3     GTS/I/O (b)
+fsb/BERR1r            2       0     0   3     FB2_9   4     GTS/I/O (b)
+cs/nOverlay0          2       0     0   3     FB2_10        (b)     (b)
+RA<3>                 2       0     0   3     FB2_11  6     I/O     O
+cnt/RefDone           2       0     0   3     FB2_12  7     I/O     I
+$OpTx$FX_DC$603       2       0     0   3     FB2_13        (b)     (b)
+RA<4>                 2       0     0   3     FB2_14  8     I/O     O
+IOU0                  3       0     0   2     FB2_15  9     I/O     I
+IOL0                  3       0     0   2     FB2_16        (b)     (b)
+RA<6>                 2       0     0   3     FB2_17  10    I/O     O
+iobs/IOReady          4       0     0   1     FB2_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<13>         14: TimeoutB          27: iobs/IOACTr 
+  2: A_FSB<14>         15: cnt/RefCnt<0>     28: iobs/IOL1 
+  3: A_FSB<16>         16: cnt/RefCnt<1>     29: iobs/IOReady 
+  4: A_FSB<20>         17: cnt/RefCnt<2>     30: iobs/IOU1 
+  5: A_FSB<21>         18: cnt/RefCnt<3>     31: iobs/Once 
+  6: A_FSB<22>         19: cnt/RefCnt<4>     32: iobs/PS_FSM_FFd1 
+  7: A_FSB<23>         20: cnt/RefCnt<5>     33: iobs/PS_FSM_FFd2 
+  8: A_FSB<4>          21: cnt/RefCnt<6>     34: nADoutLE1 
+  9: A_FSB<5>          22: cnt/RefCnt<7>     35: nAS_FSB 
+ 10: A_FSB<7>          23: cnt/RefDone       36: nLDS_FSB 
+ 11: BERR_IOBS         24: cs/nOverlay0      37: nUDS_FSB 
+ 12: IOBERR            25: fsb/ASrf          38: ram/RASEL 
+ 13: RefAck            26: fsb/BERR1r       
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+cnt/RefCnt<7>        ..............XXXXXXX................... 7
+cnt/RefCnt<6>        ..............XXXXXX.................... 6
+cnt/RefCnt<5>        ..............XXXXX..................... 5
+cnt/RefCnt<4>        ..............XXXX...................... 4
+cnt/RefCnt<3>        ..............XXX....................... 3
+cnt/RefCnt<2>        ..............XX........................ 2
+cnt/RefCnt<1>        ..............X......................... 1
+iobs/PS_FSM_FFd1     ..........................X....XX....... 3
+fsb/BERR1r           ..........X.............XX........X..... 4
+cs/nOverlay0         ...XXXX................XX.........X..... 7
+RA<3>                X......X.............................X.. 3
+cnt/RefDone          ............X.XXXXXXXXX................. 10
+$OpTx$FX_DC$603      ...XXXX......X.......................... 5
+RA<4>                .X......X............................X.. 3
+IOU0                 .............................X.XXX..X... 5
+IOL0                 ...........................X...XXX.X.... 5
+RA<6>                ..X......X...........................X.. 3
+iobs/IOReady         ...........X............X.X.X.X.XXX..... 8
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB3  ***********************************
+Number of function block inputs used/remaining:               29/25
+Number of signals used by logic mapping into function block:  29
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+iobm/IOS_FSM_FFd7     1       0   /\3   1     FB3_1         (b)     (b)
+iobm/IOS_FSM_FFd6     1       0     0   4     FB3_2   23    GCK/I/O GCK
+iobm/IOS_FSM_FFd5     1       0     0   4     FB3_3         (b)     (b)
+iobm/IOS_FSM_FFd4     1       0     0   4     FB3_4         (b)     (b)
+nLDS_IOB              3       0     0   2     FB3_5   24    I/O     O
+iobm/IOS_FSM_FFd1     1       0     0   4     FB3_6   25    I/O     I
+iobm/BERRrr           1       0     0   4     FB3_7         (b)     (b)
+iobm/BERRrf           1       0     0   4     FB3_8   27    GCK/I/O GCK/I
+iobm/IOS_FSM_FFd8     2       0     0   3     FB3_9   28    I/O     (b)
+ALE0M                 2       0     0   3     FB3_10        (b)     (b)
+nDoutOE               2       0     0   3     FB3_11  29    I/O     O
+iobm/IOS_FSM_FFd2     4       0     0   1     FB3_12  30    I/O     (b)
+BERR_IOBS             4       0     0   1     FB3_13        (b)     (b)
+nAS_IOB               1       0   \/3   1     FB3_14  32    I/O     O
+iobm/IOS_FSM_FFd3     5       3<- \/3   0     FB3_15  33    I/O     (b)
+IOBERR                8       3<-   0   0     FB3_16        (b)     (b)
+nUDS_IOB              3       0   \/2   0     FB3_17  34    I/O     O
+IOACT                10       5<-   0   0     FB3_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: BERR_IOBS         11: iobm/DTACKrr       21: iobm/IOS_FSM_FFd8 
+  2: CLK_IOB           12: iobm/ETACK         22: iobm/RESrf 
+  3: IOBERR            13: iobm/IOREQr        23: iobm/RESrr 
+  4: IOL0              14: iobm/IOS_FSM_FFd1  24: iobs/IOACTr 
+  5: IORW0             15: iobm/IOS_FSM_FFd2  25: iobs/Once 
+  6: IOU0              16: iobm/IOS_FSM_FFd3  26: iobs/PS_FSM_FFd2 
+  7: fsb/ASrf          17: iobm/IOS_FSM_FFd4  27: nADoutLE1 
+  8: iobm/BERRrf       18: iobm/IOS_FSM_FFd5  28: nAS_FSB 
+  9: iobm/BERRrr       19: iobm/IOS_FSM_FFd6  29: nBERR_IOB 
+ 10: iobm/DTACKrf      20: iobm/IOS_FSM_FFd7 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+iobm/IOS_FSM_FFd7    .X..........X.......X................... 3
+iobm/IOS_FSM_FFd6    ...................X.................... 1
+iobm/IOS_FSM_FFd5    ..................X..................... 1
+iobm/IOS_FSM_FFd4    .................X...................... 1
+nLDS_IOB             ...XX..........XXXXX.................... 7
+iobm/IOS_FSM_FFd1    ..............X......................... 1
+iobm/BERRrr          ............................X........... 1
+iobm/BERRrf          ............................X........... 1
+iobm/IOS_FSM_FFd8    .X..........XX......X................... 4
+ALE0M                ............X..XXXXXX................... 7
+nDoutOE              ....X.........XXXXXX.................... 7
+iobm/IOS_FSM_FFd2    .X.....XXXXX...X.....XX................. 9
+BERR_IOBS            X.X...X................XXXXX............ 8
+nAS_IOB              ...............XXXXX.................... 5
+iobm/IOS_FSM_FFd3    .X.....XXXXX...XX....XX................. 10
+IOBERR               .XX....XXXXX...X.....XX.....X........... 11
+nUDS_IOB             ....XX.........XXXXX.................... 7
+IOACT                .X.....XXXXXX..XXXXXXXX................. 15
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB4  ***********************************
+Number of function block inputs used/remaining:               36/18
+Number of signals used by logic mapping into function block:  36
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+ram/RASEL            20      15<-   0   0     FB4_1         (b)     (b)
+nRAS                  3       3<- /\5   0     FB4_2   87    I/O     O
+fsb/Ready0r           3       1<- /\3   0     FB4_3         (b)     (b)
+(unused)              0       0   /\1   4     FB4_4         (b)     (b)
+iobm/ETACK            1       0   \/2   2     FB4_5   89    I/O     I
+RA<1>                 2       2<- \/5   0     FB4_6   90    I/O     O
+ram/RAMReady         16      11<-   0   0     FB4_7         (b)     (b)
+(unused)              0       0   /\5   0     FB4_8   91    I/O     I
+RA<2>                 2       0   /\1   2     FB4_9   92    I/O     O
+(unused)              0       0   \/4   1     FB4_10        (b)     (b)
+ram/RAMDIS2           7       4<- \/2   0     FB4_11  93    I/O     I
+RA<5>                 2       2<- \/5   0     FB4_12  94    I/O     O
+ram/RAMDIS1          18      13<-   0   0     FB4_13        (b)     (b)
+(unused)              0       0   /\5   0     FB4_14  95    I/O     I
+nVMA_IOB              2       0   /\3   0     FB4_15  96    I/O     O
+ram/Once              5       0     0   0     FB4_16        (b)     (b)
+(unused)              0       0   \/5   0     FB4_17  97    I/O     I
+(unused)              0       0   \/5   0     FB4_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<11>         13: cnt/RefCnt<6>     25: iobm/VPArr 
+  2: A_FSB<12>         14: cnt/RefCnt<7>     26: nAS_FSB 
+  3: A_FSB<15>         15: cnt/RefDone       27: nVMA_IOB 
+  4: A_FSB<21>         16: cs/nOverlay1      28: ram/BACTr 
+  5: A_FSB<22>         17: fsb/ASrf          29: ram/Once 
+  6: A_FSB<23>         18: fsb/Ready0r       30: ram/RAMDIS1 
+  7: A_FSB<2>          19: iobm/ES<0>        31: ram/RAMDIS2 
+  8: A_FSB<3>          20: iobm/ES<1>        32: ram/RAMReady 
+  9: A_FSB<6>          21: iobm/ES<2>        33: ram/RASEL 
+ 10: IOACT             22: iobm/ES<3>        34: ram/RS_FSM_FFd1 
+ 11: RefAck            23: iobm/ES<4>        35: ram/RS_FSM_FFd2 
+ 12: cnt/RefCnt<5>     24: iobm/VPArf        36: ram/RS_FSM_FFd3 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+ram/RASEL            ...XXX.....XXXXXX........X.XX....XXX.... 15
+nRAS                 ...XXX....X....X.........X...XX......... 8
+fsb/Ready0r          ...XXX.........XXX.......X.....X........ 8
+iobm/ETACK           ..................XXXXX...X............. 6
+RA<1>                X.....X.........................X....... 3
+ram/RAMReady         ...XXX.....XXXXXX........X.XX....XXX.... 15
+RA<2>                .X.....X........................X....... 3
+ram/RAMDIS2          ...XXX.....XXXXXX........X..X.X..XXX.... 15
+RA<5>                ..X.....X.......................X....... 3
+ram/RAMDIS1          ...XXX.....XXXXXX........X.XX....XXX.... 15
+nVMA_IOB             .........X........XXXXXXX.X............. 9
+ram/Once             ...XXX.........XX........X..X....XXX.... 10
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB5  ***********************************
+Number of function block inputs used/remaining:               21/33
+Number of signals used by logic mapping into function block:  21
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0   /\1   4     FB5_1         (b)     (b)
+(unused)              0       0   \/5   0     FB5_2   35    I/O     (b)
+IORW0                18      13<-   0   0     FB5_3         (b)     (b)
+(unused)              0       0   /\5   0     FB5_4         (b)     (b)
+(unused)              0       0   /\3   2     FB5_5   36    I/O     (b)
+(unused)              0       0   \/5   0     FB5_6   37    I/O     (b)
+iobs/PS_FSM_FFd2     14       9<-   0   0     FB5_7         (b)     (b)
+nDinOE                2       1<- /\4   0     FB5_8   39    I/O     O
+IOREQ                14      10<- /\1   0     FB5_9   40    I/O     (b)
+(unused)              0       0   /\5   0     FB5_10        (b)     (b)
+nROMCS                2       2<- /\5   0     FB5_11  41    I/O     O
+(unused)              0       0   /\2   3     FB5_12  42    I/O     (b)
+(unused)              0       0   \/5   0     FB5_13        (b)     (b)
+nADoutLE1            14       9<-   0   0     FB5_14  43    I/O     O
+ALE0S                 1       0   /\4   0     FB5_15  46    I/O     (b)
+(unused)              0       0   \/5   0     FB5_16        (b)     (b)
+iobs/IORW1           16      11<-   0   0     FB5_17  49    I/O     (b)
+(unused)              0       0   /\5   0     FB5_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<13>          8: A_FSB<21>         15: iobs/IORW1 
+  2: A_FSB<14>          9: A_FSB<22>         16: iobs/Once 
+  3: A_FSB<16>         10: A_FSB<23>         17: iobs/PS_FSM_FFd1 
+  4: A_FSB<17>         11: IORW0             18: iobs/PS_FSM_FFd2 
+  5: A_FSB<18>         12: cs/nOverlay1      19: nADoutLE1 
+  6: A_FSB<19>         13: fsb/ASrf          20: nAS_FSB 
+  7: A_FSB<20>         14: iobs/IOACTr       21: nWE_FSB 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+IORW0                XXXXXXXXXXXXX.XXXXXXX................... 20
+iobs/PS_FSM_FFd2     XXXXXXXXXX.XXX.XXXXXX................... 19
+nDinOE               ......XXXX.........XX................... 6
+IOREQ                XXXXXXXXXX.XXX.XXXXXX................... 19
+nROMCS               ......XXXX.X............................ 5
+nADoutLE1            XXXXXXXXXX.XX..XXXXXX................... 18
+ALE0S                ................XX...................... 2
+iobs/IORW1           XXXXXXXXXX.XX.XXXXXXX................... 19
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB6  ***********************************
+Number of function block inputs used/remaining:               41/13
+Number of signals used by logic mapping into function block:  41
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+iobs/Once            17      12<-   0   0     FB6_1         (b)     (b)
+nCAS                  1       0   /\4   0     FB6_2   74    I/O     O
+fsb/BERR0r            3       0   \/2   0     FB6_3         (b)     (b)
+ram/RS_FSM_FFd3      11       6<-   0   0     FB6_4         (b)     (b)
+TimeoutB              3       2<- /\4   0     FB6_5   76    I/O     I
+nOE                   1       0   /\2   2     FB6_6   77    I/O     O
+TimeoutA              3       0     0   2     FB6_7         (b)     (b)
+ram/RS_FSM_FFd1       5       0     0   0     FB6_8   78    I/O     I
+nRAMLWE               1       0   \/3   1     FB6_9   79    I/O     O
+ram/RS_FSM_FFd2      13       8<-   0   0     FB6_10        (b)     (b)
+(unused)              0       0   /\5   0     FB6_11  80    I/O     I
+nRAMUWE               1       0   \/4   0     FB6_12  81    I/O     O
+iobs/Load1           14       9<-   0   0     FB6_13        (b)     (b)
+(unused)              0       0   /\5   0     FB6_14  82    I/O     I
+nROMWE                1       0     0   4     FB6_15  85    I/O     O
+(unused)              0       0     0   5     FB6_16        (b)     
+nVPA_FSB              1       0   \/3   1     FB6_17  86    I/O     O
+(unused)              0       0   \/5   0     FB6_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<13>         15: cnt/RefCnt<2>     29: nADoutLE1 
+  2: A_FSB<14>         16: cnt/RefCnt<3>     30: nAS_FSB 
+  3: A_FSB<16>         17: cnt/RefCnt<4>     31: nLDS_FSB 
+  4: A_FSB<17>         18: cnt/RefCnt<5>     32: nUDS_FSB 
+  5: A_FSB<18>         19: cnt/RefCnt<6>     33: nWE_FSB 
+  6: A_FSB<19>         20: cnt/RefCnt<7>     34: ram/BACTr 
+  7: A_FSB<20>         21: cnt/RefDone       35: ram/Once 
+  8: A_FSB<21>         22: cs/nOverlay1      36: ram/RAMDIS1 
+  9: A_FSB<22>         23: fsb/ASrf          37: ram/RAMDIS2 
+ 10: A_FSB<23>         24: fsb/BERR0r        38: ram/RASEL 
+ 11: TimeoutA          25: fsb/VPA           39: ram/RS_FSM_FFd1 
+ 12: TimeoutB          26: iobs/Once         40: ram/RS_FSM_FFd2 
+ 13: cnt/RefCnt<0>     27: iobs/PS_FSM_FFd1  41: ram/RS_FSM_FFd3 
+ 14: cnt/RefCnt<1>     28: iobs/PS_FSM_FFd2 
+
+Signal                        1         2         3         4         5 FB
+Name                0----+----0----+----0----+----0----+----0----+----0 Inputs
+iobs/Once            XXXXXXXXXX...........XX..XXXXX..X................. 18
+nCAS                 .....................................X............ 1
+fsb/BERR0r           ......XXXX.X..........XX.....X.................... 8
+ram/RS_FSM_FFd3      .......XXX.......XXXXXX......X....X...XXX......... 14
+TimeoutB             ..........XXXXXXXXXX..X......X.................... 12
+nOE                  .............................X..X................. 2
+TimeoutA             ..........X.XXXXXXXX..X......X.................... 11
+ram/RS_FSM_FFd1      .......XXX...........XX......X....X...XXX......... 10
+nRAMLWE              .............................XX.X..XX............. 5
+ram/RS_FSM_FFd2      .......XXX.......XXXXXX......X...X....XXX......... 14
+nRAMUWE              .............................X.XX..XX............. 5
+iobs/Load1           XXXXXXXXXX...........XX..XXXXX..X................. 18
+nROMWE               .............................X..X................. 2
+nVPA_FSB             ........................X....X.................... 2
+                    0----+----1----+----2----+----3----+----4----+----5
+                              0         0         0         0         0
+*********************************** FB7  ***********************************
+Number of function block inputs used/remaining:               20/34
+Number of signals used by logic mapping into function block:  20
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+iobm/VPArr            1       0     0   4     FB7_1         (b)     (b)
+RA<7>                 2       0     0   3     FB7_2   50    I/O     O
+iobm/VPArf            1       0     0   4     FB7_3         (b)     (b)
+iobm/RESrr            1       0     0   4     FB7_4         (b)     (b)
+iobm/RESrf            1       0     0   4     FB7_5   52    I/O     I
+iobm/IOREQr           1       0     0   4     FB7_6   53    I/O     I
+iobm/Er2              1       0     0   4     FB7_7         (b)     (b)
+RA<8>                 2       0     0   3     FB7_8   54    I/O     O
+iobm/DTACKrr          1       0     0   4     FB7_9   55    I/O     I
+iobm/DTACKrf          1       0     0   4     FB7_10        (b)     (b)
+iobs/IOL1             2       0     0   3     FB7_11  56    I/O     I
+RA<9>                 2       0     0   3     FB7_12  58    I/O     O
+iobm/ES<3>            3       0     0   2     FB7_13        (b)     (b)
+iobm/ES<1>            3       0     0   2     FB7_14  59    I/O     I
+iobm/ES<0>            3       0     0   2     FB7_15  60    I/O     I
+iobm/ES<4>            4       0     0   1     FB7_16        (b)     (b)
+RA<11>                1       0     0   4     FB7_17  61    I/O     O
+iobm/ES<2>            5       0     0   0     FB7_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<17>          8: iobm/ES<0>        15: iobs/Load1 
+  2: A_FSB<18>          9: iobm/ES<1>        16: nDTACK_IOB 
+  3: A_FSB<19>         10: iobm/ES<2>        17: nLDS_FSB 
+  4: A_FSB<20>         11: iobm/ES<3>        18: nRES 
+  5: A_FSB<8>          12: iobm/ES<4>        19: nVPA_IOB 
+  6: A_FSB<9>          13: iobm/Er           20: ram/RASEL 
+  7: IOREQ             14: iobm/Er2         
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+iobm/VPArr           ..................X..................... 1
+RA<7>                X...X..............X.................... 3
+iobm/VPArf           ..................X..................... 1
+iobm/RESrr           .................X...................... 1
+iobm/RESrf           .................X...................... 1
+iobm/IOREQr          ......X................................. 1
+iobm/Er2             ............X........................... 1
+RA<8>                .X...X.............X.................... 3
+iobm/DTACKrr         ...............X........................ 1
+iobm/DTACKrf         ...............X........................ 1
+iobs/IOL1            ..............X.X....................... 2
+RA<9>                ..XX...............X.................... 3
+iobm/ES<3>           .......XXXX.XX.......................... 6
+iobm/ES<1>           .......XX...XX.......................... 4
+iobm/ES<0>           .......XXXXXXX.......................... 7
+iobm/ES<4>           .......XXXXXXX.......................... 7
+RA<11>               ..X..................................... 1
+iobm/ES<2>           .......XXXXXXX.......................... 7
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB8  ***********************************
+Number of function block inputs used/remaining:               13/41
+Number of signals used by logic mapping into function block:  13
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0     0   5     FB8_1         (b)     
+RA<10>                1       0     0   4     FB8_2   63    I/O     O
+(unused)              0       0     0   5     FB8_3         (b)     
+(unused)              0       0     0   5     FB8_4         (b)     
+(unused)              0       0     0   5     FB8_5   64    I/O     I
+(unused)              0       0     0   5     FB8_6   65    I/O     I
+(unused)              0       0     0   5     FB8_7         (b)     
+nADoutLE0             1       0     0   4     FB8_8   66    I/O     O
+(unused)              0       0     0   5     FB8_9   67    I/O     I
+ram/BACTr             1       0     0   4     FB8_10        (b)     (b)
+iobs/IOACTr           1       0     0   4     FB8_11  68    I/O     I
+nAoutOE               0       0     0   5     FB8_12  70    I/O     O
+iobm/Er               1       0     0   4     FB8_13        (b)     (b)
+fsb/ASrf              1       0     0   4     FB8_14  71    I/O     I
+cnt/RefCnt<0>         0       0     0   5     FB8_15  72    I/O     I
+RefAck                1       0     0   4     FB8_16        (b)     (b)
+nDinLE                1       0     0   4     FB8_17  73    I/O     O
+iobs/IOU1             2       0     0   3     FB8_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: ALE0M              6: fsb/ASrf           10: nAS_FSB 
+  2: ALE0S              7: iobm/IOS_FSM_FFd3  11: nUDS_FSB 
+  3: A_FSB<21>          8: iobm/IOS_FSM_FFd4  12: ram/RS_FSM_FFd1 
+  4: E_IOB              9: iobs/Load1         13: ram/RS_FSM_FFd2 
+  5: IOACT            
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+RA<10>               ..X..................................... 1
+nADoutLE0            XX...................................... 2
+ram/BACTr            .....X...X.............................. 2
+iobs/IOACTr          ....X................................... 1
+nAoutOE              ........................................ 0
+iobm/Er              ...X.................................... 1
+fsb/ASrf             .........X.............................. 1
+cnt/RefCnt<0>        ........................................ 0
+RefAck               ...........XX........................... 2
+nDinLE               ......XX................................ 2
+iobs/IOU1            ........X.X............................. 2
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*******************************  Equations  ********************************
+
+********** Mapped Logic **********
+
+
+$OpTx$FX_DC$603 <= ((NOT TimeoutB)
+	OR (NOT A_FSB(23) AND A_FSB(22) AND NOT A_FSB(21) AND A_FSB(20)));
+
