@@ -1,4 +1,4 @@
-<html>
+	<html>
 <head>
 	<title>Garrett's Workshop - Warp-SE Timing</title>
 	<style type="text/css">
@@ -85,7 +85,7 @@ Primarily, /AS falls after a rising edge of the clock but rises after a falling 
 Since the worst-case clock-to-output delay of MC68000 is equal to half of one clock cycle, <br/>
 attempting to detect bus activity by registering /AS strictly on the rising or falling edge 
 would result in entrance into a metastable state. <br/>
-Therefore we introduce the "bus active" BACTV signal. BACT is the conjunction of the address strobe presently and as registered on the previous falling edge of the FSB clock. <br/>
+Therefore we introduce the "bus active" BACT signal. BACT is the disjunction of the address strobe asynchronously and as registered on the previous falling edge of the FSB clock. <br/>
 The key useful feature of the BACT signal is that it is always valid at the rising edge of FCLK.
 </p>
 
@@ -98,7 +98,10 @@ The key useful feature of the BACT signal is that it is always valid at the risi
 {name: '/AS',		wave: '1...x0........x1....x2.',	phase:-0.25, period: 0.5},
 {name: '/DTACK',	wave: '1.......0...........1..',	phase:-0.25, period: 0.5},
 {name: 'BACT',		wave: '0...x.1...........0.x.2',	phase:-0.25, period: 0.5},
-{name: 'Ready',		wave: 'x12.x.',						phase:-0.20, period: 2},
+{name: 'Ready0',	wave: 'x122x.',							phase:-0.20, period: 2},
+{name: 'Ready1',	wave: 'x122x.',							phase:-0.20, period: 2},
+{name: 'Ready2',	wave: 'x122x.',							phase:-0.20, period: 2},
+{name: 'Ready',		wave: 'x122x.',						phase:-0.20, period: 2},
 ]}
 </script><br/><p>
 Given BACT, the FSB controller asserts either /DTACK or /VPA when BACT is true and removes both /DTACK and /VPA when BACT is false. <br/>
@@ -154,7 +157,7 @@ so /VPA is additionally gated by /AS, whereas /DTACK is not.
 <script type="WaveDrom">{signal: [
 {name: 'MCLK',    wave: 'p.........',								phase: 0.00, period: 2},
 {name: 'A',       wave: 'x2..x2..x.',								phase: 0.25, period: 2, data:['400000-4FFFFF','400000-4FFFFF']},
-{name: 'ROMCS',   wave: '1..x.0.........x.....0.........x.1.....',	phase:-0.25, period: 0.5},
+{name: 'ROMCS',   wave: '1..x0..........x....0..........x1......',	phase:-0.25, period: 0.5},
 {name: 'RW',      wave: 'x..2....x..2....x...',						phase: 0.25, period: 1},
 {name: 'AS',      wave: '1...x0........x1....x0........x1....x2.',	phase:-0.25, period: 0.5},
 {name: 'DS (RD)', wave: '1...x0........x1....x0........x1.......',	phase:-0.25, period: 0.5},
