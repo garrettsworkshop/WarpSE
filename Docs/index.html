@@ -84,7 +84,7 @@ There are some details of the MC68000 bus cycle that complicate the synchronizat
 Primarily, /AS falls after a rising edge of the clock but rises after a falling edge. <br/>
 Since the worst-case clock-to-output delay of MC68000 is equal to half of one clock cycle, <br/>
 attempting to detect bus activity by registering /AS strictly on the rising or falling edge 
-would result in entrance into a metastable state. <br/>
+might result in entrance into a metastable state. <br/>
 Therefore we introduce the "bus active" BACT signal. BACT is the disjunction of the address strobe asynchronously and as registered on the previous falling edge of the FSB clock. <br/>
 The key useful feature of the BACT signal is that it is always valid at the rising edge of FCLK.
 </p>
@@ -101,7 +101,7 @@ The key useful feature of the BACT signal is that it is always valid at the risi
 {name: 'Ready0',	wave: 'x122x.',							phase:-0.20, period: 2},
 {name: 'Ready1',	wave: 'x122x.',							phase:-0.20, period: 2},
 {name: 'Ready2',	wave: 'x122x.',							phase:-0.20, period: 2},
-{name: 'Ready',		wave: 'x122x.',						phase:-0.20, period: 2},
+{name: 'Ready',		wave: 'x1..x.',						phase:-0.20, period: 2},
 ]}
 </script><br/><p>
 Given BACT, the FSB controller asserts either /DTACK or /VPA when BACT is true and removes both /DTACK and /VPA when BACT is false. <br/>
@@ -127,7 +127,7 @@ Note that MC68000's "/AS inactive-to-/DTACK inactive" parameter of two clock cyc
 {name: 'Ready0',	wave: 'x10...x.',							phase:-0.20, period: 2},
 {name: 'Ready1',	wave: 'x0.10.x.',							phase:-0.20, period: 2},
 {name: 'Ready2',	wave: 'x010..x.',							phase:-0.20, period: 2},
-{name: 'Ready',		wave: 'x0.12.x.',							phase:-0.20, period: 2},
+{name: 'Ready',		wave: 'x0.1..x.',							phase:-0.20, period: 2},
 ]}
 </script><br/><p>
 As discussed, the Ready signals do not each need to be active all at once. The FSB controller "remembers" that each Ready signal has been asserted. <br/>
@@ -204,14 +204,14 @@ This diagram introduces the DRAM access timing.
 At 25 MHz for a 4-clock read cycle, there are only 2.5 clock cycles (100 ns) between 
 the MC68k's assertion of /AS and when it latches data from the bus. <br/>
 Subtracting the 25ns /AS tCO and 5ns data in tSU, that leaves only 70ns during which to initiate and complete a DRAM access, 
-not accounting for any RAS control delay in the CPLD. <br/>
+not accounting for any RAS delay in the CPLD. <br/>
 Therefore to minimize RAM access latency, RAS is implemented not as a registered output 
 but as an asynchronous decode of the address, /AS, and the internal RAS enable signal. <br/>
 With 10ns delay in the CPLD, 25 MHz operation with 60ns DRAM is just possible.
 </p><p>
 Similarly, the RA multiplexed DRAM address bus is an asynchronous multiplexer controlled by the RASEL signal <br/>
 which outputs row addresses to the DRAM array when RASEL is low and column addresses when RASEL is high. <br/>
-The /CAS signal is a function of RASEL, which changes after FCLK rises. If RASEL is high at the next falling edge, /CAS is asserted. 
+The /CAS signal is a function of RASEL. RASEL changes after FCLK rises. If RASEL is high at the next falling edge, /CAS is asserted. 
 Otherwise if RASEL is low, /CAS is deasserted at the next falling edge.
 </p><p>
 "RS" is the RAM state. The RS state changes after the rising edge of the clock 
@@ -227,8 +227,8 @@ in preparation for the next DRAM access cycle. RS6 always transitions to RS7. <b
 RS7 is the state in which a RAM access or refresh is concluded. At the falling edge in the middle of RS7, /CAS is brought high. <br/>
 RS7 transitions to RS2 if a refresh request is pending, otherwise RS7 transitions to RS0. <br/>
 The states RS1 and RS2-RS4 will be discussed in association with the subsequent refresh cycle diagrams. <br/>
-RAMReady is used along with a RAM select signal to generate the Ready0 signal input to the FSB controller.
-RAMReady is high if and only if the RAM state is in RS0.<br/>
+The RS and RAMCS signals are used to generate the Ready0 ready signal input to the FSB. 
+Ready0 is high if and only if RS==0 and RAMCS is active.<br/>
 </p><p>
 Also notice how, during write cycles, 
 it is undefined whether the cycle is conducted as an "early write" or an "OE-controlled write" cycle. <br/>
@@ -244,7 +244,7 @@ Since /OE is held high during write cycles, the order of the /WE signals and /CA
 {name: 'A',       wave: 'x2......x.',                     phase: 0.25, period: 2, data:['000000-3FFFFF']},
 {name: 'RW',      wave: 'x..1............x...',            phase: 0.25, period: 1, data:['read or write','read or write']},
 {name: 'AS',      wave: '1...x0........................x1.......',            phase:-0.25, period: 0.5},
-{name: 'Ready',   wave: '0.....1...',                 phase:-0.20, period: 2},
+{name: 'Ready',   wave: '0....1....',                 phase:-0.20, period: 2},
 {name: 'DTACK',   wave: '1.....0..1',                     phase:-0.20, period: 2},
 {name: 'D (RD)',  wave: 'z....x2..z..........',           phase:-0.30},
 {name: 'D (WR)',  wave: 'z..x2...........z...',           phase: 0.00},
@@ -272,7 +272,7 @@ when the posted write FIFO is full, there is no need to extend DRAM read cycles.
 Therefore we do not attempt to extend the /CAS pulse to fix this problem until /AS rises since the /CAS pulse 
 could be interrupted by a refresh cycle anyway. <br/>
 To fix this problem, we could extend the /CAS pulse until /AS is high and have the
-DRAM controller conform to theDRAM "hidden refresh" protocol but it is not necessary.
+DRAM controller conform to the DRAM "hidden refresh" protocol but it is not necessary.
 </p>
 
 
@@ -288,8 +288,7 @@ DRAM controller conform to theDRAM "hidden refresh" protocol but it is not neces
 ]}</script><br/><p>
 This diagram shows the timing of a refresh occurring after the bus and DRAM are and have been idle for at least one clock cycle.
 </p><p>
-RAM states RS1, RS2, RS3, RS4, and RS7 are used for refresh. <br/>
-RS1 is used when initiating a refresh during a long-running /RAS cycle and will be discussed subsequently. <br/>
+RAM states RS2, RS3, RS4, and RS7 are used for refresh. <br/>
 RS2-RS4 implement the main refresh behavior. <br/>
 When a refresh request is pending at the rising edge ending RS0 or RS7 while /RAS is inactive, 
 RASEN is brought low and RS2 is entered. <br/>
@@ -297,11 +296,11 @@ With RASEN low, /AS activity does not cause a /RAS pulse and the DRAM controller
 to initiate refresh cycles. <br/>
 At the falling edge in the middle of RS2, /CAS is activated. Then at the rising edge concluding RS2, /RAS is activated 
 and RS2 transitions to RS3. <br/>
-RREQ is also cleared in RS2 since entrance into RS11 constitutes acceptance of a pending refresh request. <br/>
 In RS3, /RAS and /CAS remain active, and RS3 transitions to RS4.
 RS3 and RS4 serve to implement the requisite /RAS pulse width for a refresh. <br/>
 At the falling edge in the middle of RS4, /CAS is deactivated. Then at the rising edge concluding RS4, /RAS is deactivated
 and RS4 transitions to RS7. <br/>
+RREQ is cleared after the first rising edge on which RefRAS is active.<br/>
 In RS7, /RAS and /CAS remain inactive. RS7 serves to implement the requisite RAS precharge time between DRAM cycles.<br/> 
 RASEN is brought high again after the rising edge concluding RS7 and RS7 transitions to RS0 and the DRAM is considered idle again.<br/>
 </p><p>
@@ -340,14 +339,14 @@ after the previous DRAM access is terminated before /RAS is pulsed for refresh.
 <h3 id="t9">9. Refresh Immediately Following DRAM Access - Bus Transaction Terminated While Refresh In-Progress</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p.......',             phase: 0.00, period: 2},
-{name: 'AS',      wave: '0.................x1....x......',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '22222222',                 phase:-0.20, period: 2, data:[6,7,1,2,3,4,7,0,0,0,0]},
-{name: 'RefReq',  wave: '21...0..',                 phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '1.0....1',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1...0.1.',  phase:-0.20, period:2},
-{name: 'RAS',     wave: '0.......1.......0.......1...x..',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0.1.0.1.',                 phase: 0.80, period: 2},
+{name: 'MCLK',    wave: 'p......',             phase: 0.00, period: 2},
+{name: 'AS',      wave: '0.............x1....x......',  phase:-0.25, period:0.5},
+{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[6,7,2,3,4,7,0,0,0,0]},
+{name: 'RefReq',  wave: '21..0..',                 phase:-0.20, period: 2},
+{name: 'RASEN',   wave: '1.0...1',                 phase:-0.20, period: 2},
+{name: 'RRAS',    wave: '1..0.1.',  phase:-0.20, period:2},
+{name: 'RAS',     wave: '0.......1...0.......1...x..',  phase:-0.40, period:0.5},
+{name: 'CAS',     wave: '0.10.1.',                 phase: 0.80, period: 2},
 ]}
 </script><br/><p>
 This diagram shows the case where a refresh request occurs during a long-running DRAM access 
@@ -358,22 +357,22 @@ Therefore we must provide for the case where a DRAM access completes and a refre
 In this case, the rising edge of RASEN causes /RAS to go inactive, as opposed to the rising edge of /AS. <br/>
 Therefore, the /RAS precharge pulse width in this case is much shorter than 
 a refresh occurring during idle or immediately following a DRAM access. <br/>
-In order to satisfy the tRP precharge time and tRC cycle timing parameters, 
-an additional state, RS1, must be inserted in which /RAS and /CAS are both held in precharge.
+At 25 MHz, the /RAS precharge width is only 40ns. This is the minimum tRP for 60ns DRAM and is the tightest timing parameter in the Warp-SE. <br/>
+We could purpose RS1 to add additional precharge time if necessary.
 </p>
 
 
 <h3 id="t10">10. Refresh Immediately Following DRAM Access - Bus Transaction Terminated After Refresh Completes</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p.........',             phase: 0.00, period: 2},
-{name: 'AS',      wave: '0.............................x1....x...',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '2222222222',                 phase:-0.20, period: 2, data:[6,7,1,2,3,4,7,0,0,0]},
-{name: 'RefReq',  wave: '21.0......',                  phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '1.0......1',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1...0.1...',  phase:-0.20, period:2},
-{name: 'RAS',     wave: '0.......1.......0.......1...........x...',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0.1.0.1...',                 phase: 0.80, period: 2},
+{name: 'MCLK',    wave: 'p........',             phase: 0.00, period: 2},
+{name: 'AS',      wave: '0.........................x1....x...',  phase:-0.25, period:0.5},
+{name: 'RS',      wave: '222222222',                 phase:-0.20, period: 2, data:[6,7,2,3,4,7,0,0,0]},
+{name: 'RefReq',  wave: '21..0....',                  phase:-0.20, period: 2},
+{name: 'RASEN',   wave: '1.0.....1',                 phase:-0.20, period: 2},
+{name: 'RRAS',    wave: '1..0.1...',  phase:-0.20, period:2},
+{name: 'RAS',     wave: '0.......1...0.......1...........x...',  phase:-0.40, period:0.5},
+{name: 'CAS',     wave: '0.10.1...',                 phase: 0.80, period: 2},
 ]}
 </script><br/><p>
 This diagram shows the case where a refresh request occurs during a long-running DRAM access 
@@ -381,21 +380,22 @@ and the /AS cycle does not terminate before the refresh ends.
 </p><p>
 This case is similar to the previous but there is a key difference. 
 /AS does not rise until after the refresh cycle completes. <br/>
-Therefore if RASEN were brought high upon exit from RS7 into RS0, there may be an improperly-short /RAS pulse. <br/>
+Therefore if RASEN were brought high upon exit from RS7 into RS0, there may be an improperly-short /RAS pulse
+terminated by the rising edge of the /AS. <br/>
 Consequently RASEN enablement is held off the first rising edge during which BACT is low. 
 </p>
 
 <h3 id="t11">11. Refresh in the "Middle" of DRAM Access</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p.......',             phase: 0.00, period: 2},
-{name: 'AS',      wave: '0...............................',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '22222222',                 phase:-0.20, period: 2, data:[6,7,0,0,0,1,2,3]},
-{name: 'RefReq',  wave: '0...1...',                 phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '1....0..',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1......0',  phase:-0.20, period:2},
-{name: 'RAS',     wave: '0...................1.......0...',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0.1....0',                 phase: 0.80, period: 2},
+{name: 'MCLK',    wave: 'p......',             phase: 0.00, period: 2},
+{name: 'AS',      wave: '0...........................',  phase:-0.25, period:0.5},
+{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[6,7,0,0,0,2,3]},
+{name: 'RefReq',  wave: '0...1..',                 phase:-0.20, period: 2},
+{name: 'RASEN',   wave: '1....0.',                 phase:-0.20, period: 2},
+{name: 'RRAS',    wave: '1.....0',  phase:-0.20, period:2},
+{name: 'RAS',     wave: '0...................1...0...',  phase:-0.40, period:0.5},
+{name: 'CAS',     wave: '0.1...0',                 phase: 0.80, period: 2},
 ]}
 </script><br/><p>
 This diagram shows the case where a refresh request occurs in the "middle" of a long-running DRAM access. <br/>
@@ -405,21 +405,21 @@ The remainder of the timing is given by diagrams 9 or 10.
 <h3 id="t12">12. Concurrent DRAM Access and Refresh Requests</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p..........',                     phase: 0.00, period: 2},
-{name: 'A',       wave: 'x2.......x.',                     phase: 0.25, period: 2, data:['000000-4FFFFF']},
-{name: '/AS',      wave: '1..x0............................x1........',            phase:-0.75, period: 0.5},
-{name: 'DTACK',   wave: '1......0..1',                     phase:-0.30, period: 2},
-{name: 'DS (RD)', wave: '1..x0............................x1.......',            phase:-0.75, period: 0.5},
-{name: 'OE (RD)', wave: '1...x.0..........................x.1.....',            phase:-0.75, period: 0.5},
-{name: 'DS (WR)', wave: '1......x0........................x1.......',            phase:-0.75, period: 0.5},
-{name: 'WE (WR)', wave: '1.......................0........x.1......',            phase:-0.75, period: 0.5},
-{name: 'RS',      wave: '22222222222',                 phase:-0.20, period: 2, data:[0,2,3,4,6,7,0,5,6,7,0]},
-{name: 'Ready0',  wave: 'x0....10.x.',                 phase:-0.20, period: 2},
-{name: 'RefReq',  wave: '1..0.......',                 phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '10....1....',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1...0...1.............',  phase:-0.20},
-{name: '/RAS',      wave: '1.......0.......1.......0.........x.1......',            phase:-0.45, period: 0.5},
-{name: '/CAS',     wave: '1.0.1...0.1',                 phase: 0.70, period: 2},
+{name: 'MCLK',    wave: 'p.........',                     phase: 0.00, period: 2},
+{name: 'A',       wave: 'x2......x.',                     phase: 0.25, period: 2, data:['000000-4FFFFF']},
+{name: '/AS',      wave: '1..x0........................x1........',            phase:-0.75, period: 0.5},
+{name: 'DTACK',   wave: '1.....0..1',                     phase:-0.30, period: 2},
+{name: 'DS (RD)', wave: '1..x0........................x1.......',            phase:-0.75, period: 0.5},
+{name: 'OE (RD)', wave: '1...x.0......................x.1.....',            phase:-0.75, period: 0.5},
+{name: 'DS (WR)', wave: '1......x0....................x1.......',            phase:-0.75, period: 0.5},
+{name: 'WE (WR)', wave: '1.......................0....x.1......',            phase:-0.75, period: 0.5},
+{name: 'RS',      wave: '2222222222',                 phase:-0.20, period: 2, data:[0,2,3,4,7,0,5,6,7,0]},
+{name: 'Ready0',  wave: 'x0...10.x.',                 phase:-0.20, period: 2},
+{name: 'RefReq',  wave: '1..0......',                 phase:-0.20, period: 2},
+{name: 'RASEN',   wave: '10...1....',                 phase:-0.20, period: 2},
+{name: 'RRAS',    wave: '1...0...1...........',  phase:-0.20},
+{name: '/RAS',      wave: '1.......0.......1...0.........x.1......',            phase:-0.45, period: 0.5},
+{name: '/CAS',     wave: '1.0.1..0.1',                 phase: 0.70, period: 2},
 ]}
 </script><br/><p>
 This diagram shows the timing of a refresh starting concurrently with the beginning of a RAM access cycle.
@@ -659,7 +659,7 @@ The IOB slave port holds Ready1 low until the I/O bus transaction is completed.
 <script type="WaveDrom">
 {signal: [
 {name: 'MCLK',			wave: 'p...|..|..', period: 2},
-{name: 'IOAS',			wave: '010.|..|..', period: 2, phase:-0.3},
+{name: 'IOSTART',		wave: '010.|..|..', period: 2, phase:-0.3},
 {name: 'PS',			wave: '2222|22|22', period: 2, data:[0,0,2,2,2,1,1,0], phase:-0.3},
 {name: 'IOACT',			wave: '0...|1.|0.', phase:-0.3, period: 2},
 {name: 'IOREQ',			wave: '0.1.|.0|..', phase:-0.3, period: 2},
@@ -673,7 +673,7 @@ The IOB slave port holds Ready1 low until the I/O bus transaction is completed.
 This diagram shows the behavior of the I/O bus slave port controller under a single read/write request.
 </p><p>
 Here we are just showing the signals relevant to the I/O bus slave port controller rather than all of the M68k FSB signals. <br/>
-IOAS is a decode of the address, the FSB's /AS, and the IODone signal and represents when an I/O bus cycle request 
+IOSTART true when the I/O bus space is selected, BACT is low, and the I/O request has not been recognized this current BACT cycle. 
 has been submitted but not yet accepted by the I/O bus slave port controller. <br/>
 If the posted write FIFO is empty then the IOB slave port controller can submit 
 a new access request to the master controller. <br/>
