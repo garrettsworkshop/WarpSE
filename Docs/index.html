@@ -29,10 +29,10 @@
 </head>
 
 <body onload="WaveDrom.ProcessAll()">
-<h1>Garrett's Workshop Warp-SE 20 MHz 68HC000 Accelerator Documentation</h1>
+<h1>Garrett's Workshop Warp-SE 20/25 MHz 68HC000 Accelerator Documentation</h1>
 
 <h2>System Block Diagram</h2>
-<img src="CPLD.png" style="width:100%;" />
+<img src="CPLD.png" style="width:1000px;" />
 
 <h2>Relevant Timing Parameters</h2>
 <p>Some relevant timing parameters to which the bus timings were designed are as follows:</p>
@@ -101,7 +101,7 @@ The key useful feature of the BACT signal is that it is always valid at the risi
 {name: 'Ready0',	wave: 'x122x.',							phase:-0.20, period: 2},
 {name: 'Ready1',	wave: 'x122x.',							phase:-0.20, period: 2},
 {name: 'Ready2',	wave: 'x122x.',							phase:-0.20, period: 2},
-{name: 'Ready',		wave: 'x1..x.',						phase:-0.20, period: 2},
+{name: 'Ready',		wave: 'x1...x',						phase:-0.20, period: 2},
 ]}
 </script><br/><p>
 Given BACT, the FSB controller asserts either /DTACK or /VPA when BACT is true and removes both /DTACK and /VPA when BACT is false. <br/>
@@ -127,7 +127,7 @@ Note that MC68000's "/AS inactive-to-/DTACK inactive" parameter of two clock cyc
 {name: 'Ready0',	wave: 'x10...x.',							phase:-0.20, period: 2},
 {name: 'Ready1',	wave: 'x0.10.x.',							phase:-0.20, period: 2},
 {name: 'Ready2',	wave: 'x010..x.',							phase:-0.20, period: 2},
-{name: 'Ready',		wave: 'x0.1..x.',							phase:-0.20, period: 2},
+{name: 'Ready',		wave: 'x0.1...x',							phase:-0.20, period: 2},
 ]}
 </script><br/><p>
 As discussed, the Ready signals do not each need to be active all at once. The FSB controller "remembers" that each Ready signal has been asserted. <br/>
@@ -587,8 +587,8 @@ is 1.5 C16M clock cycles plus one tSU and two tCO, or approximately 110 nanoseco
 {name: 'R/W',     wave: 'x..0....x..0....x..0...|......x...', phase:0.25, period: 1},
 {name: '/AS',     wave: '1...x0........x1....x0........x1....x0.......|............x1....x..', phase:-0.25, period: 0.5},
 {name: '/DS (WR)',wave: '1.......x0....x1........x0....x1........x0...|............x1....x..', phase:-0.25, period: 0.5},
-{name: 'BACT',    wave: '201..01..01|....0',                     phase:-0.20, period: 2},
-{name: '/DTACK',  wave: '2.0..10..1.|.0..1', phase:-0.3, period: 2},
+{name: 'BACT',    wave: '0...x.1...........0.x.1...........0.x.1.......................0.x.2',	phase:-0.25, period: 0.5},
+{name: '/DTACK',  wave: '210..10..1.|.0..1', phase:-0.3, period: 2},
 {name: 'D (WR)',  wave: 'z...x2..z...x2..z...x2.|......z...', phase:0.00},
 {name: 'Ready1',  wave: 'x1..x10.x0.|1..x.', phase:-0.2, period: 2},
 ]}
@@ -611,8 +611,8 @@ Ready1 goes low because the FSB-to-IOB FIFO is full and completion of the third 
 {name: 'R/W',     wave: 'x..0....x..0....x...', phase:0.25, period: 1},
 {name: '/AS',     wave: '1...x0........x1....x0........x1....x..', phase:-0.25, period: 0.5},
 {name: '/DS (WR)',wave: '1.......x0....x1........x0....x1....x..', phase:-0.25, period: 0.5},
-{name: 'BACT',    wave: '201..01..0',                     phase:-0.20, period: 2},
-{name: '/DTACK',  wave: '2.0..10..1', phase:-0.3, period: 2},
+{name: 'BACT',    wave: '0...x.1...........0.x.1...........0.x.1',	phase:-0.25, period: 0.5},
+{name: '/DTACK',  wave: '210..10..1', phase:-0.3, period: 2},
 {name: 'D (WR)',  wave: 'z...x2..z...x2..z...', phase:0.00},
 {name: 'Ready1',  wave: 'x1..x10.x.', phase:-0.2, period: 2},
 {name: 'RS',      wave: '2222222222',                     phase:-0.20, period: 2, data:[0,0,5,6,7,0,5,6,7,0]},
@@ -638,14 +638,14 @@ delay completion of the /AS cycle via their respective Ready signals.
 <h3 id="t19">19. Read from I/O Bus</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',			wave: 'p..|.....', period: 2},
-{name: 'A',				wave: 'x2.|...x.', phase:0.25, period: 2, data:['50-5F, 90-BF, D0-FF','50-5F, 90-BF, D0-FF']},
-{name: 'RW',			wave: 'x..1...|......x...', phase:0.25, period: 1},
-{name: 'AS',			wave: '1...x0.......|............x1....x..', phase:-0.25, period: 0.5},
-{name: 'BACT',			wave: '101|....0',                     phase:-0.20, period: 2},
-{name: 'DTACK',			wave: 'x1.|.0..1', phase:-0.3, period: 2},
-{name: 'D (RD)',		wave: 'z.x....|.2....z...', phase:0.00},
-{name: 'Ready1',		wave: 'x0.|1....', phase:-0.2, period: 2},
+{name: 'MCLK',		wave: 'p..|.....', period: 2},
+{name: 'A',			wave: 'x2.|...x.', phase:0.25, period: 2, data:['50-5F, 90-BF, D0-FF','50-5F, 90-BF, D0-FF']},
+{name: 'RW',		wave: 'x..1...|......x...', phase:0.25, period: 1},
+{name: 'AS',		wave: '1...x0.......|............x1....x..', phase:-0.25, period: 0.5},
+{name: 'BACT',		wave: '0...x.1......|................0.x.1',	phase:-0.25, period: 0.5},
+{name: '/DTACK',	wave: '21.|0...1', phase:-0.3, period: 2},
+{name: 'D (RD)',	wave: 'z.x....|.2....z...', phase:0.00},
+{name: 'Ready1',	wave: 'x0.|1....', phase:-0.2, period: 2},
 ]}
 </script><br/><p>
 This diagram shows a read from the I/O bus.
@@ -658,16 +658,16 @@ The IOB slave port holds Ready1 low until the I/O bus transaction is completed.
 <h3>20. I/O Bus Slave Port - Single Read/Write</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',			wave: 'p...|..|..', period: 2},
-{name: 'IOSTART',		wave: '010.|..|..', period: 2, phase:-0.3},
-{name: 'PS',			wave: '2222|22|22', period: 2, data:[0,0,2,2,2,1,1,0], phase:-0.3},
-{name: 'IOACT',			wave: '0...|1.|0.', phase:-0.3, period: 2},
-{name: 'IOREQ',			wave: '0.1.|.0|..', phase:-0.3, period: 2},
-{name: 'ALEEN0',		wave: '1..0|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',			wave: 'x.1.|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',			wave: 'x..2|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
-{name: 'Ready1 (RD)',	wave: 'x..2|..|..', phase:-0.3, period: 2},
-{name: 'Ready1 (WR)',	wave: 'x..2|..|..', phase:-0.3, period: 2},
+{name: 'MCLK',			wave: 'p...|..|...', period: 2},
+{name: 'IOSTART',		wave: '010.|..|...', period: 2, phase:-0.3},
+{name: 'PS',			wave: '2222|22|222', period: 2, data:[0,0,3,2,2,1,1,0,0], phase:-0.3},
+{name: 'IOACT',			wave: '0...|1.|0..', phase:-0.3, period: 2},
+{name: 'IOREQ',			wave: '0.1.|.0|...', phase:-0.3, period: 2},
+{name: 'ALEEN0',		wave: '1..0|.1|...', phase:-0.3, period: 2},
+{name: 'IORW0',			wave: '2.2.|..|...', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',			wave: '2..2|..|...', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'Ready1 (RD)',	wave: '0...|..|.10', phase:-0.3, period: 2},
+{name: 'Ready1 (WR)',	wave: '1...|..|...', phase:-0.3, period: 2},
 ]}
 </script><br/><p>
 This diagram shows the behavior of the I/O bus slave port controller under a single read/write request.
@@ -698,6 +698,9 @@ Once IOACT is received high then the IOB slave controller removes IOREQ and ADLE
 </p><p>
 In PS1, the IO bus controller waits for IOACT low, indicating that the cycle has completed, and then returns to PS0.
 Additionally, once IOACT is low, if IORW0 indicates a read was performed, IORDRDY is brought high for one cycle.
+</p><p>
+The actual Ready1 output signal is a combination of IORDRDY and IOWRRDY selects the corect one depending on the
+address range accessed.
 </p>
 
 
@@ -705,21 +708,24 @@ Additionally, once IOACT is low, if IORW0 indicates a read was performed, IORDRD
 <script type="WaveDrom">
 {signal: [
 {name: 'MCLK',    wave: 'p..|..|....|..|..', period: 2},
-{name: 'AS&IO',   wave: '01.|..|.01.|..|..', period: 2, phase:-0.3},
+{name: 'IOSTART', wave: '10.|..|.10.|..|..', period: 2, phase:-0.3},
 {name: 'PS',      wave: '222|22|2222|22|22', period: 2, data:[0,2,2,2,1,1,0,2,2,2,1,1,0], phase:-0.3},
 {name: 'IOACT',   wave: '0..|1.|0...|1.|0.', phase:-0.3, period: 2},
 {name: 'IOREQ',   wave: '01.|.0|..1.|.0|..', phase:-0.3, period: 2},
 {name: 'ALE0',    wave: '1.0|.1|...0|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',   wave: 'x0.|..|..0.|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',   wave: 'x.2|..|...2|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IORW0',   wave: '20.|..|..0.|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',   wave: '2.2|..|...2|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
 ]}
-</script>
+</script><br/><p>
+This diagram shows two posted writes.
+In this case, the posted writes are spaced out such that the FIFO is never fully utilized.
+</p>
 
 <h3>23. I/O Bus Slave Port - Two Writes, FIFO filled (0)</h3>
 <script type="WaveDrom">
 {signal: [
 {name: 'MCLK',    wave: 'p..|..|.....|..|..', period: 2},
-{name: 'AS&IO',   wave: '01.|..|01...|..|..', period: 2, phase:-0.3},
+{name: 'IOSTART', wave: '10.|..|10...|..|..', period: 2, phase:-0.3},
 {name: 'IORDY',   wave: '101|..|.0..1|..|..', phase:-0.3, period: 2},
 {name: 'PS',      wave: '222|22|22222|22|22', period: 2, data:[0,2,2,2,1,1,0,2,2,2,2,1,1,0], phase:-0.3},
 {name: 'IOACT',   wave: '0..|1.|0....|1.|0.', phase:-0.3, period: 2},
@@ -728,8 +734,8 @@ Additionally, once IOACT is low, if IORW0 indicates a read was performed, IORDRD
 {name: 'IORW1',   wave: 'x..|..|.0...|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
 {name: 'IOLU1',   wave: 'x..|..|..2..|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
 {name: 'ALE0',    wave: '1.0|.1|...0.|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',   wave: 'x0.|..|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',   wave: 'x.2|..|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IORW0',   wave: '20.|..|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',   wave: '2.2|..|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
 ]}
 </script>
 
