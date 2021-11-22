@@ -27,18 +27,23 @@ module IOBS(
 
 	/* FIFO second level control */
 	reg Load1;
+	reg Clear1;
 	reg IORW1;
 	reg IOL1;
 	reg IOU1;
 	always @(posedge CLK) begin
 		if (PS!=0 && BACT && IOCS && ~Once && ~ALE1) begin
-			ALE1 <= 1;
 			IORW1 <= nWE;
 			Load1 <= 1;
-		end else begin
-			if (PS==3) ALE1 <= 0;
-			Load1 <= 0;
-		end
+		end else Load1 <= 0;
+	end
+	always @(posedge CLK) begin
+		if (PS==3 && ALE1) Clear1 <= 1;
+		else Clear1 <= 0;
+	end
+	always @(posedge CLK) begin
+		if (Load1) ALE1 <= 1;
+		else if (Clear1) ALE1 <= 0;
 	end
 	always @(posedge CLK) begin
 		if (Load1) begin
