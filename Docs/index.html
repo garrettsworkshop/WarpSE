@@ -643,7 +643,7 @@ delay completion of the /AS cycle via their respective Ready signals.
 {name: 'RW',		wave: 'x..1...|......x...', phase:0.25, period: 1},
 {name: 'AS',		wave: '1...x0.......|............x1....x..', phase:-0.25, period: 0.5},
 {name: 'BACT',		wave: '0...x.1......|................0.x.1',	phase:-0.25, period: 0.5},
-{name: '/DTACK',	wave: '21.|0...1', phase:-0.3, period: 2},
+{name: '/DTACK',	wave: '21.|.0..1', phase:-0.3, period: 2},
 {name: 'D (RD)',	wave: 'z.x....|.2....z...', phase:0.00},
 {name: 'Ready1',	wave: 'x0.|1....', phase:-0.2, period: 2},
 ]}
@@ -666,8 +666,8 @@ The IOB slave port holds Ready1 low until the I/O bus transaction is completed.
 {name: 'ALEEN0',		wave: '1..0|.1|...', phase:-0.3, period: 2},
 {name: 'IORW0',			wave: '2.2.|..|...', phase:-0.3, period: 2, data:['R/W', 'R/W']},
 {name: 'IOLU0',			wave: '2..2|..|...', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
-{name: 'Ready1 (RD)',	wave: '0...|..|.10', phase:-0.3, period: 2},
-{name: 'Ready1 (WR)',	wave: '1...|..|...', phase:-0.3, period: 2},
+{name: 'IORDReady',		wave: '0...|..|.1.', phase:-0.3, period: 2},
+{name: 'IOWRReady',		wave: '1...|..|...', phase:-0.3, period: 2},
 ]}
 </script><br/><p>
 This diagram shows the behavior of the I/O bus slave port controller under a single read/write request.
@@ -699,7 +699,7 @@ Once IOACT is received high then the IOB slave controller removes IOREQ and ADLE
 In PS1, the IO bus controller waits for IOACT low, indicating that the cycle has completed, and then returns to PS0.
 Additionally, once IOACT is low, if IORW0 indicates a read was performed, IORDRDY is brought high for one cycle.
 </p><p>
-The actual Ready1 output signal is a combination of IORDRDY and IOWRRDY selects the corect one depending on the
+The actual Ready1 output signal is a combination of IORDRDY and IOWRRDY which selects the corect one depending on the
 address range accessed.
 </p>
 
@@ -707,14 +707,15 @@ address range accessed.
 <h3>22. I/O Bus Slave Port - Two Writes, FIFO never full</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p..|..|....|..|..', period: 2},
-{name: 'IOSTART', wave: '10.|..|.10.|..|..', period: 2, phase:-0.3},
-{name: 'PS',      wave: '222|22|2222|22|22', period: 2, data:[0,2,2,2,1,1,0,2,2,2,1,1,0], phase:-0.3},
-{name: 'IOACT',   wave: '0..|1.|0...|1.|0.', phase:-0.3, period: 2},
-{name: 'IOREQ',   wave: '01.|.0|..1.|.0|..', phase:-0.3, period: 2},
-{name: 'ALE0',    wave: '1.0|.1|...0|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',   wave: '20.|..|..0.|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',   wave: '2.2|..|...2|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'MCLK',		wave: 'p..|..|....|..|..', period: 2},
+{name: 'IOSTART',	wave: '10.|..|.10.|..|..', period: 2, phase:-0.3},
+{name: 'PS',		wave: '222|22|2222|22|22', period: 2, data:[0,3,2,2,1,1,0,3,2,2,1,1,0], phase:-0.3},
+{name: 'IOACT',		wave: '0..|1.|0...|1.|0.', phase:-0.3, period: 2},
+{name: 'IOREQ',		wave: '01.|.0|..1.|.0|..', phase:-0.3, period: 2},
+{name: 'ALE0',		wave: '1.0|.1|...0|.1|..', phase:-0.3, period: 2},
+{name: 'IORW0',		wave: '20.|..|..0.|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',		wave: '2.2|..|...2|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IOWRReady',	wave: '1..|..|....|..|..', phase:-0.3, period: 2},
 ]}
 </script><br/><p>
 This diagram shows two posted writes.
@@ -724,74 +725,84 @@ In this case, the posted writes are spaced out such that the FIFO is never fully
 <h3>23. I/O Bus Slave Port - Two Writes, FIFO filled (0)</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p..|..|.....|..|..', period: 2},
-{name: 'IOSTART', wave: '10.|..|10...|..|..', period: 2, phase:-0.3},
-{name: 'IORDY',   wave: '101|..|.0..1|..|..', phase:-0.3, period: 2},
-{name: 'PS',      wave: '222|22|22222|22|22', period: 2, data:[0,2,2,2,1,1,0,2,2,2,2,1,1,0], phase:-0.3},
-{name: 'IOACT',   wave: '0..|1.|0....|1.|0.', phase:-0.3, period: 2},
-{name: 'IOREQ',   wave: '01.|.0|.1...|.0|..', phase:-0.3, period: 2},
-{name: 'ALE1',    wave: '1..|..|.0..1|..|..', phase:-0.3, period: 2},
-{name: 'IORW1',   wave: 'x..|..|.0...|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU1',   wave: 'x..|..|..2..|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
-{name: 'ALE0',    wave: '1.0|.1|...0.|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',   wave: '20.|..|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',   wave: '2.2|..|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'MCLK',		wave: 'p..|..|.....|..|..', period: 2},
+{name: 'IOSTART',	wave: '10.|..|10...|..|..', period: 2, phase:-0.3},
+{name: 'PS',		wave: '222|22|22222|22|22', period: 2, data:[0,3,2,2,1,1,0,3,2,2,2,1,1,0], phase:-0.3},
+{name: 'IOACT',		wave: '0..|1.|0....|1.|0.', phase:-0.3, period: 2},
+{name: 'IOREQ',		wave: '01.|.0|.1...|.0|..', phase:-0.3, period: 2},
+{name: 'ALE1',		wave: '1..|..|..0.1|..|..', phase:-0.3, period: 2},
+{name: 'IORW1',		wave: '2..|..|.0...|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU1',		wave: '2..|..|..2..|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'ALE0',		wave: '1.0|.1|...0.|.1|..', phase:-0.3, period: 2},
+{name: 'IORW0',		wave: '20.|..|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',		wave: '2.2|..|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IOWRReady',	wave: '1..|..|.0..1|..|..', phase:-0.3, period: 2},
 ]}
-</script>
+</script><br/><p>
+Here we have the case where two posted writes occur close enough in time that the FIFO is fully utilized.
+</p>
+
 
 <h3>24. I/O Bus Slave Port - Two Writes, FIFO filled (1)</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p..|....|.....|..|..', period: 2},
-{name: 'AS&IO',   wave: '01.|.01.|.....|..|..', period: 2, phase:-0.3},
-{name: 'IORDY',   wave: '101|..0.|....1|..|..', phase:-0.3, period: 2},
-{name: 'PS',      wave: '222|2222|22222|22|22', period: 2, data:[0,2,2,2,1,1,1,1,0,2,2,2,2,1,1,0], phase:-0.3},
-{name: 'IOACT',   wave: '0..|1...|0....|1.|0.', phase:-0.3, period: 2},
-{name: 'IOREQ',   wave: '01.|.01.|.....|.0|..', phase:-0.3, period: 2},
-{name: 'ALE1',    wave: '1..|..0.|....1|..|..', phase:-0.3, period: 2},
-{name: 'IORW1',   wave: 'x..|..0.|.....|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU1',   wave: 'x..|...2|.....|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
-{name: 'ALE0',    wave: '1.0|.1..|...0.|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',   wave: 'x0.|....|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',   wave: 'x.2|....|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'MCLK',		wave: 'p..|....|.....|..|..', period: 2},
+{name: 'IOSTART',	wave: '10.|.10.|.....|..|..', period: 2, phase:-0.3},
+{name: 'PS',		wave: '222|2222|22222|22|22', period: 2, data:[0,3,2,2,1,1,1,1,0,3,2,2,2,1,1,0], phase:-0.3},
+{name: 'IOACT',		wave: '0..|1...|0....|1.|0.', phase:-0.3, period: 2},
+{name: 'IOREQ',		wave: '01.|.01.|.....|.0|..', phase:-0.3, period: 2},
+{name: 'ALE1',		wave: '1..|...0|....1|..|..', phase:-0.3, period: 2},
+{name: 'IORW1',		wave: '2..|..0.|.....|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU1',		wave: '2..|...2|.....|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'ALE0',		wave: '1.0|.1..|...0.|.1|..', phase:-0.3, period: 2},
+{name: 'IORW0',		wave: '20.|....|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',		wave: '2.2|....|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IOWRReady',	wave: '1..|..0.|....1|..|..', phase:-0.3, period: 2},
 ]}
-</script>
+</script><br/><p>
+Similar to the previous case but the writes are even closer in time.
+</p>
 
 <h3>25. I/O Bus Slave Port - Two Writes, FIFO filled (2)</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p..|....|.....|..|..', period: 2},
-{name: 'AS&IO',   wave: '01.|01..|.....|..|..', period: 2, phase:-0.3},
-{name: 'IORDY',   wave: '101|.0..|....1|..|..', phase:-0.3, period: 2},
-{name: 'PS',      wave: '222|2222|22222|22|22', period: 2, data:[0,2,2,2,1,1,1,1,0,2,2,2,2,1,1,0], phase:-0.3},
-{name: 'IOACT',   wave: '0..|1...|0....|1.|0.', phase:-0.3, period: 2},
-{name: 'IOREQ',   wave: '01.|....|.....|.0|..', phase:-0.3, period: 2},
-{name: 'ALE1',    wave: '1..|.0..|....1|..|..', phase:-0.3, period: 2},
-{name: 'IORW1',   wave: 'x..|.0..|.....|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU1',   wave: 'x..|..2.|.....|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
-{name: 'ALE0',    wave: '1.0|.1..|...0.|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',   wave: 'x0.|....|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',   wave: 'x.2|....|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'MCLK',		wave: 'p..|....|.....|..|..', period: 2},
+{name: 'IOSTART',	wave: '10.|10..|.....|..|..', period: 2, phase:-0.3},
+{name: 'PS',		wave: '222|2222|22222|22|22', period: 2, data:[0,3,2,2,1,1,1,1,0,3,2,2,2,1,1,0], phase:-0.3},
+{name: 'IOACT',		wave: '0..|1...|0....|1.|0.', phase:-0.3, period: 2},
+{name: 'IOREQ',		wave: '01.|....|.....|.0|..', phase:-0.3, period: 2},
+{name: 'ALE1',		wave: '1..|..0.|....1|..|..', phase:-0.3, period: 2},
+{name: 'IORW1',		wave: '2..|.0..|.....|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU1',		wave: '2..|..2.|.....|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'ALE0',		wave: '1.0|.1..|...0.|.1|..', phase:-0.3, period: 2},
+{name: 'IORW0',		wave: '20.|....|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',		wave: '2.2|....|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IOWRReady',	wave: '1..|.0..|....1|..|..', phase:-0.3, period: 2},
 ]}
-</script>
+</script><p>
+Similar to the previous case (again) but here the second write has come in before 
+the IOBS has received indication from the IOBM that the previous write has begun.
+</p>
 
 <h3>26. I/O Bus Slave Port - Two Writes, FIFO filled (3)</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p....|..|.....|..|..', period: 2},
-{name: 'AS&IO',   wave: '0101.|0.|.....|..|..', period: 2, phase:-0.3},
-{name: 'IORDY',   wave: '1.10.|..|....1|..|..', phase:-0.3, period: 2},
-{name: 'PS',      wave: '22222|22|22222|22|22', period: 2, data:[0,2,2,2,2,2,1,1,0,2,2,2,2,1,1,0], phase:-0.3},
-{name: 'IOACT',   wave: '0....|1.|0....|1.|0.', phase:-0.3, period: 2},
-{name: 'IOREQ',   wave: '01...|..|.....|.0|..', phase:-0.3, period: 2},
-{name: 'ALE1',    wave: '1..0.|..|....1|..|..', phase:-0.3, period: 2},
-{name: 'IORW1',   wave: 'x..0.|..|.....|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU1',   wave: 'x...2|..|.....|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
-{name: 'ALE0',    wave: '1.0..|.1|...0.|.1|..', phase:-0.3, period: 2},
-{name: 'IORW0',   wave: 'x0...|..|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
-{name: 'IOLU0',   wave: 'x.2..|..|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'MCLK',		wave: 'p....|..|.....|..|..', period: 2},
+{name: 'IOSTART',	wave: '1010.|..|.....|..|..', period: 2, phase:-0.3},
+{name: 'PS',		wave: '22222|22|22222|22|22', period: 2, data:[0,3,2,2,2,2,1,1,0,3,2,2,2,1,1,0], phase:-0.3},
+{name: 'IOACT',		wave: '0....|1.|0....|1.|0.', phase:-0.3, period: 2},
+{name: 'IOREQ',		wave: '01...|..|.....|.0|..', phase:-0.3, period: 2},
+{name: 'ALE1',		wave: '1...0|..|....1|..|..', phase:-0.3, period: 2},
+{name: 'IORW1',		wave: '2..0.|..|.....|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU1',		wave: '2...2|..|.....|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'ALE0',		wave: '1.0..|.1|...0.|.1|..', phase:-0.3, period: 2},
+{name: 'IORW0',		wave: '20...|..|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',		wave: '2.2..|..|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IOWRReady',	wave: '1...0|..|....1|..|..', phase:-0.3, period: 2},
 ]}
-</script>
+</script><p>
+Similar to the previous case (again). This is the closest write timing allowed, even faster than MC68k can do.
+</p>
 
 
 </body>
