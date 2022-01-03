@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 7 10
+Sheet 6 10
 Title ""
 Date ""
 Rev ""
@@ -350,14 +350,10 @@ F 3 "" H 9800 6200 50  0001 C CNN
 $EndComp
 Text HLabel 8400 3700 0    50   Input ~ 0
 FCLK
-Text HLabel 8400 2400 0    50   Output ~ 0
-~RESET~r
 Text HLabel 10400 3100 2    50   Output ~ 0
 ADoutLE0
 Text HLabel 10400 3000 2    50   Output ~ 0
 ADoutLE1
-Text HLabel 8400 2300 0    50   Output ~ 0
-~RESET~r
 Text HLabel 8400 4800 0    50   Input ~ 0
 ~RESET~
 Entry Wire Line
@@ -542,6 +538,8 @@ Text HLabel 10400 5800 2    50   Input ~ 0
 TCK
 Text HLabel 10400 5900 2    50   Output ~ 0
 TDO
+NoConn ~ 8400 2300
+NoConn ~ 8400 2400
 Wire Bus Line
 	10700 1400 10700 1800
 Wire Bus Line
