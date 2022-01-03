@@ -804,6 +804,34 @@ the IOBS has received indication from the IOBM that the previous write has begun
 Similar to the previous case (again). This is the closest write timing allowed, even faster than MC68k can do.
 </p>
 
+<script type="text/javascript">
+document.querySelectorAll('script[type=wavedrom]').forEach(function(dgm) {
+	var dj;
+	eval('dj = ' + dgm.text + ';');
+	var lines = {};
+	var table = {};
+	dj.signal.forEach(function(line) {
+		lines[line.name] = '';
+		for (var symbol = 0; symbol < line.wave.length; symbol++) {
+			for (var reps = 0; reps < line.period / 0.5; reps++) {
+				if (line.wave.charAt(symbol) === '.' ||
+					line.wave.charAt(symbol) === '|') { 
+					var previndex = lines[line.name].charAt.length-1;
+					
+					if (previndex <= 0) {
+						lines[line.name] += '1';
+					} else {
+						lines[line.name] += lines[line.name].charAt(previndex);
+					}
+				} else {
+					lines[line.name] += line.wave.charAt(symbol);
+				}
+			}
+		}
+		//alert(lines[line.name]);
+	});
+});
+</script>
 
 </body>
 
