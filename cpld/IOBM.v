@@ -72,6 +72,7 @@ module IOBM(
 			IOS <= 2;
 			IOACT <= 1;
 			ALE0 <= 1;
+			IOBERR <= 0;
 		end else if (IOS==2) begin
 			IOS <= 3;
 			IOACT <= 1;
