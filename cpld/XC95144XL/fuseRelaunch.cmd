@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "uni9000_ver" -lib "aim_ver" -lib "cpld_ver" -lib "xilinxcorelib_ver" -o "C:/Users/zanek/Documents/GitHub/SE-030/cpld/XC95144XL/t_cs_isim_beh.exe" -prj "C:/Users/zanek/Documents/GitHub/SE-030/cpld/XC95144XL/t_cs_beh.prj" "work.t_cs" "work.glbl" 
+-intstyle "ise" -incremental -lib "uni9000_ver" -lib "aim_ver" -lib "cpld_ver" -lib "xilinxcorelib_ver" -o "C:/Users/zanek/Documents/GitHub/Warp-SE/cpld/XC95144XL/t_fsb_isim_beh.exe" -prj "C:/Users/zanek/Documents/GitHub/Warp-SE/cpld/XC95144XL/t_fsb_beh.prj" "work.t_fsb" "work.glbl" 

@@ -18,13 +18,16 @@ module CNT(
 	end
 
 	/* Timeout signals */
+	reg TimeoutBPre;
 	always @(posedge FCLK) begin
 		if (~CACT) begin
 			TimeoutA <= 0;
+			TimeoutBPre <= 0;
 			TimeoutB <= 0;
 		end else begin
-			if (RefCnt==0) TimeoutA <= 1;
-			if (RefCnt==0 && TimeoutA) TimeoutB <= 1;
+			if (RefCnt[6:0]==0) TimeoutA <= 1;
+			if (RefCnt==0) TimeoutBPre <= 1;
+			if (RefCnt==0 && TimeoutBPre) TimeoutB <= 1;
 		end
 	end
 

@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.36 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.36 secs
  
 --> Reading design: MXSE.prj
 
@@ -198,6 +198,7 @@ Synthesizing Unit <IOBS>.
     Found 1-bit register for signal <IOU0>.
     Found 1-bit register for signal <ALE0>.
     Found 1-bit register for signal <ALE1>.
+    Found 1-bit register for signal <Clear1>.
     Found 1-bit register for signal <IOACTr>.
     Found 1-bit register for signal <IOL1>.
     Found 1-bit register for signal <IOReady>.
@@ -259,6 +260,7 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <TimeoutB>.
     Found 8-bit up counter for signal <RefCnt>.
     Found 1-bit register for signal <RefDone>.
+    Found 1-bit register for signal <TimeoutBPre>.
     Summary:
 	inferred   1 Counter(s).
 Unit <CNT> synthesized.
@@ -291,8 +293,8 @@ Macro Statistics
 # Counters                                             : 2
  5-bit up counter                                      : 1
  8-bit up counter                                      : 1
-# Registers                                            : 56
- 1-bit register                                        : 56
+# Registers                                            : 58
+ 1-bit register                                        : 58
 
 =========================================================================
 
@@ -375,9 +377,9 @@ Optimizing unit <RAM> ...
 
 Optimizing unit <IOBS> ...
   implementation constraint: INIT=r	 : IOACTr
+  implementation constraint: INIT=r	 : PS_FSM_FFd2
   implementation constraint: INIT=r	 : Once
   implementation constraint: INIT=r	 : PS_FSM_FFd1
-  implementation constraint: INIT=r	 : PS_FSM_FFd2
 
 Optimizing unit <FSB> ...
   implementation constraint: INIT=r	 : ASrf
@@ -435,23 +437,24 @@ Design Statistics
 # IOs                              : 67
 
 Cell Usage :
-# BELS                             : 566
-#      AND2                        : 162
-#      AND3                        : 21
+# BELS                             : 570
+#      AND2                        : 160
+#      AND3                        : 20
 #      AND4                        : 15
 #      AND5                        : 1
 #      AND6                        : 3
+#      AND7                        : 1
 #      AND8                        : 3
 #      GND                         : 6
-#      INV                         : 238
-#      OR2                         : 91
+#      INV                         : 243
+#      OR2                         : 92
 #      OR3                         : 8
 #      OR4                         : 5
 #      VCC                         : 1
 #      XOR2                        : 12
-# FlipFlops/Latches                : 82
-#      FD                          : 56
-#      FDCE                        : 26
+# FlipFlops/Latches                : 84
+#      FD                          : 57
+#      FDCE                        : 27
 # IO Buffers                       : 67
 #      IBUF                        : 35
 #      OBUF                        : 32
@@ -459,11 +462,11 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 3.00 secs
-Total CPU time to Xst completion: 2.37 secs
+Total CPU time to Xst completion: 3.01 secs
  
 --> 
 
-Total memory usage is 231768 kilobytes
+Total memory usage is 232788 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    0 (   0 filtered)
