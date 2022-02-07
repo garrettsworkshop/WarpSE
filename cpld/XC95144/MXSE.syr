@@ -1,0 +1,469 @@
+Release 14.7 - xst P.20131013 (nt)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.09 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.09 secs
+ 
+--> Reading design: MXSE.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "MXSE.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "MXSE"
+Output Format                      : NGC
+Target Device                      : XC9500XL CPLDs
+
+---- Source Options
+Top Module Name                    : MXSE
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+
+---- Target Options
+Add IO Buffers                     : YES
+MACRO Preserve                     : YES
+XOR Preserve                       : YES
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : Yes
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Verilog 2001                       : YES
+
+---- Other Options
+Clock Enable                       : YES
+wysiwyg                            : NO
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling verilog file "../RAM.v" in library work
+Compiling verilog file "../IOBS.v" in library work
+Module <RAM> compiled
+Compiling verilog file "../IOBM.v" in library work
+Module <IOBS> compiled
+Compiling verilog file "../FSB.v" in library work
+Module <IOBM> compiled
+Compiling verilog file "../CS.v" in library work
+Module <FSB> compiled
+Compiling verilog file "../CNT.v" in library work
+Module <CS> compiled
+Compiling verilog file "../MXSE.v" in library work
+Module <CNT> compiled
+Module <MXSE> compiled
+No errors in compilation
+Analysis of file <"MXSE.prj"> succeeded.
+ 
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for module <MXSE> in library <work>.
+
+Analyzing hierarchy for module <CS> in library <work>.
+
+Analyzing hierarchy for module <RAM> in library <work>.
+
+Analyzing hierarchy for module <IOBS> in library <work>.
+
+Analyzing hierarchy for module <IOBM> in library <work>.
+
+Analyzing hierarchy for module <CNT> in library <work>.
+
+Analyzing hierarchy for module <FSB> in library <work>.
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing top module <MXSE>.
+Module <MXSE> is correct for synthesis.
+ 
+Analyzing module <CS> in library <work>.
+Module <CS> is correct for synthesis.
+ 
+Analyzing module <RAM> in library <work>.
+Module <RAM> is correct for synthesis.
+ 
+Analyzing module <IOBS> in library <work>.
+Module <IOBS> is correct for synthesis.
+ 
+Analyzing module <IOBM> in library <work>.
+Module <IOBM> is correct for synthesis.
+ 
+Analyzing module <CNT> in library <work>.
+Module <CNT> is correct for synthesis.
+ 
+Analyzing module <FSB> in library <work>.
+Module <FSB> is correct for synthesis.
+ 
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <CS>.
+    Related source file is "../CS.v".
+    Found 1-bit register for signal <nOverlay0>.
+    Found 1-bit register for signal <nOverlay1>.
+    Summary:
+	inferred   2 D-type flip-flop(s).
+Unit <CS> synthesized.
+
+
+Synthesizing Unit <RAM>.
+    Related source file is "../RAM.v".
+    Found finite state machine <FSM_0> for signal <RS>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 18                                             |
+    | Inputs             | 6                                              |
+    | Outputs            | 9                                              |
+    | Clock              | CLK                       (rising_edge)        |
+    | Power Up State     | 000                                            |
+    | Encoding           | automatic                                      |
+    | Implementation     | automatic                                      |
+    -----------------------------------------------------------------------
+    Found 1-bit register for signal <nCAS>.
+    Found 1-bit register for signal <BACTr>.
+    Found 1-bit register for signal <Once>.
+    Found 1-bit register for signal <RAMDIS1>.
+    Found 1-bit register for signal <RAMDIS2>.
+    Found 1-bit register for signal <RAMReady>.
+    Found 1-bit register for signal <RASEL>.
+    Found 1-bit register for signal <RefRAS>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   6 D-type flip-flop(s).
+Unit <RAM> synthesized.
+
+
+Synthesizing Unit <IOBS>.
+    Related source file is "../IOBS.v".
+    Found finite state machine <FSM_1> for signal <PS>.
+    -----------------------------------------------------------------------
+    | States             | 4                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 5                                              |
+    | Outputs            | 5                                              |
+    | Clock              | CLK                       (rising_edge)        |
+    | Power Up State     | 00                                             |
+    | Encoding           | automatic                                      |
+    | Implementation     | automatic                                      |
+    -----------------------------------------------------------------------
+    Found 1-bit register for signal <BERR>.
+    Found 1-bit register for signal <IOREQ>.
+    Found 1-bit register for signal <IORW0>.
+    Found 1-bit register for signal <IOL0>.
+    Found 1-bit register for signal <IOU0>.
+    Found 1-bit register for signal <ALE0>.
+    Found 1-bit register for signal <ALE1>.
+    Found 1-bit register for signal <Clear1>.
+    Found 1-bit register for signal <IOACTr>.
+    Found 1-bit register for signal <IOL1>.
+    Found 1-bit register for signal <IOReady>.
+    Found 1-bit register for signal <IORW1>.
+    Found 1-bit register for signal <IOU1>.
+    Found 1-bit register for signal <Load1>.
+    Found 1-bit register for signal <Once>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   9 D-type flip-flop(s).
+Unit <IOBS> synthesized.
+
+
+Synthesizing Unit <IOBM>.
+    Related source file is "../IOBM.v".
+    Found finite state machine <FSM_2> for signal <IOS>.
+    -----------------------------------------------------------------------
+    | States             | 8                                              |
+    | Transitions        | 15                                             |
+    | Inputs             | 6                                              |
+    | Outputs            | 8                                              |
+    | Clock              | C16M                      (rising_edge)        |
+    | Power Up State     | 000                                            |
+    | Encoding           | automatic                                      |
+    | Implementation     | automatic                                      |
+    -----------------------------------------------------------------------
+    Found 1-bit register for signal <IOBERR>.
+    Found 1-bit register for signal <IOACT>.
+    Found 1-bit register for signal <nAS>.
+    Found 1-bit register for signal <nLDS>.
+    Found 1-bit register for signal <nUDS>.
+    Found 1-bit register for signal <nDinLE>.
+    Found 1-bit register for signal <nDoutOE>.
+    Found 1-bit register for signal <ALE0>.
+    Found 1-bit register for signal <nVMA>.
+    Found 1-bit register for signal <BERRrf>.
+    Found 1-bit register for signal <BERRrr>.
+    Found 1-bit register for signal <DTACKrf>.
+    Found 1-bit register for signal <DTACKrr>.
+    Found 1-bit register for signal <Er>.
+    Found 1-bit register for signal <Er2>.
+    Found 5-bit up counter for signal <ES>.
+    Found 1-bit register for signal <ETACK>.
+    Found 1-bit register for signal <IOREQr>.
+    Found 1-bit register for signal <RESrf>.
+    Found 1-bit register for signal <RESrr>.
+    Found 1-bit register for signal <VPArf>.
+    Found 1-bit register for signal <VPArr>.
+    Summary:
+	inferred   1 Finite State Machine(s).
+	inferred   1 Counter(s).
+	inferred  20 D-type flip-flop(s).
+Unit <IOBM> synthesized.
+
+
+Synthesizing Unit <CNT>.
+    Related source file is "../CNT.v".
+    Found 1-bit register for signal <TimeoutA>.
+    Found 1-bit register for signal <TimeoutB>.
+    Found 8-bit up counter for signal <RefCnt>.
+    Found 1-bit register for signal <RefDone>.
+    Found 1-bit register for signal <TimeoutBPre>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <CNT> synthesized.
+
+
+Synthesizing Unit <FSB>.
+    Related source file is "../FSB.v".
+    Found 1-bit register for signal <nDTACK>.
+    Found 1-bit register for signal <ASrf>.
+    Found 1-bit register for signal <BERR0r>.
+    Found 1-bit register for signal <BERR1r>.
+    Found 1-bit register for signal <Ready0r>.
+    Found 1-bit register for signal <Ready1r>.
+    Found 1-bit register for signal <Ready2r>.
+    Found 1-bit register for signal <VPA>.
+    Summary:
+	inferred   1 D-type flip-flop(s).
+Unit <FSB> synthesized.
+
+
+Synthesizing Unit <MXSE>.
+    Related source file is "../MXSE.v".
+Unit <MXSE> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Counters                                             : 2
+ 5-bit up counter                                      : 1
+ 8-bit up counter                                      : 1
+# Registers                                            : 58
+ 1-bit register                                        : 58
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Analyzing FSM <FSM_2> for best encoding.
+Optimizing FSM <iobm/IOS/FSM> on signal <IOS[1:4]> with johnson encoding.
+-------------------
+ State | Encoding
+-------------------
+ 000   | 0000
+ 001   | 0001
+ 010   | 0011
+ 011   | 0111
+ 100   | 1111
+ 101   | 1110
+ 110   | 1100
+ 111   | 1000
+-------------------
+Analyzing FSM <FSM_1> for best encoding.
+Optimizing FSM <iobs/PS/FSM> on signal <PS[1:2]> with johnson encoding.
+-------------------
+ State | Encoding
+-------------------
+ 00    | 00
+ 11    | 01
+ 10    | 11
+ 01    | 10
+-------------------
+Analyzing FSM <FSM_0> for best encoding.
+Optimizing FSM <ram/RS/FSM> on signal <RS[1:3]> with user encoding.
+-------------------
+ State | Encoding
+-------------------
+ 000   | 000
+ 010   | 010
+ 101   | 101
+ 001   | 001
+ 011   | 011
+ 100   | 100
+ 111   | 111
+ 110   | 110
+-------------------
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# FSMs                                                 : 3
+# Counters                                             : 2
+ 5-bit up counter                                      : 1
+ 8-bit up counter                                      : 1
+# Registers                                            : 38
+ Flip-Flops                                            : 38
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+
+Optimizing unit <MXSE> ...
+
+Optimizing unit <CS> ...
+  implementation constraint: INIT=r	 : nOverlay0
+  implementation constraint: INIT=r	 : nOverlay1
+
+Optimizing unit <RAM> ...
+  implementation constraint: INIT=r	 : RAMReady
+  implementation constraint: INIT=r	 : RASEL
+  implementation constraint: INIT=r	 : RAMDIS1
+  implementation constraint: INIT=r	 : RefRAS
+  implementation constraint: INIT=r	 : RAMDIS2
+  implementation constraint: INIT=r	 : Once
+  implementation constraint: INIT=r	 : RS_FSM_FFd1
+  implementation constraint: INIT=r	 : RS_FSM_FFd2
+  implementation constraint: INIT=r	 : RS_FSM_FFd3
+
+Optimizing unit <IOBS> ...
+  implementation constraint: INIT=r	 : IOACTr
+  implementation constraint: INIT=r	 : PS_FSM_FFd2
+  implementation constraint: INIT=r	 : Once
+  implementation constraint: INIT=r	 : PS_FSM_FFd1
+
+Optimizing unit <FSB> ...
+  implementation constraint: INIT=r	 : ASrf
+
+Optimizing unit <IOBM> ...
+  implementation constraint: INIT=r	 : IOREQr
+  implementation constraint: INIT=r	 : ETACK
+  implementation constraint: INIT=r	 : IOS_FSM_FFd1
+  implementation constraint: INIT=r	 : IOS_FSM_FFd2
+  implementation constraint: INIT=r	 : IOS_FSM_FFd3
+  implementation constraint: INIT=r	 : IOS_FSM_FFd4
+
+Optimizing unit <CNT> ...
+  implementation constraint: INIT=r	 : RefDone
+  implementation constraint: INIT=r	 : RefCnt_7
+  implementation constraint: INIT=r	 : RefCnt_6
+  implementation constraint: INIT=r	 : RefCnt_5
+  implementation constraint: INIT=r	 : RefCnt_4
+  implementation constraint: INIT=r	 : RefCnt_3
+  implementation constraint: INIT=r	 : RefCnt_2
+  implementation constraint: INIT=r	 : RefCnt_1
+  implementation constraint: INIT=r	 : RefCnt_0
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : MXSE.ngr
+Top Level Output File Name         : MXSE
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : Yes
+Target Technology                  : XC9500XL CPLDs
+Macro Preserve                     : YES
+XOR Preserve                       : YES
+Clock Enable                       : YES
+wysiwyg                            : NO
+
+Design Statistics
+# IOs                              : 67
+
+Cell Usage :
+# BELS                             : 605
+#      AND2                        : 170
+#      AND3                        : 24
+#      AND4                        : 14
+#      AND6                        : 2
+#      AND7                        : 1
+#      AND8                        : 3
+#      GND                         : 6
+#      INV                         : 255
+#      OR2                         : 107
+#      OR3                         : 9
+#      OR4                         : 1
+#      VCC                         : 1
+#      XOR2                        : 12
+# FlipFlops/Latches                : 80
+#      FD                          : 54
+#      FDCE                        : 26
+# IO Buffers                       : 67
+#      IBUF                        : 35
+#      OBUF                        : 32
+=========================================================================
+
+
+Total REAL time to Xst completion: 3.00 secs
+Total CPU time to Xst completion: 2.63 secs
+ 
+--> 
+
+Total memory usage is 232880 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
+
