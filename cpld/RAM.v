@@ -33,7 +33,16 @@ module RAM(
 
 	assign RA[11] = A[19];
 	assign RA[10] = A[21];
-	assign RA[9:0] = RASEL ? {A[20], A[09:01]} : {A[19], A[18:10]};
+	assign RA[09] = RASEL ? A[20] : A[19];
+	assign RA[08] = (RASEL && RAMSEL) ? A[09] : A[18];
+	assign RA[07] = RASEL ? A[08] : A[17];
+	assign RA[06] = RASEL ? A[07] : A[16];
+	assign RA[05] = RASEL ? A[06] : A[15];
+	assign RA[04] = RASEL ? A[05] : A[14];
+	assign RA[03] = RASEL ? A[04] : A[13];
+	assign RA[02] = RASEL ? A[03] : A[12];
+	assign RA[01] = RASEL ? A[02] : A[11];
+	assign RA[00] = RASEL ? A[01] : A[10];
 
 	always @(posedge CLK) begin
 		if (~BACT) Once <= 0;
