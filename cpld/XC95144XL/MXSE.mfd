@@ -15,7 +15,7 @@ GLOBALS | 1 | 2 | CLK2X_IOB
 
 MACROCELL | 3 | 13 | cs/nOverlay1
 ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 40 | 7 | 6 | 4 | 6 | 4 | 13 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 0 | 2 | 11 | 7 | 11 | 2 | 7 | 6 | 16 | 6 | 14 | 7 | 3 | 6 | 11 | 4 | 2 | 7 | 7 | 4 | 11 | 7 | 13 | 6 | 17 | 7 | 4 | 4 | 1 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 0 | 4 | 4 | 4 | 5 | 6 | 13 | 7 | 1 | 7 | 9 | 7 | 12 | 7 | 15 | 7 | 16 | 7 | 17
+OUTPUTMC | 43 | 7 | 6 | 4 | 6 | 4 | 13 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 0 | 2 | 11 | 7 | 11 | 2 | 7 | 6 | 16 | 6 | 14 | 7 | 3 | 6 | 11 | 4 | 2 | 7 | 7 | 4 | 11 | 7 | 13 | 6 | 17 | 6 | 7 | 7 | 4 | 4 | 1 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 0 | 4 | 4 | 4 | 5 | 6 | 6 | 6 | 8 | 6 | 13 | 7 | 1 | 7 | 9 | 7 | 12 | 7 | 15 | 7 | 16 | 7 | 17
 INPUTS | 3 | cs/nOverlay0  | nAS_FSB  | fsb/ASrf
 INPUTMC | 2 | 6 | 6 | 0 | 7
 INPUTP | 1 | 54
@@ -183,17 +183,20 @@ GLOBALS | 1 | 2 | CLK_FSB
 
 MACROCELL | 6 | 6 | cs/nOverlay0
 ATTRIBUTES | 4358928 | 0
-OUTPUTMC | 2 | 3 | 13 | 6 | 6
-INPUTS | 8 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay0  | nAS_FSB  | fsb/ASrf  | nRES
-INPUTMC | 2 | 6 | 6 | 0 | 7
-INPUTP | 6 | 36 | 30 | 29 | 28 | 54 | 145
-EQ | 6 | 
+OUTPUTMC | 3 | 3 | 13 | 6 | 6 | 6 | 7
+INPUTS | 11 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay0  | nAS_FSB  | fsb/ASrf  | nRES  | A_FSB<9>  | cs/nOverlay1  | ram/RASEL
+INPUTMC | 4 | 6 | 6 | 0 | 7 | 3 | 13 | 7 | 0
+INPUTP | 7 | 36 | 30 | 29 | 28 | 54 | 145 | 12
+EXPORTS | 1 | 6 | 7
+EQ | 8 | 
    cs/nOverlay0.T = !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
 	!cs/nOverlay0 & !nAS_FSB
 	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
 	!cs/nOverlay0 & fsb/ASrf;
    cs/nOverlay0.CLK = CLK_FSB;	// GCK
    cs/nOverlay0.AR = !nRES;
+    cs/nOverlay0.EXP  =  A_FSB<9> & !A_FSB<23> & !A_FSB<22> & cs/nOverlay1 & 
+	ram/RASEL
 GLOBALS | 1 | 2 | CLK_FSB
 
 MACROCELL | 3 | 16 | IOL0
@@ -421,99 +424,99 @@ GLOBALS | 1 | 2 | CLK_FSB
 MACROCELL | 2 | 1 | fsb/VPA
 ATTRIBUTES | 8553216 | 0
 OUTPUTMC | 6 | 2 | 1 | 3 | 10 | 2 | 0 | 2 | 2 | 2 | 3 | 2 | 17
-INPUTS | 10 | fsb/BERR1r  | fsb/VPA  | $OpTx$FX_DC$607  | BERR_IOBS  | fsb/BERR0r  | A_FSB<20>  | TimeoutB  | A_FSB<23>  | EXP14_.EXP  | EXP15_.EXP
+INPUTS | 10 | fsb/BERR1r  | fsb/VPA  | $OpTx$FX_DC$609  | BERR_IOBS  | fsb/BERR0r  | A_FSB<20>  | TimeoutB  | A_FSB<23>  | EXP14_.EXP  | EXP15_.EXP
 INPUTMC | 8 | 3 | 12 | 2 | 1 | 0 | 17 | 4 | 15 | 7 | 2 | 6 | 0 | 2 | 0 | 2 | 2
 INPUTP | 2 | 28 | 36
 IMPORTS | 2 | 2 | 0 | 2 | 2
 EQ | 89 | 
-   fsb/VPA.D = BERR_IOBS & fsb/VPA & !$OpTx$FX_DC$607
-	# fsb/BERR0r & fsb/VPA & !$OpTx$FX_DC$607
-	# fsb/BERR1r & fsb/VPA & !$OpTx$FX_DC$607
+   fsb/VPA.D = BERR_IOBS & fsb/VPA & !$OpTx$FX_DC$609
+	# fsb/BERR0r & fsb/VPA & !$OpTx$FX_DC$609
+	# fsb/BERR1r & fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<23> & TimeoutB & fsb/VPA & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 	# !A_FSB<20> & TimeoutB & fsb/VPA & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 ;Imported pterms FB3_1
 	# !A_FSB<22> & TimeoutB & fsb/VPA & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 	# A_FSB<21> & TimeoutB & fsb/VPA & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 	# A_FSB<23> & !fsb/Ready1r & fsb/VPA & 
-	!iobs/IOReady & !$OpTx$FX_DC$607
+	!iobs/IOReady & !$OpTx$FX_DC$609
 	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay1 & 
-	!fsb/Ready0r & fsb/VPA & !ram/RAMReady & !$OpTx$FX_DC$607
+	!fsb/Ready0r & fsb/VPA & !ram/RAMReady & !$OpTx$FX_DC$609
 	# A_FSB<22> & !A_FSB<21> & A_FSB<20> & !fsb/Ready1r & 
-	fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$607
+	fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$609
 ;Imported pterms FB3_18
 	# A_FSB<9> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 ;Imported pterms FB3_3
 	# !A_FSB<23> & A_FSB<22> & A_FSB<21> & 
 	!cs/nOverlay1 & !fsb/Ready0r & fsb/VPA & !ram/RAMReady & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 	# A_FSB<14> & A_FSB<22> & A_FSB<20> & A_FSB<19> & 
 	A_FSB<18> & A_FSB<17> & A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & 
-	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$607
+	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$609
 	# A_FSB<13> & A_FSB<22> & A_FSB<20> & A_FSB<19> & 
 	A_FSB<18> & A_FSB<17> & A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & 
-	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$607
+	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$609
 	# A_FSB<14> & !A_FSB<22> & A_FSB<21> & A_FSB<20> & 
 	A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
 	cs/nOverlay1 & !nWE_FSB & !fsb/Ready1r & fsb/VPA & !iobs/IOReady & 
-	!nADoutLE1 & !$OpTx$FX_DC$607
+	!nADoutLE1 & !$OpTx$FX_DC$609
 	# A_FSB<13> & !A_FSB<22> & A_FSB<21> & A_FSB<20> & 
 	A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
 	cs/nOverlay1 & !nWE_FSB & !fsb/Ready1r & fsb/VPA & !iobs/IOReady & 
-	!nADoutLE1 & !$OpTx$FX_DC$607
+	!nADoutLE1 & !$OpTx$FX_DC$609
 ;Imported pterms FB3_4
 	# A_FSB<9> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !TimeoutB & !fsb/BERR0r & 
-	!fsb/BERR1r & fsb/Ready1r & !$OpTx$FX_DC$607
+	!fsb/BERR1r & fsb/Ready1r & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !TimeoutB & !fsb/BERR0r & 
-	!fsb/BERR1r & iobs/IOReady & !$OpTx$FX_DC$607;
+	!fsb/BERR1r & iobs/IOReady & !$OpTx$FX_DC$609;
    fsb/VPA.CLK = CLK_FSB;	// GCK
 GLOBALS | 1 | 2 | CLK_FSB
 
@@ -634,7 +637,7 @@ GLOBALS | 1 | 2 | CLK_FSB
 MACROCELL | 2 | 8 | nDTACK_FSB_OBUF
 ATTRIBUTES | 8815362 | 0
 OUTPUTMC | 5 | 2 | 8 | 2 | 6 | 2 | 7 | 2 | 9 | 2 | 10
-INPUTS | 9 | fsb/BERR1r  | nDTACK_FSB  | BERR_IOBS  | fsb/BERR0r  | $OpTx$FX_DC$608  | nAS_FSB  | fsb/ASrf  | EXP19_.EXP  | EXP20_.EXP
+INPUTS | 9 | fsb/BERR1r  | nDTACK_FSB  | BERR_IOBS  | fsb/BERR0r  | $OpTx$FX_DC$610  | nAS_FSB  | fsb/ASrf  | EXP19_.EXP  | EXP20_.EXP
 INPUTMC | 8 | 3 | 12 | 2 | 8 | 4 | 15 | 7 | 2 | 3 | 14 | 0 | 7 | 2 | 7 | 2 | 9
 INPUTP | 1 | 54
 IMPORTS | 2 | 2 | 7 | 2 | 9
@@ -643,7 +646,7 @@ EQ | 82 |
 	# fsb/BERR0r & nDTACK_FSB
 	# fsb/BERR1r & nDTACK_FSB
 	# nAS_FSB & !fsb/ASrf
-	# nDTACK_FSB & !$OpTx$FX_DC$608
+	# nDTACK_FSB & !$OpTx$FX_DC$610
 ;Imported pterms FB3_8
 	# A_FSB<23> & !fsb/Ready1r & !iobs/IOReady & 
 	nDTACK_FSB
@@ -714,18 +717,18 @@ EQ | 82 |
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !fsb/BERR0r & !fsb/BERR1r & 
-	fsb/Ready1r & $OpTx$FX_DC$608
+	fsb/Ready1r & $OpTx$FX_DC$610
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !fsb/BERR0r & !fsb/BERR1r & 
-	iobs/IOReady & $OpTx$FX_DC$608;
+	iobs/IOReady & $OpTx$FX_DC$610;
    nDTACK_FSB.CLK = CLK_FSB;	// GCK
 GLOBALS | 1 | 2 | CLK_FSB
 
 MACROCELL | 7 | 0 | ram/RASEL
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 10 | 6 | 5 | 6 | 1 | 4 | 13 | 4 | 10 | 4 | 4 | 4 | 9 | 4 | 14 | 6 | 4 | 6 | 7 | 6 | 10
+OUTPUTMC | 12 | 6 | 5 | 6 | 1 | 4 | 13 | 4 | 10 | 4 | 4 | 4 | 9 | 4 | 14 | 6 | 4 | 6 | 7 | 6 | 10 | 6 | 6 | 6 | 8
 INPUTS | 13 | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd3  | ram/RS_FSM_FFd1  | A_FSB<23>  | cnt/RefDone  | nAS_FSB  | ram/BACTr  | fsb/ASrf  | cnt/RefCnt<5>  | cnt/RefCnt<6>  | cnt/RefCnt<7>  | A_FSB_19_IBUF$BUF0.EXP  | EXP39_.EXP
 INPUTMC | 11 | 6 | 15 | 6 | 13 | 7 | 3 | 6 | 2 | 3 | 0 | 0 | 7 | 0 | 10 | 0 | 9 | 0 | 8 | 7 | 1 | 7 | 17
 INPUTP | 2 | 36 | 54
@@ -1698,12 +1701,22 @@ EQ | 2 |
 
 MACROCELL | 6 | 7 | RA_8_OBUF
 ATTRIBUTES | 264962 | 0
-INPUTS | 3 | A_FSB<18>  | ram/RASEL  | A_FSB<9>
-INPUTMC | 1 | 7 | 0
-INPUTP | 2 | 24 | 12
-EQ | 2 | 
-   RA<8> = A_FSB<9> & ram/RASEL
-	# A_FSB<18> & !ram/RASEL;
+INPUTS | 8 | A_FSB<23>  | A_FSB<18>  | ram/RASEL  | A_FSB<22>  | A_FSB<21>  | cs/nOverlay1  | cs/nOverlay0.EXP  | A_FSB_21_IBUF$BUF0.EXP
+INPUTMC | 4 | 7 | 0 | 3 | 13 | 6 | 6 | 6 | 8
+INPUTP | 4 | 36 | 24 | 30 | 29
+IMPORTS | 2 | 6 | 6 | 6 | 8
+EQ | 11 | 
+   RA<8> = A_FSB<23> & A_FSB<18>
+	# A_FSB<18> & !ram/RASEL
+	# A_FSB<22> & !A_FSB<21> & A_FSB<18>
+	# A_FSB<22> & A_FSB<18> & cs/nOverlay1
+	# !A_FSB<22> & A_FSB<18> & !cs/nOverlay1
+;Imported pterms FB7_7
+	# A_FSB<9> & !A_FSB<23> & !A_FSB<22> & cs/nOverlay1 & 
+	ram/RASEL
+;Imported pterms FB7_9
+	# A_FSB<9> & !A_FSB<23> & A_FSB<22> & A_FSB<21> & 
+	!cs/nOverlay1 & ram/RASEL;
 
 MACROCELL | 6 | 10 | RA_9_OBUF
 ATTRIBUTES | 264962 | 0
@@ -1940,10 +1953,15 @@ EQ | 14 |
 
 MACROCELL | 6 | 8 | A_FSB_21_IBUF$BUF0
 ATTRIBUTES | 264962 | 0
-INPUTS | 1 | A_FSB<21>
-INPUTP | 1 | 29
-EQ | 1 | 
+OUTPUTMC | 1 | 6 | 7
+INPUTS | 6 | A_FSB<21>  | A_FSB<9>  | A_FSB<23>  | A_FSB<22>  | cs/nOverlay1  | ram/RASEL
+INPUTMC | 2 | 3 | 13 | 7 | 0
+INPUTP | 4 | 29 | 12 | 36 | 30
+EXPORTS | 1 | 6 | 7
+EQ | 3 | 
    RA<10> = A_FSB<21>;
+    A_FSB_21_IBUF$BUF0.EXP  =  A_FSB<9> & !A_FSB<23> & A_FSB<22> & A_FSB<21> & 
+	!cs/nOverlay1 & ram/RASEL
 
 MACROCELL | 5 | 13 | nADoutLE1_OBUF
 ATTRIBUTES | 8815366 | 0
@@ -2010,75 +2028,75 @@ INPUTS | 0
 EQ | 1 | 
    nAoutOE = Gnd;
 
-MACROCELL | 0 | 17 | $OpTx$FX_DC$607
+MACROCELL | 0 | 17 | $OpTx$FX_DC$609
 ATTRIBUTES | 133888 | 0
 OUTPUTMC | 5 | 2 | 1 | 2 | 0 | 2 | 2 | 2 | 3 | 2 | 17
 INPUTS | 2 | nAS_FSB  | fsb/ASrf
 INPUTMC | 1 | 0 | 7
 INPUTP | 1 | 54
 EQ | 1 | 
-   $OpTx$FX_DC$607 = nAS_FSB & !fsb/ASrf;
+   $OpTx$FX_DC$609 = nAS_FSB & !fsb/ASrf;
 
-MACROCELL | 3 | 14 | $OpTx$FX_DC$608
+MACROCELL | 3 | 14 | $OpTx$FX_DC$610
 ATTRIBUTES | 133888 | 0
 OUTPUTMC | 2 | 2 | 8 | 2 | 10
 INPUTS | 5 | TimeoutB  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>
 INPUTMC | 1 | 6 | 0
 INPUTP | 4 | 36 | 30 | 29 | 28
 EQ | 2 | 
-   $OpTx$FX_DC$608 = !TimeoutB
+   $OpTx$FX_DC$610 = !TimeoutB
 	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & A_FSB<20>;
 
 MACROCELL | 2 | 0 | EXP14_
 ATTRIBUTES | 2048 | 0
 OUTPUTMC | 1 | 2 | 1
-INPUTS | 13 | A_FSB<22>  | TimeoutB  | fsb/VPA  | $OpTx$FX_DC$607  | A_FSB<21>  | A_FSB<23>  | fsb/Ready1r  | iobs/IOReady  | cs/nOverlay1  | fsb/Ready0r  | ram/RAMReady  | A_FSB<20>  | EXP25_.EXP
+INPUTS | 13 | A_FSB<22>  | TimeoutB  | fsb/VPA  | $OpTx$FX_DC$609  | A_FSB<21>  | A_FSB<23>  | fsb/Ready1r  | iobs/IOReady  | cs/nOverlay1  | fsb/Ready0r  | ram/RAMReady  | A_FSB<20>  | EXP25_.EXP
 INPUTMC | 9 | 6 | 0 | 2 | 1 | 0 | 17 | 2 | 4 | 3 | 17 | 3 | 13 | 6 | 3 | 6 | 17 | 2 | 17
 INPUTP | 4 | 30 | 29 | 36 | 28
 EXPORTS | 1 | 2 | 1
 IMPORTS | 1 | 2 | 17
 EQ | 36 | 
        EXP14_.EXP  =  !A_FSB<22> & TimeoutB & fsb/VPA & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 	# A_FSB<21> & TimeoutB & fsb/VPA & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 	# A_FSB<23> & !fsb/Ready1r & fsb/VPA & 
-	!iobs/IOReady & !$OpTx$FX_DC$607
+	!iobs/IOReady & !$OpTx$FX_DC$609
 	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay1 & 
-	!fsb/Ready0r & fsb/VPA & !ram/RAMReady & !$OpTx$FX_DC$607
+	!fsb/Ready0r & fsb/VPA & !ram/RAMReady & !$OpTx$FX_DC$609
 	# A_FSB<22> & !A_FSB<21> & A_FSB<20> & !fsb/Ready1r & 
-	fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$607
+	fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$609
 ;Imported pterms FB3_18
 	# A_FSB<9> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 
 MACROCELL | 2 | 2 | EXP15_
 ATTRIBUTES | 2048 | 0
 OUTPUTMC | 1 | 2 | 1
-INPUTS | 20 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | cs/nOverlay1  | fsb/Ready0r  | fsb/VPA  | ram/RAMReady  | $OpTx$FX_DC$607  | A_FSB<14>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | fsb/Ready1r  | iobs/IOReady  | A_FSB<13>  | nADoutLE1  | EXP16_.EXP
+INPUTS | 20 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | cs/nOverlay1  | fsb/Ready0r  | fsb/VPA  | ram/RAMReady  | $OpTx$FX_DC$609  | A_FSB<14>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | fsb/Ready1r  | iobs/IOReady  | A_FSB<13>  | nADoutLE1  | EXP16_.EXP
 INPUTMC | 9 | 3 | 13 | 6 | 3 | 2 | 1 | 6 | 17 | 0 | 17 | 2 | 4 | 3 | 17 | 5 | 13 | 2 | 3
 INPUTP | 11 | 36 | 30 | 29 | 19 | 28 | 26 | 24 | 23 | 22 | 47 | 18
 EXPORTS | 1 | 2 | 1
@@ -2086,52 +2104,52 @@ IMPORTS | 1 | 2 | 3
 EQ | 43 | 
        EXP15_.EXP  =  !A_FSB<23> & A_FSB<22> & A_FSB<21> & 
 	!cs/nOverlay1 & !fsb/Ready0r & fsb/VPA & !ram/RAMReady & 
-	!$OpTx$FX_DC$607
+	!$OpTx$FX_DC$609
 	# A_FSB<14> & A_FSB<22> & A_FSB<20> & A_FSB<19> & 
 	A_FSB<18> & A_FSB<17> & A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & 
-	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$607
+	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$609
 	# A_FSB<13> & A_FSB<22> & A_FSB<20> & A_FSB<19> & 
 	A_FSB<18> & A_FSB<17> & A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & 
-	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$607
+	!fsb/Ready1r & fsb/VPA & !iobs/IOReady & !$OpTx$FX_DC$609
 	# A_FSB<14> & !A_FSB<22> & A_FSB<21> & A_FSB<20> & 
 	A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
 	cs/nOverlay1 & !nWE_FSB & !fsb/Ready1r & fsb/VPA & !iobs/IOReady & 
-	!nADoutLE1 & !$OpTx$FX_DC$607
+	!nADoutLE1 & !$OpTx$FX_DC$609
 	# A_FSB<13> & !A_FSB<22> & A_FSB<21> & A_FSB<20> & 
 	A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
 	cs/nOverlay1 & !nWE_FSB & !fsb/Ready1r & fsb/VPA & !iobs/IOReady & 
-	!nADoutLE1 & !$OpTx$FX_DC$607
+	!nADoutLE1 & !$OpTx$FX_DC$609
 ;Imported pterms FB3_4
 	# A_FSB<9> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !TimeoutB & !fsb/BERR0r & 
-	!fsb/BERR1r & fsb/Ready1r & !$OpTx$FX_DC$607
+	!fsb/BERR1r & fsb/Ready1r & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !TimeoutB & !fsb/BERR0r & 
-	!fsb/BERR1r & iobs/IOReady & !$OpTx$FX_DC$607
+	!fsb/BERR1r & iobs/IOReady & !$OpTx$FX_DC$609
 
 MACROCELL | 2 | 3 | EXP16_
 ATTRIBUTES | 2048 | 0
 OUTPUTMC | 1 | 2 | 2
-INPUTS | 28 | A_FSB<9>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | cs/nOverlay1  | nWE_FSB  | TimeoutA  | fsb/Ready2r  | fsb/VPA  | $OpTx$FX_DC$607  | A_FSB<8>  | BERR_IOBS  | TimeoutB  | fsb/BERR0r  | fsb/BERR1r  | fsb/Ready1r  | iobs/IOReady
+INPUTS | 28 | A_FSB<9>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | cs/nOverlay1  | nWE_FSB  | TimeoutA  | fsb/Ready2r  | fsb/VPA  | $OpTx$FX_DC$609  | A_FSB<8>  | BERR_IOBS  | TimeoutB  | fsb/BERR0r  | fsb/BERR1r  | fsb/Ready1r  | iobs/IOReady
 INPUTMC | 11 | 3 | 13 | 6 | 11 | 2 | 14 | 2 | 1 | 0 | 17 | 4 | 15 | 6 | 0 | 7 | 2 | 3 | 12 | 2 | 4 | 3 | 17
 INPUTP | 17 | 12 | 21 | 19 | 18 | 17 | 15 | 13 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 11
 EXPORTS | 1 | 2 | 2
@@ -2140,27 +2158,27 @@ EQ | 25 |
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !TimeoutB & !fsb/BERR0r & 
-	!fsb/BERR1r & fsb/Ready1r & !$OpTx$FX_DC$607
+	!fsb/BERR1r & fsb/Ready1r & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !TimeoutB & !fsb/BERR0r & 
-	!fsb/BERR1r & iobs/IOReady & !$OpTx$FX_DC$607
+	!fsb/BERR1r & iobs/IOReady & !$OpTx$FX_DC$609
 
 MACROCELL | 2 | 5 | EXP17_
 ATTRIBUTES | 2048 | 0
@@ -2290,17 +2308,17 @@ EQ | 47 |
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !fsb/BERR0r & !fsb/BERR1r & 
-	fsb/Ready1r & $OpTx$FX_DC$608
+	fsb/Ready1r & $OpTx$FX_DC$610
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !fsb/BERR0r & !fsb/BERR1r & 
-	iobs/IOReady & $OpTx$FX_DC$608
+	iobs/IOReady & $OpTx$FX_DC$610
 
 MACROCELL | 2 | 10 | EXP21_
 ATTRIBUTES | 2048 | 0
 OUTPUTMC | 1 | 2 | 9
-INPUTS | 27 | A_FSB<9>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | cs/nOverlay1  | nWE_FSB  | TimeoutA  | fsb/Ready2r  | nDTACK_FSB  | A_FSB<8>  | BERR_IOBS  | fsb/BERR0r  | fsb/BERR1r  | fsb/Ready1r  | $OpTx$FX_DC$608  | iobs/IOReady
+INPUTS | 27 | A_FSB<9>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | cs/nOverlay1  | nWE_FSB  | TimeoutA  | fsb/Ready2r  | nDTACK_FSB  | A_FSB<8>  | BERR_IOBS  | fsb/BERR0r  | fsb/BERR1r  | fsb/Ready1r  | $OpTx$FX_DC$610  | iobs/IOReady
 INPUTMC | 10 | 3 | 13 | 6 | 11 | 2 | 14 | 2 | 8 | 4 | 15 | 7 | 2 | 3 | 12 | 2 | 4 | 3 | 14 | 3 | 17
 INPUTP | 17 | 12 | 21 | 19 | 18 | 17 | 15 | 13 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 11
 EXPORTS | 1 | 2 | 9
@@ -2324,12 +2342,12 @@ EQ | 25 |
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !fsb/BERR0r & !fsb/BERR1r & 
-	fsb/Ready1r & $OpTx$FX_DC$608
+	fsb/Ready1r & $OpTx$FX_DC$610
 	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
 	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
 	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
 	A_FSB<17> & A_FSB<16> & !BERR_IOBS & !fsb/BERR0r & !fsb/BERR1r & 
-	iobs/IOReady & $OpTx$FX_DC$608
+	iobs/IOReady & $OpTx$FX_DC$610
 
 MACROCELL | 2 | 11 | EXP22_
 ATTRIBUTES | 2048 | 0
@@ -2392,7 +2410,7 @@ EQ | 17 |
 MACROCELL | 2 | 17 | EXP25_
 ATTRIBUTES | 2048 | 0
 OUTPUTMC | 1 | 2 | 0
-INPUTS | 22 | A_FSB<9>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | cs/nOverlay1  | nWE_FSB  | TimeoutA  | fsb/Ready2r  | fsb/VPA  | $OpTx$FX_DC$607  | A_FSB<8>
+INPUTS | 22 | A_FSB<9>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | cs/nOverlay1  | nWE_FSB  | TimeoutA  | fsb/Ready2r  | fsb/VPA  | $OpTx$FX_DC$609  | A_FSB<8>
 INPUTMC | 5 | 3 | 13 | 6 | 11 | 2 | 14 | 2 | 1 | 0 | 17
 INPUTP | 17 | 12 | 21 | 19 | 18 | 17 | 15 | 13 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 11
 EXPORTS | 1 | 2 | 0
@@ -2401,27 +2419,27 @@ EQ | 25 |
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<9> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & !cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & A_FSB<14> & A_FSB<13> & 
 	A_FSB<12> & A_FSB<11> & A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 	# A_FSB<8> & A_FSB<15> & !A_FSB<14> & A_FSB<13> & 
 	!A_FSB<12> & !A_FSB<11> & !A_FSB<10> & !A_FSB<23> & !A_FSB<22> & 
 	A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & 
 	A_FSB<16> & cs/nOverlay1 & !nWE_FSB & !TimeoutA & !fsb/Ready2r & 
-	fsb/VPA & !$OpTx$FX_DC$607
+	fsb/VPA & !$OpTx$FX_DC$609
 
 MACROCELL | 4 | 0 | EXP26_
 ATTRIBUTES | 2048 | 0
@@ -2760,7 +2778,7 @@ EQ | 26 |
 	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & cnt/RefCnt<5> & cnt/RefCnt<6> & 
 	cnt/RefCnt<7>
 
-PIN | A_FSB<9> | 64 | 0 | N/A | 12 | 7 | 2 | 14 | 6 | 7 | 2 | 6 | 2 | 3 | 2 | 9 | 2 | 10 | 2 | 17
+PIN | A_FSB<9> | 64 | 0 | N/A | 12 | 8 | 2 | 14 | 6 | 6 | 2 | 6 | 2 | 3 | 2 | 9 | 2 | 10 | 2 | 17 | 6 | 8
 PIN | A_FSB<8> | 64 | 0 | N/A | 11 | 7 | 2 | 10 | 6 | 4 | 2 | 6 | 2 | 3 | 2 | 9 | 2 | 15 | 2 | 17
 PIN | A_FSB<15> | 64 | 0 | N/A | 21 | 8 | 2 | 14 | 4 | 10 | 2 | 6 | 2 | 3 | 2 | 9 | 2 | 10 | 2 | 15 | 2 | 17
 PIN | A_FSB<14> | 64 | 0 | N/A | 19 | 18 | 4 | 5 | 4 | 13 | 2 | 4 | 2 | 14 | 4 | 4 | 2 | 10 | 2 | 7 | 4 | 1 | 4 | 0 | 4 | 9 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 15 | 2 | 17 | 7 | 9
@@ -2768,9 +2786,9 @@ PIN | A_FSB<13> | 64 | 0 | N/A | 18 | 17 | 4 | 5 | 4 | 13 | 2 | 4 | 2 | 14 | 4 |
 PIN | A_FSB<12> | 64 | 0 | N/A | 17 | 8 | 2 | 14 | 4 | 13 | 2 | 6 | 2 | 3 | 2 | 9 | 2 | 10 | 2 | 15 | 2 | 17
 PIN | A_FSB<11> | 64 | 0 | N/A | 15 | 8 | 2 | 14 | 6 | 1 | 2 | 6 | 2 | 3 | 2 | 9 | 2 | 10 | 2 | 15 | 2 | 17
 PIN | A_FSB<10> | 64 | 0 | N/A | 13 | 8 | 2 | 14 | 6 | 5 | 2 | 6 | 2 | 3 | 2 | 9 | 2 | 10 | 2 | 15 | 2 | 17
-PIN | A_FSB<23> | 64 | 0 | N/A | 36 | 51 | 7 | 6 | 4 | 7 | 4 | 17 | 6 | 6 | 7 | 2 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 1 | 2 | 12 | 7 | 11 | 2 | 7 | 7 | 0 | 6 | 14 | 7 | 3 | 6 | 13 | 4 | 3 | 7 | 8 | 4 | 12 | 7 | 14 | 6 | 17 | 7 | 10 | 3 | 5 | 7 | 4 | 4 | 1 | 3 | 14 | 2 | 0 | 2 | 2 | 2 | 3 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 11 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 2 | 4 | 4 | 4 | 5 | 4 | 6 | 4 | 8 | 4 | 11 | 4 | 13 | 4 | 16 | 6 | 0 | 6 | 16 | 7 | 7 | 7 | 9 | 7 | 15 | 7 | 16 | 7 | 17
-PIN | A_FSB<22> | 64 | 0 | N/A | 30 | 47 | 7 | 6 | 4 | 7 | 4 | 16 | 6 | 6 | 7 | 2 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 0 | 2 | 11 | 7 | 11 | 2 | 7 | 6 | 16 | 6 | 14 | 7 | 3 | 6 | 11 | 4 | 2 | 7 | 7 | 4 | 11 | 7 | 13 | 6 | 17 | 7 | 10 | 3 | 5 | 7 | 4 | 4 | 1 | 3 | 14 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 0 | 4 | 4 | 4 | 5 | 4 | 6 | 4 | 13 | 6 | 13 | 7 | 1 | 7 | 9 | 7 | 12 | 7 | 15 | 7 | 16 | 7 | 17
-PIN | A_FSB<21> | 64 | 0 | N/A | 29 | 46 | 7 | 6 | 4 | 6 | 4 | 16 | 6 | 6 | 7 | 2 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 0 | 2 | 12 | 7 | 11 | 2 | 7 | 6 | 16 | 6 | 13 | 7 | 3 | 6 | 11 | 4 | 2 | 7 | 7 | 4 | 11 | 7 | 13 | 6 | 17 | 7 | 10 | 3 | 5 | 7 | 4 | 6 | 8 | 4 | 1 | 3 | 14 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 11 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 0 | 4 | 4 | 4 | 5 | 4 | 8 | 4 | 13 | 7 | 9 | 7 | 12 | 7 | 16 | 7 | 17
+PIN | A_FSB<23> | 64 | 0 | N/A | 36 | 53 | 7 | 6 | 4 | 7 | 4 | 17 | 6 | 6 | 7 | 2 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 1 | 2 | 12 | 7 | 11 | 2 | 7 | 7 | 0 | 6 | 14 | 7 | 3 | 6 | 13 | 4 | 3 | 7 | 8 | 4 | 12 | 7 | 14 | 6 | 17 | 6 | 7 | 7 | 10 | 3 | 5 | 7 | 4 | 4 | 1 | 3 | 14 | 2 | 0 | 2 | 2 | 2 | 3 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 11 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 2 | 4 | 4 | 4 | 5 | 4 | 6 | 4 | 8 | 4 | 11 | 4 | 13 | 4 | 16 | 6 | 0 | 6 | 8 | 6 | 16 | 7 | 7 | 7 | 9 | 7 | 15 | 7 | 16 | 7 | 17
+PIN | A_FSB<22> | 64 | 0 | N/A | 30 | 49 | 7 | 6 | 4 | 7 | 4 | 16 | 6 | 6 | 7 | 2 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 0 | 2 | 11 | 7 | 11 | 2 | 7 | 6 | 16 | 6 | 14 | 7 | 3 | 6 | 11 | 4 | 2 | 7 | 7 | 4 | 11 | 7 | 13 | 6 | 17 | 6 | 7 | 7 | 10 | 3 | 5 | 7 | 4 | 4 | 1 | 3 | 14 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 0 | 4 | 4 | 4 | 5 | 4 | 6 | 4 | 13 | 6 | 8 | 6 | 13 | 7 | 1 | 7 | 9 | 7 | 12 | 7 | 15 | 7 | 16 | 7 | 17
+PIN | A_FSB<21> | 64 | 0 | N/A | 29 | 47 | 7 | 6 | 4 | 6 | 4 | 16 | 6 | 6 | 7 | 2 | 6 | 3 | 2 | 4 | 2 | 14 | 2 | 0 | 2 | 12 | 7 | 11 | 2 | 7 | 6 | 16 | 6 | 13 | 7 | 3 | 6 | 11 | 4 | 2 | 7 | 7 | 4 | 11 | 7 | 13 | 6 | 17 | 6 | 7 | 7 | 10 | 3 | 5 | 7 | 4 | 6 | 8 | 4 | 1 | 3 | 14 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 11 | 2 | 13 | 2 | 15 | 2 | 17 | 4 | 0 | 4 | 4 | 4 | 5 | 4 | 8 | 4 | 13 | 7 | 9 | 7 | 12 | 7 | 16 | 7 | 17
 PIN | A_FSB<20> | 64 | 0 | N/A | 28 | 27 | 4 | 7 | 4 | 16 | 6 | 6 | 7 | 2 | 2 | 4 | 2 | 14 | 2 | 1 | 2 | 12 | 2 | 7 | 4 | 3 | 7 | 8 | 4 | 12 | 6 | 10 | 7 | 10 | 3 | 5 | 4 | 1 | 3 | 14 | 2 | 0 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 10 | 2 | 15 | 2 | 17 | 4 | 0
 PIN | A_FSB<19> | 64 | 0 | N/A | 26 | 20 | 4 | 1 | 4 | 8 | 2 | 4 | 2 | 14 | 4 | 0 | 2 | 10 | 2 | 7 | 4 | 2 | 7 | 7 | 4 | 11 | 6 | 10 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 13 | 2 | 15 | 2 | 17 | 7 | 2
 PIN | A_FSB<18> | 64 | 0 | N/A | 24 | 19 | 4 | 4 | 4 | 13 | 2 | 4 | 2 | 14 | 6 | 7 | 2 | 10 | 2 | 7 | 4 | 1 | 4 | 0 | 4 | 8 | 2 | 2 | 2 | 3 | 2 | 5 | 2 | 6 | 2 | 9 | 2 | 13 | 2 | 15 | 2 | 17 | 7 | 9

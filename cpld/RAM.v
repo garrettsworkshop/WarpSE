@@ -34,7 +34,7 @@ module RAM(
 	assign RA[11] = A[19];
 	assign RA[10] = A[21];
 	assign RA[09] = RASEL ? A[20] : A[19];
-	assign RA[08] = (RASEL && RAMSEL) ? A[09] : A[18];
+	assign RA[08] = (RASEL && RAMCS) ? A[09] : A[18];
 	assign RA[07] = RASEL ? A[08] : A[17];
 	assign RA[06] = RASEL ? A[07] : A[16];
 	assign RA[05] = RASEL ? A[06] : A[15];
