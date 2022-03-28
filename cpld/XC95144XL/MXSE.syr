@@ -3,14 +3,14 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.87 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.96 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.89 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.98 secs
  
 --> Reading design: MXSE.prj
 
@@ -217,8 +217,8 @@ Synthesizing Unit <IOBM>.
     Found finite state machine <FSM_2> for signal <IOS>.
     -----------------------------------------------------------------------
     | States             | 8                                              |
-    | Transitions        | 15                                             |
-    | Inputs             | 6                                              |
+    | Transitions        | 16                                             |
+    | Inputs             | 7                                              |
     | Outputs            | 8                                              |
     | Clock              | C16M                      (rising_edge)        |
     | Power Up State     | 000                                            |
@@ -226,8 +226,8 @@ Synthesizing Unit <IOBM>.
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
     Found 1-bit register for signal <IOBERR>.
+    Found 1-bit register for signal <nASout>.
     Found 1-bit register for signal <IOACT>.
-    Found 1-bit register for signal <nAS>.
     Found 1-bit register for signal <nLDS>.
     Found 1-bit register for signal <nUDS>.
     Found 1-bit register for signal <nDinLE>.
@@ -236,6 +236,9 @@ Synthesizing Unit <IOBM>.
     Found 1-bit register for signal <nVMA>.
     Found 1-bit register for signal <BERRrf>.
     Found 1-bit register for signal <BERRrr>.
+    Found 1-bit register for signal <BG>.
+    Found 1-bit register for signal <BGr0>.
+    Found 1-bit register for signal <BGr1>.
     Found 1-bit register for signal <DTACKrf>.
     Found 1-bit register for signal <DTACKrr>.
     Found 1-bit register for signal <Er>.
@@ -250,7 +253,7 @@ Synthesizing Unit <IOBM>.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   1 Counter(s).
-	inferred  20 D-type flip-flop(s).
+	inferred  22 D-type flip-flop(s).
 Unit <IOBM> synthesized.
 
 
@@ -283,6 +286,21 @@ Unit <FSB> synthesized.
 
 Synthesizing Unit <MXSE>.
     Related source file is "../MXSE.v".
+WARNING:Xst:647 - Input <SW<2>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 1-bit tristate buffer for signal <nAS_IOB>.
+    Found 1-bit tristate buffer for signal <nLDS_IOB>.
+    Found 1-bit tristate buffer for signal <nUDS_IOB>.
+    Found 1-bit tristate buffer for signal <nVMA_IOB>.
+    Found 1-bit register for signal <Disable>.
+    Found 1-bit register for signal <IPL2r0>.
+    Found 1-bit register for signal <IPL2r1>.
+    Found 1-bit register for signal <RESDone>.
+    Found 1-bit register for signal <RESr0>.
+    Found 1-bit register for signal <RESr1>.
+    Found 1-bit register for signal <RESr2>.
+    Summary:
+	inferred   7 D-type flip-flop(s).
+	inferred   4 Tristate(s).
 Unit <MXSE> synthesized.
 
 
@@ -293,8 +311,10 @@ Macro Statistics
 # Counters                                             : 2
  5-bit up counter                                      : 1
  8-bit up counter                                      : 1
-# Registers                                            : 58
- 1-bit register                                        : 58
+# Registers                                            : 68
+ 1-bit register                                        : 68
+# Tristates                                            : 4
+ 1-bit tristate buffer                                 : 4
 
 =========================================================================
 
@@ -303,18 +323,18 @@ Macro Statistics
 =========================================================================
 
 Analyzing FSM <FSM_2> for best encoding.
-Optimizing FSM <iobm/IOS/FSM> on signal <IOS[1:4]> with johnson encoding.
+Optimizing FSM <iobm/IOS/FSM> on signal <IOS[1:3]> with gray encoding.
 -------------------
  State | Encoding
 -------------------
- 000   | 0000
- 001   | 0001
- 010   | 0011
- 011   | 0111
- 100   | 1111
- 101   | 1110
- 110   | 1100
- 111   | 1000
+ 000   | 000
+ 001   | 001
+ 010   | 011
+ 011   | 010
+ 100   | 110
+ 101   | 111
+ 110   | 101
+ 111   | 100
 -------------------
 Analyzing FSM <FSM_1> for best encoding.
 Optimizing FSM <iobs/PS/FSM> on signal <PS[1:2]> with johnson encoding.
@@ -340,6 +360,10 @@ Optimizing FSM <ram/RS/FSM> on signal <RS[1:3]> with user encoding.
  111   | 111
  110   | 110
 -------------------
+WARNING:Xst:1426 - The value init of the FF/Latch 0 hinder the constant cleaning in the block RESDone.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch 0 hinder the constant cleaning in the block Disable.
+   You should achieve better results by setting this init to 1.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -349,16 +373,27 @@ Macro Statistics
 # Counters                                             : 2
  5-bit up counter                                      : 1
  8-bit up counter                                      : 1
-# Registers                                            : 38
- Flip-Flops                                            : 38
+# Registers                                            : 47
+ Flip-Flops                                            : 47
 
 =========================================================================
 
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
+WARNING:Xst:1426 - The value init of the FF/Latch RESDone hinder the constant cleaning in the block MXSE.
+   You should achieve better results by setting this init to 1.
+WARNING:Xst:1426 - The value init of the FF/Latch Disable hinder the constant cleaning in the block MXSE.
+   You should achieve better results by setting this init to 1.
 
 Optimizing unit <MXSE> ...
+  implementation constraint: INIT=r	 : RESr0
+  implementation constraint: INIT=r	 : RESr1
+  implementation constraint: INIT=r	 : RESr2
+  implementation constraint: INIT=r	 : IPL2r0
+  implementation constraint: INIT=r	 : IPL2r1
+  implementation constraint: INIT=r	 : Disable
+  implementation constraint: INIT=r	 : RESDone
 
 Optimizing unit <CS> ...
   implementation constraint: INIT=r	 : nOverlay0
@@ -387,10 +422,12 @@ Optimizing unit <FSB> ...
 Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOREQr
   implementation constraint: INIT=r	 : ETACK
+  implementation constraint: INIT=r	 : BGr0
+  implementation constraint: INIT=r	 : BGr1
+  implementation constraint: INIT=r	 : BG
   implementation constraint: INIT=r	 : IOS_FSM_FFd1
   implementation constraint: INIT=r	 : IOS_FSM_FFd2
   implementation constraint: INIT=r	 : IOS_FSM_FFd3
-  implementation constraint: INIT=r	 : IOS_FSM_FFd4
 
 Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : RefDone
@@ -430,40 +467,44 @@ Clock Enable                       : YES
 wysiwyg                            : NO
 
 Design Statistics
-# IOs                              : 67
+# IOs                              : 75
 
 Cell Usage :
-# BELS                             : 607
-#      AND2                        : 169
-#      AND3                        : 25
-#      AND4                        : 14
+# BELS                             : 606
+#      AND2                        : 168
+#      AND3                        : 27
+#      AND4                        : 12
+#      AND5                        : 1
 #      AND6                        : 2
 #      AND7                        : 1
 #      AND8                        : 3
-#      GND                         : 6
-#      INV                         : 256
-#      OR2                         : 108
-#      OR3                         : 9
+#      GND                         : 7
+#      INV                         : 260
+#      OR2                         : 99
+#      OR3                         : 11
 #      OR4                         : 1
-#      VCC                         : 1
+#      VCC                         : 2
 #      XOR2                        : 12
-# FlipFlops/Latches                : 80
-#      FD                          : 54
-#      FDCE                        : 26
-# IO Buffers                       : 67
-#      IBUF                        : 35
-#      OBUF                        : 32
+# FlipFlops/Latches                : 89
+#      FD                          : 60
+#      FDCE                        : 29
+# Tri-States                       : 1
+#      BUFE                        : 1
+# IO Buffers                       : 74
+#      IBUF                        : 39
+#      OBUF                        : 31
+#      OBUFE                       : 4
 =========================================================================
 
 
-Total REAL time to Xst completion: 27.00 secs
-Total CPU time to Xst completion: 27.11 secs
+Total REAL time to Xst completion: 29.00 secs
+Total CPU time to Xst completion: 29.19 secs
  
 --> 
 
-Total memory usage is 204052 kilobytes
+Total memory usage is 205076 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    0 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

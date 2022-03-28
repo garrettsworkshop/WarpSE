@@ -4,7 +4,7 @@ module FSB(
 	/* AS cycle detection */
 	output BACT,
 	/* Ready inputs */
-	input Ready0, input Ready1, input Ready2,
+	input Ready0, input Ready1, input Ready2, input Disable,
 	/* BERR inputs */
 	input BERR0, input BERR1,
 	/* Interrupt acknowledge select */
@@ -18,9 +18,9 @@ module FSB(
 	/* Ready and BERR "remember" */
 	reg Ready0r, Ready1r, Ready2r;
 	reg BERR0r, BERR1r;
-	wire Ready = (Ready0 || Ready0r) && 
-					 (Ready1 || Ready1r) && 
-					 (Ready2 || Ready2r);
+	wire Ready = ~Disable && (Ready0 || Ready0r) && 
+							 (Ready1 || Ready1r) && 
+							 (Ready2 || Ready2r);
 	wire BERR = (BERR0 || BERR0r || BERR1 || BERR1r);
 	assign nBERR = ~(~nAS && BERR);
 	always @(posedge FCLK) begin

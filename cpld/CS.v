@@ -1,4 +1,6 @@
 module CS(
+	/* Setting input */
+	input MotherboardROMEN,
 	/* MC68HC000 interface */
 	input [23:08] A, input CLK, input nRES, input nWE, 
 	/* AS cycle detection */
@@ -42,11 +44,14 @@ module CS(
 		(A[15:12]==4'hF && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||
 		(A[15:12]==4'hA && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
 
-	assign ROMCS = A[23:20]==4'h4 || (A[23:20]==4'h0 && Overlay);
+	assign ROMCS = (A[23:20]==4'h4 && !MotherboardROMEN) || 
+				   (A[23:20]==4'h8 &&  MotherboardROMEN) || 
+				   (A[23:20]==4'h0 && Overlay);
 
 	/* Select signals - IOB domain */
 	assign IACS = A[23:08]==16'hFFFF; // IACK
-	assign IOCS = A[23:20]==4'h5 || // SCSI
+	assign IOCS = (A[23:20]==4'h4 && MotherboardROMEN) || // Motherboard ROM
+				  A[23:20]==4'h5 || // SCSI
 	              A[23:20]==4'h8 || // empty
 	              A[23:20]==4'h9 || // SCC read/reset
 	              A[23:20]==4'hA || // empty

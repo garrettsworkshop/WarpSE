@@ -1,12 +1,13 @@
 module IOBM(
 	/* PDS interface */
 	input C16M, input C8M, input E,
-	output reg nAS, output reg nLDS, output reg nUDS, output reg nVMA,
-	input nDTACK, input nVPA, input nBERR, input nRES,
+	output nBR, output reg nASout, output reg nLDS, output reg nUDS, output reg nVMA,
+	input nASin, input nBG, input nDTACK, input nVPA, input nBERR, input nRES,
 	/* PDS address and data latch control */
 	output nAoutOE, output reg nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
-	output reg IOACT, output reg IOBERR, input IOREQ, input IOLDS, input IOUDS, input IOWE);
+	output reg IOACT, output reg IOBERR, 
+	input Park, input IOREQ, input IOLDS, input IOUDS, input IOWE);
 
 	/* I/O bus slave port input synchronization */
 	reg IOREQr = 0;
@@ -51,11 +52,23 @@ module IOBM(
 		else if (ES==0) nVMA <= 1;
 	end
 
+	/* Bus Request/Grant control */
+	assign nBR = Park;
+	reg BGr0 = 0;
+	reg BGr1 = 0;
+	reg BG = 0;
+	always @(posedge C16M) begin
+		BGr0 <= ~nBG;
+		BGr1 <= BGr0;
+		if (BGr1 && nASin) BG <= 1;
+		else if (~BGr0) BG <= 0;
+	end
+
 	/* I/O bus state */
 	reg [2:0] IOS = 0;
 	always @(posedge C16M) begin
 		if (IOS==0) begin
-			if (IOREQr) begin
+			if (IOREQr && BG) begin
 				if (~C8M) begin
 					IOS <= 1;
 				end else begin
@@ -107,7 +120,7 @@ module IOBM(
 	end
 
 	/* PDS address and data latch control */
-	assign nAoutOE = 0;
+	assign nAoutOE = ~BG;
 	always @(negedge C16M) begin nDinLE <= IOS==4 || IOS==5; end
 	always @(posedge C16M) begin
 		nDoutOE <= ~(IOWE && (IOS==1 || IOS==2 || IOS==3 || 
@@ -116,7 +129,7 @@ module IOBM(
 
 	/* AS, DS control */
 	always @(negedge C16M) begin
-		nAS <= ~(IOS==1 || IOS==2 || IOS==3 || IOS==4 || IOS==5);
+		nASout <= ~(IOS==1 || IOS==2 || IOS==3 || IOS==4 || IOS==5);
 		nLDS <= ~(IOLDS && (((IOS==1 || IOS==2) && ~IOWE) || IOS==3 || IOS==4 || IOS==5));
 		nUDS <= ~(IOUDS && (((IOS==1 || IOS==2) && ~IOWE) || IOS==3 || IOS==4 || IOS==5));
 	end

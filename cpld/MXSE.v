@@ -17,8 +17,11 @@ module MXSE(
 	output nAS_IOB,
 	output nUDS_IOB,
 	output nLDS_IOB,
+	output nBR_IOB,
+	input nBG_IOB,
 	input nBERR_IOB,
 	input nRES,
+	input nIPL2,
 	output nROMCS,
 	output nRAMLWE,
 	output nRAMUWE,
@@ -32,7 +35,15 @@ module MXSE(
 	output nAoutOE,
 	output nDoutOE,
 	output nDinOE,
-	output nDinLE);
+	output nDinLE,
+	input [2:0] SW,
+	output CLK20EN,
+	output CLK25EN);
+
+	/* DIP switches */
+	assign CLK20EN =  SW[0];
+	assign CLK25EN = !SW[0];
+	wire MotherboardROMEN = !SW[1];
 
 	/* AS cycle detection */
 	wire BACT;
@@ -42,6 +53,8 @@ module MXSE(
 	
 	wire IOCS, SCSICS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR;
 	CS cs(
+		/* Setting input */
+		MotherboardROMEN,
 		/* MC68HC000 interface */
 		A_FSB[23:08], CLK_FSB, nRES, nWE_FSB,
 		/*  AS cycle detection */
@@ -64,7 +77,7 @@ module MXSE(
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
 
 	wire Ready_IOBS, BERR_IOBS;
-	wire IOREQ, IOACT, IOBERR;
+	wire Park, IOREQ, IOACT, IOBERR;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
 	assign nADoutLE1 = ~ALE1;
@@ -84,16 +97,22 @@ module MXSE(
 		ALE0S, IORW0, IOL0, IOU0,
 		/* FIFO secondary level control */
 		ALE1);
-		
+	
+	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
+	assign nAS_IOB = nAoutOE ? 1'bZ : nAS_IOBout;
+	assign nLDS_IOB = nAoutOE ? 1'bZ : nLDS_IOBout;
+	assign nUDS_IOB = nAoutOE ? 1'bZ : nUDS_IOBout;
+	assign nVMA_IOB = nAoutOE ? 1'bZ : nVMA_IOBout;
 	IOBM iobm(
 		/* PDS interface */
 		CLK2X_IOB, CLK_IOB, E_IOB,
-		nAS_IOB, nLDS_IOB, nUDS_IOB, nVMA_IOB,
-		nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRES,
+		nBR_IOB, nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
+		nAS_IOB, nBG_IOB, nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRES,
 		/* PDS address and data latch control */
 		nAoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
-		IOACT, IOBERR, IOREQ, IOL0, IOU0, IORW0);
+		IOACT, IOBERR,
+		Park, IOREQ, IOL0, IOU0, IORW0);
 
 	wire TimeoutA, TimeoutB;
 	CNT cnt(
@@ -103,6 +122,22 @@ module MXSE(
 		RefReq, RefUrgent, RefAck,
 		/* Timeout signals */
 		TimeoutA, TimeoutB);
+
+	/* Accelerator Disable Control */
+	reg RESr0 = 0;
+	reg RESr1 = 0;
+	reg RESr2 = 0;
+	reg IPL2r0 = 0;
+	reg IPL2r1 = 0;
+	reg RESDone = 0;
+	reg Disable = 0;
+	assign Park = ~Disable;
+	always @(posedge CLK_FSB) begin
+		RESr0  <= ~nRES;  RESr1  <= RESr0;  RESr2  <= RESr1;
+		IPL2r0 <= ~nIPL2; IPL2r1 <= IPL2r0;
+		if ( RESr0 &&  RESr1 && RESr2 && ~RESDone && IPL2r0 && IPL2r1) Disable <= 1;
+		if (~RESr0 && ~RESr1 && RESr2) RESDone <= 1;
+	end
 	
 	FSB fsb(
 		/* MC68HC000 interface */
@@ -110,7 +145,7 @@ module MXSE(
 		/* AS cycle detection */
 		BACT,
 		/* Ready and IA inputs */
-		Ready_RAM, Ready_IOBS, ~(SndRAMCSWR && ~TimeoutA),
+		Ready_RAM, Ready_IOBS, ~(SndRAMCSWR && ~TimeoutA), Disable,
 		/* BERR inputs */
 		(~SCSICS && TimeoutB), BERR_IOBS,
 		/* Interrupt acknowledge select */

@@ -24,13 +24,17 @@ A_FSB<6> S:PIN3
 A_FSB<7> S:PIN4
 A_FSB<8> S:PIN6
 A_FSB<9> S:PIN7
+SW<0> S:PIN61
 CLK2X_IOB S:PIN22
 CLK_FSB S:PIN27
 CLK_IOB S:PIN23
 E_IOB S:PIN25
+SW<1> S:PIN60
 nAS_FSB S:PIN32
 nBERR_IOB S:PIN76
+nBG_IOB S:PIN73
 nDTACK_IOB S:PIN78
+nIPL2 S:PIN92
 nLDS_FSB S:PIN30
 nRES S:PIN91
 nUDS_FSB S:PIN33
@@ -38,6 +42,9 @@ nVPA_IOB S:PIN77
 nWE_FSB S:PIN29
 RA<11> S:PIN63
 RA<10> S:PIN55
+CLK20EN S:PIN59
+CLK25EN S:PIN58
+nBR_IOB S:PIN72
 RA<0> S:PIN53
 RA<1> S:PIN50
 RA<2> S:PIN43
@@ -73,41 +80,43 @@ nVPA_FSB S:PIN93
 ;The remaining section of the .gyd file is for documentation purposes only.
 ;It shows where your internal equations were placed in the last successful fit.
 
-PARTITION FB1_1 iobs/IOACTr iobm/IOREQr iobm/Er2 iobm/DTACKrr
-		 iobm/DTACKrf iobm/BERRrr iobm/BERRrf fsb/ASrf
-		 cnt/RefCnt<7> cnt/RefCnt<6> cnt/RefCnt<5> cnt/RefCnt<4>
-		 cnt/RefCnt<3> cnt/RefCnt<2> cnt/RefCnt<1> cnt/RefCnt<0>
-		 RefAck $OpTx$FX_DC$609
-PARTITION FB2_14 iobm/VPArr iobm/VPArf iobm/RESrr iobm/RESrf
-		 iobm/Er
-PARTITION FB3_1 EXP14_ fsb/VPA EXP15_ EXP16_
-		 fsb/Ready1r EXP17_ EXP18_ EXP19_
-		 nDTACK_FSB_OBUF EXP20_ EXP21_ EXP22_
-		 iobs/IORW1 EXP23_ fsb/Ready2r EXP24_
-		 nROMWE_OBUF EXP25_
-PARTITION FB4_1 ram/BACTr nAoutOE_OBUF iobs/Clear1 ALE0S
-		 nDoutOE_OBUF nDinOE_OBUF iobs/PS_FSM_FFd1 iobs/IOU1
-		 iobs/IOL1 iobm/IOS_FSM_FFd2 nVPA_FSB_OBUF iobm/IOS_FSM_FFd1
-		 fsb/BERR1r cs/nOverlay1 $OpTx$FX_DC$610 IOU0
-		 IOL0 iobs/IOReady
-PARTITION FB5_1 EXP26_ nROMCS_OBUF EXP27_ iobs/PS_FSM_FFd2
-		 nCAS_OBUF nOE_OBUF EXP28_ iobs/Once
-		 RA_4_OBUF EXP29_ RA_3_OBUF RA_5_OBUF
-		 IOREQ RA_2_OBUF RA_6_OBUF BERR_IOBS
-		 EXP30_ IORW0
-PARTITION FB6_1 iobm/ETACK nVMA_IOB_OBUF ALE0M iobm/ES<3>
-		 iobm/ES<1> iobm/ES<0> iobm/IOS_FSM_FFd4 iobm/ES<4>
-		 nLDS_IOB_OBUF iobm/IOS_FSM_FFd3 nUDS_IOB_OBUF nAS_IOB_OBUF
+PARTITION FB1_1 ram/BACTr iobm/RESrr iobm/RESrf fsb/ASrf
+		 cnt/RefCnt<2> cnt/RefCnt<1> RefAck RESr2
+		 RESr1 RESr0 IPL2r1 IPL2r0
+		 ALE0S $OpTx$FX_DC$708 iobs/IOU1 iobs/IOL1
+		 iobm/IOS_FSM_FFd1 IOU0
+PARTITION FB2_6 iobs/IOACTr iobm/VPArr iobm/VPArf iobm/IOREQr
+		 iobm/Er2 iobm/Er iobm/DTACKrr iobm/DTACKrf
+		 iobm/BGr1 iobm/BGr0 iobm/BERRrr iobm/BERRrf
+		 cnt/RefCnt<0>
+PARTITION FB3_1 fsb/Ready1r EXP14_ iobs/IORW1 EXP15_
+		 fsb/Ready2r EXP16_ EXP17_ EXP18_
+		 nDTACK_FSB_OBUF EXP19_ EXP20_
+PARTITION FB3_13 EXP21_ EXP22_ fsb/VPA EXP23_
+		 nROMWE_OBUF iobs/Clear1
+PARTITION FB4_1 cnt/RefCnt<6> nAoutOE_OBUF cnt/RefCnt<5> cnt/RefCnt<4>
+		 nDoutOE_OBUF nDinOE_OBUF cnt/RefCnt<3> iobs/PS_FSM_FFd1
+		 fsb/BERR1r cs/nOverlay1 nVPA_FSB_OBUF cnt/RefDone
+		 cs/nOverlay0 cnt/TimeoutBPre TimeoutA IOL0
+		 iobs/IOReady BERR_IOBS
+PARTITION FB5_1 ram/RASEL nROMCS_OBUF cnt/RefCnt<7> ram/RAMDIS2
+		 nCAS_OBUF nOE_OBUF EXP24_ ram/RAMDIS1
+		 RA_4_OBUF EXP25_ RA_3_OBUF RA_5_OBUF
+		 iobs/Load1 RA_2_OBUF RA_6_OBUF ram/Once
+		 EXP26_ EXP27_
+PARTITION FB6_1 iobm/ETACK nVMA_IOBout iobm/IOS_FSM_FFd3 iobm/ES<3>
+		 iobm/ES<1> iobm/ES<0> ALE0M iobm/ES<4>
+		 nLDS_IOBout iobm/IOS_FSM_FFd2 nUDS_IOBout nAS_IOBout
 		 iobm/ES<2> nADoutLE1_OBUF nADoutLE0_OBUF IOACT
 		 nDinLE_OBUF IOBERR
-PARTITION FB7_1 TimeoutB RA_1_OBUF cnt/RefDone fsb/Ready0r
-		 RA_7_OBUF RA_0_OBUF cs/nOverlay0 RA_8_OBUF
-		 A_FSB_21_IBUF$BUF0 cnt/TimeoutBPre RA_9_OBUF TimeoutA
-		 EXP31_ ram/RS_FSM_FFd3 EXP32_ ram/RS_FSM_FFd2
-		 EXP33_ ram/RAMReady
-PARTITION FB8_1 ram/RASEL A_FSB_19_IBUF$BUF0 fsb/BERR0r ram/RS_FSM_FFd1
-		 nRAS_OBUF nRAMLWE_OBUF ram/Once nRAMUWE_OBUF
-		 iobs/Load1 EXP34_ EXP35_ nBERR_FSB_OBUF
-		 ram/RAMDIS2 EXP36_ ram/RAMDIS1 EXP37_
-		 EXP38_ EXP39_
+PARTITION FB7_1 ram/RAMReady RA_1_OBUF TimeoutB fsb/Ready0r
+		 RA_7_OBUF RA_0_OBUF ram/RS_FSM_FFd1 RA_8_OBUF
+		 A_FSB_21_IBUF$BUF0 $OpTx$$OpTx$FX_DC$182_INV$783 RA_9_OBUF CLK25EN_OBUF
+		 ram/RS_FSM_FFd3 CLK20EN_OBUF$BUF0 EXP28_ EXP29_
+		 ram/RS_FSM_FFd2 EXP30_
+PARTITION FB8_1 EXP31_ A_FSB_19_IBUF$BUF0 EXP32_ iobs/PS_FSM_FFd2
+		 nRAS_OBUF nRAMLWE_OBUF RESDone nRAMUWE_OBUF
+		 IOREQ EXP33_ EXP34_ nBERR_FSB_OBUF
+		 EXP35_ iobs/Once Park fsb/BERR0r
+		 EXP36_ IORW0
 
