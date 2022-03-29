@@ -1,0 +1,1844 @@
+<html><body>
+<pre>
+ 
+cpldfit:  version P.20131013                        Xilinx Inc.
+                                  Fitter Report
+Design Name: WarpSE                              Date:  3-28-2022,  9:46AM
+Device Used: XC95144XL-10-TQ100
+Fitting Status: Successful
+
+*************************  Mapped Resource Summary  **************************
+
+Macrocells     Product Terms    Function Block   Registers      Pins           
+Used/Tot       Used/Tot         Inps Used/Tot    Used/Tot       Used/Tot       
+114/144 ( 79%) 463 /720  ( 64%) 253/432 ( 59%)   89 /144 ( 62%) 74 /81  ( 91%)
+
+** Function Block Resources **
+
+Function    Mcells      FB Inps     Pterms      IO          
+Block       Used/Tot    Used/Tot    Used/Tot    Used/Tot    
+FB1          18/18*      20/54       23/90      11/11*
+FB2          12/18        9/54       11/90       8/10
+FB3           8/18       38/54       82/90      10/10*
+FB4          18/18*      41/54       39/90      10/10*
+FB5          14/18       39/54       82/90       8/10
+FB6          18/18*      34/54       64/90      10/10*
+FB7          14/18       34/54       81/90      10/10*
+FB8          12/18       38/54       81/90       7/10
+             -----       -----       -----      -----    
+            114/144     253/432     463/720     74/81 
+
+* - Resource is exhausted
+
+** Global Control Resources **
+
+Signal 'CLK2X_IOB' mapped onto global clock net GCK1.
+Signal 'CLK_IOB' mapped onto global clock net GCK2.
+Signal 'CLK_FSB' mapped onto global clock net GCK3.
+Global output enable net(s) unused.
+Global set/reset net(s) unused.
+
+** Pin Resources **
+
+Signal Type    Required     Mapped  |  Pin Type            Used    Total 
+------------------------------------|------------------------------------
+Input         :   36          36    |  I/O              :    68      73
+Output        :   35          35    |  GCK/IO           :     3       3
+Bidirectional :    0           0    |  GTS/IO           :     3       4
+GCK           :    3           3    |  GSR/IO           :     0       1
+GTS           :    0           0    |
+GSR           :    0           0    |
+                 ----        ----
+        Total     74          74
+
+** Power Data **
+
+There are 114 macrocells in high performance mode (MCHP).
+There are 0 macrocells in low power mode (MCLP).
+End of Mapped Resource Summary
+**************************  Errors and Warnings  ***************************
+
+WARNING:Cpld - Unable to retrieve the path to the iSE Project Repository. Will
+   use the default filename of 'WarpSE.ise'.
+INFO:Cpld - Inferring BUFG constraint for signal 'CLK2X_IOB' based upon the LOC
+   constraint 'P22'. It is recommended that you declare this BUFG explicitedly
+   in your design. Note that for certain device families the output of a BUFG
+   constraint can not drive a gated clock, and the BUFG constraint will be
+   ignored.
+INFO:Cpld - Inferring BUFG constraint for signal 'CLK_FSB' based upon the LOC
+   constraint 'P27'. It is recommended that you declare this BUFG explicitedly
+   in your design. Note that for certain device families the output of a BUFG
+   constraint can not drive a gated clock, and the BUFG constraint will be
+   ignored.
+INFO:Cpld - Inferring BUFG constraint for signal 'CLK_IOB' based upon the LOC
+   constraint 'P23'. It is recommended that you declare this BUFG explicitedly
+   in your design. Note that for certain device families the output of a BUFG
+   constraint can not drive a gated clock, and the BUFG constraint will be
+   ignored.
+WARNING:Cpld:1007 - Removing unused input(s) 'SW<2>'.  The input(s) are unused
+   after optimization. Please verify functionality via simulation.
+*************************  Summary of Mapped Logic  ************************
+
+** 35 Outputs **
+
+Signal              Total Total Loc     Pin  Pin     Pin     Pwr  Slew Reg Init
+Name                Pts   Inps          No.  Type    Use     Mode Rate State
+nDTACK_FSB          28    34    FB3_9   28   I/O     O       STD  FAST RESET
+nROMWE              1     2     FB3_17  34   I/O     O       STD  FAST 
+nAoutOE             3     4     FB4_2   87   I/O     O       STD  FAST SET
+nDoutOE             2     3     FB4_5   89   I/O     O       STD  FAST RESET
+nDinOE              3     7     FB4_6   90   I/O     O       STD  FAST 
+nVPA_FSB            1     2     FB4_11  93   I/O     O       STD  FAST 
+nROMCS              3     6     FB5_2   35   I/O     O       STD  FAST 
+nCAS                1     1     FB5_5   36   I/O     O       STD  FAST RESET
+nOE                 1     2     FB5_6   37   I/O     O       STD  FAST 
+RA<4>               2     3     FB5_9   40   I/O     O       STD  FAST 
+RA<3>               2     3     FB5_11  41   I/O     O       STD  FAST 
+RA<5>               2     3     FB5_12  42   I/O     O       STD  FAST 
+RA<2>               2     3     FB5_14  43   I/O     O       STD  FAST 
+RA<6>               2     3     FB5_15  46   I/O     O       STD  FAST 
+nVMA_IOB            3     10    FB6_2   74   I/O     O       STD  FAST RESET
+nLDS_IOB            4     6     FB6_9   79   I/O     O       STD  FAST RESET
+nUDS_IOB            4     6     FB6_11  80   I/O     O       STD  FAST RESET
+nAS_IOB             3     4     FB6_12  81   I/O     O       STD  FAST RESET
+nADoutLE1           2     3     FB6_14  82   I/O     O       STD  FAST SET
+nADoutLE0           1     2     FB6_15  85   I/O     O       STD  FAST 
+nDinLE              1     2     FB6_17  86   I/O     O       STD  FAST RESET
+RA<1>               2     3     FB7_2   50   I/O     O       STD  FAST 
+RA<7>               2     3     FB7_5   52   I/O     O       STD  FAST 
+RA<0>               2     3     FB7_6   53   I/O     O       STD  FAST 
+RA<8>               7     7     FB7_8   54   I/O     O       STD  FAST 
+RA<10>              1     1     FB7_9   55   I/O     O       STD  FAST 
+RA<9>               2     3     FB7_11  56   I/O     O       STD  FAST 
+CLK25EN             1     1     FB7_12  58   I/O     O       STD  FAST 
+CLK20EN             1     1     FB7_14  59   I/O     O       STD  FAST 
+RA<11>              1     1     FB8_2   63   I/O     O       STD  FAST 
+nRAS                3     8     FB8_5   64   I/O     O       STD  FAST 
+nRAMLWE             1     5     FB8_6   65   I/O     O       STD  FAST 
+nRAMUWE             1     5     FB8_8   66   I/O     O       STD  FAST 
+nBERR_FSB           3     9     FB8_12  70   I/O     O       STD  FAST 
+nBR_IOB             1     6     FB8_15  72   I/O     O       STD  FAST SET
+
+** 79 Buried Nodes **
+
+Signal              Total Total Loc     Pwr  Reg Init
+Name                Pts   Inps          Mode State
+ram/RefRAS          1     2     FB1_1   STD  RESET
+ram/BACTr           1     2     FB1_2   STD  RESET
+iobm/RESrr          1     1     FB1_3   STD  RESET
+iobm/RESrf          1     1     FB1_4   STD  RESET
+iobm/BERRrf         1     1     FB1_5   STD  RESET
+fsb/ASrf            1     1     FB1_6   STD  RESET
+cnt/RefCnt<1>       1     1     FB1_7   STD  RESET
+RESr2               1     1     FB1_8   STD  RESET
+RESr1               1     1     FB1_9   STD  RESET
+RESr0               1     1     FB1_10  STD  RESET
+IPL2r1              1     1     FB1_11  STD  RESET
+IPL2r0              1     1     FB1_12  STD  RESET
+$OpTx$FX_DC$591     1     2     FB1_13  STD  
+iobs/IOU1           2     2     FB1_14  STD  RESET
+iobs/IOL1           2     2     FB1_15  STD  RESET
+iobm/IOS_FSM_FFd1   2     3     FB1_16  STD  RESET
+fsb/BERR1r          2     4     FB1_17  STD  RESET
+cs/nOverlay1        2     3     FB1_18  STD  RESET
+iobs/IOACTr         1     1     FB2_7   STD  RESET
+iobm/VPArr          1     1     FB2_8   STD  RESET
+iobm/VPArf          1     1     FB2_9   STD  RESET
+iobm/IOREQr         1     1     FB2_10  STD  RESET
+iobm/Er2            1     1     FB2_11  STD  RESET
+iobm/Er             1     1     FB2_12  STD  RESET
+iobm/DTACKrr        1     1     FB2_13  STD  RESET
+iobm/DTACKrf        1     1     FB2_14  STD  RESET
+iobm/BGr1           1     1     FB2_15  STD  RESET
+iobm/BGr0           1     1     FB2_16  STD  RESET
+iobm/BERRrr         1     1     FB2_17  STD  RESET
+cnt/RefCnt<0>       0     0     FB2_18  STD  RESET
+fsb/VPA             27    33    FB3_1   STD  RESET
+fsb/Ready0r         3     8     FB3_4   STD  RESET
+fsb/BERR0r          3     8     FB3_12  STD  RESET
+cs/nOverlay0        3     8     FB3_13  STD  RESET
+fsb/Ready1r         8     18    FB3_15  STD  RESET
+fsb/Ready2r         9     22    FB3_16  STD  RESET
+iobs/Clear1         1     3     FB4_1   STD  RESET
+iobs/ALE0           1     2     FB4_3   STD  RESET
+cnt/RefCnt<7>       1     7     FB4_4   STD  RESET
+cnt/RefCnt<6>       1     6     FB4_7   STD  RESET
+
+Signal              Total Total Loc     Pwr  Reg Init
+Name                Pts   Inps          Mode State
+cnt/RefCnt<5>       1     5     FB4_8   STD  RESET
+cnt/RefCnt<4>       1     4     FB4_9   STD  RESET
+cnt/RefCnt<3>       1     3     FB4_10  STD  RESET
+cnt/RefCnt<2>       1     2     FB4_12  STD  RESET
+iobs/PS_FSM_FFd1    2     3     FB4_13  STD  RESET
+cnt/RefDone         2     10    FB4_14  STD  RESET
+iobs/IOU0           3     5     FB4_15  STD  RESET
+cnt/TimeoutA        3     10    FB4_16  STD  RESET
+iobs/IOReady        4     8     FB4_17  STD  RESET
+ram/RS_FSM_FFd1     8     14    FB4_18  STD  RESET
+ram/RAMDIS2         7     15    FB5_3   STD  RESET
+iobs/IOL0           3     5     FB5_4   STD  RESET
+iobs/Once           18    19    FB5_7   STD  RESET
+ram/Once            5     10    FB5_10  STD  RESET
+iobs/Load1          15    19    FB5_13  STD  RESET
+ram/RASEL           19    15    FB5_18  STD  RESET
+iobm/ETACK          1     6     FB6_1   STD  RESET
+iobm/IOS_FSM_FFd3   3     6     FB6_3   STD  RESET
+iobm/ES<3>          3     6     FB6_4   STD  RESET
+iobm/ES<1>          3     4     FB6_5   STD  RESET
+iobm/ES<0>          3     7     FB6_6   STD  RESET
+iobm/ALE0           3     5     FB6_7   STD  RESET
+iobm/ES<4>          4     7     FB6_8   STD  RESET
+iobm/IOS_FSM_FFd2   5     11    FB6_10  STD  RESET
+iobm/ES<2>          5     7     FB6_13  STD  RESET
+iobm/IOACT          7     13    FB6_16  STD  RESET
+iobm/IOBERR         9     13    FB6_18  STD  RESET
+ram/RS_FSM_FFd3     11    14    FB7_4   STD  RESET
+cnt/TimeoutBPre     3     11    FB7_7   STD  RESET
+ram/RS_FSM_FFd2     14    14    FB7_10  STD  RESET
+cnt/TimeoutB        3     12    FB7_13  STD  RESET
+ram/RAMReady        15    15    FB7_15  STD  RESET
+ram/RAMDIS1         17    15    FB7_18  STD  RESET
+iobs/PS_FSM_FFd2    15    20    FB8_4   STD  RESET
+RESDone             1     3     FB8_7   STD  RESET
+iobs/IOREQ          15    20    FB8_9   STD  RESET
+iobs/IORW1          17    20    FB8_14  STD  RESET
+iobs/BERR           4     8     FB8_16  STD  RESET
+iobs/IORW0          19    21    FB8_18  STD  RESET
+
+** 39 Inputs **
+
+Signal              Loc     Pin  Pin     Pin     
+Name                        No.  Type    Use     
+A_FSB<13>           FB1_2   11   I/O     I
+A_FSB<14>           FB1_3   12   I/O     I
+A_FSB<15>           FB1_5   13   I/O     I
+A_FSB<16>           FB1_6   14   I/O     I
+A_FSB<17>           FB1_8   15   I/O     I
+A_FSB<18>           FB1_9   16   I/O     I
+A_FSB<19>           FB1_11  17   I/O     I
+A_FSB<20>           FB1_12  18   I/O     I
+A_FSB<21>           FB1_14  19   I/O     I
+A_FSB<22>           FB1_15  20   I/O     I
+CLK2X_IOB           FB1_17  22   GCK/I/O GCK
+A_FSB<5>            FB2_6   2    GTS/I/O I
+A_FSB<6>            FB2_8   3    GTS/I/O I
+A_FSB<7>            FB2_9   4    GTS/I/O I
+A_FSB<8>            FB2_11  6    I/O     I
+A_FSB<9>            FB2_12  7    I/O     I
+A_FSB<10>           FB2_14  8    I/O     I
+A_FSB<11>           FB2_15  9    I/O     I
+A_FSB<12>           FB2_17  10   I/O     I
+CLK_IOB             FB3_2   23   GCK/I/O GCK/I
+A_FSB<23>           FB3_5   24   I/O     I
+E_IOB               FB3_6   25   I/O     I
+CLK_FSB             FB3_8   27   GCK/I/O GCK
+nWE_FSB             FB3_11  29   I/O     I
+nLDS_FSB            FB3_12  30   I/O     I
+nAS_FSB             FB3_14  32   I/O     I
+nUDS_FSB            FB3_15  33   I/O     I
+nRES                FB4_8   91   I/O     I
+nIPL2               FB4_9   92   I/O     I
+A_FSB<1>            FB4_12  94   I/O     I
+A_FSB<2>            FB4_14  95   I/O     I
+A_FSB<3>            FB4_15  96   I/O     I
+A_FSB<4>            FB4_17  97   I/O     I
+nBERR_IOB           FB6_5   76   I/O     I
+nVPA_IOB            FB6_6   77   I/O     I
+nDTACK_IOB          FB6_8   78   I/O     I
+SW<1>               FB7_15  60   I/O     I
+SW<0>               FB7_17  61   I/O     I
+nBG_IOB             FB8_17  73   I/O     I
+
+Legend:
+Pin No. - ~ - User Assigned
+**************************  Function Block Details  ************************
+Legend:
+Total Pt     - Total product terms used by the macrocell signal
+Imp Pt       - Product terms imported from other macrocells
+Exp Pt       - Product terms exported to other macrocells
+               in direction shown
+Unused Pt    - Unused local product terms remaining in macrocell
+Loc          - Location where logic was mapped in device
+Pin Type/Use - I  - Input             GCK - Global Clock
+               O  - Output            GTS - Global Output Enable
+              (b) - Buried macrocell  GSR - Global Set/Reset
+X            - Signal used as input to the macrocell logic.
+Pin No.      - ~  - User Assigned
+*********************************** FB1  ***********************************
+Number of function block inputs used/remaining:               20/34
+Number of signals used by logic mapping into function block:  20
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+ram/RefRAS            1       0     0   4     FB1_1         (b)     (b)
+ram/BACTr             1       0     0   4     FB1_2   11    I/O     I
+iobm/RESrr            1       0     0   4     FB1_3   12    I/O     I
+iobm/RESrf            1       0     0   4     FB1_4         (b)     (b)
+iobm/BERRrf           1       0     0   4     FB1_5   13    I/O     I
+fsb/ASrf              1       0     0   4     FB1_6   14    I/O     I
+cnt/RefCnt<1>         1       0     0   4     FB1_7         (b)     (b)
+RESr2                 1       0     0   4     FB1_8   15    I/O     I
+RESr1                 1       0     0   4     FB1_9   16    I/O     I
+RESr0                 1       0     0   4     FB1_10        (b)     (b)
+IPL2r1                1       0     0   4     FB1_11  17    I/O     I
+IPL2r0                1       0     0   4     FB1_12  18    I/O     I
+$OpTx$FX_DC$591       1       0     0   4     FB1_13        (b)     (b)
+iobs/IOU1             2       0     0   3     FB1_14  19    I/O     I
+iobs/IOL1             2       0     0   3     FB1_15  20    I/O     I
+iobm/IOS_FSM_FFd1     2       0     0   3     FB1_16        (b)     (b)
+fsb/BERR1r            2       0     0   3     FB1_17  22    GCK/I/O GCK
+cs/nOverlay1          2       0     0   3     FB1_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: IPL2r0             8: iobm/IOS_FSM_FFd1  15: nIPL2 
+  2: RESr0              9: iobm/IOS_FSM_FFd2  16: nLDS_FSB 
+  3: RESr1             10: iobm/IOS_FSM_FFd3  17: nRES 
+  4: cnt/RefCnt<0>     11: iobs/BERR          18: nUDS_FSB 
+  5: cs/nOverlay0      12: iobs/Load1         19: ram/RS_FSM_FFd1 
+  6: fsb/ASrf          13: nAS_FSB            20: ram/RS_FSM_FFd2 
+  7: fsb/BERR1r        14: nBERR_IOB         
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+ram/RefRAS           ..................XX.................... 2
+ram/BACTr            .....X......X........................... 2
+iobm/RESrr           ................X....................... 1
+iobm/RESrf           ................X....................... 1
+iobm/BERRrf          .............X.......................... 1
+fsb/ASrf             ............X........................... 1
+cnt/RefCnt<1>        ...X.................................... 1
+RESr2                ..X..................................... 1
+RESr1                .X...................................... 1
+RESr0                ................X....................... 1
+IPL2r1               X....................................... 1
+IPL2r0               ..............X......................... 1
+$OpTx$FX_DC$591      .....X......X........................... 2
+iobs/IOU1            ...........X.....X...................... 2
+iobs/IOL1            ...........X...X........................ 2
+iobm/IOS_FSM_FFd1    .......XXX.............................. 3
+fsb/BERR1r           .....XX...X.X........................... 4
+cs/nOverlay1         ....XX......X........................... 3
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB2  ***********************************
+Number of function block inputs used/remaining:               9/45
+Number of signals used by logic mapping into function block:  9
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0     0   5     FB2_1         (b)     
+(unused)              0       0     0   5     FB2_2   99    GSR/I/O 
+(unused)              0       0     0   5     FB2_3         (b)     
+(unused)              0       0     0   5     FB2_4         (b)     
+(unused)              0       0     0   5     FB2_5   1     GTS/I/O 
+(unused)              0       0     0   5     FB2_6   2     GTS/I/O I
+iobs/IOACTr           1       0     0   4     FB2_7         (b)     (b)
+iobm/VPArr            1       0     0   4     FB2_8   3     GTS/I/O I
+iobm/VPArf            1       0     0   4     FB2_9   4     GTS/I/O I
+iobm/IOREQr           1       0     0   4     FB2_10        (b)     (b)
+iobm/Er2              1       0     0   4     FB2_11  6     I/O     I
+iobm/Er               1       0     0   4     FB2_12  7     I/O     I
+iobm/DTACKrr          1       0     0   4     FB2_13        (b)     (b)
+iobm/DTACKrf          1       0     0   4     FB2_14  8     I/O     I
+iobm/BGr1             1       0     0   4     FB2_15  9     I/O     I
+iobm/BGr0             1       0     0   4     FB2_16        (b)     (b)
+iobm/BERRrr           1       0     0   4     FB2_17  10    I/O     I
+cnt/RefCnt<0>         0       0     0   5     FB2_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: E_IOB              4: iobm/IOACT         7: nBG_IOB 
+  2: iobm/BGr0          5: iobs/IOREQ         8: nDTACK_IOB 
+  3: iobm/Er            6: nBERR_IOB          9: nVPA_IOB 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+iobs/IOACTr          ...X.................................... 1
+iobm/VPArr           ........X............................... 1
+iobm/VPArf           ........X............................... 1
+iobm/IOREQr          ....X................................... 1
+iobm/Er2             ..X..................................... 1
+iobm/Er              X....................................... 1
+iobm/DTACKrr         .......X................................ 1
+iobm/DTACKrf         .......X................................ 1
+iobm/BGr1            .X...................................... 1
+iobm/BGr0            ......X................................. 1
+iobm/BERRrr          .....X.................................. 1
+cnt/RefCnt<0>        ........................................ 0
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB3  ***********************************
+Number of function block inputs used/remaining:               38/16
+Number of signals used by logic mapping into function block:  38
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+fsb/VPA              27      22<-   0   0     FB3_1         (b)     (b)
+(unused)              0       0   /\5   0     FB3_2   23    GCK/I/O GCK/I
+(unused)              0       0   /\5   0     FB3_3         (b)     (b)
+fsb/Ready0r           3       1<- /\3   0     FB3_4         (b)     (b)
+(unused)              0       0   /\1   4     FB3_5   24    I/O     I
+(unused)              0       0   \/2   3     FB3_6   25    I/O     I
+(unused)              0       0   \/5   0     FB3_7         (b)     (b)
+(unused)              0       0   \/5   0     FB3_8   27    GCK/I/O GCK
+nDTACK_FSB           28      23<-   0   0     FB3_9   28    I/O     O
+(unused)              0       0   /\5   0     FB3_10        (b)     (b)
+(unused)              0       0   /\5   0     FB3_11  29    I/O     I
+fsb/BERR0r            3       0   /\1   1     FB3_12  30    I/O     I
+cs/nOverlay0          3       0   \/2   0     FB3_13        (b)     (b)
+(unused)              0       0   \/5   0     FB3_14  32    I/O     I
+fsb/Ready1r           8       7<- \/4   0     FB3_15  33    I/O     I
+fsb/Ready2r           9       4<-   0   0     FB3_16        (b)     (b)
+nROMWE                1       0   \/4   0     FB3_17  34    I/O     O
+(unused)              0       0   \/5   0     FB3_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: $OpTx$FX_DC$591   14: A_FSB<22>         27: fsb/Ready1r 
+  2: A_FSB<10>         15: A_FSB<23>         28: fsb/Ready2r 
+  3: A_FSB<11>         16: A_FSB<8>          29: fsb/VPA 
+  4: A_FSB<12>         17: A_FSB<9>          30: iobs/BERR 
+  5: A_FSB<13>         18: SW<1>             31: iobs/IOReady 
+  6: A_FSB<14>         19: cnt/TimeoutA      32: nADoutLE1 
+  7: A_FSB<15>         20: cnt/TimeoutB      33: nAS_FSB 
+  8: A_FSB<16>         21: cs/nOverlay0      34: nBR_IOB 
+  9: A_FSB<17>         22: cs/nOverlay1      35: nDTACK_FSB 
+ 10: A_FSB<18>         23: fsb/ASrf          36: nRES 
+ 11: A_FSB<19>         24: fsb/BERR0r        37: nWE_FSB 
+ 12: A_FSB<20>         25: fsb/BERR1r        38: ram/RAMReady 
+ 13: A_FSB<21>         26: fsb/Ready0r      
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+fsb/VPA              XXXXXXXXXXXXXXXXXXXX.X.XXXXXXXXX.X..XX.. 33
+fsb/Ready0r          ............XXX......XX..X......X....X.. 8
+nDTACK_FSB           .XXXXXXXXXXXXXXXXXXX.XXXXXXX.XXXXXX.XX.. 34
+fsb/BERR0r           ...........XXXX....X..XX........X....... 8
+cs/nOverlay0         ...........XXXX.....X.X.........X..X.... 8
+fsb/Ready1r          ....XX.XXXXXXXX..X...XX...X...XXX...X... 18
+fsb/Ready2r          .XXXXXXXXXXXXXXXX.X..XX....X....X...X... 22
+nROMWE               ................................X...X... 2
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB4  ***********************************
+Number of function block inputs used/remaining:               41/13
+Number of signals used by logic mapping into function block:  41
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+iobs/Clear1           1       0   /\2   2     FB4_1         (b)     (b)
+nAoutOE               3       0     0   2     FB4_2   87    I/O     O
+iobs/ALE0             1       0     0   4     FB4_3         (b)     (b)
+cnt/RefCnt<7>         1       0     0   4     FB4_4         (b)     (b)
+nDoutOE               2       0     0   3     FB4_5   89    I/O     O
+nDinOE                3       0     0   2     FB4_6   90    I/O     O
+cnt/RefCnt<6>         1       0     0   4     FB4_7         (b)     (b)
+cnt/RefCnt<5>         1       0     0   4     FB4_8   91    I/O     I
+cnt/RefCnt<4>         1       0     0   4     FB4_9   92    I/O     I
+cnt/RefCnt<3>         1       0     0   4     FB4_10        (b)     (b)
+nVPA_FSB              1       0     0   4     FB4_11  93    I/O     O
+cnt/RefCnt<2>         1       0     0   4     FB4_12  94    I/O     I
+iobs/PS_FSM_FFd1      2       0     0   3     FB4_13        (b)     (b)
+cnt/RefDone           2       0     0   3     FB4_14  95    I/O     I
+iobs/IOU0             3       0     0   2     FB4_15  96    I/O     I
+cnt/TimeoutA          3       0     0   2     FB4_16        (b)     (b)
+iobs/IOReady          4       0   \/1   0     FB4_17  97    I/O     I
+ram/RS_FSM_FFd1       8       3<-   0   0     FB4_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<20>         15: cnt/TimeoutA       29: iobs/PS_FSM_FFd1 
+  2: A_FSB<21>         16: cs/nOverlay1       30: iobs/PS_FSM_FFd2 
+  3: A_FSB<22>         17: fsb/ASrf           31: nADoutLE1 
+  4: A_FSB<23>         18: fsb/VPA            32: nAS_FSB 
+  5: SW<1>             19: iobm/BGr0          33: nAS_IOB 
+  6: cnt/RefCnt<0>     20: iobm/BGr1          34: nAoutOE 
+  7: cnt/RefCnt<1>     21: iobm/IOBERR        35: nUDS_FSB 
+  8: cnt/RefCnt<2>     22: iobm/IOS_FSM_FFd2  36: nWE_FSB 
+  9: cnt/RefCnt<3>     23: iobm/IOS_FSM_FFd3  37: ram/Once 
+ 10: cnt/RefCnt<4>     24: iobs/IOACTr        38: ram/RS_FSM_FFd1 
+ 11: cnt/RefCnt<5>     25: iobs/IORW0         39: ram/RS_FSM_FFd2 
+ 12: cnt/RefCnt<6>     26: iobs/IOReady       40: ram/RS_FSM_FFd3 
+ 13: cnt/RefCnt<7>     27: iobs/IOU1          41: ram/RefRAS 
+ 14: cnt/RefDone       28: iobs/Once         
+
+Signal                        1         2         3         4         5 FB
+Name                0----+----0----+----0----+----0----+----0----+----0 Inputs
+iobs/Clear1          ............................XXX................... 3
+nAoutOE              ..................XX............XX................ 4
+iobs/ALE0            ............................XX.................... 2
+cnt/RefCnt<7>        .....XXXXXXX...................................... 7
+nDoutOE              .....................XX.X......................... 3
+nDinOE               XXXXX..........................X...X.............. 7
+cnt/RefCnt<6>        .....XXXXXX....................................... 6
+cnt/RefCnt<5>        .....XXXXX........................................ 5
+cnt/RefCnt<4>        .....XXXX......................................... 4
+cnt/RefCnt<3>        .....XXX.......................................... 3
+nVPA_FSB             .................X.............X.................. 2
+cnt/RefCnt<2>        .....XX........................................... 2
+iobs/PS_FSM_FFd1     .......................X....XX.................... 3
+cnt/RefDone          .....XXXXXXXXX..........................X......... 10
+iobs/IOU0            ..........................X.XXX...X............... 5
+cnt/TimeoutA         .....XXXXXXX..X.X..............X.................. 10
+iobs/IOReady         ................X...X..X.X.X.XXX.................. 8
+ram/RS_FSM_FFd1      .XXX......XXXX.XX..............X....XXXX.......... 14
+                    0----+----1----+----2----+----3----+----4----+----5
+                              0         0         0         0         0
+*********************************** FB5  ***********************************
+Number of function block inputs used/remaining:               39/15
+Number of signals used by logic mapping into function block:  39
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0   /\5   0     FB5_1         (b)     (b)
+nROMCS                3       0   \/2   0     FB5_2   35    I/O     O
+ram/RAMDIS2           7       2<-   0   0     FB5_3         (b)     (b)
+iobs/IOL0             3       0     0   2     FB5_4         (b)     (b)
+nCAS                  1       0   \/1   3     FB5_5   36    I/O     O
+nOE                   1       1<- \/5   0     FB5_6   37    I/O     O
+iobs/Once            18      13<-   0   0     FB5_7         (b)     (b)
+(unused)              0       0   /\5   0     FB5_8   39    I/O     (b)
+RA<4>                 2       0   /\3   0     FB5_9   40    I/O     O
+ram/Once              5       0     0   0     FB5_10        (b)     (b)
+RA<3>                 2       0   \/2   1     FB5_11  41    I/O     O
+RA<5>                 2       2<- \/5   0     FB5_12  42    I/O     O
+iobs/Load1           15      10<-   0   0     FB5_13        (b)     (b)
+RA<2>                 2       2<- /\5   0     FB5_14  43    I/O     O
+RA<6>                 2       0   /\2   1     FB5_15  46    I/O     O
+(unused)              0       0   \/4   1     FB5_16        (b)     (b)
+(unused)              0       0   \/5   0     FB5_17  49    I/O     (b)
+ram/RASEL            19      14<-   0   0     FB5_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<12>         14: A_FSB<4>          27: iobs/PS_FSM_FFd1 
+  2: A_FSB<13>         15: A_FSB<5>          28: iobs/PS_FSM_FFd2 
+  3: A_FSB<14>         16: A_FSB<6>          29: nADoutLE1 
+  4: A_FSB<15>         17: A_FSB<7>          30: nAS_FSB 
+  5: A_FSB<16>         18: SW<1>             31: nLDS_FSB 
+  6: A_FSB<17>         19: cnt/RefCnt<5>     32: nWE_FSB 
+  7: A_FSB<18>         20: cnt/RefCnt<6>     33: ram/BACTr 
+  8: A_FSB<19>         21: cnt/RefCnt<7>     34: ram/Once 
+  9: A_FSB<20>         22: cnt/RefDone       35: ram/RAMDIS2 
+ 10: A_FSB<21>         23: cs/nOverlay1      36: ram/RASEL 
+ 11: A_FSB<22>         24: fsb/ASrf          37: ram/RS_FSM_FFd1 
+ 12: A_FSB<23>         25: iobs/IOL1         38: ram/RS_FSM_FFd2 
+ 13: A_FSB<3>          26: iobs/Once         39: ram/RS_FSM_FFd3 
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+nROMCS               ........XXXX.....X....X................. 6
+ram/RAMDIS2          .........XXX......XXXXXX.....X...XX.XXX. 15
+iobs/IOL0            ........................X.XXX.X......... 5
+nCAS                 ...................................X.... 1
+nOE                  .............................X.X........ 2
+iobs/Once            .XX.XXXXXXXX.....X....XX.XXXXX.X........ 19
+RA<4>                ..X...........X....................X.... 3
+ram/Once             .........XXX..........XX.....X...X..XXX. 10
+RA<3>                .X...........X.....................X.... 3
+RA<5>                ...X...........X...................X.... 3
+iobs/Load1           .XX.XXXXXXXX.....X....XX.XXXXX.X........ 19
+RA<2>                X...........X......................X.... 3
+RA<6>                ....X...........X..................X.... 3
+ram/RASEL            .........XXX......XXXXXX.....X..XX..XXX. 15
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB6  ***********************************
+Number of function block inputs used/remaining:               34/20
+Number of signals used by logic mapping into function block:  34
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+iobm/ETACK            1       0   /\4   0     FB6_1         (b)     (b)
+nVMA_IOB              3       0     0   2     FB6_2   74    I/O     O
+iobm/IOS_FSM_FFd3     3       0     0   2     FB6_3         (b)     (b)
+iobm/ES<3>            3       0     0   2     FB6_4         (b)     (b)
+iobm/ES<1>            3       0     0   2     FB6_5   76    I/O     I
+iobm/ES<0>            3       0     0   2     FB6_6   77    I/O     I
+iobm/ALE0             3       0     0   2     FB6_7         (b)     (b)
+iobm/ES<4>            4       0     0   1     FB6_8   78    I/O     I
+nLDS_IOB              4       0     0   1     FB6_9   79    I/O     O
+iobm/IOS_FSM_FFd2     5       0     0   0     FB6_10        (b)     (b)
+nUDS_IOB              4       0     0   1     FB6_11  80    I/O     O
+nAS_IOB               3       0     0   2     FB6_12  81    I/O     O
+iobm/ES<2>            5       0     0   0     FB6_13        (b)     (b)
+nADoutLE1             2       0     0   3     FB6_14  82    I/O     O
+nADoutLE0             1       0   \/1   3     FB6_15  85    I/O     O
+iobm/IOACT            7       2<-   0   0     FB6_16        (b)     (b)
+nDinLE                1       0   /\1   3     FB6_17  86    I/O     O
+iobm/IOBERR           9       4<-   0   0     FB6_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: CLK_IOB           13: iobm/Er            24: iobm/VPArr 
+  2: iobm/ALE0         14: iobm/Er2           25: iobs/ALE0 
+  3: iobm/BERRrf       15: iobm/IOACT         26: iobs/Clear1 
+  4: iobm/BERRrr       16: iobm/IOBERR        27: iobs/IOL0 
+  5: iobm/DTACKrf      17: iobm/IOREQr        28: iobs/IORW0 
+  6: iobm/DTACKrr      18: iobm/IOS_FSM_FFd1  29: iobs/IOU0 
+  7: iobm/ES<0>        19: iobm/IOS_FSM_FFd2  30: iobs/Load1 
+  8: iobm/ES<1>        20: iobm/IOS_FSM_FFd3  31: nADoutLE1 
+  9: iobm/ES<2>        21: iobm/RESrf         32: nAoutOE 
+ 10: iobm/ES<3>        22: iobm/RESrr         33: nBERR_IOB 
+ 11: iobm/ES<4>        23: iobm/VPArf         34: nVMA_IOB 
+ 12: iobm/ETACK       
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+iobm/ETACK           ......XXXXX......................X...... 6
+nVMA_IOB             ......XXXXX...X.......XX.......X.X...... 10
+iobm/IOS_FSM_FFd3    X...............XXXX...........X........ 6
+iobm/ES<3>           ......XXXX..XX.......................... 6
+iobm/ES<1>           ......XX....XX.......................... 4
+iobm/ES<0>           ......XXXXX.XX.......................... 7
+iobm/ALE0            ................XXXX...........X........ 5
+iobm/ES<4>           ......XXXXX.XX.......................... 7
+nLDS_IOB             .................XXX......XX...X........ 6
+iobm/IOS_FSM_FFd2    X.XXXX.....X.....XXXXX.................. 11
+nUDS_IOB             .................XXX.......XX..X........ 6
+nAS_IOB              .................XXX...........X........ 4
+iobm/ES<2>           ......XXXXX.XX.......................... 7
+nADoutLE1            .........................X...XX......... 3
+nADoutLE0            .X......................X............... 2
+iobm/IOACT           X.XXXX.....X....XXXXXX.........X........ 13
+nDinLE               .................XX..................... 2
+iobm/IOBERR          X.XXXX.....X...X.XXXXX..........X....... 13
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB7  ***********************************
+Number of function block inputs used/remaining:               34/20
+Number of signals used by logic mapping into function block:  34
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0   /\5   0     FB7_1         (b)     (b)
+RA<1>                 2       0   /\2   1     FB7_2   50    I/O     O
+(unused)              0       0   \/5   0     FB7_3         (b)     (b)
+ram/RS_FSM_FFd3      11       6<-   0   0     FB7_4         (b)     (b)
+RA<7>                 2       0   /\1   2     FB7_5   52    I/O     O
+RA<0>                 2       0     0   3     FB7_6   53    I/O     O
+cnt/TimeoutBPre       3       0   \/2   0     FB7_7         (b)     (b)
+RA<8>                 7       2<-   0   0     FB7_8   54    I/O     O
+RA<10>                1       0   \/4   0     FB7_9   55    I/O     O
+ram/RS_FSM_FFd2      14       9<-   0   0     FB7_10        (b)     (b)
+RA<9>                 2       2<- /\5   0     FB7_11  56    I/O     O
+CLK25EN               1       0   /\2   2     FB7_12  58    I/O     O
+cnt/TimeoutB          3       0   \/1   1     FB7_13        (b)     (b)
+CLK20EN               1       1<- \/5   0     FB7_14  59    I/O     O
+ram/RAMReady         15      10<-   0   0     FB7_15  60    I/O     I
+(unused)              0       0   /\5   0     FB7_16        (b)     (b)
+(unused)              0       0   \/5   0     FB7_17  61    I/O     I
+ram/RAMDIS1          17      12<-   0   0     FB7_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<10>         13: A_FSB<9>          24: cnt/TimeoutB 
+  2: A_FSB<11>         14: SW<0>             25: cnt/TimeoutBPre 
+  3: A_FSB<17>         15: cnt/RefCnt<0>     26: cs/nOverlay1 
+  4: A_FSB<18>         16: cnt/RefCnt<1>     27: fsb/ASrf 
+  5: A_FSB<19>         17: cnt/RefCnt<2>     28: nAS_FSB 
+  6: A_FSB<1>          18: cnt/RefCnt<3>     29: ram/BACTr 
+  7: A_FSB<20>         19: cnt/RefCnt<4>     30: ram/Once 
+  8: A_FSB<21>         20: cnt/RefCnt<5>     31: ram/RASEL 
+  9: A_FSB<22>         21: cnt/RefCnt<6>     32: ram/RS_FSM_FFd1 
+ 10: A_FSB<23>         22: cnt/RefCnt<7>     33: ram/RS_FSM_FFd2 
+ 11: A_FSB<2>          23: cnt/RefDone       34: ram/RS_FSM_FFd3 
+ 12: A_FSB<8>         
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+RA<1>                .X........X...................X......... 3
+ram/RS_FSM_FFd3      .......XXX.........XXXX..XXX.X.XXX...... 14
+RA<7>                ..X........X..................X......... 3
+RA<0>                X....X........................X......... 3
+cnt/TimeoutBPre      ..............XXXXXXXX..X.XX............ 11
+RA<8>                ...X...XXX..X............X....X......... 7
+RA<10>               .......X................................ 1
+ram/RS_FSM_FFd2      .......XXX.........XXXX..XXXX..XXX...... 14
+RA<9>                ....X.X.......................X......... 3
+CLK25EN              .............X.......................... 1
+cnt/TimeoutB         ..............XXXXXXXX.XX.XX............ 12
+CLK20EN              .............X.......................... 1
+ram/RAMReady         .......XXX.........XXXX..XXXXX.XXX...... 15
+ram/RAMDIS1          .......XXX.........XXXX..XXXXX.XXX...... 15
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*********************************** FB8  ***********************************
+Number of function block inputs used/remaining:               38/16
+Number of signals used by logic mapping into function block:  38
+Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
+Name                Pt      Pt    Pt  Pt               #    Type    Use
+(unused)              0       0   /\5   0     FB8_1         (b)     (b)
+RA<11>                1       0   /\4   0     FB8_2   63    I/O     O
+(unused)              0       0   \/5   0     FB8_3         (b)     (b)
+iobs/PS_FSM_FFd2     15      10<-   0   0     FB8_4         (b)     (b)
+nRAS                  3       3<- /\5   0     FB8_5   64    I/O     O
+nRAMLWE               1       0   /\3   1     FB8_6   65    I/O     O
+RESDone               1       0   \/1   3     FB8_7         (b)     (b)
+nRAMUWE               1       1<- \/5   0     FB8_8   66    I/O     O
+iobs/IOREQ           15      10<-   0   0     FB8_9   67    I/O     (b)
+(unused)              0       0   /\5   0     FB8_10        (b)     (b)
+(unused)              0       0   \/1   4     FB8_11  68    I/O     (b)
+nBERR_FSB             3       1<- \/3   0     FB8_12  70    I/O     O
+(unused)              0       0   \/5   0     FB8_13        (b)     (b)
+iobs/IORW1           17      12<-   0   0     FB8_14  71    I/O     (b)
+nBR_IOB               1       0   /\4   0     FB8_15  72    I/O     O
+iobs/BERR             4       0     0   1     FB8_16        (b)     (b)
+(unused)              0       0   \/5   0     FB8_17  73    I/O     I
+iobs/IORW0           19      14<-   0   0     FB8_18        (b)     (b)
+
+Signals Used by Logic in Function Block
+  1: A_FSB<13>         14: RESr0             27: iobs/IORW1 
+  2: A_FSB<14>         15: RESr1             28: iobs/Once 
+  3: A_FSB<16>         16: RESr2             29: iobs/PS_FSM_FFd1 
+  4: A_FSB<17>         17: SW<1>             30: iobs/PS_FSM_FFd2 
+  5: A_FSB<18>         18: cnt/TimeoutB      31: nADoutLE1 
+  6: A_FSB<19>         19: cs/nOverlay1      32: nAS_FSB 
+  7: A_FSB<20>         20: fsb/ASrf          33: nLDS_FSB 
+  8: A_FSB<21>         21: fsb/BERR0r        34: nUDS_FSB 
+  9: A_FSB<22>         22: fsb/BERR1r        35: nWE_FSB 
+ 10: A_FSB<23>         23: iobm/IOBERR       36: ram/RAMDIS1 
+ 11: IPL2r0            24: iobs/BERR         37: ram/RAMDIS2 
+ 12: IPL2r1            25: iobs/IOACTr       38: ram/RefRAS 
+ 13: RESDone           26: iobs/IORW0       
+
+Signal                        1         2         3         4 FB
+Name                0----+----0----+----0----+----0----+----0 Inputs
+RA<11>               .....X.................................. 1
+iobs/PS_FSM_FFd2     XXXXXXXXXX......X.XX....X..XXXXX..X..... 20
+nRAS                 .......XXX........X............X...XXX.. 8
+nRAMLWE              ...............................XX.XXX... 5
+RESDone              .............XXX........................ 3
+nRAMUWE              ...............................X.XXXX... 5
+iobs/IOREQ           XXXXXXXXXX......X.XX....X..XXXXX..X..... 20
+nBERR_FSB            ......XXXX.......X..XX.X.......X........ 9
+iobs/IORW1           XXXXXXXXXX......X.XX......XXXXXX..X..... 20
+nBR_IOB              ..........XXXXXX........................ 6
+iobs/BERR            ...................X..XXX..X.XXX........ 8
+iobs/IORW0           XXXXXXXXXX......X.XX.....XXXXXXX..X..... 21
+                    0----+----1----+----2----+----3----+----4
+                              0         0         0         0
+*******************************  Equations  ********************************
+
+********** Mapped Logic **********
+
+
+assign $OpTx$FX_DC$591 = (nAS_FSB && !fsb/ASrf);
+
+
+assign CLK20EN = SW[0];
+
+
+assign CLK25EN = !SW[0];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FDCPE FDCPE_IPL2r0 (IPL2r0,!nIPL2,CLK_FSB,1'b0,1'b0);
+
+FDCPE FDCPE_IPL2r1 (IPL2r1,IPL2r0,CLK_FSB,1'b0,1'b0);
+
+
+assign RA[0] = ((A_FSB[10] && !ram/RASEL)
+	|| (ram/RASEL && A_FSB[1]));
+
+
+assign RA[1] = ((A_FSB[11] && !ram/RASEL)
+	|| (ram/RASEL && A_FSB[2]));
+
+
+assign RA[2] = ((A_FSB[12] && !ram/RASEL)
+	|| (ram/RASEL && A_FSB[3]));
+
+
+assign RA[3] = ((A_FSB[13] && !ram/RASEL)
+	|| (ram/RASEL && A_FSB[4]));
+
+
+assign RA[4] = ((A_FSB[14] && !ram/RASEL)
+	|| (ram/RASEL && A_FSB[5]));
+
+
+assign RA[5] = ((A_FSB[15] && !ram/RASEL)
+	|| (ram/RASEL && A_FSB[6]));
+
+
+assign RA[6] = ((A_FSB[16] && !ram/RASEL)
+	|| (ram/RASEL && A_FSB[7]));
+
+
+assign RA[7] = ((A_FSB[8] && ram/RASEL)
+	|| (A_FSB[17] && !ram/RASEL));
+
+
+assign RA[8] = ((A_FSB[9] && !A_FSB[23] && !A_FSB[22] && cs/nOverlay1 && 
+	ram/RASEL)
+	|| (A_FSB[9] && !A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	!cs/nOverlay1 && ram/RASEL)
+	|| (A_FSB[23] && A_FSB[18])
+	|| (A_FSB[18] && !ram/RASEL)
+	|| (A_FSB[22] && !A_FSB[21] && A_FSB[18])
+	|| (A_FSB[22] && A_FSB[18] && cs/nOverlay1)
+	|| (!A_FSB[22] && A_FSB[18] && !cs/nOverlay1));
+
+
+assign RA[9] = ((A_FSB[20] && ram/RASEL)
+	|| (A_FSB[19] && !ram/RASEL));
+
+
+assign RA[10] = A_FSB[21];
+
+
+assign RA[11] = A_FSB[19];
+
+FDCPE FDCPE_RESDone (RESDone,1'b1,CLK_FSB,1'b0,1'b0,RESDone_CE);
+assign RESDone_CE = (!RESr0 && !RESr1 && RESr2);
+
+FDCPE FDCPE_RESr0 (RESr0,!nRES,CLK_FSB,1'b0,1'b0);
+
+FDCPE FDCPE_RESr1 (RESr1,RESr0,CLK_FSB,1'b0,1'b0);
+
+FDCPE FDCPE_RESr2 (RESr2,RESr1,CLK_FSB,1'b0,1'b0);
+
+FTCPE FTCPE_cnt/RefCnt0 (cnt/RefCnt[0],1'b1,CLK_FSB,1'b0,1'b0);
+
+FTCPE FTCPE_cnt/RefCnt1 (cnt/RefCnt[1],cnt/RefCnt[0],CLK_FSB,1'b0,1'b0);
+
+FTCPE FTCPE_cnt/RefCnt2 (cnt/RefCnt[2],cnt/RefCnt_T[2],CLK_FSB,1'b0,1'b0);
+assign cnt/RefCnt_T[2] = (cnt/RefCnt[0] && cnt/RefCnt[1]);
+
+FTCPE FTCPE_cnt/RefCnt3 (cnt/RefCnt[3],cnt/RefCnt_T[3],CLK_FSB,1'b0,1'b0);
+assign cnt/RefCnt_T[3] = (cnt/RefCnt[0] && cnt/RefCnt[1] && cnt/RefCnt[2]);
+
+FTCPE FTCPE_cnt/RefCnt4 (cnt/RefCnt[4],cnt/RefCnt_T[4],CLK_FSB,1'b0,1'b0);
+assign cnt/RefCnt_T[4] = (cnt/RefCnt[0] && cnt/RefCnt[1] && cnt/RefCnt[3] && 
+	cnt/RefCnt[2]);
+
+FTCPE FTCPE_cnt/RefCnt5 (cnt/RefCnt[5],cnt/RefCnt_T[5],CLK_FSB,1'b0,1'b0);
+assign cnt/RefCnt_T[5] = (cnt/RefCnt[0] && cnt/RefCnt[1] && cnt/RefCnt[3] && 
+	cnt/RefCnt[2] && cnt/RefCnt[4]);
+
+FTCPE FTCPE_cnt/RefCnt6 (cnt/RefCnt[6],cnt/RefCnt_T[6],CLK_FSB,1'b0,1'b0);
+assign cnt/RefCnt_T[6] = (cnt/RefCnt[5] && cnt/RefCnt[0] && cnt/RefCnt[1] && 
+	cnt/RefCnt[3] && cnt/RefCnt[2] && cnt/RefCnt[4]);
+
+FTCPE FTCPE_cnt/RefCnt7 (cnt/RefCnt[7],cnt/RefCnt_T[7],CLK_FSB,1'b0,1'b0);
+assign cnt/RefCnt_T[7] = (cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[0] && 
+	cnt/RefCnt[1] && cnt/RefCnt[3] && cnt/RefCnt[2] && cnt/RefCnt[4]);
+
+FDCPE FDCPE_cnt/RefDone (cnt/RefDone,cnt/RefDone_D,CLK_FSB,1'b0,1'b0);
+assign cnt/RefDone_D = ((!cnt/RefDone && !ram/RefRAS)
+	|| (!cnt/RefCnt[5] && !cnt/RefCnt[6] && !cnt/RefCnt[0] && 
+	!cnt/RefCnt[7] && !cnt/RefCnt[1] && !cnt/RefCnt[3] && !cnt/RefCnt[2] && 
+	!cnt/RefCnt[4]));
+
+FTCPE FTCPE_cnt/TimeoutA (cnt/TimeoutA,cnt/TimeoutA_T,CLK_FSB,1'b0,1'b0);
+assign cnt/TimeoutA_T = ((cnt/TimeoutA && nAS_FSB && !fsb/ASrf)
+	|| (!cnt/TimeoutA && !nAS_FSB && !cnt/RefCnt[5] && 
+	!cnt/RefCnt[6] && !cnt/RefCnt[0] && !cnt/RefCnt[1] && !cnt/RefCnt[3] && 
+	!cnt/RefCnt[2] && !cnt/RefCnt[4])
+	|| (!cnt/TimeoutA && !cnt/RefCnt[5] && !cnt/RefCnt[6] && 
+	!cnt/RefCnt[0] && !cnt/RefCnt[1] && !cnt/RefCnt[3] && !cnt/RefCnt[2] && 
+	!cnt/RefCnt[4] && fsb/ASrf));
+
+FTCPE FTCPE_cnt/TimeoutB (cnt/TimeoutB,cnt/TimeoutB_T,CLK_FSB,1'b0,1'b0);
+assign cnt/TimeoutB_T = ((cnt/TimeoutB && nAS_FSB && !fsb/ASrf)
+	|| (!cnt/TimeoutB && cnt/TimeoutBPre && !nAS_FSB && 
+	!cnt/RefCnt[5] && !cnt/RefCnt[6] && !cnt/RefCnt[0] && !cnt/RefCnt[7] && 
+	!cnt/RefCnt[1] && !cnt/RefCnt[3] && !cnt/RefCnt[2] && !cnt/RefCnt[4])
+	|| (!cnt/TimeoutB && cnt/TimeoutBPre && !cnt/RefCnt[5] && 
+	!cnt/RefCnt[6] && !cnt/RefCnt[0] && !cnt/RefCnt[7] && !cnt/RefCnt[1] && 
+	!cnt/RefCnt[3] && !cnt/RefCnt[2] && !cnt/RefCnt[4] && fsb/ASrf));
+
+FTCPE FTCPE_cnt/TimeoutBPre (cnt/TimeoutBPre,cnt/TimeoutBPre_T,CLK_FSB,1'b0,1'b0);
+assign cnt/TimeoutBPre_T = ((cnt/TimeoutBPre && nAS_FSB && !fsb/ASrf)
+	|| (!cnt/TimeoutBPre && !nAS_FSB && !cnt/RefCnt[5] && 
+	!cnt/RefCnt[6] && !cnt/RefCnt[0] && !cnt/RefCnt[7] && !cnt/RefCnt[1] && 
+	!cnt/RefCnt[3] && !cnt/RefCnt[2] && !cnt/RefCnt[4])
+	|| (!cnt/TimeoutBPre && !cnt/RefCnt[5] && !cnt/RefCnt[6] && 
+	!cnt/RefCnt[0] && !cnt/RefCnt[7] && !cnt/RefCnt[1] && !cnt/RefCnt[3] && 
+	!cnt/RefCnt[2] && !cnt/RefCnt[4] && fsb/ASrf));
+
+FTCPE FTCPE_cs/nOverlay0 (cs/nOverlay0,cs/nOverlay0_T,CLK_FSB,!nRES,1'b0);
+assign cs/nOverlay0_T = ((!A_FSB[23] && A_FSB[22] && !A_FSB[21] && !A_FSB[20] && 
+	!cs/nOverlay0 && !nAS_FSB)
+	|| (!A_FSB[23] && A_FSB[22] && !A_FSB[21] && !A_FSB[20] && 
+	!cs/nOverlay0 && fsb/ASrf));
+
+FDCPE FDCPE_cs/nOverlay1 (cs/nOverlay1,cs/nOverlay0,CLK_FSB,1'b0,1'b0,cs/nOverlay1_CE);
+assign cs/nOverlay1_CE = (nAS_FSB && !fsb/ASrf);
+
+FDCPE FDCPE_fsb/ASrf (fsb/ASrf,!nAS_FSB,!CLK_FSB,1'b0,1'b0);
+
+FDCPE FDCPE_fsb/BERR0r (fsb/BERR0r,fsb/BERR0r_D,CLK_FSB,1'b0,1'b0);
+assign fsb/BERR0r_D = ((!cnt/TimeoutB && !fsb/BERR0r)
+	|| (nAS_FSB && !fsb/ASrf)
+	|| (!A_FSB[23] && A_FSB[22] && !A_FSB[21] && A_FSB[20] && 
+	!fsb/BERR0r));
+
+FDCPE FDCPE_fsb/BERR1r (fsb/BERR1r,fsb/BERR1r_D,CLK_FSB,1'b0,1'b0);
+assign fsb/BERR1r_D = ((!iobs/BERR && !fsb/BERR1r)
+	|| (nAS_FSB && !fsb/ASrf));
+
+FDCPE FDCPE_fsb/Ready0r (fsb/Ready0r,fsb/Ready0r_D,CLK_FSB,1'b0,1'b0);
+assign fsb/Ready0r_D = ((nAS_FSB && !fsb/ASrf)
+	|| (!A_FSB[23] && !A_FSB[22] && cs/nOverlay1 && 
+	!fsb/Ready0r && !ram/RAMReady)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	!cs/nOverlay1 && !fsb/Ready0r && !ram/RAMReady));
+
+FDCPE FDCPE_fsb/Ready1r (fsb/Ready1r,fsb/Ready1r_D,CLK_FSB,1'b0,1'b0);
+assign fsb/Ready1r_D = ((cs/nOverlay0.EXP)
+	|| (A_FSB[23] && !fsb/Ready1r && !iobs/IOReady)
+	|| (A_FSB[22] && !A_FSB[21] && A_FSB[20] && !fsb/Ready1r && 
+	!iobs/IOReady)
+	|| (A_FSB[22] && !A_FSB[21] && !fsb/Ready1r && 
+	!iobs/IOReady && !SW[1])
+	|| (A_FSB[14] && A_FSB[22] && A_FSB[20] && A_FSB[19] && 
+	A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && 
+	!fsb/Ready1r && !iobs/IOReady)
+	|| (A_FSB[13] && A_FSB[22] && A_FSB[20] && A_FSB[19] && 
+	A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && 
+	!fsb/Ready1r && !iobs/IOReady)
+	|| (nAS_FSB && !fsb/ASrf));
+
+FDCPE FDCPE_fsb/Ready2r (fsb/Ready2r,fsb/Ready2r_D,CLK_FSB,1'b0,1'b0);
+assign fsb/Ready2r_D = ((nAS_FSB && !fsb/ASrf)
+	|| (A_FSB[8] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r)
+	|| (A_FSB[8] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r)
+	|| (A_FSB[8] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r)
+	|| (A_FSB[9] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r)
+	|| (A_FSB[9] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r)
+	|| (A_FSB[9] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r)
+	|| (A_FSB[9] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r)
+	|| (A_FSB[8] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r));
+
+FDCPE FDCPE_fsb/VPA (fsb/VPA,fsb/VPA_D,CLK_FSB,1'b0,1'b0);
+assign fsb/VPA_D = ((EXP15_.EXP)
+	|| (!A_FSB[23] && !A_FSB[22] && cs/nOverlay1 && 
+	!fsb/Ready0r && fsb/VPA && !ram/RAMReady && !$OpTx$FX_DC$591)
+	|| (A_FSB[22] && !A_FSB[21] && !fsb/Ready1r && fsb/VPA && 
+	!iobs/IOReady && !SW[1] && !$OpTx$FX_DC$591)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	!cs/nOverlay1 && !fsb/Ready0r && fsb/VPA && !ram/RAMReady && 
+	!$OpTx$FX_DC$591)
+	|| (A_FSB[14] && A_FSB[22] && A_FSB[20] && A_FSB[19] && 
+	A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && 
+	!fsb/Ready1r && fsb/VPA && !iobs/IOReady && !$OpTx$FX_DC$591)
+	|| (A_FSB[13] && A_FSB[22] && A_FSB[20] && A_FSB[19] && 
+	A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && 
+	!fsb/Ready1r && fsb/VPA && !iobs/IOReady && !$OpTx$FX_DC$591)
+	|| (nROMWE_OBUF.EXP)
+	|| (A_FSB[23] && cnt/TimeoutB && fsb/VPA && 
+	!$OpTx$FX_DC$591)
+	|| (!A_FSB[22] && cnt/TimeoutB && fsb/VPA && 
+	!$OpTx$FX_DC$591)
+	|| (A_FSB[21] && cnt/TimeoutB && fsb/VPA && 
+	!$OpTx$FX_DC$591)
+	|| (A_FSB[23] && !fsb/Ready1r && fsb/VPA && 
+	!iobs/IOReady && !$OpTx$FX_DC$591)
+	|| (A_FSB[22] && !A_FSB[21] && A_FSB[20] && !fsb/Ready1r && 
+	fsb/VPA && !iobs/IOReady && !$OpTx$FX_DC$591)
+	|| (iobs/BERR && fsb/VPA && !$OpTx$FX_DC$591)
+	|| (fsb/BERR0r && fsb/VPA && !$OpTx$FX_DC$591)
+	|| (fsb/BERR1r && fsb/VPA && !$OpTx$FX_DC$591)
+	|| (fsb/VPA && !nBR_IOB && !$OpTx$FX_DC$591)
+	|| (!A_FSB[20] && cnt/TimeoutB && fsb/VPA && 
+	!$OpTx$FX_DC$591));
+
+FDCPE FDCPE_iobm/ALE0 (iobm/ALE0,iobm/ALE0_D,CLK2X_IOB,1'b0,1'b0);
+assign iobm/ALE0_D = ((iobm/IOS_FSM_FFd2)
+	|| (iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd1)
+	|| (!iobm/IOS_FSM_FFd1 && iobm/IOREQr && !nAoutOE));
+
+FDCPE FDCPE_iobm/BERRrf (iobm/BERRrf,!nBERR_IOB,!CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/BERRrr (iobm/BERRrr,!nBERR_IOB,CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/BGr0 (iobm/BGr0,!nBG_IOB,CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/BGr1 (iobm/BGr1,iobm/BGr0,CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/DTACKrf (iobm/DTACKrf,!nDTACK_IOB,!CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/DTACKrr (iobm/DTACKrr,!nDTACK_IOB,CLK2X_IOB,1'b0,1'b0);
+
+FTCPE FTCPE_iobm/ES0 (iobm/ES[0],iobm/ES_T[0],CLK2X_IOB,1'b0,1'b0);
+assign iobm/ES_T[0] = ((iobm/ES[0] && !iobm/Er && iobm/Er2)
+	|| (!iobm/ES[0] && !iobm/ES[1] && !iobm/ES[2] && 
+	!iobm/ES[3] && !iobm/ES[4] && iobm/Er)
+	|| (!iobm/ES[0] && !iobm/ES[1] && !iobm/ES[2] && 
+	!iobm/ES[3] && !iobm/ES[4] && !iobm/Er2));
+
+FDCPE FDCPE_iobm/ES1 (iobm/ES[1],iobm/ES_D[1],CLK2X_IOB,1'b0,1'b0);
+assign iobm/ES_D[1] = ((iobm/ES[0] && iobm/ES[1])
+	|| (!iobm/ES[0] && !iobm/ES[1])
+	|| (!iobm/Er && iobm/Er2));
+
+FDCPE FDCPE_iobm/ES2 (iobm/ES[2],iobm/ES_D[2],CLK2X_IOB,1'b0,1'b0);
+assign iobm/ES_D[2] = ((!iobm/ES[0] && !iobm/ES[2])
+	|| (!iobm/ES[1] && !iobm/ES[2])
+	|| (!iobm/Er && iobm/Er2)
+	|| (iobm/ES[0] && iobm/ES[1] && iobm/ES[2])
+	|| (!iobm/ES[2] && !iobm/ES[3] && iobm/ES[4]));
+
+FTCPE FTCPE_iobm/ES3 (iobm/ES[3],iobm/ES_T[3],CLK2X_IOB,1'b0,1'b0);
+assign iobm/ES_T[3] = ((iobm/ES[3] && !iobm/Er && iobm/Er2)
+	|| (iobm/ES[0] && iobm/ES[1] && iobm/ES[2] && iobm/Er)
+	|| (iobm/ES[0] && iobm/ES[1] && iobm/ES[2] && !iobm/Er2));
+
+FTCPE FTCPE_iobm/ES4 (iobm/ES[4],iobm/ES_T[4],CLK2X_IOB,1'b0,1'b0);
+assign iobm/ES_T[4] = ((iobm/ES[4] && !iobm/Er && iobm/Er2)
+	|| (iobm/ES[0] && iobm/ES[1] && iobm/ES[2] && 
+	iobm/ES[3] && iobm/Er)
+	|| (iobm/ES[0] && iobm/ES[1] && iobm/ES[2] && 
+	iobm/ES[3] && !iobm/Er2)
+	|| (iobm/ES[0] && iobm/ES[1] && !iobm/ES[2] && 
+	!iobm/ES[3] && iobm/ES[4]));
+
+FDCPE FDCPE_iobm/ETACK (iobm/ETACK,iobm/ETACK_D,CLK2X_IOB,1'b0,1'b0);
+assign iobm/ETACK_D = (!nVMA_IOB && !iobm/ES[0] && !iobm/ES[1] && !iobm/ES[2] && 
+	!iobm/ES[3] && iobm/ES[4]);
+
+FDCPE FDCPE_iobm/Er (iobm/Er,E_IOB,!CLK_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/Er2 (iobm/Er2,iobm/Er,CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/IOACT (iobm/IOACT,iobm/IOACT_D,CLK2X_IOB,1'b0,1'b0);
+assign iobm/IOACT_D = ((CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/DTACKrf && iobm/DTACKrr)
+	|| (CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/RESrf && iobm/RESrr)
+	|| (iobm/IOS_FSM_FFd1 && !iobm/IOS_FSM_FFd2)
+	|| (!iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd2 && 
+	!iobm/IOREQr)
+	|| (!iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd2 && nAoutOE)
+	|| (CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/ETACK)
+	|| (CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/BERRrf && iobm/BERRrr));
+
+FTCPE FTCPE_iobm/IOBERR (iobm/IOBERR,iobm/IOBERR_T,CLK2X_IOB,1'b0,1'b0);
+assign iobm/IOBERR_T = ((CLK_IOB && nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && iobm/IOBERR && iobm/RESrf && 
+	iobm/RESrr)
+	|| (CLK_IOB && !nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && !iobm/IOBERR && iobm/BERRrf && 
+	iobm/BERRrr)
+	|| (CLK_IOB && !nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && !iobm/IOBERR && iobm/DTACKrf && 
+	iobm/DTACKrr)
+	|| (CLK_IOB && !nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && !iobm/IOBERR && iobm/RESrf && 
+	iobm/RESrr)
+	|| (iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd1 && 
+	!iobm/IOS_FSM_FFd2 && iobm/IOBERR)
+	|| (CLK_IOB && nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && iobm/IOBERR && iobm/ETACK)
+	|| (CLK_IOB && !nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && !iobm/IOBERR && iobm/ETACK)
+	|| (CLK_IOB && nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && iobm/IOBERR && iobm/BERRrf && 
+	iobm/BERRrr)
+	|| (CLK_IOB && nBERR_IOB && iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2 && iobm/IOBERR && iobm/DTACKrf && 
+	iobm/DTACKrr));
+
+FDCPE FDCPE_iobm/IOREQr (iobm/IOREQr,iobs/IOREQ,!CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/IOS_FSM_FFd1 (iobm/IOS_FSM_FFd1,iobm/IOS_FSM_FFd1_D,CLK2X_IOB,1'b0,1'b0);
+assign iobm/IOS_FSM_FFd1_D = ((iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1)
+	|| (!iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd2));
+
+FTCPE FTCPE_iobm/IOS_FSM_FFd2 (iobm/IOS_FSM_FFd2,iobm/IOS_FSM_FFd2_T,CLK2X_IOB,1'b0,1'b0);
+assign iobm/IOS_FSM_FFd2_T = ((iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd1 && 
+	!iobm/IOS_FSM_FFd2)
+	|| (CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/IOS_FSM_FFd2 && iobm/ETACK)
+	|| (CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/IOS_FSM_FFd2 && iobm/BERRrf && iobm/BERRrr)
+	|| (CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/IOS_FSM_FFd2 && iobm/DTACKrf && iobm/DTACKrr)
+	|| (CLK_IOB && iobm/IOS_FSM_FFd3 && iobm/IOS_FSM_FFd1 && 
+	iobm/IOS_FSM_FFd2 && iobm/RESrf && iobm/RESrr));
+
+FDCPE FDCPE_iobm/IOS_FSM_FFd3 (iobm/IOS_FSM_FFd3,iobm/IOS_FSM_FFd3_D,CLK2X_IOB,1'b0,1'b0);
+assign iobm/IOS_FSM_FFd3_D = ((iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2)
+	|| (iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd1 && 
+	!iobm/IOS_FSM_FFd2)
+	|| (!CLK_IOB && !iobm/IOS_FSM_FFd1 && !iobm/IOS_FSM_FFd2 && 
+	iobm/IOREQr && !nAoutOE));
+
+FDCPE FDCPE_iobm/RESrf (iobm/RESrf,!nRES,!CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/RESrr (iobm/RESrr,!nRES,CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/VPArf (iobm/VPArf,!nVPA_IOB,!CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobm/VPArr (iobm/VPArr,!nVPA_IOB,CLK2X_IOB,1'b0,1'b0);
+
+FDCPE FDCPE_iobs/ALE0 (iobs/ALE0,iobs/ALE0_D,CLK_FSB,1'b0,1'b0);
+assign iobs/ALE0_D = (iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1);
+
+FTCPE FTCPE_iobs/BERR (iobs/BERR,iobs/BERR_T,CLK_FSB,1'b0,1'b0);
+assign iobs/BERR_T = ((iobs/BERR && nAS_FSB && !fsb/ASrf)
+	|| (iobs/Once && iobs/BERR && !iobs/PS_FSM_FFd2 && 
+	!iobs/IOACTr && !iobm/IOBERR && nADoutLE1)
+	|| (iobs/Once && !iobs/BERR && !nAS_FSB && 
+	!iobs/PS_FSM_FFd2 && !iobs/IOACTr && iobm/IOBERR && nADoutLE1)
+	|| (iobs/Once && !iobs/BERR && !iobs/PS_FSM_FFd2 && 
+	!iobs/IOACTr && iobm/IOBERR && fsb/ASrf && nADoutLE1));
+
+FDCPE FDCPE_iobs/Clear1 (iobs/Clear1,iobs/Clear1_D,CLK_FSB,1'b0,1'b0);
+assign iobs/Clear1_D = (iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && !nADoutLE1);
+
+FDCPE FDCPE_iobs/IOACTr (iobs/IOACTr,iobm/IOACT,CLK_FSB,1'b0,1'b0);
+
+FDCPE FDCPE_iobs/IOL0 (iobs/IOL0,iobs/IOL0_D,CLK_FSB,1'b0,1'b0,iobs/IOL0_CE);
+assign iobs/IOL0_D = ((!nLDS_FSB && nADoutLE1)
+	|| (iobs/IOL1 && !nADoutLE1));
+assign iobs/IOL0_CE = (iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1);
+
+FDCPE FDCPE_iobs/IOL1 (iobs/IOL1,!nLDS_FSB,CLK_FSB,1'b0,1'b0,iobs/Load1);
+
+FDCPE FDCPE_iobs/IOREQ (iobs/IOREQ,iobs/IOREQ_D,CLK_FSB,1'b0,1'b0);
+assign iobs/IOREQ_D = ((!A_FSB[23] && !A_FSB[22] && !A_FSB[21] && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[20] && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[19] && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[17] && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[16] && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[18] && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && nWE_FSB && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[20] && !iobs/PS_FSM_FFd2 && 
+	SW[1] && nADoutLE1)
+	|| (!A_FSB[14] && !A_FSB[13] && !A_FSB[23] && A_FSB[21] && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	cs/nOverlay1 && !iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (!iobs/PS_FSM_FFd2 && iobs/PS_FSM_FFd1)
+	|| (iobs/PS_FSM_FFd1 && iobs/IOACTr)
+	|| (iobs/Once && !iobs/PS_FSM_FFd2 && nADoutLE1)
+	|| (nAS_FSB && !iobs/PS_FSM_FFd2 && !fsb/ASrf && 
+	nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[22] && !cs/nOverlay1 && 
+	!iobs/PS_FSM_FFd2 && nADoutLE1));
+
+FTCPE FTCPE_iobs/IORW0 (iobs/IORW0,iobs/IORW0_T,CLK_FSB,1'b0,1'b0);
+assign iobs/IORW0_T = ((A_FSB_19_IBUF$BUF0.EXP)
+	|| (iobs/IORW0 && iobs/IORW1 && !nADoutLE1)
+	|| (!iobs/IORW0 && !iobs/IORW1 && !nADoutLE1)
+	|| (nAS_FSB && !fsb/ASrf && nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[22] && !A_FSB[21] && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !iobs/IORW0 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[19] && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[18] && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[17] && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[16] && nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[20] && SW[1] && nADoutLE1)
+	|| (!nWE_FSB && !iobs/IORW0 && nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[22] && !cs/nOverlay1 && 
+	nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[20] && nADoutLE1)
+	|| (!A_FSB[14] && !A_FSB[13] && !A_FSB[23] && A_FSB[21] && 
+	nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	cs/nOverlay1 && nADoutLE1));
+
+FTCPE FTCPE_iobs/IORW1 (iobs/IORW1,iobs/IORW1_T,CLK_FSB,1'b0,1'b0);
+assign iobs/IORW1_T = ((iobs/Once)
+	|| (!nADoutLE1)
+	|| (nBERR_FSB_OBUF.EXP)
+	|| (nAS_FSB && !fsb/ASrf)
+	|| (!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1)
+	|| (!A_FSB[23] && !A_FSB[22] && !A_FSB[21])
+	|| (!A_FSB[23] && !A_FSB[22] && !cs/nOverlay1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[20])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[19])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[18])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[17])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[16])
+	|| (nWE_FSB && iobs/IORW1)
+	|| (!nWE_FSB && !iobs/IORW1)
+	|| (!A_FSB[23] && A_FSB[21] && !iobs/IORW1));
+
+FTCPE FTCPE_iobs/IOReady (iobs/IOReady,iobs/IOReady_T,CLK_FSB,1'b0,1'b0);
+assign iobs/IOReady_T = ((iobs/IOReady && nAS_FSB && !fsb/ASrf)
+	|| (iobs/Once && iobs/IOReady && !iobs/PS_FSM_FFd2 && 
+	!iobs/IOACTr && iobm/IOBERR && nADoutLE1)
+	|| (iobs/Once && !iobs/IOReady && !nAS_FSB && 
+	!iobs/PS_FSM_FFd2 && !iobs/IOACTr && !iobm/IOBERR && nADoutLE1)
+	|| (iobs/Once && !iobs/IOReady && !iobs/PS_FSM_FFd2 && 
+	!iobs/IOACTr && !iobm/IOBERR && fsb/ASrf && nADoutLE1));
+
+FDCPE FDCPE_iobs/IOU0 (iobs/IOU0,iobs/IOU0_D,CLK_FSB,1'b0,1'b0,iobs/IOU0_CE);
+assign iobs/IOU0_D = ((!nUDS_FSB && nADoutLE1)
+	|| (iobs/IOU1 && !nADoutLE1));
+assign iobs/IOU0_CE = (iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1);
+
+FDCPE FDCPE_iobs/IOU1 (iobs/IOU1,!nUDS_FSB,CLK_FSB,1'b0,1'b0,iobs/Load1);
+
+FDCPE FDCPE_iobs/Load1 (iobs/Load1,iobs/Load1_D,CLK_FSB,1'b0,1'b0);
+assign iobs/Load1_D = ((iobs/Once)
+	|| (!nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[22] && !A_FSB[21])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[20])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[19])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[17])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[16])
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[18])
+	|| (!A_FSB[23] && A_FSB[21] && nWE_FSB)
+	|| (!A_FSB[23] && !A_FSB[20] && SW[1])
+	|| (!A_FSB[14] && !A_FSB[13] && !A_FSB[23] && A_FSB[21])
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	cs/nOverlay1)
+	|| (nAS_FSB && !fsb/ASrf)
+	|| (!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1)
+	|| (!A_FSB[23] && !A_FSB[22] && !cs/nOverlay1));
+
+FDCPE FDCPE_iobs/Once (iobs/Once,iobs/Once_D,CLK_FSB,1'b0,1'b0);
+assign iobs/Once_D = ((A_FSB[23] && !iobs/Once && iobs/PS_FSM_FFd1)
+	|| (!iobs/Once && iobs/PS_FSM_FFd1 && !nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[22] && !A_FSB[21] && !iobs/Once)
+	|| (!A_FSB[23] && !A_FSB[22] && !iobs/Once && 
+	!cs/nOverlay1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[20] && !iobs/Once)
+	|| (RA_4_OBUF.EXP)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[19] && !iobs/Once)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[18] && !iobs/Once)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[17] && !iobs/Once)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[16] && !iobs/Once)
+	|| (!A_FSB[23] && A_FSB[21] && nWE_FSB && !iobs/Once)
+	|| (nAS_FSB && !fsb/ASrf)
+	|| (A_FSB[23] && !iobs/Once && iobs/PS_FSM_FFd2)
+	|| (A_FSB[22] && !iobs/Once && iobs/PS_FSM_FFd2)
+	|| (A_FSB[22] && !iobs/Once && iobs/PS_FSM_FFd1)
+	|| (!iobs/Once && iobs/PS_FSM_FFd2 && !nADoutLE1));
+
+FDCPE FDCPE_iobs/PS_FSM_FFd1 (iobs/PS_FSM_FFd1,iobs/PS_FSM_FFd1_D,CLK_FSB,1'b0,1'b0);
+assign iobs/PS_FSM_FFd1_D = ((iobs/PS_FSM_FFd2)
+	|| (iobs/PS_FSM_FFd1 && iobs/IOACTr));
+
+FDCPE FDCPE_iobs/PS_FSM_FFd2 (iobs/PS_FSM_FFd2,iobs/PS_FSM_FFd2_D,CLK_FSB,1'b0,1'b0);
+assign iobs/PS_FSM_FFd2_D = ((!A_FSB[23] && !A_FSB[22] && !A_FSB[21] && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[20] && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[19] && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[17] && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[16] && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && !A_FSB[18] && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[21] && nWE_FSB && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[20] && !iobs/PS_FSM_FFd2 && 
+	!iobs/PS_FSM_FFd1 && SW[1] && nADoutLE1)
+	|| (!A_FSB[14] && !A_FSB[13] && !A_FSB[23] && A_FSB[21] && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	cs/nOverlay1 && !iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1)
+	|| (iobs/PS_FSM_FFd2 && iobs/PS_FSM_FFd1 && 
+	iobs/IOACTr)
+	|| (!iobs/PS_FSM_FFd2 && iobs/PS_FSM_FFd1 && 
+	!iobs/IOACTr)
+	|| (iobs/Once && !iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && 
+	nADoutLE1)
+	|| (nAS_FSB && !iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && 
+	!fsb/ASrf && nADoutLE1)
+	|| (!A_FSB[23] && !A_FSB[22] && !cs/nOverlay1 && 
+	!iobs/PS_FSM_FFd2 && !iobs/PS_FSM_FFd1 && nADoutLE1));
+
+
+assign nADoutLE0 = (!iobm/ALE0 && !iobs/ALE0);
+
+FDCPE FDCPE_nADoutLE1 (nADoutLE1,nADoutLE1_D,CLK_FSB,1'b0,1'b0);
+assign nADoutLE1_D = ((iobs/Load1)
+	|| (!iobs/Clear1 && !nADoutLE1));
+
+FDCPE FDCPE_nAS_IOB (nAS_IOB_I,nAS_IOB,!CLK2X_IOB,1'b0,1'b0);
+assign nAS_IOB = ((!iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd2)
+	|| (iobm/IOS_FSM_FFd1 && !iobm/IOS_FSM_FFd2));
+assign nAS_IOB = nAS_IOB_OE ? nAS_IOB_I : 1'bZ;
+assign nAS_IOB_OE = !nAoutOE;
+
+FDCPE FDCPE_nAoutOE (nAoutOE,nAoutOE_D,CLK2X_IOB,1'b0,1'b0);
+assign nAoutOE_D = ((!iobm/BGr0 && !iobm/BGr1)
+	|| (!iobm/BGr1 && nAoutOE)
+	|| (!nAS_IOB && !iobm/BGr0 && !nAoutOE));
+
+
+assign nBERR_FSB = ((nAS_FSB)
+	|| (!A_FSB[23] && A_FSB[22] && !A_FSB[21] && A_FSB[20] && 
+	!iobs/BERR && !fsb/BERR0r && !fsb/BERR1r)
+	|| (!iobs/BERR && !cnt/TimeoutB && !fsb/BERR0r && 
+	!fsb/BERR1r));
+
+FDCPE FDCPE_nBR_IOB (nBR_IOB,1'b0,CLK_FSB,1'b0,1'b0,nBR_IOB_CE);
+assign nBR_IOB_CE = (RESr0 && RESr1 && IPL2r0 && RESr2 && !RESDone && 
+	IPL2r1);
+
+FDCPE FDCPE_nCAS (nCAS,!ram/RASEL,!CLK_FSB,1'b0,1'b0);
+
+FDCPE FDCPE_nDTACK_FSB (nDTACK_FSB,nDTACK_FSB_D,CLK_FSB,1'b0,1'b0);
+assign nDTACK_FSB_D = ((EXP18_.EXP)
+	|| (A_FSB[14] && A_FSB[22] && A_FSB[20] && A_FSB[19] && 
+	A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && 
+	!fsb/Ready1r && !iobs/IOReady && nDTACK_FSB)
+	|| (A_FSB[14] && !A_FSB[22] && A_FSB[21] && A_FSB[20] && 
+	A_FSB[19] && A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && 
+	cs/nOverlay1 && !fsb/Ready1r && !iobs/IOReady && nDTACK_FSB && 
+	!nADoutLE1)
+	|| (A_FSB[8] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB)
+	|| (A_FSB[8] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB)
+	|| (A_FSB[8] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB)
+	|| (EXP21_.EXP)
+	|| (A_FSB[22] && !A_FSB[21] && A_FSB[20] && !fsb/Ready1r && 
+	!iobs/IOReady && nDTACK_FSB)
+	|| (A_FSB[22] && !A_FSB[21] && !fsb/Ready1r && 
+	!iobs/IOReady && nDTACK_FSB && !SW[1])
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	!cs/nOverlay1 && !fsb/Ready0r && nDTACK_FSB && !ram/RAMReady)
+	|| (A_FSB[13] && A_FSB[22] && A_FSB[20] && A_FSB[19] && 
+	A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && 
+	!fsb/Ready1r && !iobs/IOReady && nDTACK_FSB)
+	|| (A_FSB[13] && !A_FSB[22] && A_FSB[21] && A_FSB[20] && 
+	A_FSB[19] && A_FSB[18] && A_FSB[17] && A_FSB[16] && !nWE_FSB && 
+	cs/nOverlay1 && !fsb/Ready1r && !iobs/IOReady && nDTACK_FSB && 
+	!nADoutLE1)
+	|| (A_FSB[9] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB)
+	|| (A_FSB[9] && A_FSB[15] && A_FSB[14] && A_FSB[13] && 
+	A_FSB[12] && A_FSB[11] && A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB)
+	|| (A_FSB[9] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && !cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB)
+	|| (A_FSB[9] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB)
+	|| (A_FSB[8] && A_FSB[15] && !A_FSB[14] && A_FSB[13] && 
+	!A_FSB[12] && !A_FSB[11] && !A_FSB[10] && !A_FSB[23] && !A_FSB[22] && 
+	A_FSB[21] && A_FSB[20] && A_FSB[19] && A_FSB[18] && A_FSB[17] && 
+	A_FSB[16] && !nWE_FSB && cs/nOverlay1 && !cnt/TimeoutA && 
+	!fsb/Ready2r && nDTACK_FSB));
+
+FDCPE FDCPE_nDinLE (nDinLE,nDinLE_D,!CLK2X_IOB,1'b0,1'b0);
+assign nDinLE_D = (iobm/IOS_FSM_FFd1 && iobm/IOS_FSM_FFd2);
+
+
+assign nDinOE = ((A_FSB[23] && nWE_FSB && !nAS_FSB)
+	|| (A_FSB[22] && !A_FSB[21] && A_FSB[20] && nWE_FSB && 
+	!nAS_FSB)
+	|| (A_FSB[22] && !A_FSB[21] && nWE_FSB && !nAS_FSB && 
+	!SW[1]));
+
+FDCPE FDCPE_nDoutOE (nDoutOE,nDoutOE_D,CLK2X_IOB,1'b0,1'b0);
+assign nDoutOE_D = ((!iobs/IORW0)
+	|| (!iobm/IOS_FSM_FFd3 && !iobm/IOS_FSM_FFd2));
+
+FDCPE FDCPE_nLDS_IOB (nLDS_IOB_I,nLDS_IOB,!CLK2X_IOB,1'b0,1'b0);
+assign nLDS_IOB = ((iobs/IOL0 && !iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd2)
+	|| (iobs/IOL0 && iobm/IOS_FSM_FFd1 && 
+	iobm/IOS_FSM_FFd2)
+	|| (!iobs/IORW0 && iobs/IOL0 && iobm/IOS_FSM_FFd3 && 
+	!iobm/IOS_FSM_FFd1));
+assign nLDS_IOB = nLDS_IOB_OE ? nLDS_IOB_I : 1'bZ;
+assign nLDS_IOB_OE = !nAoutOE;
+
+
+assign nOE = !((nWE_FSB && !nAS_FSB));
+
+
+assign nRAMLWE = !((!nWE_FSB && !nLDS_FSB && !ram/RAMDIS2 && !nAS_FSB && 
+	!ram/RAMDIS1));
+
+
+assign nRAMUWE = !((!nWE_FSB && !nUDS_FSB && !ram/RAMDIS2 && !nAS_FSB && 
+	!ram/RAMDIS1));
+
+
+assign nRAS = !(((ram/RefRAS)
+	|| (!A_FSB[23] && !A_FSB[22] && cs/nOverlay1 && 
+	!ram/RAMDIS2 && !nAS_FSB && !ram/RAMDIS1)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	!cs/nOverlay1 && !ram/RAMDIS2 && !nAS_FSB && !ram/RAMDIS1)));
+
+
+assign nROMCS = !(((A_FSB[23] && !A_FSB[22] && !A_FSB[21] && !A_FSB[20] && 
+	!SW[1])
+	|| (!A_FSB[23] && A_FSB[22] && !A_FSB[21] && !A_FSB[20] && 
+	SW[1])
+	|| (!A_FSB[23] && !A_FSB[22] && !A_FSB[21] && !A_FSB[20] && 
+	!cs/nOverlay1)));
+
+
+assign nROMWE = !((!nWE_FSB && !nAS_FSB));
+
+FDCPE FDCPE_nUDS_IOB (nUDS_IOB_I,nUDS_IOB,!CLK2X_IOB,1'b0,1'b0);
+assign nUDS_IOB = ((iobs/IOU0 && !iobm/IOS_FSM_FFd3 && 
+	iobm/IOS_FSM_FFd2)
+	|| (iobs/IOU0 && iobm/IOS_FSM_FFd1 && 
+	iobm/IOS_FSM_FFd2)
+	|| (!iobs/IORW0 && iobs/IOU0 && iobm/IOS_FSM_FFd3 && 
+	!iobm/IOS_FSM_FFd1));
+assign nUDS_IOB = nUDS_IOB_OE ? nUDS_IOB_I : 1'bZ;
+assign nUDS_IOB_OE = !nAoutOE;
+
+FTCPE FTCPE_nVMA_IOB (nVMA_IOB_I,nVMA_IOB_T,CLK2X_IOB,1'b0,1'b0);
+assign nVMA_IOB_T = ((!nVMA_IOB && !iobm/ES[0] && !iobm/ES[1] && !iobm/ES[2] && 
+	!iobm/ES[3] && !iobm/ES[4])
+	|| (nVMA_IOB && iobm/ES[0] && iobm/ES[1] && iobm/ES[2] && 
+	!iobm/ES[3] && !iobm/ES[4] && iobm/IOACT && iobm/VPArf && 
+	iobm/VPArr));
+assign nVMA_IOB = nVMA_IOB_OE ? nVMA_IOB_I : 1'bZ;
+assign nVMA_IOB_OE = !nAoutOE;
+
+
+assign nVPA_FSB = !((fsb/VPA && !nAS_FSB));
+
+FDCPE FDCPE_ram/BACTr (ram/BACTr,ram/BACTr_D,CLK_FSB,1'b0,1'b0);
+assign ram/BACTr_D = (nAS_FSB && !fsb/ASrf);
+
+FTCPE FTCPE_ram/Once (ram/Once,ram/Once_T,CLK_FSB,1'b0,1'b0);
+assign ram/Once_T = ((ram/Once && nAS_FSB && !fsb/ASrf)
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	!ram/RS_FSM_FFd3)
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && fsb/ASrf)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !ram/Once && 
+	!cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	!ram/RS_FSM_FFd3)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !ram/Once && 
+	!cs/nOverlay1 && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	!ram/RS_FSM_FFd3 && fsb/ASrf));
+
+FDCPE FDCPE_ram/RAMDIS1 (ram/RAMDIS1,ram/RAMDIS1_D,CLK_FSB,1'b0,1'b0);
+assign ram/RAMDIS1_D = ((RA_1_OBUF.EXP)
+	|| (A_FSB[23] && !cnt/RefDone && !ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!A_FSB[22] && !cnt/RefDone && !cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && !ram/BACTr && fsb/ASrf)
+	|| (!cnt/RefDone && ram/Once && !ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && 
+	cnt/RefCnt[7])
+	|| (!cnt/RefDone && nAS_FSB && !ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && 
+	!fsb/ASrf)
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && !nAS_FSB && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && !ram/BACTr)
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && !ram/BACTr && fsb/ASrf)
+	|| (A_FSB[22] && !cnt/RefDone && cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && !ram/BACTr)
+	|| (A_FSB[22] && !cnt/RefDone && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && !ram/BACTr && fsb/ASrf)
+	|| (!A_FSB[22] && !cnt/RefDone && !cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && !ram/BACTr)
+	|| (ram/RS_FSM_FFd1 && ram/RS_FSM_FFd3)
+	|| (!ram/RS_FSM_FFd1 && ram/RS_FSM_FFd2)
+	|| (A_FSB[23] && !cnt/RefDone && !nAS_FSB && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && !ram/BACTr)
+	|| (A_FSB[23] && !cnt/RefDone && !ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd3 && !ram/BACTr && fsb/ASrf)
+	|| (!cnt/RefDone && ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7]));
+
+FTCPE FTCPE_ram/RAMDIS2 (ram/RAMDIS2,ram/RAMDIS2_T,CLK_FSB,1'b0,1'b0);
+assign ram/RAMDIS2_T = ((!A_FSB[23] && A_FSB[22] && A_FSB[21] && !cnt/RefDone && 
+	ram/Once && !cs/nOverlay1 && !ram/RAMDIS2 && !nAS_FSB && 
+	!ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && 
+	cnt/RefCnt[7])
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !cnt/RefDone && 
+	ram/Once && !cs/nOverlay1 && !ram/RAMDIS2 && !ram/RS_FSM_FFd2 && 
+	!ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && 
+	fsb/ASrf)
+	|| (ram/RAMDIS2 && nAS_FSB && !fsb/ASrf)
+	|| (!cnt/RefDone && ram/Once && !ram/RAMDIS2 && !nAS_FSB && 
+	ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!cnt/RefDone && ram/Once && !ram/RAMDIS2 && 
+	ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && fsb/ASrf)
+	|| (!A_FSB[23] && !A_FSB[22] && !cnt/RefDone && ram/Once && 
+	cs/nOverlay1 && !ram/RAMDIS2 && !nAS_FSB && !ram/RS_FSM_FFd2 && 
+	!ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!A_FSB[23] && !A_FSB[22] && !cnt/RefDone && ram/Once && 
+	cs/nOverlay1 && !ram/RAMDIS2 && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && fsb/ASrf));
+
+FDCPE FDCPE_ram/RAMReady (ram/RAMReady,ram/RAMReady_D,CLK_FSB,1'b0,1'b0);
+assign ram/RAMReady_D = ((ram/RS_FSM_FFd2)
+	|| (ram/RS_FSM_FFd3)
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1)
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && fsb/ASrf)
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && !nAS_FSB && 
+	!ram/RS_FSM_FFd1 && !ram/BACTr)
+	|| (A_FSB[22] && !cnt/RefDone && cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/BACTr)
+	|| (!A_FSB[22] && !cnt/RefDone && !cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/BACTr)
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && 
+	!ram/RS_FSM_FFd1 && !ram/BACTr && fsb/ASrf)
+	|| (A_FSB[22] && !cnt/RefDone && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/BACTr && fsb/ASrf)
+	|| (!A_FSB[22] && !cnt/RefDone && !cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/BACTr && fsb/ASrf)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !ram/Once && 
+	!cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd1)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !ram/Once && 
+	!cs/nOverlay1 && !ram/RS_FSM_FFd1 && fsb/ASrf)
+	|| (!cnt/RefDone && cnt/RefCnt[5] && cnt/RefCnt[6] && 
+	cnt/RefCnt[7])
+	|| (A_FSB[23] && !cnt/RefDone && !nAS_FSB && 
+	!ram/RS_FSM_FFd1 && !ram/BACTr)
+	|| (A_FSB[23] && !cnt/RefDone && !ram/RS_FSM_FFd1 && 
+	!ram/BACTr && fsb/ASrf));
+
+FDCPE FDCPE_ram/RASEL (ram/RASEL,ram/RASEL_D,CLK_FSB,1'b0,1'b0);
+assign ram/RASEL_D = ((A_FSB[22] && !cnt/RefDone && cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/BACTr)
+	|| (A_FSB[22] && !cnt/RefDone && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/BACTr && fsb/ASrf)
+	|| (!A_FSB[22] && !cnt/RefDone && !cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/BACTr)
+	|| (!A_FSB[22] && !cnt/RefDone && !cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/BACTr && fsb/ASrf)
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && cnt/RefCnt[5] && cnt/RefCnt[6] && 
+	cnt/RefCnt[7])
+	|| (EXP26_.EXP)
+	|| (A_FSB[23] && !cnt/RefDone && !ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd2 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2)
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && fsb/ASrf)
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && !nAS_FSB && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/BACTr)
+	|| (A_FSB[22] && !A_FSB[21] && !cnt/RefDone && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/BACTr && fsb/ASrf)
+	|| (!ram/RS_FSM_FFd2 && ram/RS_FSM_FFd3)
+	|| (!ram/RS_FSM_FFd1 && ram/RS_FSM_FFd2 && 
+	!ram/RS_FSM_FFd3)
+	|| (A_FSB[23] && !cnt/RefDone && !nAS_FSB && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && !ram/BACTr)
+	|| (A_FSB[23] && !cnt/RefDone && !ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd2 && !ram/BACTr && fsb/ASrf)
+	|| (!cnt/RefDone && nAS_FSB && !ram/RS_FSM_FFd2 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && !fsb/ASrf));
+
+FDCPE FDCPE_ram/RS_FSM_FFd1 (ram/RS_FSM_FFd1,ram/RS_FSM_FFd1_D,CLK_FSB,1'b0,1'b0);
+assign ram/RS_FSM_FFd1_D = ((!A_FSB[23] && A_FSB[22] && A_FSB[21] && !cnt/RefDone && 
+	ram/Once && !cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd2 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !cnt/RefDone && 
+	ram/Once && !cs/nOverlay1 && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && fsb/ASrf)
+	|| (!A_FSB[23] && !A_FSB[22] && !cnt/RefDone && ram/Once && 
+	cs/nOverlay1 && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && fsb/ASrf)
+	|| (ram/RS_FSM_FFd1 && ram/RS_FSM_FFd2)
+	|| (!ram/RS_FSM_FFd1 && ram/RS_FSM_FFd3)
+	|| (!cnt/RefDone && !nAS_FSB && ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!cnt/RefDone && ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && fsb/ASrf)
+	|| (!A_FSB[23] && !A_FSB[22] && !cnt/RefDone && ram/Once && 
+	cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7]));
+
+FDCPE FDCPE_ram/RS_FSM_FFd2 (ram/RS_FSM_FFd2,ram/RS_FSM_FFd2_D,CLK_FSB,1'b0,1'b0);
+assign ram/RS_FSM_FFd2_D = ((!ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	!cnt/RefCnt[5] && ram/BACTr)
+	|| (!ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	!cnt/RefCnt[6] && ram/BACTr)
+	|| (nAS_FSB && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	!cnt/RefCnt[5] && !fsb/ASrf)
+	|| (nAS_FSB && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	!cnt/RefCnt[7] && !fsb/ASrf)
+	|| (nAS_FSB && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	!cnt/RefCnt[6] && !fsb/ASrf)
+	|| (!A_FSB[23] && !A_FSB[22] && cs/nOverlay1 && !nAS_FSB && 
+	!ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3)
+	|| (!A_FSB[23] && !A_FSB[22] && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && fsb/ASrf)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	!cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && 
+	!cs/nOverlay1 && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && fsb/ASrf)
+	|| (ram/RS_FSM_FFd1 && ram/RS_FSM_FFd2)
+	|| (cnt/RefDone && !ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3)
+	|| (!nAS_FSB && ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3)
+	|| (ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && fsb/ASrf)
+	|| (!ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && 
+	!cnt/RefCnt[7] && ram/BACTr));
+
+FDCPE FDCPE_ram/RS_FSM_FFd3 (ram/RS_FSM_FFd3,ram/RS_FSM_FFd3_D,CLK_FSB,1'b0,1'b0);
+assign ram/RS_FSM_FFd3_D = ((!cnt/RefDone && !nAS_FSB && ram/RS_FSM_FFd1 && 
+	!ram/RS_FSM_FFd2 && !ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && 
+	cnt/RefCnt[7])
+	|| (!cnt/RefDone && ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd2 && 
+	!ram/RS_FSM_FFd3 && cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && 
+	fsb/ASrf)
+	|| (!A_FSB[23] && !A_FSB[22] && !cnt/RefDone && 
+	cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!A_FSB[23] && !A_FSB[22] && !cnt/RefDone && 
+	cs/nOverlay1 && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && fsb/ASrf)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !cnt/RefDone && 
+	!cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7])
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !cnt/RefDone && 
+	!cs/nOverlay1 && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && 
+	cnt/RefCnt[5] && cnt/RefCnt[6] && cnt/RefCnt[7] && fsb/ASrf)
+	|| (!ram/RS_FSM_FFd1 && ram/RS_FSM_FFd2)
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3)
+	|| (!A_FSB[23] && !A_FSB[22] && !ram/Once && cs/nOverlay1 && 
+	!ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && fsb/ASrf)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !ram/Once && 
+	!cs/nOverlay1 && !nAS_FSB && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3)
+	|| (!A_FSB[23] && A_FSB[22] && A_FSB[21] && !ram/Once && 
+	!cs/nOverlay1 && !ram/RS_FSM_FFd1 && !ram/RS_FSM_FFd3 && fsb/ASrf));
+
+FDCPE FDCPE_ram/RefRAS (ram/RefRAS,ram/RefRAS_D,CLK_FSB,1'b0,1'b0);
+assign ram/RefRAS_D = (!ram/RS_FSM_FFd1 && ram/RS_FSM_FFd2);
+
+Register Legend:
+ FDCPE (Q,D,C,CLR,PRE,CE); 
+ FTCPE (Q,D,C,CLR,PRE,CE); 
+ LDCP  (Q,D,G,CLR,PRE); 
+
+******************************  Device Pin Out *****************************
+
+Device : XC95144XL-10-TQ100
+
+
+   --------------------------------------------------  
+  /100 98  96  94  92  90  88  86  84  82  80  78  76  \
+ |   99  97  95  93  91  89  87  85  83  81  79  77    |
+ | 1                                               75  | 
+ | 2                                               74  | 
+ | 3                                               73  | 
+ | 4                                               72  | 
+ | 5                                               71  | 
+ | 6                                               70  | 
+ | 7                                               69  | 
+ | 8                                               68  | 
+ | 9                                               67  | 
+ | 10                                              66  | 
+ | 11                                              65  | 
+ | 12                                              64  | 
+ | 13              XC95144XL-10-TQ100              63  | 
+ | 14                                              62  | 
+ | 15                                              61  | 
+ | 16                                              60  | 
+ | 17                                              59  | 
+ | 18                                              58  | 
+ | 19                                              57  | 
+ | 20                                              56  | 
+ | 21                                              55  | 
+ | 22                                              54  | 
+ | 23                                              53  | 
+ | 24                                              52  | 
+ | 25                                              51  | 
+ |   27  29  31  33  35  37  39  41  43  45  47  49    |
+  \26  28  30  32  34  36  38  40  42  44  46  48  50  /
+   --------------------------------------------------  
+
+
+Pin Signal                         Pin Signal                        
+No. Name                           No. Name                          
+  1 KPR                              51 VCC                           
+  2 A_FSB<5>                         52 RA<7>                         
+  3 A_FSB<6>                         53 RA<0>                         
+  4 A_FSB<7>                         54 RA<8>                         
+  5 VCC                              55 RA<10>                        
+  6 A_FSB<8>                         56 RA<9>                         
+  7 A_FSB<9>                         57 VCC                           
+  8 A_FSB<10>                        58 CLK25EN                       
+  9 A_FSB<11>                        59 CLK20EN                       
+ 10 A_FSB<12>                        60 SW<1>                         
+ 11 A_FSB<13>                        61 SW<0>                         
+ 12 A_FSB<14>                        62 GND                           
+ 13 A_FSB<15>                        63 RA<11>                        
+ 14 A_FSB<16>                        64 nRAS                          
+ 15 A_FSB<17>                        65 nRAMLWE                       
+ 16 A_FSB<18>                        66 nRAMUWE                       
+ 17 A_FSB<19>                        67 KPR                           
+ 18 A_FSB<20>                        68 KPR                           
+ 19 A_FSB<21>                        69 GND                           
+ 20 A_FSB<22>                        70 nBERR_FSB                     
+ 21 GND                              71 KPR                           
+ 22 CLK2X_IOB                        72 nBR_IOB                       
+ 23 CLK_IOB                          73 nBG_IOB                       
+ 24 A_FSB<23>                        74 nVMA_IOB                      
+ 25 E_IOB                            75 GND                           
+ 26 VCC                              76 nBERR_IOB                     
+ 27 CLK_FSB                          77 nVPA_IOB                      
+ 28 nDTACK_FSB                       78 nDTACK_IOB                    
+ 29 nWE_FSB                          79 nLDS_IOB                      
+ 30 nLDS_FSB                         80 nUDS_IOB                      
+ 31 GND                              81 nAS_IOB                       
+ 32 nAS_FSB                          82 nADoutLE1                     
+ 33 nUDS_FSB                         83 TDO                           
+ 34 nROMWE                           84 GND                           
+ 35 nROMCS                           85 nADoutLE0                     
+ 36 nCAS                             86 nDinLE                        
+ 37 nOE                              87 nAoutOE                       
+ 38 VCC                              88 VCC                           
+ 39 KPR                              89 nDoutOE                       
+ 40 RA<4>                            90 nDinOE                        
+ 41 RA<3>                            91 nRES                          
+ 42 RA<5>                            92 nIPL2                         
+ 43 RA<2>                            93 nVPA_FSB                      
+ 44 GND                              94 A_FSB<1>                      
+ 45 TDI                              95 A_FSB<2>                      
+ 46 RA<6>                            96 A_FSB<3>                      
+ 47 TMS                              97 A_FSB<4>                      
+ 48 TCK                              98 VCC                           
+ 49 KPR                              99 KPR                           
+ 50 RA<1>                           100 GND                           
+
+
+Legend :  NC  = Not Connected, unbonded pin
+         PGND = Unused I/O configured as additional Ground pin
+         TIE  = Unused I/O floating -- must tie to VCC, GND or other signal
+         KPR  = Unused I/O with weak keeper (leave unconnected)
+         VCC  = Dedicated Power Pin
+         GND  = Dedicated Ground Pin
+         TDI  = Test Data In, JTAG pin
+         TDO  = Test Data Out, JTAG pin
+         TCK  = Test Clock, JTAG pin
+         TMS  = Test Mode Select, JTAG pin
+  PROHIBITED  = User reserved pin
+****************************  Compiler Options  ****************************
+
+Following is a list of all global compiler options used by the fitter run.
+
+Device(s) Specified                         : xc95144xl-10-TQ100
+Optimization Method                         : SPEED
+Multi-Level Logic Optimization              : ON
+Ignore Timing Specifications                : OFF
+Default Register Power Up Value             : LOW
+Keep User Location Constraints              : ON
+What-You-See-Is-What-You-Get                : OFF
+Exhaustive Fitting                          : OFF
+Keep Unused Inputs                          : OFF
+Slew Rate                                   : FAST
+Power Mode                                  : STD
+Ground on Unused IOs                        : OFF
+Set I/O Pin Termination                     : KEEPER
+Global Clock Optimization                   : ON
+Global Set/Reset Optimization               : ON
+Global Ouput Enable Optimization            : ON
+Input Limit                                 : 54
+Pterm Limit                                 : 50
+</pre>
+<form><span class="pgRef"><table width="90%" align="center"><tr>
+<td align="left"><input type="button" onclick="javascript:parent.leftnav.showTop()" onmouseover="window.status='goto top of page'; return true;" onmouseout="window.status=''" value="back to top"></td>
+<td align="right"><input type="button" onclick="window.print()" onmouseover="window.status='print page'; return true;" onmouseout="window.status=''" value="print page"></td>
+</tr></table></span></form>
+</body></html>
