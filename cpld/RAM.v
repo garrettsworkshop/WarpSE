@@ -1,150 +1,253 @@
 module RAM(
+	/* Fast clock and 25 MHz substate */
+	input CLK, input [1:0] SS,
 	/* MC68HC000 interface */
-	input CLK, input [21:1] A, input nWE, input nAS, input nLDS, input nUDS,
-	/* AS cycle detection */
-	input BACT, 
+	input [21:1] A, input nWE, input nAS, input nLDS, input nUDS,
+	input BACT,
 	/* Select and ready signals */
-	input RAMCS, input ROMCS, output Ready,
-	/* Refresh Counter Interface */
-	input RefReq, input RefUrgent, output RefAck,
-	/* DRAM and NOR flash interface */
-	output [11:0] RA, output nRAS, output reg nCAS,
-	output nLWE, output nUWE, output nOE, output nROMCS, output nROMWE);
-	
+	input RAMCS, input ROMCS,
+	/* SDRAM interface */
+	output reg CKE, output reg nCS,
+	output reg nRAS, output reg nCAS, output reg nRWE,
+	output reg [1:0] BA, output reg [11:0] RA,
+	output reg DQMH, output reg DQML);
+
 	/* RAM control state */
-	reg [2:0] RS = 0;
-	reg Once = 0;
-	reg RAMReady = 0;
-	reg RASEL = 0; // RASEL controls /CAS signal
-	
-	/* Refresh state */
-	reg RAMDIS1 = 0;
-	reg RAMDIS2 = 0;
-	wire RAMDIS = RAMDIS1 || RAMDIS2;
-	wire RAMEN = ~RAMDIS;
-	reg RefRAS = 0;
-
-	assign nROMCS = ~ROMCS;
-	assign nRAS =   ~((~nAS && RAMCS && RAMEN && ~RefRAS /* does this add loading to these P-terms? */) || RefRAS);
-	assign nOE =    ~(~nAS &&  nWE);
-	assign nLWE =   ~(~nAS && ~nWE && ~nLDS && RAMEN);
-	assign nUWE =   ~(~nAS && ~nWE && ~nUDS && RAMEN);
-	assign nROMWE = ~(~nAS && ~nWE);
-
-	assign RA[11] = A[19];
-	assign RA[10] = A[21];
-	assign RA[09] = RASEL ? A[20] : A[19];
-	assign RA[08] = (RASEL && RAMCS) ? A[09] : A[18];
-	assign RA[07] = RASEL ? A[08] : A[17];
-	assign RA[06] = RASEL ? A[07] : A[16];
-	assign RA[05] = RASEL ? A[06] : A[15];
-	assign RA[04] = RASEL ? A[05] : A[14];
-	assign RA[03] = RASEL ? A[04] : A[13];
-	assign RA[02] = RASEL ? A[03] : A[12];
-	assign RA[01] = RASEL ? A[02] : A[11];
-	assign RA[00] = RASEL ? A[01] : A[10];
-
+	reg [1:0] RS = 0;
+	reg Once1 = 0;
+	reg Once3 = 0;
 	always @(posedge CLK) begin
-		if (~BACT) Once <= 0;
-		else if (RS==0 && BACT && RAMCS) Once <= 1;
+		if (SS[1:0]==2'h3) case (RS[1:0])
+			2'h0: RS <= 2'h1;
+			2'h1: RS <= ~nAS ? (Once3 ? 2'h3 : 2'h2) : 2'h1;
+			2'h2: RS <= 2'h3;
+			2'h3: RS <= 2'h0;
+		endcase
 	end
 	always @(posedge CLK) begin
-		if (~BACT) RAMDIS2 <= 0;
-		else if ((RS==0 && BACT && RefUrgent && Once && RAMCS) || 
-		         (RS==7 && BACT && RefUrgent && Once)) RAMDIS2 <= 1;
-	end
-	reg BACTr;
-	always @(posedge CLK) begin BACTr <= BACT; end
-	always @(posedge CLK) begin
-		if (RS==0) begin
-			if (( BACT && RefReq && ~RAMCS && ~BACTr) || // Non-urgent refresh can start during first clock of non-RAM cycle
-				 (~BACT && RefUrgent) || // Urgent refresh can start during bus idle
-				 ( BACT && RefUrgent && ~RAMCS)) begin // Urgent refresh can start during non-ram cycle
-				RS <= 2;
-				RAMReady <= 0;
-				RASEL <= 1;
-				RAMDIS1 <= 1;
-			end else if (BACT &&  RAMCS && ~Once) begin
-				// RAM access cycle has priority over urgent refresh if RAM access already begun
-				RS <= 5;
-				RAMReady <= 0;
-				RASEL <= 1;
-				RAMDIS1 <= 0;
-			end else if (BACT &&  RAMCS && RefUrgent) begin
-				// Urgent refresh can start during prolonged RAM access cycle
-				// But we must insert one extra precharge state first.
-				RS <= 1;
-				RAMReady <= 0;
-				RASEL <= 0;
-				RAMDIS1 <= 1;
-			end else begin
-				// No RAM access/refresh requests pending
-				RS <= 0;
-				RAMReady <= 1;
-				RASEL <= 0;
-				RAMDIS1 <= 0;
-			end
-			RefRAS <= 0;
-		end else if (RS==1) begin
-			RS <= 2;
-			RAMReady <= 0;
-			RASEL <= 1;
-			RAMDIS1 <= 1;
-			RefRAS <= 0;
-		end else if (RS==2) begin
-			RS <= 3;
-			RAMReady <= 0;
-			RASEL <= 1;
-			RAMDIS1 <= 1;
-			RefRAS <= 1;
-		end else if (RS==3) begin
-			RS <= 4;
-			RAMReady <= 0;
-			RASEL <= 0;
-			RAMDIS1 <= 1;
-			RefRAS <= 1;
-		end else if (RS==4) begin
-			RS <= 7;
-			RAMReady <= 0;
-			RASEL <= 0;
-			RAMDIS1 <= 1;
-			RefRAS <= 0;
-		end else if (RS==5) begin
-			RS <= 6;
-			RAMReady <= 0;
-			RASEL <= 1;
-			RAMDIS1 <= 0;
-			RefRAS <= 0;
-		end else if (RS==6) begin
-			RS <= 7;
-			RAMReady <= 0;
-			RASEL <= 0;
-			RAMDIS1 <= 0;
-			RefRAS <= 0;
-		end else if (RS==7) begin
-			if (~BACT && RefUrgent) begin
-				RS <= 2;
-				RAMReady <= 0;
-				RAMDIS1 <= 1;
-				RASEL <= 1;
-			end else if (BACT && RefUrgent) begin
-				RS <= 1;
-				RAMReady <= 0;
-				RASEL <= 0;
-				RAMDIS1 <= 1;
-			end else begin
-				RS <= 0;
-				RAMReady <= 1;
-				RASEL <= 0;
-				RAMDIS1 <= 0;
-			end
-			RefRAS <= 0;
+		if (SS[1:0]==2'h1 && RS[1:0]==2'h1 && ~nAS && RAMCS) Once1 <= 1;
+		else if (SS[1:0]==2'h3) begin
+			if (nAS) begin
+				Once1 <= 0;
+				Once3 <= 0;
+			end else Once3 <= Once1;
 		end
 	end
-	always @(negedge CLK) begin nCAS <= ~RASEL; end
 
-	assign RefAck = RefRAS;
-
-	assign Ready = ~RAMCS || RAMReady;
+	/* RAM control and address */
+	always @(posedge CLK) begin
+		case (RS[1:0])
+			2'h0: begin
+				// NOP CKD
+				CKE <= 1'b0;
+				nCS <= 1'b1;
+				nRAS <= 1'b1;
+				nCAS <= 1'b1;
+				nRWE <= 1'b1;
+				DQML <= 1'b1;
+				DQMH <= 1'b1;
+			end 2'h1: begin
+				case (SS[1:0])
+					2'h0: begin
+						if (RAMCS || ROMCS) begin
+							// NOP CKE
+							CKE <= 1'b1;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end else begin
+							// NOP CKD
+							CKE <= 1'b0;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end
+						RA[11:0] <= A[21:10];
+					end 2'h1: begin
+						if (~nAS && ~Once3 && (RAMCS || ROMCS)) begin
+							// ACT CKD
+							CKE <= 1'b0;
+							nCS <= 1'b0;
+							nRAS <= 1'b0;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end else begin
+							// NOP CKD
+							CKE <= 1'b0;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end
+						RA[11:0] <= A[21:10];
+					end 2'h2: begin
+						if (~nAS && ~Once3 && nWE && (RAMCS || ROMCS)) begin
+							// NOP CKE
+							CKE <= 1'b1;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end else begin
+							// NOP CKD
+							CKE <= 1'b0;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end
+						RA[10] <= 1'b1; // auto-precharge
+						RA[9] <= A[9]; // don't care
+						RA[8:0] <= A[9:1];
+					end 2'h3: begin
+						if (~nAS && ~Once3 && nWE && (RAMCS || ROMCS)) begin
+							// RD CKE
+							CKE <= 1'b1;
+							nCS <= 1'b0;
+							nRAS <= 1'b1;
+							nCAS <= 1'b0;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end else begin
+							// NOP CKD
+							CKE <= 1'b0;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end
+						RA[10] <= 1'b1; // auto-precharge
+						RA[9] <= A[19]; // don't care
+						RA[8:0] <= A[9:1];
+					end
+				endcase
+				BA[1] <= 1'b0;
+				BA[0] <= RAMCS;
+			end 2'h2: begin
+				case (SS[1:0])
+					2'h0: begin
+						if (~nWE && RAMCS) begin
+							// NOP CKE
+							CKE <= 1'b1;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end else begin
+							// NOP CKD
+							CKE <= 1'b0;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end
+					end 2'h1: begin
+						if (~nWE && RAMCS) begin
+							// WR CKE
+							CKE <= 1'b1;
+							nCS <= 1'b0;
+							nRAS <= 1'b1;
+							nCAS <= 1'b0;
+							nRWE <= 1'b0;
+							DQML <= nLDS;
+							DQMH <= nUDS;
+						end else begin
+							// NOP CKD
+							CKE <= 1'b0;
+							nCS <= 1'b1;
+							nRAS <= 1'b1;
+							nCAS <= 1'b1;
+							nRWE <= 1'b1;
+							DQML <= 1'b1;
+							DQMH <= 1'b1;
+						end
+					end 2'h2: begin
+						// NOP CKE
+						CKE <= 1'b1;
+						nCS <= 1'b1;
+						nRAS <= 1'b1;
+						nCAS <= 1'b1;
+						nRWE <= 1'b1;
+						DQML <= 1'b1;
+						DQMH <= 1'b1;
+					end 2'h3: begin
+						// PC CKD
+						CKE <= 1'b0;
+						nCS <= 1'b0;
+						nRAS <= 1'b0;
+						nCAS <= 1'b1;
+						nRWE <= 1'b0;
+						DQML <= 1'b1;
+						DQMH <= 1'b1;
+					end
+				endcase
+				// BA[1:0] doesn't change
+				RA[10] <= 1'b1; // auto-precharge / "all"
+				RA[9] <= A[19]; // don't care
+				RA[8:0] <= A[9:1];
+			end 2'h3: begin
+				case (SS[1:0])
+					2'h0: begin
+						// NOP CKE
+						CKE <= 1'b1;
+						nCS <= 1'b1;
+						nRAS <= 1'b1;
+						nCAS <= 1'b1;
+						nRWE <= 1'b1;
+						DQML <= 1'b1;
+						DQMH <= 1'b1;
+					end 2'h1: begin
+						// AREF
+						CKE <= 1'b1;
+						nCS <= 1'b0;
+						nRAS <= 1'b0;
+						nCAS <= 1'b0;
+						nRWE <= 1'b1;
+						DQML <= 1'b1;
+						DQMH <= 1'b1;
+					end 2'h2: begin
+						// NOP CKD
+						CKE <= 1'b0;
+						nCS <= 1'b1;
+						nRAS <= 1'b1;
+						nCAS <= 1'b1;
+						nRWE <= 1'b1;
+						DQML <= 1'b1;
+						DQMH <= 1'b1;
+					end 2'h3: begin
+						// NOP CKD
+						CKE <= 1'b0;
+						nCS <= 1'b1;
+						nRAS <= 1'b1;
+						nCAS <= 1'b1;
+						nRWE <= 1'b1;
+						DQML <= 1'b1;
+						DQMH <= 1'b1;
+					end
+				endcase
+			end
+		endcase
+	end
 
 endmodule

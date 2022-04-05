@@ -7,7 +7,9 @@ module WarpSE(
 	output nDTACK_FSB,
 	output nVPA_FSB,
 	output nBERR_FSB,
-	input CLK_FSB,
+	input CLK,
+	output MCLK,
+	output RCLK,
 	input CLK2X_IOB,
 	input CLK_IOB,
 	input E_IOB,
@@ -22,14 +24,15 @@ module WarpSE(
 	input nBERR_IOB,
 	input nRES,
 	input nIPL2,
-	output nROMCS,
-	output nRAMLWE,
-	output nRAMUWE,
-	output nROMWE,
+	output CKE,
+	output nCS,
 	output nRAS,
 	output nCAS,
+	output nRWE,
+	output [1:0] BA,
 	output [11:0] RA,
-	output nOE,
+	output DQMH,
+	output DQML,
 	output nADoutLE0,
 	output nADoutLE1,
 	output nAoutOE,
@@ -48,8 +51,9 @@ module WarpSE(
 	/* AS cycle detection */
 	wire BACT;
 
-	/* Refresh request/ack signals */
-	wire RefReq, RefUrgent, RefAck;
+	wire [1:0] SS;
+	wire CLK_FSB = (~CLK && SS[1:0]==2'b01);
+	CLK clk(CLK, SS, MCLK, RCLK);
 	
 	wire IOCS, SCSICS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR;
 	CS cs(
@@ -62,19 +66,17 @@ module WarpSE(
 		/* Device select outputs */
 		IOCS, SCSICS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR);
 
-	wire Ready_RAM;
 	RAM ram(
+		CLK, SS,
 		/* MC68HC000 interface */
-		CLK_FSB, A_FSB[21:1], nWE_FSB, nAS_FSB, nLDS_FSB, nUDS_FSB,
+		A_FSB[21:1], nWE_FSB, nAS_FSB, nLDS_FSB, nUDS_FSB,
 		/*  AS cycle detection */
 		BACT,
 		/* Select and ready signals */
-		RAMCS, ROMCS, Ready_RAM,
-		/* Refresh Counter Interface */
-		RefReq, RefUrgent, RefAck,
-		/* DRAM and NOR flash interface */
-		RA[11:0], nRAS, nCAS,
-		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
+		RAMCS, ROMCS,
+		/* SDRAM interface */
+		CKE, nCS, nRAS, nCAS, nRWE,
+		BA, RA, DQMH, DQML);
 
 	wire Ready_IOBS, BERR_IOBS;
 	wire Park, IOREQ, IOACT, IOBERR;
@@ -118,8 +120,6 @@ module WarpSE(
 	CNT cnt(
 		/* FSB clock and AS detection */
 		CLK_FSB, BACT,
-		/* Refresh request */
-		RefReq, RefUrgent, RefAck,
 		/* Timeout signals */
 		TimeoutA, TimeoutB);
 
@@ -140,12 +140,13 @@ module WarpSE(
 	end
 	
 	FSB fsb(
+		CLK, SS,
 		/* MC68HC000 interface */
 		CLK_FSB, nAS_FSB, nDTACK_FSB, nVPA_FSB, nBERR_FSB,
 		/* AS cycle detection */
 		BACT,
 		/* Ready and IA inputs */
-		Ready_RAM, Ready_IOBS, ~(SndRAMCSWR && ~TimeoutA), Disable,
+		Ready_IOBS, ~(SndRAMCSWR && ~TimeoutA), Disable,
 		/* BERR inputs */
 		(~SCSICS && TimeoutB), BERR_IOBS,
 		/* Interrupt acknowledge select */
