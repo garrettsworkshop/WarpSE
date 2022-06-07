@@ -15,7 +15,7 @@ module FSB(
 	always @(negedge FCLK) begin ASrf <= ~nAS; end
 	assign BACT = ~nAS || ASrf;
 	
-	/* Ready and BERR "remember" */
+	/* Ready and BERR bypass */
 	reg Ready0r, Ready1r, Ready2r;
 	reg BERR0r, BERR1r;
 	wire Ready = ~Disable && (Ready0 || Ready0r) && 
