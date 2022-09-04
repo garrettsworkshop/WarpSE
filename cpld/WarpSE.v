@@ -20,7 +20,7 @@ module WarpSE(
 	output nBR_IOB,
 	input nBG_IOB,
 	input nBERR_IOB,
-	input nRES,
+	inout nRES,
 	input nIPL2,
 	output nROMCS,
 	output nRAMLWE,
@@ -36,27 +36,30 @@ module WarpSE(
 	output nDoutOE,
 	output nDinOE,
 	output nDinLE,
-	input [2:0] SW,
-	output CLK20EN,
-	output CLK25EN);
+	input [3:1] SW,
+	output C20MEN,
+	output C25MEN);
 
-	/* DIP switches */
-	assign CLK20EN =  SW[0];
-	assign CLK25EN = !SW[0];
-	wire MotherboardROMEN = !SW[1];
+	/* Reset input and open-drain output */
+	wire nRESin = nRES;
+	wire nRESout;
+	assign nRES = !nRESout ? 1'b0 : 1'bZ;
 
 	/* AS cycle detection */
 	wire BACT;
 
 	/* Refresh request/ack signals */
-	wire RefReq, RefUrgent, RefAck;
+	wire RefReq, RefUrgent;
+
+	/* Fast ROM enable setting */
+	wire FastROMEN;
 	
 	wire IOCS, SCSICS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR;
 	CS cs(
 		/* Setting input */
-		MotherboardROMEN,
+		FastROMEN,
 		/* MC68HC000 interface */
-		A_FSB[23:08], CLK_FSB, nRES, nWE_FSB,
+		A_FSB[23:08], CLK_FSB, nRESin, nWE_FSB,
 		/*  AS cycle detection */
 		BACT,
 		/* Device select outputs */
@@ -71,13 +74,13 @@ module WarpSE(
 		/* Select and ready signals */
 		RAMCS, ROMCS, Ready_RAM,
 		/* Refresh Counter Interface */
-		RefReq, RefUrgent, RefAck,
+		RefReq, RefUrgent,
 		/* DRAM and NOR flash interface */
 		RA[11:0], nRAS, nCAS,
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
 
 	wire Ready_IOBS, BERR_IOBS;
-	wire Park, IOREQ, IOACT, IOBERR;
+	wire IOREQ, IOACT, IOBERR;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
 	assign nADoutLE1 = ~ALE1;
@@ -106,38 +109,28 @@ module WarpSE(
 	IOBM iobm(
 		/* PDS interface */
 		CLK2X_IOB, CLK_IOB, E_IOB,
-		nBR_IOB, nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
-		nAS_IOB, nBG_IOB, nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRES,
+		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
+		nAS_IOB, nBG_IOB, nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
 		/* PDS address and data latch control */
 		nAoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
 		IOACT, IOBERR,
-		Park, IOREQ, IOL0, IOU0, IORW0);
+		IOREQ, IOL0, IOU0, IORW0);
 
-	wire TimeoutA, TimeoutB;
+	wire BERRTimeout, QoSReady;
 	CNT cnt(
-		/* FSB clock and AS detection */
-		CLK_FSB, BACT,
+		/* C16M  clock */
+		C16M,
+		/* FSB clock and bus active signal */
+		FCLK, BACT,
 		/* Refresh request */
-		RefReq, RefUrgent, RefAck,
-		/* Timeout signals */
-		TimeoutA, TimeoutB);
-
-	/* Accelerator Disable Control */
-	reg RESr0 = 0;
-	reg RESr1 = 0;
-	reg RESr2 = 0;
-	reg IPL2r0 = 0;
-	reg IPL2r1 = 0;
-	reg RESDone = 0;
-	reg Disable = 0;
-	assign Park = ~Disable;
-	always @(posedge CLK_FSB) begin
-		RESr0  <= ~nRES;  RESr1  <= RESr0;  RESr2  <= RESr1;
-		IPL2r0 <= ~nIPL2; IPL2r1 <= IPL2r0;
-		if ( RESr0 &&  RESr1 && RESr2 && ~RESDone && IPL2r0 && IPL2r1) Disable <= 1;
-		if (~RESr0 && ~RESr1 && RESr2) RESDone <= 1;
-	end
+		RefReq, RefUrgent,
+		/* BERR and QoS speed limit output */
+		BERRTimeout, QoSReady,
+		/* Reset, switch, button */
+		SW[3:1], nRESin, nRESout, nIPL2, 
+		/* Configuration outputs */
+		nBR_IOB, FastROMEN, C20MEN, C25MEN);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
@@ -145,9 +138,9 @@ module WarpSE(
 		/* AS cycle detection */
 		BACT,
 		/* Ready and IA inputs */
-		Ready_RAM, Ready_IOBS, ~(SndRAMCSWR && ~TimeoutA), Disable,
+		Ready_RAM, Ready_IOBS, (!SndRAMCSWR || QoSReady),
 		/* BERR inputs */
-		(~SCSICS && TimeoutB), BERR_IOBS,
+		(~IOCS && BERRTimeout), BERR_IOBS,
 		/* Interrupt acknowledge select */
 		IACS);
 

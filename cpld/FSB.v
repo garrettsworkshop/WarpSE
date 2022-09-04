@@ -4,7 +4,7 @@ module FSB(
 	/* AS cycle detection */
 	output BACT,
 	/* Ready inputs */
-	input Ready0, input Ready1, input Ready2, input Disable,
+	input Ready0, input Ready1, input Ready2,
 	/* BERR inputs */
 	input BERR0, input BERR1,
 	/* Interrupt acknowledge select */
@@ -15,29 +15,39 @@ module FSB(
 	always @(negedge FCLK) begin ASrf <= ~nAS; end
 	assign BACT = ~nAS || ASrf;
 	
-	/* Ready and BERR bypass */
+	/* Ready generation and bypass */
 	reg Ready0r, Ready1r, Ready2r;
-	reg BERR0r, BERR1r;
-	wire Ready = ~Disable && (Ready0 || Ready0r) && 
-							 (Ready1 || Ready1r) && 
-							 (Ready2 || Ready2r);
-	wire BERR = (BERR0 || BERR0r || BERR1 || BERR1r);
-	assign nBERR = ~(~nAS && BERR);
+	wire Ready = (Ready0 || Ready0r) && 
+				 (Ready1 || Ready1r) && 
+				 (Ready2 || Ready2r);
 	always @(posedge FCLK) begin
 		if (~BACT) begin
 			Ready0r <= 0;
 			Ready1r <= 0;
 			Ready2r <= 0;
-			BERR0r <= 0;
-			BERR1r <= 0;
 		end else begin
 			if (Ready0) Ready0r <= 1;
 			if (Ready1) Ready1r <= 1;
 			if (Ready2) Ready2r <= 1;
-			if (BERR0) BERR0r <= 1;
-			if (BERR1) BERR1r <= 1;
 		end
 	end
+	
+	/* BERR generation */
+	reg BERR0r, BERR1r;
+	always @(posedge FCLK) BERR0r <= BERR0;
+	always @(posedge FCLK) BERR1r <= BERR1;
+	reg BERREN = 0;
+	reg BERRCNT = 0;
+	always @(posedge FCLK) begin
+		if (~BACT) begin
+			BERREN <= 0;
+			BERRCNT <= 0;
+		end else begin
+			BERRCNT <= BERRCNT+1;
+			BERREN <= BERRCNT==3'b111;
+		end
+	end
+	assign nBERR = ~(~nAS && BERREN && (BERR0r || BERR1r));
 
 	/* DTACK/VPA control */
 	reg VPA;
