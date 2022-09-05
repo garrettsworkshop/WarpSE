@@ -6,7 +6,7 @@ module CNT(
 	/* Refresh request */
 	output reg RefReq, output RefUrgent,
 	/* BERR and QoS speed limit output */
-	output reg BERRTimeout, output reg QoSReady,
+	output reg BERRTimeout, output reg QoSGate,
 	/* Reset, switch, button */
 	input [3:1] SW, input nRESin, output reg nRESout, input nIPL2, 
 	/* Configuration outputs */
@@ -60,45 +60,53 @@ module CNT(
 	end
 
 	/* Sound QoS */
-	reg [3:0] SC; // Sound counter
 	always @(posedge C16M) begin
-		if (PORDone && TimerTC) SC <= SC+1; // SC increment
-		if SC[]
+		QoSGate <= Timer[7:6]==2'b11;
 	end
 
-	/* IPL2 and /RESET registration */
-	reg nIPL2r, nRESr;
+	/* Button/switch synchronization */
+	reg RESr, IPL2r;
+	wire DisableSw =  SW[1];
+	reg DisableBtn;
+	wire FastROMSw = !SW[2];
+	reg FastROMBtn;
 	always @(posedge C16M) begin
-		nIPL2r <= nIPL2;
-		nRESr <= nRES;
+		DisableBtn <= !nRES;
+		FastROMBtn <= !nIPL2;
 	end
 
 	/* Startup sequence control */
 	reg PORDone = 0;
+	reg [3:0] SC; // Startup counter
+	always @(posedge C16M) if (PORDone && TimerTC) SC <= SC+1; // SC increment
 	always @(posedge C16M) begin
 		if (!PORDone) begin
-			if (!nRESr) nRESout <= 1;
-			else begin
+			if (!nRESr) begin // While Mac is asserting POR...
+				nRESout <= 1; // Disable reset
+				nBR_IOB <= 1; // Disable bus request
+			end else begin // Once Mac disbles POR...
 				nRESout <= 0; // Re-enable reset
 				PORDone <= 1; // Mark POR done
 				// Decode buttons
-				if (nRESr) begin // Reset not pressed: enable WarpSE
-					nBR_IOB <= 0; // Request Mac bus
-					FastROMEN <= 1; // Fast ROM enabled
-				end else if (!nRES && nIPL2r) begin // Reset only: disable card
+				if ((DisableSw ^ DisableBtn) && !FastROMBtn) begin
+					 // Disable switch XOR disable button and no ROM button
 					nBR_IOB <= 1; // Don't request Mac bus
 					FastROMEN <= 0; // Fast ROM enable is don't care
-				end else if (!nRES && !nIPL2r) begin // Reset+IPL2: MB ROM
+				end else if (( (DisableSw ^ DisableBtn) && FastROMBtn) ||
+							 (!(DisableSw ^ DisableBtn))) begin
+					 // Disable switch XOR disable button and ROM button
+					 // Or neither pressed/enabled
+					 // Or both pressed/enabled
 					nBR_IOB <= 0; // Request Mac bus
-					FastROMEN <= 1; // Fast ROM disabled so as to use motherboard ROM
+					FastROMEN <= FastROMSw ^ FastROMBtn;
 				end
 			end
-		end else if (SC[4]) nRESout <= 1; // Release reset to run
+		end else if (SC[3:2]==2'b11) nRESout <= 1; // Release reset to run after 12 refresh cycles
 	end
 
 	// Enable both oscillators... only mount one
-	assign C20MEN = 1; // SW[0];
-	assign C25MEN = 1; //!SW[0];
+	assign C20MEN = 1;
+	assign C25MEN = 1;
 
 endmodule
 	
