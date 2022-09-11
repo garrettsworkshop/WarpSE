@@ -7,14 +7,14 @@ module IOBM(
 	output nAoutOE, output reg nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
 	output reg IOACT, output reg IOBERR, 
-	input Park, input IOREQ, input IOLDS, input IOUDS, input IOWE);
+	input IOREQ, input IOLDS, input IOUDS, input IOWE);
 
 	/* Bus grant recognition */
 	reg nASr;
 	reg BG = 0;
 	always @(posedge C16M) begin
 		nASr <= nASin;
-		if (nASr) BG <= nBG;
+		if (nASr) BG <= !nBG;
 	end
 
 	/* I/O bus slave port input synchronization */
@@ -107,7 +107,7 @@ module IOBM(
 	end
 
 	/* PDS address and data latch control */
-	assign nAoutOE = ~BG;
+	assign nAoutOE = !BG;
 	always @(negedge C16M) begin nDinLE <= IOS==4 || IOS==5; end
 	always @(posedge C16M) begin
 		nDoutOE <= ~(IOWE && (IOS==1 || IOS==2 || IOS==3 || 

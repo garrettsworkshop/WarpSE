@@ -59,49 +59,41 @@ module CNT(
 		end
 	end
 
-	/* Sound QoS */
+	/* Sound QoS counter */
+	reg [15:0] SC; // Sound counter
 	always @(posedge C16M) begin
-		QoSGate <= Timer[7:6]==2'b11;
+		if (TimerTC) SC <= SC+1; // SC increment
 	end
 
-	/* Button/switch synchronization */
-	reg RESr, IPL2r;
-	wire DisableSw =  SW[1];
-	reg DisableBtn;
-	wire FastROMSw = !SW[2];
-	reg FastROMBtn;
-	always @(posedge C16M) begin
-		DisableBtn <= !nRES;
-		FastROMBtn <= !nIPL2;
-	end
+	/* IPL2 registration */
+	reg nIPL2r;
+	always @(posedge C16M) nIPL2r <= nIPL2;
 
 	/* Startup sequence control */
-	reg PORDone = 0;
-	reg [3:0] SC; // Startup counter
-	always @(posedge C16M) if (PORDone && TimerTC) SC <= SC+1; // SC increment
+	reg PORS = 0;
 	always @(posedge C16M) begin
-		if (!PORDone) begin
-			if (!nRESr) begin // While Mac is asserting POR...
-				nRESout <= 1; // Disable reset
-				nBR_IOB <= 1; // Disable bus request
-			end else begin // Once Mac disbles POR...
-				nRESout <= 0; // Re-enable reset
-				PORDone <= 1; // Mark POR done
-				// Decode buttons
-				if ((DisableSw ^ DisableBtn) && !FastROMBtn) begin
-					 // Disable switch XOR disable button and no ROM button
-					nBR_IOB <= 1; // Don't request Mac bus
-					FastROMEN <= 0; // Fast ROM enable is don't care
-				end else if (( (DisableSw ^ DisableBtn) && FastROMBtn) ||
-							 (!(DisableSw ^ DisableBtn))) begin
-					 // Disable switch XOR disable button and ROM button
-					 // Or neither pressed/enabled
-					 // Or both pressed/enabled
-					nBR_IOB <= 0; // Request Mac bus
-					FastROMEN <= FastROMSw ^ FastROMBtn;
-				end
+		case (PORS[1:0])
+			0: begin
+				nRESout <= !nRESr;
+				if (nRESr) PORS <= 1;
+			end 1: begin
+				nRESout <= 0;
+				if (TimerTC && nIPL2r) PORS <= 2;
+			end 2: begin
+				nRESout <= 0;
+				if (TimerTC && SC[15:0]==16'hFFFF) PORS <= 3;
+			end 3: begin
+				nRESout <= 1;
 			end
-		end else if (SC[3:2]==2'b11) nRESout <= 1; // Release reset to run after 12 refresh cycles
+		endcase
+	end
+
+	/* Accelerator enable/disable control */
+	always @(posedge CLK) begin
+		if (PORS==0) begin
+			if (nRESr) nBR_IOB <= nIPL2r;
+			else nBR_IOB <= 1;
+		end
 	end
 
 	// Enable both oscillators... only mount one
