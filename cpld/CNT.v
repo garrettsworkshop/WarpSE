@@ -18,11 +18,11 @@ module CNT(
 	always @(posedge C16M) Timer <= TimerTC ? 0 : Timer+1;
 
 	/* Refresh timer outputs
-	 *        ___             _______________________________________
-	 * RefReq    |___________|                                       |_________
-	 *        ___^ Timer==0  ^ Timer==17                _____________^ Timer==0
-	 * RefUrg    |_____________________________________|             |_________
-	 *           ^ Timer==0                            ^ Timer==128  ^ Timer==0
+	 *        ___             ______________________________________
+	 * RefReq    |___________|                                      |__________
+	 *        ___ ^ Timer==0  ^ Timer==17               _____________^ Timer==0
+	 * RefUrg    |____________________________________|             |__________
+	 *            ^ Timer==0                           ^ Timer==128  ^ Timer==0
 	 */
 	assign RefUrgent = Timer[7];
 	always @(posedge C16M) begin
@@ -52,6 +52,7 @@ module CNT(
 	reg BERRTimeout = 0;
 	always @(posedge C16M) begin
 		if (NBACTr && TimerTC) begin
+			BERRArm <= 1;
 			if (BERRArm) BERRTimeout <= 1;
 		end else if (!NBACTr) begin
 			BERRArm <= 0;
@@ -60,28 +61,31 @@ module CNT(
 	end
 
 	/* Sound QoS counter */
-	reg [15:0] SC; // Sound counter
+	reg [13:0] SC; // Sound counter
 	always @(posedge C16M) begin
 		if (TimerTC) SC <= SC+1; // SC increment
 	end
 
 	/* IPL2 registration */
-	reg nIPL2r;
-	always @(posedge C16M) nIPL2r <= nIPL2;
+	reg nIPL2r, nRESr;
+	always @(negedge C16M) begin
+		nIPL2r <= nIPL2;
+		nRESr <= nRES;
+	end
 
 	/* Startup sequence control */
-	reg PORS = 0;
+	reg [1:0] PORS = 0;
 	always @(posedge C16M) begin
-		case (PORS[1:0])
+		case (PORS)
 			0: begin
 				nRESout <= !nRESr;
 				if (nRESr) PORS <= 1;
 			end 1: begin
 				nRESout <= 0;
-				if (TimerTC && nIPL2r) PORS <= 2;
+				if (TimerTC && SC[13:0]==14'h3FFF && nIPL2r) PORS <= 2;
 			end 2: begin
 				nRESout <= 0;
-				if (TimerTC && SC[15:0]==16'hFFFF) PORS <= 3;
+				if (TimerTC && SC[13:0]==14'h3FFF) PORS <= 3;
 			end 3: begin
 				nRESout <= 1;
 			end
@@ -101,4 +105,3 @@ module CNT(
 	assign C25MEN = 1;
 
 endmodule
-	
