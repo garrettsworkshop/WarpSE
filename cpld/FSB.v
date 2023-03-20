@@ -5,8 +5,8 @@ module FSB(
 	output BACT, output LBACT,
 	/* Ready inputs */
 	input Ready0, input Ready1, input Ready2,
-	/* BERR inputs */
-	input BERR0, input BERR1,
+	/* BERR input from IOB slave port */
+	input IOBS_BERR,
 	/* Interrupt acknowledge select */
 	input IACS);
 
@@ -17,7 +17,6 @@ module FSB(
 
 	/* LBACT - "Long BACT" */
 	reg [1:0] BACTCnt = 0;
-	reg LBACT;
 	always @(posedge FCLK) begin
 		if (!BACT) begin
 			BACTCnt <= 0;
@@ -46,21 +45,7 @@ module FSB(
 	end
 	
 	/* BERR generation */
-	reg BERR0r, BERR1r;
-	always @(posedge FCLK) BERR0r <= BERR0;
-	always @(posedge FCLK) BERR1r <= BERR1;
-	reg BERREN = 0;
-	reg BERRCNT = 0;
-	always @(posedge FCLK) begin
-		if (~BACT) begin
-			BERREN <= 0;
-			BERRCNT <= 0;
-		end else begin
-			BERRCNT <= BERRCNT+1;
-			BERREN <= BERRCNT==3'b111;
-		end
-	end
-	assign nBERR = ~(~nAS && BERREN && (BERR0r || BERR1r));
+	assign nBERR = ~(~nAS && IOBS_BERR);
 
 	/* DTACK/VPA control */
 	reg VPA;
@@ -69,7 +54,7 @@ module FSB(
 		if (~BACT) begin
 			nDTACK <= 1;
 			VPA <= 0;
-		end else if (Ready && ~BERR) begin			
+		end else if (Ready) begin			
 			nDTACK <= IACS;
 			VPA <= IACS;
 		end

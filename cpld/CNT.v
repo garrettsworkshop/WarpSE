@@ -49,8 +49,8 @@ module CNT(
 	 */
 	assign RefUrgent = Timer[6];
 	always @(posedge C8M) begin
-		if (Timer[3]) RefREQ <= 1;
-		else if (TimerTC) RefREQ <= 0;
+		if (Timer[3]) RefReq <= 1;
+		else if (TimerTC) RefReq <= 0;
 	end
 
 	/* LBACTr - LBACT synchronized to C16M clock domain */
@@ -59,7 +59,6 @@ module CNT(
 
 	/* BERR generation in C8M clock domain */
 	reg BERRArm = 0;
-	reg BERRTimeout = 0;
 	always @(posedge C8M) begin
 		if (LBACTr && TimerTC) begin
 			BERRArm <= 1;
@@ -72,17 +71,21 @@ module CNT(
 
 	/* Long timer counts from 0 to 16384 -- 16385 states == 202.888 ms */
 	reg [14:0] LTimer; // Long timer
-	wire LTimerTC <= LTimer[14];
+	wire LTimerTC = LTimer[14];
 	always @(posedge C8M) begin
 		if (LTimerTC) LTimer <= 0;
 		else LTimer <= LTimer+1;
 	end
-
+	
+	/* IPL2 synchronizer */
+	reg IPL2r;
+	always @(posedge C8M) IPL2r <= !nIPL2;
+	
 	/* Startup sequence control */
 	reg [1:0] PORS = 0;
 	reg Disable = 0;
-	reg BR_IOB = 0;	assign nBR_IOB <= !BR_IOB;
-	assign nAoutOE <= !AoutOE;
+	reg BR_IOB = 0; assign nBR_IOB = !BR_IOB;
+	assign nAoutOE = !AoutOE;
 	always @(posedge C8M) begin
 		case (PORS)
 			0: begin
@@ -93,7 +96,7 @@ module CNT(
 			end 1: begin
 				AoutOE <= 0; // Tristate PDS address and control
 				nRESout <= 0; // Hold reset low
-				Disable <= Disable | !nIPL2; // No need to synchronize /IPL2
+				Disable <= Disable | IPL2r;
 				if (!IPL2r && LTimerTC) begin
 					BR_IOB <= !Disable;
 					PORS <= 2;

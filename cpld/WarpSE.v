@@ -80,7 +80,7 @@ module WarpSE(
 		RA[11:0], nRAS, nCAS,
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
 
-	wire Ready_IOBS, BERR_IOBS;
+	wire IOBS_Ready, IOBS_BERR;
 	wire IOREQ, IOACT, IOBERR;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
@@ -92,7 +92,7 @@ module WarpSE(
 		/* AS cycle detection, FSB BERR */
 		BACT,
 		/* Select and ready signals */
-		IOCS, IOPWCS, Ready_IOBS, BERR_IOBS,
+		IOCS, IOPWCS, IOBS_Ready, IOBS_BERR,
 		/* Read data OE control */
 		nDinOE,
 		/* IOB Master Controller Interface */
@@ -102,11 +102,12 @@ module WarpSE(
 		/* FIFO secondary level control */
 		ALE1);
 	
+	wire AoutOE;
 	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
-	assign nAS_IOB = nAoutOE ? 1'bZ : nAS_IOBout;
-	assign nLDS_IOB = nAoutOE ? 1'bZ : nLDS_IOBout;
-	assign nUDS_IOB = nAoutOE ? 1'bZ : nUDS_IOBout;
-	assign nVMA_IOB = nAoutOE ? 1'bZ : nVMA_IOBout;
+	assign nAS_IOB = AoutOE ? 1'bZ : nAS_IOBout;
+	assign nLDS_IOB = AoutOE ? 1'bZ : nLDS_IOBout;
+	assign nUDS_IOB = AoutOE ? 1'bZ : nUDS_IOBout;
+	assign nVMA_IOB = AoutOE ? 1'bZ : nVMA_IOBout;
 	IOBM iobm(
 		/* PDS interface */
 		CLK2X_IOB, CLK_IOB, E_IOB,
@@ -119,7 +120,6 @@ module WarpSE(
 		IOREQ, IOL0, IOU0, IORW0);
 
 	wire BERRTimeout;
-	wire AoutOE;
 	CNT cnt(
 		/* C8M clock */
 		C8M,
@@ -142,9 +142,9 @@ module WarpSE(
 		/* AS cycle detection */
 		BACT, LBACT,
 		/* Ready and IA inputs */
-		Ready_RAM, Ready_IOBS, (!SndRAMCSWR || QoSReady),
-		/* BERR inputs */
-		(~IOCS && BERRTimeout), BERR_IOBS,
+		Ready_RAM, IOBS_Ready, (!SndRAMCSWR || QoSReady),
+		/* IOB slabe port BERR input */
+		IOBS_BERR,
 		/* Interrupt acknowledge select */
 		IACS);
 

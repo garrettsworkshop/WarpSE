@@ -107,8 +107,8 @@ module IOBM(
 	end
 
 	/* PDS address and data latch control */
-	always @(negedge C16M) begin nDinLE <= IOS==4 || IOS==5; end
-	reg DoutOE = 0; assign nDoutOE <= !(AoutOE && DoutOE);
+	always @(negedge C16M) begin nDinLE = IOS==4 || IOS==5; end
+	reg DoutOE = 0; assign nDoutOE = !(AoutOE && DoutOE);
 	always @(posedge C16M) begin
 		DoutOE <= IOWE && (IOS==1 || IOS==2 || IOS==3 || 
 						   IOS==4 || IOS==5 || IOS==6);

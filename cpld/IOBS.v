@@ -4,7 +4,7 @@ module IOBS(
 	/* AS cycle detection */
 	input BACT,
 	/* Select and ready signals */
-	input IOCS, input IOPWCS, output Ready, output reg BERR,
+	input IOCS, input IOPWCS, output IOBS_Ready, output reg IOBS_BERR,
 	/* Read data OE control */
 	output nDinOE,
 	/* IOB Master Controller Interface */
@@ -109,9 +109,9 @@ module IOBS(
 			BERR <= 0;
 		end else if (Once && (PS==0 || PS==1) && ~IOACTr && IOPWReady) begin
 			IOReady <= ~IOBERR;
-			BERR <= IOBERR;
+			IOBS_BERR <= IOBERR;
 		end
 	end
-	assign Ready = ~IOCS || IOReady || (IOPWCS && IOPWReady);
+	assign IOBS_Ready = ~IOCS || IOReady || (IOPWCS && IOPWReady);
 
 endmodule
