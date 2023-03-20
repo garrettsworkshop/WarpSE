@@ -97,31 +97,26 @@ module RAM(
 				RS <= 2;
 				RAMReady <= 0;
 				RASEL <= 1;
-				RAMDIS1 <= 1;
 			end else if (RefFromRS0Pre) begin
 				// Urgent ref can start during long RAM cycle after access.
 				// Must insert one extra precharge state first by going to RS1.
 				RS <= 1;
 				RAMReady <= 0;
 				RASEL <= 0;
-				RAMDIS1 <= 1;
 			end else if (BACT &&  RAMCS && RAMEN) begin
 				// RAM access cycle has priority over urgent refresh if RAM access already begun
 				RS <= 5;
 				RAMReady <= 0;
 				RASEL <= 1;
-				RAMDIS1 <= 0;
 			end else if (RAMRefFromRS0Pre) begin
 				RS <= 1;
 				RAMReady <= 0;
 				RASEL <= 0;
-				RAMDIS1 <= 1;
 			end else begin
 				// No RAM access/refresh requests pending
 				RS <= 0;
 				RAMReady <= 1;
 				RASEL <= 0;
-				RAMDIS1 <= 0;
 			end
 			RefRAS <= 0;
 		end else if (RS==1) begin
@@ -129,42 +124,36 @@ module RAM(
 			RS <= 2;
 			RAMReady <= 0;
 			RASEL <= 1;
-			RAMDIS1 <= 1;
 			RefRAS <= 0;
 		end else if (RS==2) begin
 			// Refresh RAS pulse asserted ater RS2.
 			RS <= 3;
 			RAMReady <= 0;
 			RASEL <= 1;
-			RAMDIS1 <= 1;
 			RefRAS <= 1;
 		end else if (RS==3) begin
 			// RS3 implements requisite RAS pulse width.
 			RS <= 4;
 			RAMReady <= 0;
 			RASEL <= 0;
-			RAMDIS1 <= 1;
 			RefRAS <= 1;
 		end else if (RS==4) begin
 			// RS4 implements precharge after RAM refresh.
 			RS <= 7;
 			RAMReady <= 0;
 			RASEL <= 0;
-			RAMDIS1 <= 1;
 			RefRAS <= 0;
 		end else if (RS==5) begin
 			// RS5 is first state of R/W operation
 			RS <= 6;
 			RAMReady <= 0;
 			RASEL <= 1;
-			RAMDIS1 <= 0;
 			RefRAS <= 0;
 		end else if (RS==6) begin
 			// RS6 is second state of R/W operation
 			RS <= 7;
 			RAMReady <= 0;
 			RASEL <= 0;
-			RAMDIS1 <= 0;
 			RefRAS <= 0;
 		end else if (RS==7) begin
 			// RS7 is final state of R/W or refresh operation.
@@ -173,7 +162,6 @@ module RAM(
 				 // we know /RAS has been in precharge so we can go to RS2.
 				RS <= 2;
 				RAMReady <= 0;
-				RAMDIS1 <= 1;
 				RASEL <= 1;
 			end else if (BACT && RefUrgent) begin
 				 // But if /AS cycle hasn't terminated and we need to refresh,
@@ -181,13 +169,11 @@ module RAM(
 				RS <= 1;
 				RAMReady <= 0;
 				RASEL <= 0;
-				RAMDIS1 <= 1;
 			end else begin
 				// Otherwise if no urgent refresh request, go to RS0.
 				RS <= 0;
 				RAMReady <= 1;
 				RASEL <= 0;
-				RAMDIS1 <= 0;
 			end
 			RefRAS <= 0;
 		end
