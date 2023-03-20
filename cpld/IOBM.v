@@ -4,7 +4,7 @@ module IOBM(
 	output reg nASout, output reg nLDS, output reg nUDS, output reg nVMA,
 	input nASin, input nBG, input nDTACK, input nVPA, input nBERR, input nRES,
 	/* PDS address and data latch control */
-	output nAoutOE, output reg nDoutOE, output reg ALE0, output reg nDinLE,
+	input AoutOE, output nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
 	output reg IOACT, output reg IOBERR, 
 	input IOREQ, input IOLDS, input IOUDS, input IOWE);
@@ -107,11 +107,11 @@ module IOBM(
 	end
 
 	/* PDS address and data latch control */
-	assign nAoutOE = !BG;
 	always @(negedge C16M) begin nDinLE <= IOS==4 || IOS==5; end
+	reg DoutOE = 0; assign nDoutOE <= !(AoutOE && DoutOE);
 	always @(posedge C16M) begin
-		nDoutOE <= ~(IOWE && (IOS==1 || IOS==2 || IOS==3 || 
-							  IOS==4 || IOS==5 || IOS==6));
+		DoutOE <= IOWE && (IOS==1 || IOS==2 || IOS==3 || 
+						   IOS==4 || IOS==5 || IOS==6);
 	end
 
 	/* AS, DS control */

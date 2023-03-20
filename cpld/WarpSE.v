@@ -47,6 +47,7 @@ module WarpSE(
 
 	/* AS cycle detection */
 	wire BACT;
+	wire LBACT;
 
 	/* Refresh request/ack signals */
 	wire RefReq, RefUrgent;
@@ -112,31 +113,34 @@ module WarpSE(
 		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
 		nAS_IOB, nBG_IOB, nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
 		/* PDS address and data latch control */
-		nAoutOE, nDoutOE, ALE0M, nDinLE,
+		AoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
 		IOACT, IOBERR,
 		IOREQ, IOL0, IOU0, IORW0);
 
-	wire BERRTimeout, QoSReady;
+	wire BERRTimeout;
+	wire AoutOE;
 	CNT cnt(
-		/* C16M  clock */
-		C16M,
-		/* FSB clock and bus active signal */
-		FCLK, BACT,
+		/* C8M clock */
+		C8M,
+		/* FSB bus active signals */
+		BACT, LBACT,
 		/* Refresh request */
 		RefReq, RefUrgent,
 		/* BERR and QoS speed limit output */
-		BERRTimeout, QoSReady,
+		BERRTimeout,
 		/* Reset, switch, button */
 		SW[3:1], nRESin, nRESout, nIPL2, 
+		/* Mac PDS bus master control outputs */
+		nAoutOE, AoutOE, nBR_IOB, 
 		/* Configuration outputs */
-		nBR_IOB, FastROMEN, C20MEN, C25MEN);
+		FastROMEN, C20MEN, C25MEN);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
 		CLK_FSB, nAS_FSB, nDTACK_FSB, nVPA_FSB, nBERR_FSB,
 		/* AS cycle detection */
-		BACT,
+		BACT, LBACT,
 		/* Ready and IA inputs */
 		Ready_RAM, Ready_IOBS, (!SndRAMCSWR || QoSReady),
 		/* BERR inputs */
