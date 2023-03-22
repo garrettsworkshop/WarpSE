@@ -4,12 +4,15 @@ module RAM(
 	/* AS cycle detection */
 	input BACT, 
 	/* Select and ready signals */
-	input RAMCS, input ROMCS, output Ready,
+	input RAMCS, input ROMCS, output RAM_Ready,
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgentIn,
 	/* DRAM and NOR flash interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
 	output nLWE, output nUWE, output nOE, output nROMCS, output nROMWE);
+	
+	// Save BACT from last clock
+	reg BACTr; always @(posedge CLK) BACTr <= BACT;
 	
 	/* RAM control state */
 	reg [2:0] RS = 0;
@@ -18,46 +21,42 @@ module RAM(
 	reg RASEL = 0; // RASEL controls /CAS signal
 
 	/* Refresh request synchronization */
-	reg RefReqR; // Refresh synchronization
-	always @(posedge CLK) RefReqR <= RefReqIn;
+	reg RefReqSync; always @(posedge CLK) RefReqSync <= RefReqIn;
+	reg RegUrgentSync; always @(posedge CLK) RegUrgentSync <= RefUrgentIn;
+	
+	/* Refresh command generation */
 	reg RefReq, RefUrgent; // Refresh commands
 	reg RefDone; // Refresh done "remember"
 	always @(posedge CLK) begin
-		RefReq <= RefReqR && !RefDone;
-		RefUrgent <= RefReqR && RefUrgentIn && !RefDone;
-		if (!RefReqR) RefDone <= 0;
+		RefReq <= RefReqSync && !RefDone;
+		RefUrgent <= RegUrgentSync && !RefDone;
+		if (!RefReqSync) RefDone <= 0;
 		else if (RS==2 || RS==3) RefDone <= 1; // RS2 || RS3 to save 1 input
 	end
 
-	/* RAM enable
-	 */
-
 	/* Refresh init conditions */
-	wire RAMRefFromRS0Next = RS==0 && (
+	wire RefFromRS0Next = RS==0 && (
 		// Non-urgent refresh can start during first clock of non-RAM cycle
 		( BACT && ~BACTr && ~RAMCS && RefReq) ||
 		// Urgent refresh can start during bus idle
 		(~BACT && RefUrgent) ||
 		// Urgent refresh can start during non-ram cycle
 		( BACT && ~RAMCS && RefUrgent));
-	wire RAMRefFromRS0Pre = RS==0 &&
+	wire RefFromRS0Pre = RS==0 &&
 		// Urgent refresh can start during long RAM cycle after RAM access done.
 		BACT &&  RAMCS && !RAMEN && RefUrgent;
-	wire RAMRefFromRS0 = RAMRefFromRS0Next || RAMRefFromRS0Pre;
+	wire RefFromRS0 = RefFromRS0Next || RefFromRS0Pre;
 	// Urgent refresh cannot start when BACT and RAMCS and RAMEN,
 	// since /RAS has already been asserted. For this we wait for RS7.
-	wire RAMRefFromRS7 = RS==7 && RefUrgent;
-
-	/* RAM access start condition */
-	wire RAMStart = RS==0 && BACT && RAMCS && RAMEN;
+	wire RefFromRS7 = RS==7 && RefUrgent;
 
 	/* RAM enable (/AS -> /RAS) */
 	always @(posedge CLK) begin
 		if (RS==0) begin
-			if (RAMRefFromRS0) RAMEN <= 0;
+			if (RefFromRS0) RAMEN <= 0;
 			else if (!BACT) RAMEN <= 1;
 		end else if (RS==7) begin
-			if (RAMRefFromRS7) RAMEN <= 0;
+			if (RefFromRS7) RAMEN <= 0;
 			else if (BACT) RAMEN <= 0;
 			else if (!BACT) RAMEN <= 1;
 		end
@@ -87,9 +86,6 @@ module RAM(
 	assign RA[01] = RASEL ? A[02] : A[11];
 	assign RA[00] = RASEL ? A[01] : A[10];
 
-	 // Save BACT from last clock
-	reg BACTr;
-	always @(posedge CLK) BACTr <= BACT;
 	always @(posedge CLK) begin
 		if (RS==0) begin
 			// In RS0, RAM is idle and ready for new command.
@@ -108,7 +104,7 @@ module RAM(
 				RS <= 5;
 				RAMReady <= 0;
 				RASEL <= 1;
-			end else if (RAMRefFromRS0Pre) begin
+			end else if (RefFromRS0Pre) begin
 				RS <= 1;
 				RAMReady <= 0;
 				RASEL <= 0;
@@ -180,6 +176,6 @@ module RAM(
 	end
 	always @(negedge CLK) begin nCAS <= ~RASEL; end
 
-	assign Ready = ~RAMCS || RAMReady;
+	assign RAM_Ready = ~RAMCS || RAMReady;
 
 endmodule
