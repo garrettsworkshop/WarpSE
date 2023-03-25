@@ -6,7 +6,7 @@ module CNT(
 	/* Reset, switch, button */
 	input [3:1] SW, output reg nRESout, input nIPL2, 
 	/* Mac PDS bus master control outputs */
-	output reg AoutOE, output nAoutOE, output reg nBR_IOB, 
+	output reg AoutOE, output reg nBR_IOB, 
 	/* Configuration outputs */
 	output C20MEN, output C25MEN, output FastROMEN);
 
@@ -53,7 +53,6 @@ module CNT(
 	
 	/* Startup sequence control */
 	reg [1:0] PORS = 0;
-	assign nAoutOE = !AoutOE;
 	always @(negedge C8M) begin
 		case (PORS)
 			0: begin

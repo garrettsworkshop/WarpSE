@@ -30,7 +30,6 @@ E S:PIN25
 FCLK S:PIN27
 nAS_FSB S:PIN32
 nBERR_IOB S:PIN76
-nBG_IOB S:PIN73
 nDTACK_IOB S:PIN78
 nIPL2 S:PIN92
 nLDS_FSB S:PIN30
@@ -52,7 +51,6 @@ RA<6> S:PIN46
 RA<7> S:PIN52
 RA<8> S:PIN54
 RA<9> S:PIN56
-nAoutOE S:PIN87
 nBR_IOB S:PIN72
 nDTACK_FSB S:PIN28
 nAS_IOB S:PIN81
@@ -63,6 +61,7 @@ nVMA_IOB S:PIN74
 nBERR_FSB S:PIN70
 nADoutLE0 S:PIN85
 nADoutLE1 S:PIN82
+nAoutOE S:PIN87
 nDinOE S:PIN90
 nDoutOE S:PIN89
 nOE S:PIN37
@@ -78,43 +77,42 @@ nCAS S:PIN36
 ;The remaining section of the .gyd file is for documentation purposes only.
 ;It shows where your internal equations were placed in the last successful fit.
 
-PARTITION FB1_1 iobm/nASr iobm/VPArr iobm/VPArf iobm/RESrr
-		 iobm/RESrf iobm/IOREQr iobm/Er2 iobm/Er
-		 iobm/DTACKrr iobm/DTACKrf iobm/BERRrr iobm/BERRrf
-		 cnt/IPL2r iobm/IOS_FSM_FFd1 iobm/BG iobs/IOU0
-		 iobs/IOL0 iobm/IOS_FSM_FFd3
-PARTITION FB2_7 ram/RegUrgentSync ram/RefUrgent ram/RefReqSync ram/RefReq
-		 ram/RefRAS ram/BACTr iobs/IOACTr iobs/ALE0
-		 fsb/ASrf iobs/PS_FSM_FFd1 iobs/IOU1 iobs/IOL1
-		
-PARTITION FB3_1 EXP14_ fsb/VPA EXP15_
-PARTITION FB3_5 iobs/Clear1 fsb/Ready0r iobs/IOReady EXP16_
-		 fsb/nDTACK fsb/Ready1r EXP17_ iobs/IORW1
-		 EXP18_ EXP19_ iobs/IORW0 EXP20_
-		 nROMWE_OBUF EXP21_
-PARTITION FB4_1 cnt/nRESout cnt/AoutOE cnt/TimerTC cnt/Timer<0>
-		 nDoutOE_OBUF nDinOE_OBUF cnt/PORS_FSM_FFd2 N0
-		 cnt/LTimer<0> cnt/Timer<3> nVPA_FSB_OBUF cnt/Timer<2>
-		 cnt/Timer<1> cnt/RefUrgent cnt/RefReq cnt/LTimer<3>
-		 cnt/LTimer<2> cnt/LTimer<1>
+PARTITION FB1_1 ram/RegUrgentSync ram/RefUrgent ram/RefReqSync ram/RefReq
+		 ram/RefRAS iobs/IOACTr fsb/ASrf iobs/IOU1
+		 iobs/IOL1 cnt/TimerTC iobs/IOU0 iobs/IOL0
+		 cnt/Timer<3> cnt/Timer<2> cnt/Timer<1> cnt/RefUrgent
+		 iobs/IOReady cnt/RefReq
+PARTITION FB2_9 iobm/VPArr iobm/VPArf iobm/RESrr iobm/RESrf
+		 iobm/IOREQr iobm/Er2 iobm/Er iobm/DTACKrr
+		 iobm/DTACKrf cnt/Timer<0>
+PARTITION FB3_1 fsb/VPA EXP14_ EXP15_
+PARTITION FB3_5 EXP16_ EXP17_ iobs/IOREQ EXP18_
+		 fsb/nDTACK fsb/Ready1r EXP19_ iobs/IORW1
+		 EXP20_ EXP21_ iobs/IORW0 EXP22_
+		 nROMWE_OBUF EXP23_
+PARTITION FB4_1 EXP24_ nAoutOE_OBUF iobm/BERRrr iobm/BERRrf
+		 nDoutOE_OBUF nDinOE_OBUF cnt/PORS_FSM_FFd1 N0
+		 cnt/IPL2r iobm/IOS_FSM_FFd1 nVPA_FSB_OBUF cnt/nRESout
+		 cnt/PORS_FSM_FFd2 cnt/LTimer<0> cnt/LTimer<3> cnt/LTimer<2>
+		 cnt/LTimer<1> iobm/IOBERR
 PARTITION FB5_1 ram/RASEL nROMCS_OBUF ram/RefDone cs/nOverlay1
-		 ram/nCAS nOE_OBUF ram/RS_FSM_FFd1 cs/nOverlay0
+		 ram/nCAS nOE_OBUF fsb/Ready0r cs/nOverlay0
 		 RA_4_OBUF ram/RAMEN RA_3_OBUF RA_5_OBUF
-		 ram/RS_FSM_FFd2 RA_2_OBUF RA_6_OBUF EXP22_
-		 ram/RAMReady EXP23_
+		 ram/RS_FSM_FFd2 RA_2_OBUF RA_6_OBUF EXP25_
+		 ram/RAMReady EXP26_
 PARTITION FB6_1 iobm/ETACK iobm/nVMA iobm/DoutOE iobm/ALE0
-		 iobm/ES<3> iobm/ES<1> iobm/ES<0> iobm/ES<4>
-		 iobm/nLDS iobm/IOS_FSM_FFd2 iobm/nUDS iobm/nASout
-		 iobm/ES<2> nADoutLE1_OBUF nADoutLE0_OBUF iobm/IOACT
-		 iobm/nDinLE iobm/IOBERR
+		 iobm/IOS_FSM_FFd3 iobm/ES<3> iobm/ES<1> iobm/ES<0>
+		 iobm/nLDS iobm/ES<4> iobm/nUDS iobm/nASout
+		 iobm/IOS_FSM_FFd2 nADoutLE1_OBUF nADoutLE0_OBUF iobm/ES<2>
+		 iobm/nDinLE iobm/IOACT
 PARTITION FB7_1 cnt/LTimer<13> RA_1_OBUF cnt/LTimer<9> cnt/LTimer<8>
 		 RA_7_OBUF RA_0_OBUF cnt/LTimer<7> RA_8_OBUF
 		 A_FSB_21_IBUF$BUF0 cnt/LTimer<6> RA_9_OBUF N1
 		 cnt/LTimer<5> N1$BUF0 cnt/LTimer<4> cnt/LTimer<12>
 		 cnt/LTimer<11> cnt/LTimer<10>
-PARTITION FB8_1 cnt/PORS_FSM_FFd1 A_FSB_19_IBUF$BUF0 ram/RS_FSM_FFd3
-PARTITION FB8_5 nRAS_OBUF nRAMLWE_OBUF iobs/PS_FSM_FFd2 nRAMUWE_OBUF
-		 EXP24_ iobs/Load1 EXP25_ iobs/nBERR_FSB
-		 EXP26_ iobs/IOREQ cnt/nBR_IOB EXP27_
-		 iobs/Once EXP28_
+PARTITION FB8_1 iobs/Once A_FSB_19_IBUF$BUF0 iobs/Clear1 iobs/ALE0
+		 nRAS_OBUF nRAMLWE_OBUF iobs/PS_FSM_FFd1 nRAMUWE_OBUF
+		 ram/RS_FSM_FFd1 EXP27_ ram/RS_FSM_FFd3 iobs/nBERR_FSB
+		 EXP28_ iobs/PS_FSM_FFd2 cnt/nBR_IOB iobs/Load1
+		 ram/BACTr EXP29_
 

@@ -16,6 +16,8 @@ module CS(
 	always @(posedge CLK, negedge nRES) begin
 		if (~nRES) nOverlay0 <= 0;
 		else if (BACT && ODCS) nOverlay0 <= 1;
+	end
+	always @(posedge CLK) begin
 		if (~BACT) nOverlay1 <= nOverlay0;
 	end
 

@@ -238,7 +238,6 @@ Synthesizing Unit <IOBM>.
     Found 1-bit register for signal <nVMA>.
     Found 1-bit register for signal <BERRrf>.
     Found 1-bit register for signal <BERRrr>.
-    Found 1-bit register for signal <BG>.
     Found 1-bit register for signal <DoutOE>.
     Found 1-bit register for signal <DTACKrf>.
     Found 1-bit register for signal <DTACKrr>.
@@ -247,7 +246,6 @@ Synthesizing Unit <IOBM>.
     Found 5-bit up counter for signal <ES>.
     Found 1-bit register for signal <ETACK>.
     Found 1-bit register for signal <IOREQr>.
-    Found 1-bit register for signal <nASr>.
     Found 1-bit register for signal <RESrf>.
     Found 1-bit register for signal <RESrr>.
     Found 1-bit register for signal <VPArf>.
@@ -255,7 +253,7 @@ Synthesizing Unit <IOBM>.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   1 Counter(s).
-	inferred  22 D-type flip-flop(s).
+	inferred  20 D-type flip-flop(s).
 Unit <IOBM> synthesized.
 
 
@@ -304,6 +302,7 @@ Unit <FSB> synthesized.
 
 Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
+WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:646 - Signal <SndRAMCSWR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
 WARNING:Xst:646 - Signal <SCSICS> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
@@ -324,8 +323,8 @@ Macro Statistics
  14-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 63
- 1-bit register                                        : 63
+# Registers                                            : 61
+ 1-bit register                                        : 61
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
 
@@ -393,8 +392,8 @@ Macro Statistics
  14-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 51
- Flip-Flops                                            : 51
+# Registers                                            : 49
+ Flip-Flops                                            : 49
 
 =========================================================================
 
@@ -403,6 +402,7 @@ Macro Statistics
 =========================================================================
 
 Optimizing unit <WarpSE> ...
+  implementation constraint: INIT=r	 : cs/nOverlay0
   implementation constraint: INIT=r	 : fsb/ASrf
   implementation constraint: INIT=r	 : iobm/IOREQr
   implementation constraint: INIT=r	 : cnt/PORS_FSM_FFd1
@@ -412,20 +412,18 @@ Optimizing unit <WarpSE> ...
   implementation constraint: INIT=r	 : ram/RAMReady
   implementation constraint: INIT=r	 : ram/RASEL
   implementation constraint: INIT=r	 : ram/RefRAS
-  implementation constraint: INIT=r	 : cs/nOverlay0
   implementation constraint: INIT=r	 : iobs/IOACTr
   implementation constraint: INIT=r	 : iobs/Once
-  implementation constraint: INIT=r	 : ram/RS_FSM_FFd1
-  implementation constraint: INIT=r	 : iobm/BG
-  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd3
+  implementation constraint: INIT=r	 : ram/RS_FSM_FFd3
   implementation constraint: INIT=r	 : iobm/ETACK
   implementation constraint: INIT=r	 : iobm/DoutOE
-  implementation constraint: INIT=r	 : ram/RS_FSM_FFd3
-  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd2
-  implementation constraint: INIT=r	 : iobs/PS_FSM_FFd2
-  implementation constraint: INIT=r	 : iobs/PS_FSM_FFd1
-  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd1
   implementation constraint: INIT=r	 : ram/RS_FSM_FFd2
+  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd2
+  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd3
+  implementation constraint: INIT=r	 : iobs/PS_FSM_FFd2
+  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd1
+  implementation constraint: INIT=r	 : iobs/PS_FSM_FFd1
+  implementation constraint: INIT=r	 : ram/RS_FSM_FFd1
   implementation constraint: INIT=r	 : cnt/Timer_3
   implementation constraint: INIT=r	 : cnt/Timer_2
   implementation constraint: INIT=r	 : cnt/Timer_1
@@ -461,26 +459,24 @@ Design Statistics
 # IOs                              : 75
 
 Cell Usage :
-# BELS                             : 577
+# BELS                             : 574
 #      AND2                        : 172
-#      AND3                        : 20
+#      AND3                        : 19
 #      AND4                        : 15
 #      AND5                        : 3
 #      AND6                        : 1
 #      AND8                        : 4
 #      GND                         : 1
-#      INV                         : 238
+#      INV                         : 236
 #      OR2                         : 98
 #      OR3                         : 4
 #      VCC                         : 1
 #      XOR2                        : 20
-# FlipFlops/Latches                : 96
-#      FD                          : 63
-#      FDCE                        : 33
-# Tri-States                       : 1
-#      BUFE                        : 1
-# IO Buffers                       : 72
-#      IBUF                        : 36
+# FlipFlops/Latches                : 94
+#      FD                          : 62
+#      FDCE                        : 32
+# IO Buffers                       : 71
+#      IBUF                        : 35
 #      IOBUFE                      : 1
 #      OBUF                        : 31
 #      OBUFE                       : 4
@@ -488,13 +484,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 15.00 secs
-Total CPU time to Xst completion: 15.04 secs
+Total CPU time to Xst completion: 15.07 secs
  
 --> 
 
 Total memory usage is 266244 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    4 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
