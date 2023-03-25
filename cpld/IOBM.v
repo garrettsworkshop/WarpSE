@@ -1,21 +1,13 @@
 module IOBM(
 	/* PDS interface */
-	input C16M, input C8M, input E,
+	input C16M, input C8M, input E, input Er,
 	output reg nASout, output reg nLDS, output reg nUDS, output reg nVMA,
-	input nASin, input nBG, input nDTACK, input nVPA, input nBERR, input nRES,
+	input nDTACK, input nVPA, input nBERR, input nRES,
 	/* PDS address and data latch control */
 	input AoutOE, output nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
 	output reg IOACT, output reg IOBERR, 
 	input IOREQ, input IOLDS, input IOUDS, input IOWE);
-
-	/* Bus grant recognition */
-	reg nASr;
-	reg BG = 0;
-	always @(posedge C16M) begin
-		nASr <= nASin;
-		if (nASr) BG <= !nBG;
-	end
 
 	/* I/O bus slave port input synchronization */
 	reg IOREQr = 0;
@@ -42,9 +34,7 @@ module IOBM(
 
 	/* E clock state */
 	reg [4:0] ES;
-	reg Er;
 	reg Er2;
-	always @(negedge C8M) begin Er <= E; end
 	always @(posedge C16M) begin Er2 <= Er; end
 	always @(posedge C16M) begin
 		if (Er2 && ~Er) ES <= 1;
@@ -64,7 +54,7 @@ module IOBM(
 	reg [2:0] IOS = 0;
 	always @(posedge C16M) begin
 		if (IOS==0) begin
-			if (~C8M && IOREQr && BG) IOS <= 1;
+			if (~C8M && IOREQr && AoutOE) IOS <= 1;
 			else IOS <= 0;
 			IOACT <= IOREQr;
 			ALE0 <= IOREQr;

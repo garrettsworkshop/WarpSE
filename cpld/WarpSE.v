@@ -38,12 +38,15 @@ module WarpSE(
 	output nDinLE,
 	input [3:1] SW,
 	output C20MEN,
-	output C25MEN);
+	output C25MEN);	
 
 	/* Reset input and open-drain output */
 	wire nRESin = nRES;
 	wire nRESout;
 	assign nRES = !nRESout ? 1'b0 : 1'bZ;
+
+	/* E clock registration */
+	reg Er; always @(negedge C8M) begin Er <= E; end
 
 	/* AS cycle detection */
 	wire BACT;
@@ -103,32 +106,32 @@ module WarpSE(
 		ALE1);
 	
 	wire AoutOE;
+	assign nAoutOE = !AoutOE;
 	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
-	assign nAS_IOB = AoutOE ? 1'bZ : nAS_IOBout;
-	assign nLDS_IOB = AoutOE ? 1'bZ : nLDS_IOBout;
-	assign nUDS_IOB = AoutOE ? 1'bZ : nUDS_IOBout;
-	assign nVMA_IOB = AoutOE ? 1'bZ : nVMA_IOBout;
+	assign nAS_IOB = AoutOE ? nAS_IOBout : 1'bZ;
+	assign nLDS_IOB = AoutOE ? nLDS_IOBout : 1'bZ;
+	assign nUDS_IOB = AoutOE ? nUDS_IOBout : 1'bZ;
+	assign nVMA_IOB = AoutOE ? nVMA_IOBout : 1'bZ;
 	IOBM iobm(
 		/* PDS interface */
-		C16M, C8M, E,
+		C16M, C8M, E, Er,
 		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
-		nAS_IOB, nBG_IOB, nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
+		nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
 		/* PDS address and data latch control */
 		AoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
 		IOACT, IOBERR,
 		IOREQ, IOL0, IOU0, IORW0);
 
-	
 	CNT cnt(
 		/* C8M and E clocks */
-		C8M, E,
+		C8M, E, Er,
 		/* Refresh request */
 		RefReq, RefUrgent,
 		/* Reset, switch, button */
 		SW[3:1], nRESout, nIPL2, 
 		/* Mac PDS bus master control outputs */
-		nAoutOE, AoutOE, nBR_IOB, 
+		AoutOE, nBR_IOB, 
 		/* Configuration outputs */
 		FastROMEN, C20MEN, C25MEN);
 	
