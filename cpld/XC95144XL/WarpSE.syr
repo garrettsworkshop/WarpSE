@@ -56,8 +56,8 @@ Equivalent register Removal        : YES
 
 ---- General Options
 Optimization Goal                  : Speed
-Optimization Effort                : 2
-Keep Hierarchy                     : No
+Optimization Effort                : 1
+Keep Hierarchy                     : Yes
 Netlist Hierarchy                  : As_Optimized
 RTL Output                         : Yes
 Hierarchy Separator                : /
@@ -144,21 +144,21 @@ Performing bidirectional port resolution...
 
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
-    Found 1-bit register for signal <nOverlay0>.
-    Found 1-bit register for signal <nOverlay1>.
+    Found 1-bit register for signal <nOverlay>.
     Summary:
-	inferred   2 D-type flip-flop(s).
+	inferred   1 D-type flip-flop(s).
 Unit <CS> synthesized.
 
 
 Synthesizing Unit <RAM>.
     Related source file is "../RAM.v".
+WARNING:Xst:646 - Signal <RefRAS> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found finite state machine <FSM_0> for signal <RS>.
     -----------------------------------------------------------------------
     | States             | 8                                              |
     | Transitions        | 21                                             |
     | Inputs             | 6                                              |
-    | Outputs            | 9                                              |
+    | Outputs            | 8                                              |
     | Clock              | CLK                       (rising_edge)        |
     | Power Up State     | 000                                            |
     | Encoding           | automatic                                      |
@@ -170,14 +170,13 @@ Synthesizing Unit <RAM>.
     Found 1-bit register for signal <RAMReady>.
     Found 1-bit register for signal <RASEL>.
     Found 1-bit register for signal <RefDone>.
-    Found 1-bit register for signal <RefRAS>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <RefReqSync>.
-    Found 1-bit register for signal <RefUrgent>.
-    Found 1-bit register for signal <RegUrgentSync>.
+    Found 1-bit register for signal <RefUrg>.
+    Found 1-bit register for signal <RegUrgSync>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred  10 D-type flip-flop(s).
+	inferred   9 D-type flip-flop(s).
 Unit <RAM> synthesized.
 
 
@@ -259,25 +258,25 @@ Unit <IOBM> synthesized.
 
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
-WARNING:Xst:647 - Input <SW> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-    Found finite state machine <FSM_3> for signal <PORS>.
+    Found finite state machine <FSM_3> for signal <INITS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
     | Transitions        | 8                                              |
     | Inputs             | 2                                              |
     | Outputs            | 4                                              |
-    | Clock              | C8M                       (falling_edge)       |
+    | Clock              | CLK                       (rising_edge)        |
     | Power Up State     | 00                                             |
     | Encoding           | automatic                                      |
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
-    Found 1-bit register for signal <RefUrgent>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
-    Found 1-bit register for signal <IPL2r>.
-    Found 14-bit up counter for signal <LTimer>.
+    Found 2-bit register for signal <Er>.
+    Found 13-bit up counter for signal <LTimer>.
+    Found 1-bit register for signal <LTimerTC>.
+    Found 1-bit register for signal <nIPL2r>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTC>.
     Summary:
@@ -302,9 +301,9 @@ Unit <FSB> synthesized.
 
 Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
+WARNING:Xst:647 - Input <SW> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:646 - Signal <SndRAMCSWR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <SCSICS> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nLDS_IOB>.
     Found 1-bit tristate buffer for signal <nRES>.
@@ -320,11 +319,12 @@ HDL Synthesis Report
 
 Macro Statistics
 # Counters                                             : 3
- 14-bit up counter                                     : 1
+ 13-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 61
- 1-bit register                                        : 61
+# Registers                                            : 60
+ 1-bit register                                        : 59
+ 2-bit register                                        : 1
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
 
@@ -335,7 +335,7 @@ Macro Statistics
 =========================================================================
 
 Analyzing FSM <FSM_3> for best encoding.
-Optimizing FSM <cnt/PORS/FSM> on signal <PORS[1:2]> with johnson encoding.
+Optimizing FSM <cnt/INITS/FSM> on signal <INITS[1:2]> with johnson encoding.
 -------------------
  State | Encoding
 -------------------
@@ -369,18 +369,18 @@ Optimizing FSM <iobs/PS/FSM> on signal <PS[1:2]> with johnson encoding.
  01    | 10
 -------------------
 Analyzing FSM <FSM_0> for best encoding.
-Optimizing FSM <ram/RS/FSM> on signal <RS[1:3]> with compact encoding.
+Optimizing FSM <ram/RS/FSM> on signal <RS[1:3]> with sequential encoding.
 -------------------
  State | Encoding
 -------------------
  000   | 000
- 010   | 010
- 001   | 101
- 101   | 001
- 011   | 011
- 100   | 111
- 111   | 100
- 110   | 110
+ 010   | 001
+ 001   | 010
+ 101   | 011
+ 011   | 100
+ 100   | 101
+ 111   | 110
+ 110   | 111
 -------------------
 
 =========================================================================
@@ -389,11 +389,11 @@ Advanced HDL Synthesis Report
 Macro Statistics
 # FSMs                                                 : 4
 # Counters                                             : 3
- 14-bit up counter                                     : 1
+ 13-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 49
- Flip-Flops                                            : 49
+# Registers                                            : 47
+ Flip-Flops                                            : 47
 
 =========================================================================
 
@@ -402,32 +402,42 @@ Macro Statistics
 =========================================================================
 
 Optimizing unit <WarpSE> ...
-  implementation constraint: INIT=r	 : cs/nOverlay0
-  implementation constraint: INIT=r	 : fsb/ASrf
-  implementation constraint: INIT=r	 : iobm/IOREQr
-  implementation constraint: INIT=r	 : cnt/PORS_FSM_FFd1
-  implementation constraint: INIT=r	 : cnt/PORS_FSM_FFd2
-  implementation constraint: INIT=r	 : cs/nOverlay1
-  implementation constraint: INIT=r	 : ram/RAMEN
-  implementation constraint: INIT=r	 : ram/RAMReady
-  implementation constraint: INIT=r	 : ram/RASEL
-  implementation constraint: INIT=r	 : ram/RefRAS
-  implementation constraint: INIT=r	 : iobs/IOACTr
-  implementation constraint: INIT=r	 : iobs/Once
-  implementation constraint: INIT=r	 : ram/RS_FSM_FFd3
-  implementation constraint: INIT=r	 : iobm/ETACK
-  implementation constraint: INIT=r	 : iobm/DoutOE
-  implementation constraint: INIT=r	 : ram/RS_FSM_FFd2
-  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd2
-  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd3
-  implementation constraint: INIT=r	 : iobs/PS_FSM_FFd2
-  implementation constraint: INIT=r	 : iobm/IOS_FSM_FFd1
-  implementation constraint: INIT=r	 : iobs/PS_FSM_FFd1
-  implementation constraint: INIT=r	 : ram/RS_FSM_FFd1
-  implementation constraint: INIT=r	 : cnt/Timer_3
-  implementation constraint: INIT=r	 : cnt/Timer_2
-  implementation constraint: INIT=r	 : cnt/Timer_1
-  implementation constraint: INIT=r	 : cnt/Timer_0
+
+Optimizing unit <CS> ...
+  implementation constraint: INIT=r	 : nOverlay
+
+Optimizing unit <RAM> ...
+  implementation constraint: INIT=r	 : RAMEN
+  implementation constraint: INIT=r	 : RAMReady
+  implementation constraint: INIT=r	 : RASEL
+  implementation constraint: INIT=r	 : RS_FSM_FFd1
+  implementation constraint: INIT=r	 : RS_FSM_FFd2
+  implementation constraint: INIT=r	 : RS_FSM_FFd3
+
+Optimizing unit <IOBS> ...
+  implementation constraint: INIT=r	 : IOACTr
+  implementation constraint: INIT=r	 : PS_FSM_FFd2
+  implementation constraint: INIT=r	 : Once
+  implementation constraint: INIT=r	 : PS_FSM_FFd1
+
+Optimizing unit <FSB> ...
+  implementation constraint: INIT=r	 : ASrf
+
+Optimizing unit <IOBM> ...
+  implementation constraint: INIT=r	 : IOREQr
+  implementation constraint: INIT=r	 : ETACK
+  implementation constraint: INIT=r	 : DoutOE
+  implementation constraint: INIT=r	 : IOS_FSM_FFd1
+  implementation constraint: INIT=r	 : IOS_FSM_FFd2
+  implementation constraint: INIT=r	 : IOS_FSM_FFd3
+
+Optimizing unit <CNT> ...
+  implementation constraint: INIT=r	 : Timer_3
+  implementation constraint: INIT=r	 : Timer_0
+  implementation constraint: INIT=r	 : Timer_1
+  implementation constraint: INIT=r	 : INITS_FSM_FFd2
+  implementation constraint: INIT=r	 : Timer_2
+  implementation constraint: INIT=r	 : INITS_FSM_FFd1
 
 =========================================================================
 *                           Partition Report                            *
@@ -448,7 +458,7 @@ RTL Top Level Output File Name     : WarpSE.ngr
 Top Level Output File Name         : WarpSE
 Output Format                      : NGC
 Optimization Goal                  : Speed
-Keep Hierarchy                     : No
+Keep Hierarchy                     : Yes
 Target Technology                  : XC9500XL CPLDs
 Macro Preserve                     : YES
 XOR Preserve                       : YES
@@ -459,22 +469,23 @@ Design Statistics
 # IOs                              : 75
 
 Cell Usage :
-# BELS                             : 574
+# BELS                             : 571
 #      AND2                        : 172
-#      AND3                        : 19
-#      AND4                        : 15
+#      AND3                        : 27
+#      AND4                        : 7
 #      AND5                        : 3
-#      AND6                        : 1
-#      AND8                        : 4
-#      GND                         : 1
-#      INV                         : 236
-#      OR2                         : 98
+#      AND6                        : 2
+#      AND8                        : 3
+#      GND                         : 6
+#      INV                         : 226
+#      OR2                         : 97
 #      OR3                         : 4
-#      VCC                         : 1
+#      OR4                         : 1
+#      VCC                         : 3
 #      XOR2                        : 20
-# FlipFlops/Latches                : 94
-#      FD                          : 62
-#      FDCE                        : 32
+# FlipFlops/Latches                : 93
+#      FD                          : 56
+#      FDCE                        : 37
 # IO Buffers                       : 71
 #      IBUF                        : 35
 #      IOBUFE                      : 1
@@ -483,12 +494,12 @@ Cell Usage :
 =========================================================================
 
 
-Total REAL time to Xst completion: 15.00 secs
-Total CPU time to Xst completion: 15.07 secs
+Total REAL time to Xst completion: 5.00 secs
+Total CPU time to Xst completion: 4.98 secs
  
 --> 
 
-Total memory usage is 266244 kilobytes
+Total memory usage is 264516 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    5 (   0 filtered)

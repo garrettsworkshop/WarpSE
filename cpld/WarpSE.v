@@ -38,36 +38,33 @@ module WarpSE(
 	output nDinLE,
 	input [3:1] SW,
 	output C20MEN,
-	output C25MEN);	
+	output C25MEN);
+
+	/* FSB clock oscillator enables */
+	// Enable both oscillators... only mount one
+	assign C20MEN = 1;
+	assign C25MEN = 1;
 
 	/* Reset input and open-drain output */
 	wire nRESin = nRES;
 	wire nRESout;
 	assign nRES = !nRESout ? 1'b0 : 1'bZ;
 
-	/* E clock registration */
-	reg Er; always @(negedge C8M) begin Er <= E; end
-
 	/* AS cycle detection */
 	wire BACT;
 
 	/* Refresh request/ack signals */
-	wire RefReq, RefUrgent;
-
-	/* Fast ROM enable setting */
-	wire FastROMEN;
+	wire RefReq, RefUrg;
 	
 	/* FSB chip select signals */
-	wire IOCS, SCSICS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR;
+	wire IOCS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR;
 	CS cs(
-		/* Setting input */
-		FastROMEN,
 		/* MC68HC000 interface */
 		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
 		/*  AS cycle detection */
 		BACT,
 		/* Device select outputs */
-		IOCS, SCSICS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR);
+		IOCS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR);
 
 	wire RAM_Ready;
 	RAM ram(
@@ -78,7 +75,7 @@ module WarpSE(
 		/* Select and ready signals */
 		RAMCS, ROMCS, RAM_Ready,
 		/* Refresh Counter Interface */
-		RefReq, RefUrgent,
+		RefReq, RefUrg,
 		/* DRAM and NOR flash interface */
 		RA[11:0], nRAS, nCAS,
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
@@ -114,26 +111,24 @@ module WarpSE(
 	assign nVMA_IOB = AoutOE ? nVMA_IOBout : 1'bZ;
 	IOBM iobm(
 		/* PDS interface */
-		C16M, C8M, E, Er,
+		C16M, C8M, E,
 		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
 		nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
 		/* PDS address and data latch control */
 		AoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
 		IOACT, IOBERR,
-		IOREQ, IOL0, IOU0, IORW0);
+		IOREQ, IOL0, IOU0, !IORW0);
 
 	CNT cnt(
-		/* C8M and E clocks */
-		C8M, E, Er,
+		/* FSB clock and E clock inputs */
+		FCLK, E,
 		/* Refresh request */
-		RefReq, RefUrgent,
-		/* Reset, switch, button */
-		SW[3:1], nRESout, nIPL2, 
+		RefReq, RefUrg,
+		/* Reset, button */
+		nRESout, nIPL2, 
 		/* Mac PDS bus master control outputs */
-		AoutOE, nBR_IOB, 
-		/* Configuration outputs */
-		FastROMEN, C20MEN, C25MEN);
+		AoutOE, nBR_IOB);
 	
 	FSB fsb(
 		/* MC68HC000 interface */

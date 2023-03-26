@@ -6,7 +6,7 @@ module RAM(
 	/* Select and ready signals */
 	input RAMCS, input ROMCS, output RAM_Ready,
 	/* Refresh Counter Interface */
-	input RefReqIn, input RefUrgentIn,
+	input RefReqIn, input RefUrgIn,
 	/* DRAM and NOR flash interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
 	output nLWE, output nUWE, output nOE, output nROMCS, output nROMWE);
@@ -22,14 +22,14 @@ module RAM(
 
 	/* Refresh request synchronization */
 	reg RefReqSync; always @(posedge CLK) RefReqSync <= RefReqIn;
-	reg RegUrgentSync; always @(posedge CLK) RegUrgentSync <= RefUrgentIn;
+	reg RegUrgSync; always @(posedge CLK) RegUrgSync <= RefUrgIn;
 	
 	/* Refresh command generation */
-	reg RefReq, RefUrgent; // Refresh commands
+	reg RefReq, RefUrg; // Refresh commands
 	reg RefDone; // Refresh done "remember"
 	always @(posedge CLK) begin
 		RefReq <= RefReqSync && !RefDone;
-		RefUrgent <= RegUrgentSync && !RefDone;
+		RefUrg <= RegUrgSync && !RefDone;
 		if (!RefReqSync) RefDone <= 0;
 		else if (RS==2 || RS==3) RefDone <= 1; // RS2 || RS3 to save 1 input
 	end
@@ -39,16 +39,16 @@ module RAM(
 		// Non-urgent refresh can start during first clock of non-RAM cycle
 		( BACT && ~BACTr && ~RAMCS && RefReq) ||
 		// Urgent refresh can start during bus idle
-		(~BACT && RefUrgent) ||
+		(~BACT && RefUrg) ||
 		// Urgent refresh can start during non-ram cycle
-		( BACT && ~RAMCS && RefUrgent));
+		( BACT && ~RAMCS && RefUrg));
 	wire RefFromRS0Pre = RS==0 &&
 		// Urgent refresh can start during long RAM cycle after RAM access done.
-		BACT &&  RAMCS && !RAMEN && RefUrgent;
+		BACT &&  RAMCS && !RAMEN && RefUrg;
 	wire RefFromRS0 = RefFromRS0Next || RefFromRS0Pre;
 	// Urgent refresh cannot start when BACT and RAMCS and RAMEN,
 	// since /RAS has already been asserted. For this we wait for RS7.
-	wire RefFromRS7 = RS==7 && RefUrgent;
+	wire RefFromRS7 = RS==7 && RefUrg;
 
 	/* RAM enable (/AS -> /RAS) */
 	always @(posedge CLK) begin
@@ -65,8 +65,8 @@ module RAM(
 	/* Refresh state */
 	reg RefRAS = 0;
 
-	assign nROMCS = ~ROMCS;
-	assign nRAS =   ~((~nAS && RAMCS && RAMEN) || RefRAS);
+	assign nROMCS = !ROMCS;
+	assign nRAS =   1;//~((~nAS && RAMCS && RAMEN) || RefRAS);
 	assign nOE =    ~(~nAS &&  nWE);
 	assign nLWE =   ~(~nAS && ~nWE && ~nLDS && RAMEN);
 	assign nUWE =   ~(~nAS && ~nWE && ~nUDS && RAMEN);
@@ -153,13 +153,13 @@ module RAM(
 			RefRAS <= 0;
 		end else if (RS==7) begin
 			// RS7 is final state of R/W or refresh operation.
-			if (~BACT && RefUrgent) begin
+			if (~BACT && RefUrg) begin
 				 // If /AS cycle terminated and urgent refresh request,
 				 // we know /RAS has been in precharge so we can go to RS2.
 				RS <= 2;
 				RAMReady <= 0;
 				RASEL <= 1;
-			end else if (BACT && RefUrgent) begin
+			end else if (BACT && RefUrg) begin
 				 // But if /AS cycle hasn't terminated and we need to refresh,
 				 // we need to go to RS1 to add additional precharge time.
 				RS <= 1;

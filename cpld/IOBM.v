@@ -1,6 +1,6 @@
 module IOBM(
 	/* PDS interface */
-	input C16M, input C8M, input E, input Er,
+	input C16M, input C8M, input E,
 	output reg nASout, output reg nLDS, output reg nUDS, output reg nVMA,
 	input nDTACK, input nVPA, input nBERR, input nRES,
 	/* PDS address and data latch control */
@@ -32,10 +32,12 @@ module IOBM(
 	wire VPA = VPArr && VPArf;
 	wire RES = RESrr && RESrf;
 
+	/* E clock synchronization */
+	reg Er; always @(negedge C8M) begin Er <= E; end
+	reg Er2; always @(posedge C16M) begin Er2 <= Er; end
+	
 	/* E clock state */
 	reg [4:0] ES;
-	reg Er2;
-	always @(posedge C16M) begin Er2 <= Er; end
 	always @(posedge C16M) begin
 		if (Er2 && ~Er) ES <= 1;
 		else if (ES==0 || ES==19) ES <= 0;
@@ -100,8 +102,8 @@ module IOBM(
 	always @(negedge C16M) begin nDinLE = IOS==4 || IOS==5; end
 	reg DoutOE = 0; assign nDoutOE = !(AoutOE && DoutOE);
 	always @(posedge C16M) begin
-		DoutOE <= IOWE && (IOS==1 || IOS==2 || IOS==3 || 
-						   IOS==4 || IOS==5 || IOS==6);
+		DoutOE <= ( IOWE   && (IOS==1 || IOS==2 || IOS==3 ||  IOS==4 || IOS==5 || IOS==6)) ||
+					 (!IOREQr && IOS==0 && AoutOE);
 	end
 
 	/* AS, DS control */

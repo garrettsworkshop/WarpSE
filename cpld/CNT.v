@@ -1,22 +1,25 @@
 module CNT(
-	/* C8M clock input */
-	input C8M, input E, input Er,
+	/* FSB clock and E clock inputs */
+	input CLK, input E,
 	/* Refresh request */
-	output reg RefReq, output RefUrgent,
-	/* Reset, switch, button */
-	input [3:1] SW, output reg nRESout, input nIPL2, 
+	output reg RefReq, output RefUrg,
+	/* Reset, button */
+	output reg nRESout, input nIPL2, 
 	/* Mac PDS bus master control outputs */
-	output reg AoutOE, output reg nBR_IOB, 
-	/* Configuration outputs */
-	output C20MEN, output C25MEN, output FastROMEN);
+	output reg AoutOE, output reg nBR_IOB);
+	
+	/* E clock synchronization */
+	reg [1:0] Er;
+	wire EFall = Er[1] && !Er[0];
+	always @(posedge CLK) Er[1:0] <= { Er[0], E };
 
 	/* Timer counts from 0 to 1010 (10) -- 11 states == 14.042 us
     *	Refresh timer sequence
-	 * |  Timer  | RefReq | RefUrgent |
+	 * |  Timer  | RefReq | RefUrg |
 	 * |------------------------------|
 	 * | 0  0000 |   0    |     0     |
 	 * | 1  0001 |   0    |     0     |
-	 * | 2  0010 |   0    |     0     |
+	 * | 2  0010 |   1    |     0     |
 	 * | 3  0011 |   1    |     0     |
 	 * | 4  0100 |   1    |     0     |
 	 * | 5  0101 |   1    |     0     |
@@ -29,60 +32,52 @@ module CNT(
 	 */
 	reg [3:0] Timer = 0;
 	reg TimerTC;
-	assign RefUrgent = Timer[3];
-	always @(negedge C8M) begin
-		if (Er && !E) begin
-			TimerTC <= Timer[3:0]==4'h8;
+	always @(posedge CLK) begin
+		if (EFall) begin
 			if (TimerTC) Timer <= 0;
 			else Timer <= Timer+1;
-			RefReq <=	 Timer[3:0]==4'h2 || 
-						 Timer[3:0]==4'h3 || Timer[3:0]==4'h4 || Timer[3:0]==4'h5 ||
-						 Timer[3:0]==4'h6 || Timer[3:0]==4'h7 || Timer[3:0]==4'h8;
+			RefReq <= !(Timer==4'h0 || Timer==4'h1);
+			TimerTC <= Timer[3:0]==4'h9;
+		end
+	end
+	assign RefUrg = Timer[3];
+	
+	/* Long timer counts from 0 to 8191 -- 8192 states == 115.033 ms */
+	reg [12:0] LTimer;
+	reg LTimerTC;
+	always @(posedge CLK) begin
+		if (EFall && TimerTC) begin
+			LTimer <= LTimer+1;
+			LTimerTC <= LTimer[12:0]==13'h1FFE;
 		end
 	end
 	
-	/* Long timer counts from 0 to 8192 -- 8193 states == 115.046 ms */
-	reg [13:0] LTimer;
-	wire LTimerTC = LTimer[13];
-	always @(negedge C8M) begin
-		if (Er && !E) && TimerTC begin
-			if (LTimerTC) LTimer <= 0;
-			else LTimer <= LTimer+1;
-		end
-	end
+	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
 	
 	/* Startup sequence control */
 	reg [1:0] INITS = 0;
-	assign nAoutOE = !AoutOE;
-	always @(negedge C8M) begin
-		case (INITS)
-			0: begin
+	wire INITSTC = EFall && TimerTC && LTimerTC;
+	always @(posedge CLK) begin
+		case (INITS[1:0])
+			2'h0: begin
 				AoutOE <= 0; // Tristate PDS address and control
 				nRESout <= 0; // Hold reset low
 				nBR_IOB <= 0; // Default to request bus
-				if (LTimerTC) INITS <= 1;
-				else INITS <= 0;
-			end 1: begin
-				AoutOE <= 0; // Tristate PDS address and control
-				nRESout <= 0; // Hold reset low
-				nBR_IOB <= nBR_IOB | !nIPL2; // Disable bus request if NMI pressed
-				if (LTimerTC && !IPL2r) INITS <= 2;
-			end 2: begin
-				AoutOE <= 0; // Tristate PDS address and control
-				nRESout <= 0; // Hold reset low
-				if (LTimerTC) INITS <= 3;
-			end 3: begin
-				AoutOE <= !nBR_IOB; // Get on PDS bus if bus was requested
+				if (INITSTC) INITS <= 1;
+			end 2'h1: begin
+				AoutOE <= 0;
+				nRESout <= 0;
+				nBR_IOB <= !(!nBR_IOB && nIPL2r); // Disable bus request if NMI pressed
+				if (INITSTC && nIPL2r) INITS <= 2;
+			end 2'h2: begin
+				AoutOE <= !nBR_IOB;
+				nRESout <= 0;
+				if (INITSTC) INITS <= 3;
+			end 2'h3: begin
 				nRESout <= 1; // Release reset
 				INITS <= 3;
 			end
 		endcase
 	end
-
-	// Enable both oscillators... only mount one
-	assign C20MEN = 1;
-	assign C25MEN = 1;
-	// Enable fast ROM
-	assign FastROMEN = 1;
 
 endmodule
