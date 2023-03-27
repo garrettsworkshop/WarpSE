@@ -77,29 +77,28 @@ nVPA_FSB S:PIN93
 ;The remaining section of the .gyd file is for documentation purposes only.
 ;It shows where your internal equations were placed in the last successful fit.
 
-PARTITION FB1_1 ram/RefUrg ram/RefReqSync ram/RefReq iobs/IOACTr
-		 iobm/Er iobm/DTACKrr iobm/DTACKrf iobm/BERRrr
-		 iobm/BERRrf cnt/nIPL2r cnt/Er<0> ALE0S
-		 ram/RS_FSM_FFd1 iobs/IOU1 iobs/IOL1 iobm/IOS_FSM_FFd1
-		 ALE0M ram/RefDone
-PARTITION FB2_13 iobm/VPArr iobm/VPArf iobm/RESrr iobm/RESrf
-		 iobm/IOREQr iobm/Er2
+PARTITION FB1_1 ram/RegUrgSync ram/RefUrg ram/RefReqSync iobs/IOACTr
+		 iobm/Er2 iobm/Er iobm/DTACKrr iobm/DTACKrf
+		 iobm/BERRrr iobm/BERRrf fsb/ASrf cnt/nIPL2r
+		 cnt/Er<0> iobs/IOU1 iobs/IOL1 iobm/IOS_FSM_FFd1
+		 ALE0M IOU0
+PARTITION FB2_14 iobm/VPArr iobm/VPArf iobm/RESrr iobm/RESrf
+		 iobm/IOREQr
 PARTITION FB3_1 IORW0 EXP10_ EXP11_ EXP12_
 		 EXP13_ fsb/VPA EXP14_ EXP15_
 		 nDTACK_FSB_OBUF EXP16_ iobs/IORW1 EXP17_
 		 fsb/Ready1r cs/nOverlay EXP18_ IOREQ
 		 nROMWE_OBUF iobs/Clear1
-PARTITION FB4_1 ram/RegUrgSync nAoutOE_OBUF ram/BACTr nRESout
-		 nDoutOE_OBUF nDinOE_OBUF fsb/ASrf N0
-		 cnt/Er<1> cnt/TimerTC nVPA_FSB_OBUF cnt/LTimer<3>
-		 cnt/LTimer<2> cnt/LTimer<1> RefReq IOU0
-		 IOL0 RefUrg
-PARTITION FB5_1 EXP19_ nROMCS_OBUF iobs/Load1 EXP20_
-		 nCAS_OBUF nOE_OBUF iobs/PS_FSM_FFd2 ram/RS_FSM_FFd2
-		 RA_4_OBUF iobs/PS_FSM_FFd1 RA_3_OBUF RA_5_OBUF
-		
-PARTITION FB5_14 RA_2_OBUF RA_6_OBUF iobs/IOReady iobs/Once
-		 EXP21_
+PARTITION FB4_1 cnt/LTimer<0> nAoutOE_OBUF cnt/INITS_FSM_FFd1 cnt/Er<1>
+		 nDoutOE_OBUF nDinOE_OBUF cnt/TimerTC N0
+		 cnt/Timer<0> cnt/LTimer<3> nVPA_FSB_OBUF cnt/LTimer<2>
+		 cnt/LTimer<1> cnt/INITS_FSM_FFd2 RefReq cnt/Timer<1>
+		 cnt/Timer<2> RefUrg
+PARTITION FB5_1 EXP19_ nROMCS_OBUF ram/RAMEN ram/RAMReady
+		 nCAS_OBUF nOE_OBUF ram/RS_FSM_FFd2 fsb/Ready0r
+		 RA_4_OBUF ram/RefDone RA_3_OBUF RA_5_OBUF
+		 ram/BACTr RA_2_OBUF RA_6_OBUF ram/RefRAS
+		 ram/RefReq ram/RASEL
 PARTITION FB6_1 iobm/ETACK nVMA_IOBout iobm/IOS_FSM_FFd3 iobm/ES<3>
 		 iobm/ES<1> iobm/ES<0> iobm/DoutOE iobm/ES<4>
 		 nLDS_IOBout iobm/IOS_FSM_FFd2 nUDS_IOBout nAS_IOBout
@@ -110,9 +109,9 @@ PARTITION FB7_1 cnt/LTimerTC RA_1_OBUF cnt/LTimer<9> cnt/LTimer<8>
 		 A_FSB_21_IBUF$BUF0 cnt/LTimer<6> RA_9_OBUF C25MEN_OBUF
 		 cnt/LTimer<5> C25MEN_OBUF$BUF0 cnt/LTimer<4> cnt/LTimer<12>
 		 cnt/LTimer<11> cnt/LTimer<10>
-PARTITION FB8_1 ram/RASEL A_FSB_19_IBUF$BUF0 cnt/Timer<2> cnt/Timer<0>
-		 nRAS_OBUF nRAMLWE_OBUF cnt/INITS_FSM_FFd2 nRAMUWE_OBUF
-		 fsb/Ready0r cnt/Timer<1> ram/RAMReady nBERR_FSB_OBUF
-		 EXP22_ ram/RAMEN nBR_IOB_OBUF ram/RS_FSM_FFd3
-		 cnt/INITS_FSM_FFd1 cnt/LTimer<0>
+PARTITION FB8_1 EXP20_ A_FSB_19_IBUF$BUF0 iobs/Load1 iobs/IOReady
+		 nRAS_OBUF nRAMLWE_OBUF iobs/PS_FSM_FFd2 nRAMUWE_OBUF
+		 ram/RS_FSM_FFd3 IOL0 ram/RS_FSM_FFd1 nBERR_FSB_OBUF
+		 iobs/PS_FSM_FFd1 ALE0S nBR_IOB_OBUF nRESout
+		 iobs/Once EXP21_
 

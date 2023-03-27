@@ -66,11 +66,11 @@ module RAM(
 	reg RefRAS = 0;
 
 	assign nROMCS = !ROMCS;
-	assign nRAS =   1;//~((~nAS && RAMCS && RAMEN) || RefRAS);
-	assign nOE =    ~(~nAS &&  nWE);
-	assign nLWE =   ~(~nAS && ~nWE && ~nLDS && RAMEN);
-	assign nUWE =   ~(~nAS && ~nWE && ~nUDS && RAMEN);
-	assign nROMWE = ~(~nAS && ~nWE);
+	assign nRAS =   !((~nAS && RAMCS && RAMEN) || RefRAS);
+	assign nOE =    !(~nAS &&  nWE);
+	assign nLWE =   !(~nAS && ~nWE && ~nLDS && RAMEN);
+	assign nUWE =   !(~nAS && ~nWE && ~nUDS && RAMEN);
+	assign nROMWE = !(~nAS && ~nWE);
 
 	/* RAM address mux (and ROM address on RA8) */
 	assign RA[11] = A[19];

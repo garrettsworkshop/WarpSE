@@ -19,7 +19,7 @@ module IOBS(
 	always @(posedge CLK) begin IOACTr <= IOACT; end
 
 	/* Read data OE control */
-	assign nDinOE = ~nAS && IOCS && nWE;
+	assign nDinOE = !(!nAS && IOCS && nWE);
 	
 	/* Posted read/write state */
 	reg [1:0] PS = 0;

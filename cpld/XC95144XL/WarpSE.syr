@@ -152,13 +152,12 @@ Unit <CS> synthesized.
 
 Synthesizing Unit <RAM>.
     Related source file is "../RAM.v".
-WARNING:Xst:646 - Signal <RefRAS> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found finite state machine <FSM_0> for signal <RS>.
     -----------------------------------------------------------------------
     | States             | 8                                              |
     | Transitions        | 21                                             |
     | Inputs             | 6                                              |
-    | Outputs            | 8                                              |
+    | Outputs            | 9                                              |
     | Clock              | CLK                       (rising_edge)        |
     | Power Up State     | 000                                            |
     | Encoding           | automatic                                      |
@@ -170,13 +169,14 @@ WARNING:Xst:646 - Signal <RefRAS> is assigned but never used. This unconnected s
     Found 1-bit register for signal <RAMReady>.
     Found 1-bit register for signal <RASEL>.
     Found 1-bit register for signal <RefDone>.
+    Found 1-bit register for signal <RefRAS>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <RefReqSync>.
     Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RegUrgSync>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred   9 D-type flip-flop(s).
+	inferred  10 D-type flip-flop(s).
 Unit <RAM> synthesized.
 
 
@@ -322,8 +322,8 @@ Macro Statistics
  13-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 60
- 1-bit register                                        : 59
+# Registers                                            : 61
+ 1-bit register                                        : 60
  2-bit register                                        : 1
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
@@ -369,18 +369,18 @@ Optimizing FSM <iobs/PS/FSM> on signal <PS[1:2]> with johnson encoding.
  01    | 10
 -------------------
 Analyzing FSM <FSM_0> for best encoding.
-Optimizing FSM <ram/RS/FSM> on signal <RS[1:3]> with sequential encoding.
+Optimizing FSM <ram/RS/FSM> on signal <RS[1:3]> with user encoding.
 -------------------
  State | Encoding
 -------------------
  000   | 000
- 010   | 001
- 001   | 010
- 101   | 011
- 011   | 100
- 100   | 101
- 111   | 110
- 110   | 111
+ 010   | 010
+ 001   | 001
+ 101   | 101
+ 011   | 011
+ 100   | 100
+ 111   | 111
+ 110   | 110
 -------------------
 
 =========================================================================
@@ -392,8 +392,8 @@ Macro Statistics
  13-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 47
- Flip-Flops                                            : 47
+# Registers                                            : 48
+ Flip-Flops                                            : 48
 
 =========================================================================
 
@@ -410,6 +410,7 @@ Optimizing unit <RAM> ...
   implementation constraint: INIT=r	 : RAMEN
   implementation constraint: INIT=r	 : RAMReady
   implementation constraint: INIT=r	 : RASEL
+  implementation constraint: INIT=r	 : RefRAS
   implementation constraint: INIT=r	 : RS_FSM_FFd1
   implementation constraint: INIT=r	 : RS_FSM_FFd2
   implementation constraint: INIT=r	 : RS_FSM_FFd3
@@ -469,22 +470,22 @@ Design Statistics
 # IOs                              : 75
 
 Cell Usage :
-# BELS                             : 571
-#      AND2                        : 172
-#      AND3                        : 27
+# BELS                             : 590
+#      AND2                        : 184
+#      AND3                        : 25
 #      AND4                        : 7
-#      AND5                        : 3
-#      AND6                        : 2
+#      AND5                        : 2
+#      AND6                        : 3
 #      AND8                        : 3
 #      GND                         : 6
-#      INV                         : 226
+#      INV                         : 234
 #      OR2                         : 97
-#      OR3                         : 4
+#      OR3                         : 7
 #      OR4                         : 1
-#      VCC                         : 3
-#      XOR2                        : 20
-# FlipFlops/Latches                : 93
-#      FD                          : 56
+#      VCC                         : 2
+#      XOR2                        : 19
+# FlipFlops/Latches                : 94
+#      FD                          : 57
 #      FDCE                        : 37
 # IO Buffers                       : 71
 #      IBUF                        : 35
@@ -495,13 +496,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.98 secs
+Total CPU time to Xst completion: 5.10 secs
  
 --> 
 
-Total memory usage is 264516 kilobytes
+Total memory usage is 263684 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    5 (   0 filtered)
+Number of warnings :    4 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
