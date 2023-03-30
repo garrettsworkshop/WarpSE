@@ -40,7 +40,7 @@ module CS(
 
 	/* Select signals - IOB domain */
 	assign IACS =  (A[23:08]==16'hFFFF); // IACK
-	assign IOCS =
+	assign IOCS = ((A[23:20]==4'h4) && Overlay ) || // ROM once
 				   (A[23:20]==4'h5) || // SCSI
 				   (A[23:20]==4'h6) || // empty
 				   (A[23:20]==4'h7) || // empty
@@ -53,7 +53,6 @@ module CS(
 				   (A[23:20]==4'hE) || // VIA
 				   (A[23:20]==4'hF) || // IACK
 	               VidRAMCSWR;
-	//assign IOCS = 0;
 	assign IOPWCS = RAMCS && !nWE;
 
 endmodule

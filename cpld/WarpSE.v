@@ -91,8 +91,10 @@ module WarpSE(
 		FCLK, nWE_FSB, nAS_FSB, nLDS_FSB, nUDS_FSB,
 		/* AS cycle detection, FSB BERR */
 		BACT,
-		/* Select and ready signals */
-		IOCS, IOPWCS, IOBS_Ready, nBERR_FSB,
+		/* Select signals */
+		IOCS, IOPWCS, ROMCS,
+		/* FSB cycle termination outputs */
+		IOBS_Ready, nBERR_FSB,
 		/* Read data OE control */
 		nDinOE,
 		/* IOB Master Controller Interface */

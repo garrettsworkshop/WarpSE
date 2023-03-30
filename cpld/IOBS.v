@@ -3,8 +3,10 @@ module IOBS(
 	input CLK, input nWE, input nAS, input nLDS, input nUDS,
 	/* AS cycle detection */
 	input BACT,
-	/* Select and ready signals */
-	input IOCS, input IOPWCS, output IOBS_Ready, output reg nBERR_FSB,
+	/* Select signals */
+	input IOCS, input IOPWCS, input ROMCS,
+	/* FSB cycle termination outputs */
+	output IOBS_Ready, output reg nBERR_FSB,
 	/* Read data OE control */
 	output nDinOE,
 	/* IOB Master Controller Interface */
@@ -19,10 +21,22 @@ module IOBS(
 	always @(posedge CLK) begin IOACTr <= IOACT; end
 
 	/* Read data OE control */
-	assign nDinOE = !(!nAS && IOCS && nWE);
+	assign nDinOE = !(!nAS && IOCS && nWE && !ROMCS);
+
+	wire IOStart = BACT && IOCS && ~Once;
 	
-	/* Posted read/write state */
-	reg [1:0] PS = 0;
+	/* I/O transfer state
+	 * TS0 - I/O bridge idle:
+	 *       asserts IOREQ
+	 *       transitions to TS3 when IOStart true
+	 * TS3 - starting I/O transfer:
+	         latches LDS and UDS from FSB or FIFO secondary level
+			 transitions immediately to TS2
+	 * TS2 - waiting for IOBM to begin:
+		     transitions to TS1 when IOACT true
+	 * TS1 - waiting for IOBM to finish:
+	 *       transitions to TS1 when IOACT false */
+	reg [1:0] TS = 0;
 	reg Once = 0;
 
 	/* FIFO second level control */
@@ -32,46 +46,54 @@ module IOBS(
 	reg IOL1;
 	reg IOU1;
 	always @(posedge CLK) begin
-		if (PS!=0 && BACT && IOCS && ~Once && ~ALE1) begin
+		// If write currently posting (TS!=0),
+		// I/O selected, and FIFO secondary level empty
+		if (TS!=0 && IOStart && ~ALE1) begin
+			// Latch R/W now but latch address and LDS/UDS next cycle
 			IORW1 <= nWE;
 			Load1 <= 1;
 		end else Load1 <= 0;
 	end
 	always @(posedge CLK) begin
-		if (PS==3 && ALE1) Clear1 <= 1;
+		// Make address latch transparent in cycle after TS3
+		// (i.e. first TS2 cycle that's not part of current write)
+		if (TS==3) Clear1 <= 1;
 		else Clear1 <= 0;
 	end
 	always @(posedge CLK) begin
-		if (Load1) ALE1 <= 1;
-		else if (Clear1) ALE1 <= 0;
-	end
-	always @(posedge CLK) begin
 		if (Load1) begin
+			// Latch address, LDS, UDS when Load1 true
+			ALE0 <= 1;
 			IOL1 <= ~nLDS;
 			IOU1 <= ~nUDS;
-		end
+		end else if (Clear1) ALE1 <= 0;
 	end
 	
 	/* FIFO Primary Level Control */
 	always @(posedge CLK) begin
-		if (PS==0) begin
-			if (ALE1) begin
-				PS <= 3;
+		if (TS==0) begin
+			if (ALE1) begin // If FIFO secondary level occupied
+				// Request transfer from IOBM and latch R/W from FIFO
+				TS <= 3;
 				IOREQ <= 1;
 				IORW0 <= IORW1;
-			end else if (BACT && IOCS && ~Once) begin
-				PS <= 3;
+			end else if (IOStart) begin // If I/O selected and FIFO empty
+				// Request transfer from IOBM and latch R/W from FSB
+				TS <= 3;
 				IOREQ <= 1;
 				IORW0 <= nWE;
-			end else begin
-				PS <= 0;
+			end else begin // Otherwise stay in idle
+				TS <= 0;
 				IOREQ <= 0;
 			end
 			ALE0 <= 0;
-		end else if (PS==3) begin
-			PS <= 2;
+		end else if (TS==3) begin
+			// Always go to TS2. Keep IOREQ active
+			TS <= 2;
 			IOREQ <= 1;
+			// Latch address (and data)
 			ALE0 <= 1;
+			// Latch data strobes from FIFO or FSB as appropriate
 			if (ALE1) begin
 				IOL0 <= IOL1;
 				IOU0 <= IOU1;
@@ -79,39 +101,44 @@ module IOBS(
 				IOL0 <= ~nLDS;
 				IOU0 <= ~nUDS;
 			end
-		end else if (PS==2) begin
+		end else if (TS==2) begin
+			// Wait for IOACT then withdraw IOREQ and enter TS1
 			if (IOACTr) begin
-				PS <= 1;
+				TS <= 1;
 				IOREQ <= 0;
 			end else begin
-				PS <= 2;
+				TS <= 2;
 				IOREQ <= 1;
 			end
-			ALE0 <= 0;
-		end else if (PS==1) begin
-			if (~IOACTr) PS <= 0;
-			else PS <= 2;
+			ALE0 <= 1;
+		end else if (TS==1) begin
+			// Wait for IOACT low (transfer over) before going back to idle
+			if (~IOACTr) TS <= 0;
+			else TS <= 2;
 			IOREQ <= 0;
+			// Address latch released since it's controlled by IOBM now
 			ALE0 <= 0;
 		end
 	end
 
 	/* Once, ready, BERR control */
-	reg IOReady;
-	wire IOPWReady = ~ALE1;
 	always @(posedge CLK) begin
 		if (~BACT) Once <= 0;
-		else if (IOCS && (PS==0 || (IOPWCS && IOPWReady))) Once <= 1;
+		else if (IOCS && !ALE1 && (TS==0 || IOPWCS)) Once <= 1;
 	end
 	always @(posedge CLK) begin
 		if (~BACT) begin
+			// Deassert IOReady and /BERR when bus inactive
 			IOReady <= 0;
 			nBERR_FSB <= 1;
-		end else if (Once && (PS==0 || PS==1) && ~IOACTr && IOPWReady) begin
+		end else if (Once && !ALE1 && (TS==0 || (TS==1 && !IOACTr))) begin
+			// If transaction submitted, FIFO second level empty,
+			// and in or entering TS0, all transactions including
+			// current are complete. So terminate cycle.
 			IOReady <= !IOBERR;
 			nBERR_FSB <= !IOBERR;
 		end
 	end
-	assign IOBS_Ready = ~IOCS || IOReady || (IOPWCS && IOPWReady);
+	assign IOBS_Ready = !IOCS || IOReady || (IOPWCS && !ALE1);
 
 endmodule
