@@ -26,7 +26,7 @@ module IOBS(
 	/* I/O transfer state
 	 * TS0 - I/O bridge idle:
 	 *       asserts IOREQ
-	 *       transitions to TS3 when BACT && IOCS && !ALE1 && !Once true
+	 *       transitions to TS3 when BACT && IOCS && !ALE1 && !Sent true
 	 * TS3 - starting I/O transfer:
 	         latches LDS and UDS from FSB or FIFO secondary level
 			 transitions immediately to TS2
@@ -35,7 +35,7 @@ module IOBS(
 	 * TS1 - waiting for IOBM to finish:
 	 *       transitions to TS1 when IOACT false */
 	reg [1:0] TS = 0;
-	reg Once = 0;
+	reg Sent = 0;
 
 	/* FIFO second level control */
 	reg Load1;
@@ -46,7 +46,7 @@ module IOBS(
 	always @(posedge CLK) begin
 		// If write currently posting (TS!=0),
 		// I/O selected, and FIFO secondary level empty
-		if (TS!=0 && BACT && IOCS && !ALE1 && !Once && IOPWCS) begin
+		if (TS!=0 && BACT && IOCS && !ALE1 && !Sent && IOPWCS) begin
 			// Latch R/W now but latch address and LDS/UDS next cycle
 			IORW1 <= nWE;
 			Load1 <= 1;
@@ -75,7 +75,7 @@ module IOBS(
 				TS <= 3;
 				IOREQ <= 1;
 				IORW0 <= IORW1;
-			end else if (BACT && IOCS && !ALE1 && !Once) begin // If I/O selected and FIFO empty
+			end else if (BACT && IOCS && !ALE1 && !Sent) begin // If I/O selected and FIFO empty
 				// Request transfer from IOBM and latch R/W from FSB
 				TS <= 3;
 				IOREQ <= 1;
@@ -119,17 +119,18 @@ module IOBS(
 		end
 	end
 
-	/* Once, ready, BERR control */
+	/* Sent, ready, BERR control */
 	always @(posedge CLK) begin
-		if (~BACT) Once <= 0;
-		else if (BACT && IOCS && !ALE1 && !Once && (TS==0 || IOPWCS)) Once <= 1;
+		if (~BACT) Sent <= 0;
+		else if (BACT && IOCS && !ALE1 && !Sent && (TS==0 || IOPWCS)) Sent <= 1;
 	end
 	always @(posedge CLK) begin
 		if (~BACT) begin
 			// Deassert IOReady and /BERR when bus inactive
 			IOReady <= 0;
 			nBERR_FSB <= 1;
-		end else if (BACT && IOCS && !IOPWCS && !ALE1 && Once && (TS==0 || (TS==1 && !IOACTr))) begin
+		end else if (BACT && IOCS && !IOPWCS && !ALE1 && Sent && 
+			(TS==0 || (TS==1 && !IOACTr))) begin
 			// If transaction submitted, FIFO second level empty,
 			// and in or entering TS0, all transactions including
 			// current are complete. So terminate cycle.
