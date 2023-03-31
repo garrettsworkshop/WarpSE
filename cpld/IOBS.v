@@ -22,13 +22,11 @@ module IOBS(
 
 	/* Read data OE control */
 	assign nDinOE = !(!nAS && IOCS && nWE && !ROMCS);
-
-	wire IOStart = BACT && IOCS && ~Once;
 	
 	/* I/O transfer state
 	 * TS0 - I/O bridge idle:
 	 *       asserts IOREQ
-	 *       transitions to TS3 when IOStart true
+	 *       transitions to TS3 when BACT && IOCS && !ALE1 && !Once true
 	 * TS3 - starting I/O transfer:
 	         latches LDS and UDS from FSB or FIFO secondary level
 			 transitions immediately to TS2
@@ -48,7 +46,7 @@ module IOBS(
 	always @(posedge CLK) begin
 		// If write currently posting (TS!=0),
 		// I/O selected, and FIFO secondary level empty
-		if (TS!=0 && IOStart && ~ALE1) begin
+		if (TS!=0 && BACT && IOCS && !ALE1 && !Once && IOPWCS) begin
 			// Latch R/W now but latch address and LDS/UDS next cycle
 			IORW1 <= nWE;
 			Load1 <= 1;
@@ -77,7 +75,7 @@ module IOBS(
 				TS <= 3;
 				IOREQ <= 1;
 				IORW0 <= IORW1;
-			end else if (IOStart) begin // If I/O selected and FIFO empty
+			end else if (BACT && IOCS && !ALE1 && !Once) begin // If I/O selected and FIFO empty
 				// Request transfer from IOBM and latch R/W from FSB
 				TS <= 3;
 				IOREQ <= 1;
@@ -114,7 +112,7 @@ module IOBS(
 		end else if (TS==1) begin
 			// Wait for IOACT low (transfer over) before going back to idle
 			if (~IOACTr) TS <= 0;
-			else TS <= 2;
+			else TS <= 1;
 			IOREQ <= 0;
 			// Address latch released since it's controlled by IOBM now
 			ALE0 <= 0;
@@ -124,14 +122,14 @@ module IOBS(
 	/* Once, ready, BERR control */
 	always @(posedge CLK) begin
 		if (~BACT) Once <= 0;
-		else if (IOCS && !ALE1 && (TS==0 || IOPWCS)) Once <= 1;
+		else if (BACT && IOCS && !ALE1 && !Once && (TS==0 || IOPWCS)) Once <= 1;
 	end
 	always @(posedge CLK) begin
 		if (~BACT) begin
 			// Deassert IOReady and /BERR when bus inactive
 			IOReady <= 0;
 			nBERR_FSB <= 1;
-		end else if (Once && !ALE1 && (TS==0 || (TS==1 && !IOACTr))) begin
+		end else if (BACT && IOCS && !IOPWCS && !ALE1 && Once && (TS==0 || (TS==1 && !IOACTr))) begin
 			// If transaction submitted, FIFO second level empty,
 			// and in or entering TS0, all transactions including
 			// current are complete. So terminate cycle.
@@ -139,6 +137,6 @@ module IOBS(
 			nBERR_FSB <= !IOBERR;
 		end
 	end
-	assign IOBS_Ready = !IOCS || IOReady || (IOPWCS && !ALE1);
+	assign IOBS_Ready = !IOCS || ((IOReady) || (IOPWCS && !ALE1));
 
 endmodule
