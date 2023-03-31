@@ -7,12 +7,14 @@ module CS(
 	output IOCS, output IOPWCS, output IACS, output ROMCS, output RAMCS, output SndRAMCSWR);
 
 	/* Overlay control */
-	reg nOverlay = 0;
-	wire Overlay = ~nOverlay;
-	wire ODCS = (A[23:20]==4'h4); // Disable overlay
-	always @(posedge CLK, negedge nRES) begin
-		if (!nRES) nOverlay <= 0;
-		else if (BACT && ODCS) nOverlay <= 1;
+	reg nOverlay = 0; wire Overlay = !nOverlay;
+	reg ODCSr;
+	always @(posedge CLK) begin
+		ODCSr <= (A[23:20]==4'h4) && BACT;
+		if (!BACT) begin
+			if (!nRES) nOverlay <= 0;
+			else if (ODCSr) nOverlay <= 1;
+		end
 	end
 
 	/* Select signals - FSB domain */
@@ -35,12 +37,11 @@ module CS(
 		((A[15:12]==4'hF) && ((A[11:8]==4'hD) || (A[11:8]==4'hE) || (A[11:8]==4'hF))) ||
 		((A[15:12]==4'hA) && ((A[11:8]==4'h1) || (A[11:8]==4'h2) || (A[11:8]==4'h3))));
 
-	assign ROMCS = ((A[23:20]==4'h0) && Overlay) ||
-						 (A[23:20]==4'h4);
+	assign ROMCS = ((A[23:20]==4'h0) && Overlay) || (A[23:20]==4'h4);
 
 	/* Select signals - IOB domain */
 	assign IACS =  (A[23:08]==16'hFFFF); // IACK
-	assign IOCS = ((A[23:20]==4'h4) && Overlay ) || // ROM once
+	assign IOCS = ((A[23:20]==4'h4) && Overlay) || // ROM once
 				   (A[23:20]==4'h5) || // SCSI
 				   (A[23:20]==4'h6) || // empty
 				   (A[23:20]==4'h7) || // empty
