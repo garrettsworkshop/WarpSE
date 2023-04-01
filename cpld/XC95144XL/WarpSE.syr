@@ -145,8 +145,9 @@ Performing bidirectional port resolution...
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
     Found 1-bit register for signal <nOverlay>.
+    Found 1-bit register for signal <ODCSr>.
     Summary:
-	inferred   1 D-type flip-flop(s).
+	inferred   2 D-type flip-flop(s).
 Unit <CS> synthesized.
 
 
@@ -182,12 +183,12 @@ Unit <RAM> synthesized.
 
 Synthesizing Unit <IOBS>.
     Related source file is "../IOBS.v".
-    Found finite state machine <FSM_1> for signal <PS>.
+    Found finite state machine <FSM_1> for signal <TS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
     | Transitions        | 10                                             |
     | Inputs             | 5                                              |
-    | Outputs            | 5                                              |
+    | Outputs            | 6                                              |
     | Clock              | CLK                       (rising_edge)        |
     | Power Up State     | 00                                             |
     | Encoding           | automatic                                      |
@@ -199,18 +200,18 @@ Synthesizing Unit <IOBS>.
     Found 1-bit register for signal <IOU0>.
     Found 1-bit register for signal <ALE0>.
     Found 1-bit register for signal <ALE1>.
-    Found 1-bit register for signal <nBERR_FSB>.
     Found 1-bit register for signal <Clear1>.
+    Found 1-bit register for signal <DTACKEN>.
     Found 1-bit register for signal <IOACTr>.
+    Found 1-bit register for signal <IODTACKr>.
     Found 1-bit register for signal <IOL1>.
-    Found 1-bit register for signal <IOReady>.
     Found 1-bit register for signal <IORW1>.
     Found 1-bit register for signal <IOU1>.
     Found 1-bit register for signal <Load1>.
-    Found 1-bit register for signal <Once>.
+    Found 1-bit register for signal <Sent>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred   9 D-type flip-flop(s).
+	inferred  10 D-type flip-flop(s).
 Unit <IOBS> synthesized.
 
 
@@ -227,7 +228,6 @@ Synthesizing Unit <IOBM>.
     | Encoding           | automatic                                      |
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
-    Found 1-bit register for signal <IOBERR>.
     Found 1-bit register for signal <nASout>.
     Found 1-bit register for signal <IOACT>.
     Found 1-bit register for signal <nLDS>.
@@ -236,23 +236,19 @@ Synthesizing Unit <IOBM>.
     Found 1-bit register for signal <ALE0>.
     Found 1-bit register for signal <nVMA>.
     Found 1-bit register for signal <BERRrf>.
-    Found 1-bit register for signal <BERRrr>.
     Found 1-bit register for signal <DoutOE>.
     Found 1-bit register for signal <DTACKrf>.
-    Found 1-bit register for signal <DTACKrr>.
     Found 1-bit register for signal <Er>.
     Found 1-bit register for signal <Er2>.
     Found 5-bit up counter for signal <ES>.
     Found 1-bit register for signal <ETACK>.
     Found 1-bit register for signal <IOREQr>.
     Found 1-bit register for signal <RESrf>.
-    Found 1-bit register for signal <RESrr>.
-    Found 1-bit register for signal <VPArf>.
-    Found 1-bit register for signal <VPArr>.
+    Found 1-bit register for signal <VPAr>.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   1 Counter(s).
-	inferred  20 D-type flip-flop(s).
+	inferred  15 D-type flip-flop(s).
 Unit <IOBM> synthesized.
 
 
@@ -322,8 +318,8 @@ Macro Statistics
  13-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 61
- 1-bit register                                        : 60
+# Registers                                            : 57
+ 1-bit register                                        : 56
  2-bit register                                        : 1
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
@@ -359,7 +355,7 @@ Optimizing FSM <iobm/IOS/FSM> on signal <IOS[1:3]> with gray encoding.
  111   | 100
 -------------------
 Analyzing FSM <FSM_1> for best encoding.
-Optimizing FSM <iobs/PS/FSM> on signal <PS[1:2]> with johnson encoding.
+Optimizing FSM <iobs/TS/FSM> on signal <TS[1:2]> with johnson encoding.
 -------------------
  State | Encoding
 -------------------
@@ -382,6 +378,8 @@ Optimizing FSM <ram/RS/FSM> on signal <RS[1:3]> with user encoding.
  111   | 111
  110   | 110
 -------------------
+WARNING:Xst:1898 - Due to constant pushing, FF/Latch <0> is unconnected in block <RAMReady>.
+WARNING:Xst:1898 - Due to constant pushing, FF/Latch <0> is unconnected in block <0>.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -392,8 +390,8 @@ Macro Statistics
  13-bit up counter                                     : 1
  4-bit up counter                                      : 1
  5-bit up counter                                      : 1
-# Registers                                            : 48
- Flip-Flops                                            : 48
+# Registers                                            : 45
+ Flip-Flops                                            : 45
 
 =========================================================================
 
@@ -417,9 +415,11 @@ Optimizing unit <RAM> ...
 
 Optimizing unit <IOBS> ...
   implementation constraint: INIT=r	 : IOACTr
-  implementation constraint: INIT=r	 : PS_FSM_FFd2
-  implementation constraint: INIT=r	 : Once
-  implementation constraint: INIT=r	 : PS_FSM_FFd1
+  implementation constraint: INIT=r	 : IODTACKr
+  implementation constraint: INIT=r	 : TS_FSM_FFd2
+  implementation constraint: INIT=r	 : DTACKEN
+  implementation constraint: INIT=r	 : Sent
+  implementation constraint: INIT=r	 : TS_FSM_FFd1
 
 Optimizing unit <FSB> ...
   implementation constraint: INIT=r	 : ASrf
@@ -439,6 +439,8 @@ Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : INITS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : INITS_FSM_FFd1
+WARNING:Xst:1898 - Due to constant pushing, FF/Latch <RAMReady> is unconnected in block <ram>.
+WARNING:Xst:2677 - Node <Ready0r> of sequential type is unconnected in block <fsb>.
 
 =========================================================================
 *                           Partition Report                            *
@@ -470,23 +472,22 @@ Design Statistics
 # IOs                              : 75
 
 Cell Usage :
-# BELS                             : 590
-#      AND2                        : 184
-#      AND3                        : 25
+# BELS                             : 503
+#      AND2                        : 151
+#      AND3                        : 20
 #      AND4                        : 7
 #      AND5                        : 2
-#      AND6                        : 3
+#      AND6                        : 1
 #      AND8                        : 3
-#      GND                         : 6
-#      INV                         : 234
-#      OR2                         : 97
-#      OR3                         : 7
-#      OR4                         : 1
-#      VCC                         : 2
+#      GND                         : 7
+#      INV                         : 204
+#      OR2                         : 83
+#      OR3                         : 5
+#      VCC                         : 1
 #      XOR2                        : 19
-# FlipFlops/Latches                : 94
-#      FD                          : 57
-#      FDCE                        : 37
+# FlipFlops/Latches                : 88
+#      FD                          : 53
+#      FDCE                        : 35
 # IO Buffers                       : 71
 #      IBUF                        : 35
 #      IOBUFE                      : 1
@@ -496,13 +497,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.10 secs
+Total CPU time to Xst completion: 4.98 secs
  
 --> 
 
-Total memory usage is 263684 kilobytes
+Total memory usage is 263748 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    4 (   0 filtered)
+Number of warnings :    8 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

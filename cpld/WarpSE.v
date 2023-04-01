@@ -81,7 +81,7 @@ module WarpSE(
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
 
 	wire IOBS_Ready;
-	wire IOREQ, IOACT, IOBERR;
+	wire IOREQ, IOACT;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
 	assign nADoutLE1 = ~ALE1;
@@ -98,7 +98,7 @@ module WarpSE(
 		/* Read data OE control */
 		nDinOE,
 		/* IOB Master Controller Interface */
-		IOREQ, IOACT, IOBERR,
+		IOREQ, IOACT, nBERR_IOB, nDTACK_IOB,
 		/* FIFO primary level control */
 		ALE0S, IORW0, IOL0, IOU0,
 		/* FIFO secondary level control */
@@ -119,7 +119,7 @@ module WarpSE(
 		/* PDS address and data latch control */
 		AoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
-		IOACT, IOBERR,
+		IOACT,
 		IOREQ, IOL0, IOU0, !IORW0);
 
 	CNT cnt(
