@@ -19,7 +19,7 @@ module CS(
 
 	/* Select signals - FSB domain */
 	assign RAMCS = 0;//(A[23:22]==2'b00) && !Overlay; // 000000-3FFFFF when overlay disabled
-	wire VidRAMCSWR64k = RAMCS && (A[21:20]==2'h3) && (A[19:16]==4'hF) && ~nWE; // 3F0000-3FFFFF / 7F0000-7FFFFF
+	wire VidRAMCSWR64k = RAMCS && !nWE && (A[21:20]==2'h3) && (A[19:16]==4'hF); // 3F0000-3FFFFF / 7F0000-7FFFFF
 	wire VidRAMCSWR = VidRAMCSWR64k && (
 		(A[15:12]==4'h2) || // 1792 bytes RAM, 2304 bytes video
 		(A[15:12]==4'h3) || // 4096 bytes video
