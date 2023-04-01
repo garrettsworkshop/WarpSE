@@ -6,7 +6,7 @@ module IOBM(
 	/* PDS address and data latch control */
 	input AoutOE, output nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
-	output reg IOACT, output reg IOBERR, 
+	output reg IOACT,
 	input IOREQ, input IOLDS, input IOUDS, input IOWE);
 
 	/* I/O bus slave port input synchronization */
@@ -14,24 +14,17 @@ module IOBM(
 	always @(negedge C16M) begin IOREQr <= IOREQ; end
 	
 	/* DTACK, BERR, RESET synchronization */
-	reg DTACKrr, DTACKrf, VPArr, VPArf, BERRrr, BERRrf, RESrr, RESrf;
+	reg DTACKrf, BERRrf, RESrf;
 	always @(negedge C8M) begin
-		DTACKrf <= ~nDTACK;
-		VPArf <= ~nVPA;
-		BERRrf <= ~nBERR;
-		RESrf <= ~nRES;
+		DTACKrf <= !nDTACK;
+		BERRrf <= !nBERR;
+		RESrf <= !nRES;
 	end
-	always @(posedge C8M) begin
-		DTACKrr <= ~nDTACK;
-		VPArr <= ~nVPA;
-		BERRrr <= ~nBERR;
-		RESrr <= ~nRES;
-	end
-	wire DTACK = DTACKrf && DTACKrr;
-	wire BERR = BERRrf && BERRrr;
-	wire VPA = VPArf && VPArr;
-	wire RES = RESrf && RESrr;
-
+	
+	/* VPA synchronization */
+	reg VPAr;
+	always @(negedge C16M) VPAr <= !nVPA;
+	
 	/* E clock synchronization */
 	reg Er; always @(negedge C8M) begin Er <= E; end
 	reg Er2; always @(posedge C16M) begin Er2 <= Er; end
@@ -48,7 +41,7 @@ module IOBM(
 	reg ETACK = 0;
 	always @(posedge C16M) begin ETACK <= ES==16 && ~nVMA; end
 	always @(posedge C16M) begin
-		if (ES==7 && IOACT && VPA) nVMA <= 0;
+		if (ES==7 && IOACT && VPAr) nVMA <= 0;
 		else if (ES==0) nVMA <= 1;
 	end
 
@@ -64,7 +57,6 @@ module IOBM(
 			IOS <= 2;
 			IOACT <= 1;
 			ALE0 <= 1;
-			IOBERR <= 0;
 		end else if (IOS==2) begin
 			IOS <= 3;
 			IOACT <= 1;
@@ -75,13 +67,13 @@ module IOBM(
 			ALE0 <= 1;
 		end else if (IOS==4) begin
 			IOS <= 5;
-			IOACT <= 1;
 			ALE0 <= 1;
+			if (DTACKrf) IOACT <= 0;
+			else IOACT <= 1;
 		end else if (IOS==5) begin
-			if (C8M && (DTACK || ETACK || BERR || RES)) begin
+			if (C8M && (DTACKrf || ETACK || BERRrf || RESrf)) begin
 				IOS <= 6;
 				IOACT <= 0;
-				IOBERR <= ~nBERR;
 			end else begin
 				IOS <= 5;
 				IOACT <= 1;
