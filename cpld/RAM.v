@@ -57,8 +57,7 @@ module RAM(
 			else if (!BACT) RAMEN <= 1;
 		end else if (RS==7) begin
 			if (RefFromRS7) RAMEN <= 0;
-			else if (BACT) RAMEN <= 0;
-			else if (!BACT) RAMEN <= 1;
+			else RAMEN <= 1;
 		end
 	end
 	
