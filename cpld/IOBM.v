@@ -15,22 +15,22 @@ module IOBM(
 	
 	/* DTACK, BERR, RESET synchronization */
 	reg DTACKrr, DTACKrf, VPArr, VPArf, BERRrr, BERRrf, RESrr, RESrf;
-	always @(posedge C16M) begin
-		DTACKrr <= ~nDTACK;
-		VPArr <= ~nVPA;
-		BERRrr <= ~nBERR;
-		RESrr <= ~nRES;
-	end
-	always @(negedge C16M) begin
+	always @(negedge C8M) begin
 		DTACKrf <= ~nDTACK;
 		VPArf <= ~nVPA;
 		BERRrf <= ~nBERR;
 		RESrf <= ~nRES;
 	end
-	wire DTACK = DTACKrr && DTACKrf;
-	wire BERR = BERRrr && BERRrf;
-	wire VPA = VPArr && VPArf;
-	wire RES = RESrr && RESrf;
+	always @(posedge C8M) begin
+		DTACKrr <= ~nDTACK;
+		VPArr <= ~nVPA;
+		BERRrr <= ~nBERR;
+		RESrr <= ~nRES;
+	end
+	wire DTACK = DTACKrf && DTACKrr;
+	wire BERR = BERRrf && BERRrr;
+	wire VPA = VPArf && VPArr;
+	wire RES = RESrf && RESrr;
 
 	/* E clock synchronization */
 	reg Er; always @(negedge C8M) begin Er <= E; end
