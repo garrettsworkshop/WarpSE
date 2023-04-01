@@ -941,12 +941,10 @@ INPUTS | 12 | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | nAS_FSB  | ram/RS_FSM_FFd
 INPUTMC | 9 | 6 | 2 | 7 | 9 | 7 | 2 | 2 | 4 | 0 | 0 | 0 | 2 | 2 | 17 | 7 | 6 | 7 | 1
 INPUTP | 3 | 36 | 30 | 54
 IMPORTS | 1 | 7 | 1
-EQ | 17 | 
+EQ | 15 | 
    ram/RAMEN.D = !ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & ram/RAMEN
-	# !ram/RS_FSM_FFd1 & !ram/RefUrg & ram/RAMEN & 
-	ram/BACTr
-	# !ram/RS_FSM_FFd1 & !ram/RefUrg & ram/RAMEN & 
-	!ram/RefReq
+	# !ram/RefUrg & ram/RAMEN & ram/BACTr
+	# !ram/RefUrg & ram/RAMEN & !ram/RefReq
 	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
 	!ram/RS_FSM_FFd1 & ram/RAMEN
 	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
@@ -954,8 +952,8 @@ EQ | 17 |
 ;Imported pterms FB8_2
 	# ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & ram/RAMEN
 	# !ram/RS_FSM_FFd1 & ram/RS_FSM_FFd3 & ram/RAMEN
-	# nAS_FSB & ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3 & !ram/RefUrg & !fsb/ASrf
+	# ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
+	ram/RS_FSM_FFd3 & !ram/RefUrg
 	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
 	!ram/RS_FSM_FFd3 & !ram/RefUrg & !fsb/ASrf;
    ram/RAMEN.CLK = FCLK;	// GCK
@@ -1750,7 +1748,7 @@ EQ | 2 |
 MACROCELL | 7 | 1 | A_FSB_19_IBUF$BUF0
 ATTRIBUTES | 264962 | 0
 OUTPUTMC | 1 | 7 | 2
-INPUTS | 8 | A_FSB<19>  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd3  | ram/RAMEN  | ram/RS_FSM_FFd1  | nAS_FSB  | ram/RefUrg  | fsb/ASrf
+INPUTS | 8 | A_FSB<19>  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd3  | ram/RAMEN  | ram/RS_FSM_FFd1  | ram/RefUrg  | nAS_FSB  | fsb/ASrf
 INPUTMC | 6 | 7 | 6 | 7 | 8 | 7 | 2 | 7 | 9 | 0 | 0 | 2 | 4
 INPUTP | 2 | 26 | 54
 EXPORTS | 1 | 7 | 2
@@ -1758,8 +1756,8 @@ EQ | 7 |
    RA<11> = A_FSB<19>;
     A_FSB_19_IBUF$BUF0.EXP  =  ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & ram/RAMEN
 	# !ram/RS_FSM_FFd1 & ram/RS_FSM_FFd3 & ram/RAMEN
-	# nAS_FSB & ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3 & !ram/RefUrg & !fsb/ASrf
+	# ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
+	ram/RS_FSM_FFd3 & !ram/RefUrg
 	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
 	!ram/RS_FSM_FFd3 & !ram/RefUrg & !fsb/ASrf
 

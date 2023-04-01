@@ -1,7 +1,7 @@
  
 cpldfit:  version P.20131013                        Xilinx Inc.
                                   Fitter Report
-Design Name: WarpSE                              Date:  4- 1-2023,  7:57AM
+Design Name: WarpSE                              Date:  4- 1-2023,  8:21AM
 Device Used: XC95144XL-10-TQ100
 Fitting Status: Successful
 
@@ -1436,15 +1436,13 @@ ram/BACTr_D <= (nAS_FSB AND NOT fsb/ASrf);
 FDCPE_ram/RAMEN: FDCPE port map (ram/RAMEN,ram/RAMEN_D,FCLK,'0','0');
 ram/RAMEN_D <= ((ram/RS_FSM_FFd2 AND NOT ram/RS_FSM_FFd3 AND ram/RAMEN)
 	OR (NOT ram/RS_FSM_FFd1 AND ram/RS_FSM_FFd3 AND ram/RAMEN)
-	OR (nAS_FSB AND ram/RS_FSM_FFd2 AND ram/RS_FSM_FFd1 AND 
-	ram/RS_FSM_FFd3 AND NOT ram/RefUrg AND NOT fsb/ASrf)
+	OR (ram/RS_FSM_FFd2 AND ram/RS_FSM_FFd1 AND 
+	ram/RS_FSM_FFd3 AND NOT ram/RefUrg)
 	OR (nAS_FSB AND NOT ram/RS_FSM_FFd2 AND NOT ram/RS_FSM_FFd1 AND 
 	NOT ram/RS_FSM_FFd3 AND NOT ram/RefUrg AND NOT fsb/ASrf)
 	OR (NOT ram/RS_FSM_FFd2 AND ram/RS_FSM_FFd1 AND ram/RAMEN)
-	OR (NOT ram/RS_FSM_FFd1 AND NOT ram/RefUrg AND ram/RAMEN AND 
-	ram/BACTr)
-	OR (NOT ram/RS_FSM_FFd1 AND NOT ram/RefUrg AND ram/RAMEN AND 
-	NOT ram/RefReq)
+	OR (NOT ram/RefUrg AND ram/RAMEN AND ram/BACTr)
+	OR (NOT ram/RefUrg AND ram/RAMEN AND NOT ram/RefReq)
 	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND NOT nAS_FSB AND 
 	NOT ram/RS_FSM_FFd1 AND ram/RAMEN)
 	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND 
