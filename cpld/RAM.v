@@ -72,8 +72,8 @@ module RAM(
 	assign nROMWE = !(~nAS && ~nWE);
 
 	/* RAM address mux (and ROM address on RA8) */
-	assign RA[11] = A[19];
-	assign RA[10] = A[21];
+	assign RA[11] = RAMCS ? (RASEL ? A[04] : A[13]) : A[19];
+	assign RA[10] = RASEL ? A[03] : A[21];
 	assign RA[09] = RASEL ? A[20] : A[19];
 	assign RA[08] = (RASEL && RAMCS) ? A[09] : A[18];
 	assign RA[07] = RASEL ? A[08] : A[17];
