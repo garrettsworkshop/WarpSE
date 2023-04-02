@@ -72,18 +72,20 @@ module RAM(
 	assign nROMWE = !(~nAS && ~nWE);
 
 	/* RAM address mux (and ROM address on RA8) */
-	assign RA[11] = RAMCS ? (RASEL ? A[04] : A[13]) : A[19];
-	assign RA[10] = RASEL ? A[03] : A[21];
-	assign RA[09] = RASEL ? A[20] : A[19];
-	assign RA[08] = (RASEL && RAMCS) ? A[09] : A[18];
-	assign RA[07] = RASEL ? A[08] : A[17];
-	assign RA[06] = RASEL ? A[07] : A[16];
-	assign RA[05] = RASEL ? A[06] : A[15];
-	assign RA[04] = RASEL ? A[05] : A[14];
-	assign RA[03] = RASEL ? A[04] : A[13];
-	assign RA[02] = RASEL ? A[03] : A[12];
-	assign RA[01] = RASEL ? A[02] : A[11];
-	assign RA[00] = RASEL ? A[01] : A[10];
+	assign RA[11] = ROMCS ? A[19] : !RASEL ? A[21] : A[20];
+	assign RA[03] = 				!RASEL ? A[21] : A[20];
+
+	assign RA[10] = 				!RASEL ? A[19] : A[17];
+	assign RA[02] = 				!RASEL ? A[18] : A[17];
+	
+	assign RA[09] = 				!RASEL ? A[16] : A[08];
+	assign RA[08] = ROMCS ? A[18] : !RASEL ? A[15] : A[07];
+	assign RA[07] = 				!RASEL ? A[14] : A[06];
+	assign RA[06] = 				!RASEL ? A[13] : A[05];
+	assign RA[05] = 				!RASEL ? A[12] : A[04];
+	assign RA[04] = 				!RASEL ? A[11] : A[03];
+	assign RA[01] = 				!RASEL ? A[10] : A[02];
+	assign RA[00] = 				!RASEL ? A[09] : A[01];
 
 	always @(posedge CLK) begin
 		if (RS==0) begin
