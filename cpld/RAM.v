@@ -147,10 +147,7 @@ module RAM(
 
 	/* RAM ready signal */
 	always @(posedge CLK) begin
-		if (RS==7) RAMReady <= 1;
-		if (RS==0 && !RefFromRS0) RAMReady <= 1;
-		if (BACT && RAMReady) RAMReady <= 1;
-		else RAMReady <= 0;
+		RAMReady <= (BACT && RAMReady) || (RS==7) || (RS==0 && !RefFromRS0);
 	end	
 
 endmodule
