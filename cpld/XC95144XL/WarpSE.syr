@@ -75,18 +75,18 @@ wysiwyg                            : NO
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling verilog file "../RAM.v" in library work
-Compiling verilog file "../IOBS.v" in library work
+Compiling verilog file "RAM.v" in library work
+Compiling verilog file "IOBS.v" in library work
 Module <RAM> compiled
-Compiling verilog file "../IOBM.v" in library work
+Compiling verilog file "IOBM.v" in library work
 Module <IOBS> compiled
-Compiling verilog file "../FSB.v" in library work
+Compiling verilog file "FSB.v" in library work
 Module <IOBM> compiled
-Compiling verilog file "../CS.v" in library work
+Compiling verilog file "CS.v" in library work
 Module <FSB> compiled
-Compiling verilog file "../CNT.v" in library work
+Compiling verilog file "CNT.v" in library work
 Module <CS> compiled
-Compiling verilog file "../WarpSE.v" in library work
+Compiling verilog file "WarpSE.v" in library work
 Module <CNT> compiled
 Module <WarpSE> compiled
 No errors in compilation
@@ -143,9 +143,9 @@ Module <FSB> is correct for synthesis.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <CS>.
-    Related source file is "../CS.v".
-WARNING:Xst:647 - Input <A<17:8>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:646 - Signal <VidRAMCSWR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Related source file is "CS.v".
+WARNING:Xst:1305 - Output <SndRAMCSWR> is never assigned. Tied to value 0.
+WARNING:Xst:647 - Input <A<11:8>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit register for signal <nOverlay>.
     Found 1-bit register for signal <ODCSr>.
     Summary:
@@ -154,7 +154,7 @@ Unit <CS> synthesized.
 
 
 Synthesizing Unit <RAM>.
-    Related source file is "../RAM.v".
+    Related source file is "RAM.v".
     Found finite state machine <FSM_0> for signal <RS>.
     -----------------------------------------------------------------------
     | States             | 8                                              |
@@ -178,13 +178,12 @@ Synthesizing Unit <RAM>.
     Found 1-bit register for signal <RefDone>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred   6 D-type flip-flop(s).
+	inferred   7 D-type flip-flop(s).
 Unit <RAM> synthesized.
 
 
 Synthesizing Unit <IOBS>.
-    Related source file is "../IOBS.v".
-WARNING:Xst:646 - Signal <IODONEr<1>> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Related source file is "IOBS.v".
     Found finite state machine <FSM_1> for signal <TS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
@@ -207,7 +206,7 @@ WARNING:Xst:646 - Signal <IODONEr<1>> is assigned but never used. This unconnect
     Found 1-bit register for signal <nBERR_FSB>.
     Found 1-bit register for signal <Clear1>.
     Found 1-bit register for signal <IOACTr>.
-    Found 2-bit register for signal <IODONEr>.
+    Found 1-bit register for signal <IODONEr>.
     Found 1-bit register for signal <IOL1>.
     Found 1-bit register for signal <IORW1>.
     Found 1-bit register for signal <IOU1>.
@@ -215,12 +214,12 @@ WARNING:Xst:646 - Signal <IODONEr<1>> is assigned but never used. This unconnect
     Found 1-bit register for signal <Sent>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred   9 D-type flip-flop(s).
+	inferred  10 D-type flip-flop(s).
 Unit <IOBS> synthesized.
 
 
 Synthesizing Unit <IOBM>.
-    Related source file is "../IOBM.v".
+    Related source file is "IOBM.v".
     Found finite state machine <FSM_2> for signal <IOS>.
     -----------------------------------------------------------------------
     | States             | 7                                              |
@@ -257,7 +256,7 @@ Unit <IOBM> synthesized.
 
 
 Synthesizing Unit <CNT>.
-    Related source file is "../CNT.v".
+    Related source file is "CNT.v".
     Found finite state machine <FSM_3> for signal <INITS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
@@ -287,11 +286,7 @@ Unit <CNT> synthesized.
 
 
 Synthesizing Unit <FSB>.
-    Related source file is "../FSB.v".
-WARNING:Xst:647 - Input <QoSCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <QoSReady> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <RAMCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <RAMReady> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Related source file is "FSB.v".
     Found 1-bit register for signal <nVPA>.
     Found 1-bit register for signal <nDTACK>.
     Found 1-bit register for signal <ASrf>.
@@ -301,7 +296,7 @@ Unit <FSB> synthesized.
 
 
 Synthesizing Unit <WarpSE>.
-    Related source file is "../WarpSE.v".
+    Related source file is "WarpSE.v".
 WARNING:Xst:647 - Input <SW> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
@@ -322,8 +317,8 @@ Macro Statistics
  13-bit up counter                                     : 1
  4-bit up counter                                      : 2
 # Registers                                            : 56
- 1-bit register                                        : 54
- 2-bit register                                        : 2
+ 1-bit register                                        : 55
+ 2-bit register                                        : 1
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
 
@@ -380,12 +375,6 @@ Optimizing FSM <ram/RS/FSM> on signal <RS[1:8]> with one-hot encoding.
  101   | 01000000
  110   | 10000000
 -------------------
-WARNING:Xst:1293 - FF/Latch <0> has a constant value of 0 in block <FFd5>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1293 - FF/Latch <0> has a constant value of 0 in block <FFd7>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1293 - FF/Latch <0> has a constant value of 0 in block <RASEL>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1293 - FF/Latch <0> has a constant value of 0 in block <RASrf>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:2257 - FF/Latches <FFd5> is unconnected in block <FSM>.
-WARNING:Xst:2257 - FF/Latches <FFd7> is unconnected in block <FSM>.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -395,16 +384,14 @@ Macro Statistics
 # Counters                                             : 3
  13-bit up counter                                     : 1
  4-bit up counter                                      : 2
-# Registers                                            : 42
- Flip-Flops                                            : 42
+# Registers                                            : 44
+ Flip-Flops                                            : 44
 
 =========================================================================
 
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
-WARNING:Xst:1710 - FF/Latch <RAMReady> (without init value) has a constant value of 0 in block <RAM>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:2677 - Node <IODONEr_1> of sequential type is unconnected in block <IOBS>.
 
 Optimizing unit <WarpSE> ...
 
@@ -416,25 +403,25 @@ Optimizing unit <RAM> ...
   implementation constraint: INIT=r	 : RASEL
   implementation constraint: INIT=r	 : CAS
   implementation constraint: INIT=r	 : RASrr
-  implementation constraint: INIT=r	 : RS_FSM_FFd6
-  implementation constraint: INIT=r	 : RASrf
   implementation constraint: INIT=r	 : RS_FSM_FFd7
   implementation constraint: INIT=r	 : Once
+  implementation constraint: INIT=r	 : RASrf
   implementation constraint: INIT=r	 : RAMEN
   implementation constraint: INIT=r	 : RS_FSM_FFd1
   implementation constraint: INIT=r	 : RS_FSM_FFd2
   implementation constraint: INIT=r	 : RS_FSM_FFd3
   implementation constraint: INIT=r	 : RS_FSM_FFd4
   implementation constraint: INIT=r	 : RS_FSM_FFd5
-
-Optimizing unit <FSB> ...
-  implementation constraint: INIT=r	 : ASrf
+  implementation constraint: INIT=r	 : RS_FSM_FFd6
 
 Optimizing unit <IOBS> ...
   implementation constraint: INIT=r	 : IOACTr
   implementation constraint: INIT=r	 : TS_FSM_FFd2
   implementation constraint: INIT=r	 : Sent
   implementation constraint: INIT=r	 : TS_FSM_FFd1
+
+Optimizing unit <FSB> ...
+  implementation constraint: INIT=r	 : ASrf
 
 Optimizing unit <IOBM> ...
   implementation constraint: INIT=s	 : IOS_FSM_FFd7
@@ -453,10 +440,6 @@ Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : INITS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : INITS_FSM_FFd1
-WARNING:Xst:1293 - FF/Latch <RASEL> has a constant value of 0 in block <ram>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1293 - FF/Latch <RS_FSM_FFd7> has a constant value of 0 in block <ram>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1896 - Due to other FF/Latch trimming, FF/Latch <RASrf> has a constant value of 0 in block <ram>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1293 - FF/Latch <RS_FSM_FFd5> has a constant value of 0 in block <ram>. This FF/Latch will be trimmed during the optimization process.
 
 =========================================================================
 *                           Partition Report                            *
@@ -488,28 +471,28 @@ Design Statistics
 # IOs                              : 75
 
 Cell Usage :
-# BELS                             : 457
-#      AND2                        : 129
-#      AND3                        : 20
-#      AND4                        : 7
+# BELS                             : 559
+#      AND2                        : 172
+#      AND3                        : 25
+#      AND4                        : 9
 #      AND5                        : 2
 #      AND6                        : 1
 #      AND7                        : 1
 #      AND8                        : 1
 #      GND                         : 6
-#      INV                         : 190
-#      OR2                         : 69
-#      OR3                         : 10
+#      INV                         : 214
+#      OR2                         : 96
+#      OR3                         : 11
 #      OR4                         : 2
 #      VCC                         : 1
 #      XOR2                        : 18
-# FlipFlops/Latches                : 92
-#      FD                          : 56
+# FlipFlops/Latches                : 97
+#      FD                          : 61
 #      FDC                         : 2
 #      FDCE                        : 33
 #      FDP                         : 1
-# IO Buffers                       : 63
-#      IBUF                        : 27
+# IO Buffers                       : 71
+#      IBUF                        : 35
 #      IOBUFE                      : 1
 #      OBUF                        : 31
 #      OBUFE                       : 4
@@ -517,13 +500,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.96 secs
+Total CPU time to Xst completion: 5.04 secs
  
 --> 
 
-Total memory usage is 261316 kilobytes
+Total memory usage is 261508 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   22 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

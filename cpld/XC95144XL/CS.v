@@ -54,6 +54,7 @@ module CS(
 				   (A[23:20]==4'h7) || // empty
 				   (A[23:20]==4'h6) || // empty
 				   (A[23:20]==4'h5) || // SCSI
-				  ((A[23:20]==4'h4) && Overlay); // ROM once
+				  ((A[23:20]==4'h4) && Overlay) ||
+				    VidRAMCSWR; // ROM once
 	assign IOPWCS = VidRAMCSWR;
 endmodule
