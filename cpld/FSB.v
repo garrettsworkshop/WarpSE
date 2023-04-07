@@ -20,7 +20,7 @@ module FSB(
 	/* DTACK/VPA control */
 	wire Ready = /*(RAMCS && RAMReady && !IOPWCS) ||*/
 				 (/*RAMCS && RAMReady &&*/ IOPWCS && IOPWReady /*&& !QoSCS*/) ||
-				 /*(RAMCS && RAMReady &&  IOPWCS && IOPWReady &&  QoSCS && QoSReady)*/ ||
+				 /*(RAMCS && RAMReady &&  IOPWCS && IOPWReady &&  QoSCS && QoSReady) ||*/
 				 (ROMCS) || (IONPReady);
 	always @(posedge FCLK) nDTACK <= !(Ready && BACT && !IACS);
 	always @(posedge FCLK, posedge nAS) begin

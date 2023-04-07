@@ -21,10 +21,9 @@ module IOBS(
 	reg IOACTr = 0; always @(posedge CLK) IOACTr <= IOACT;
 
 	/* IODTACK input synchronization */
-	reg [1:0] IODONErr; reg [1:0] IODONErf;
-	always @(posedge CLK) IODONErr[1:0] <= { IODONErr[0], IODONEin };
-	always @(posedge CLK) IODONErf[1:0] <= { IODONErf[0], IODONEin };
-	wire IODONE = IODONErr[1];
+	reg [1:0] IODONEr;
+	always @(posedge CLK) IODONEr[1:0] <= { IODONEr[0], IODONEin };
+	wire IODONE = IODONEr[0];
 
 	/* Read data OE control */
 	assign nDinOE = !(!nAS && IOCS && nWE && !ROMCS);
@@ -42,7 +41,6 @@ module IOBS(
 	 *       transitions to TS1 when IOACT false */
 	reg [1:0] TS = 0;
 	reg Sent = 0;
-	reg PostSent = 0;
 
 	/* FIFO secondary level control */
 	reg Load1;
@@ -81,11 +79,15 @@ module IOBS(
 				TS <= 3;
 				IORDREQ <= IORW1;
 				IOWRREQ <= !IORW1;
+				IOL0 <= IOL1;
+				IOU0 <= IOU1;
 			end else if (BACT && IOCS && !ALE1 && !Sent) begin // FSB request
 				// Request transfer from IOBM and latch R/W from FSB
 				TS <= 3;
 				IORDREQ <= nWE;
 				IOWRREQ <= !nWE;
+				IOL0 <= !nLDS;
+				IOU0 <= !nUDS;
 			end else begin // Otherwise stay in idle
 				TS <= 0;
 				IORDREQ <= 0;

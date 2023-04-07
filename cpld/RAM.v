@@ -13,15 +13,6 @@ module RAM(
 	
 	/* BACT saved from last cycle */
 	reg BACTr; always @(posedge CLK) BACTr <= BACT;
-
-	/* Refresh command generation */
-	reg RefDone; // Refresh done "remember"
-	always @(posedge CLK) begin
-		if (!RefReqIn && !RefUrgIn) RefDone <= 0;
-		else if (RS==4 || RS==5) RefDone <= 1;
-	end
-	wire RefReq = RefReqIn && !RefDone;
-	wire RefUrg = RefUrgIn && !RefDone;
 	
 	/* RAM control state */
 	reg [2:0] RS = 0;
@@ -31,6 +22,15 @@ module RAM(
 	reg CAS = 0;
 	reg RASrr = 0;
 	reg RASrf = 0;
+
+	/* Refresh command generation */
+	reg RefDone; // Refresh done "remember"
+	always @(posedge CLK) begin
+		if (!RefReqIn && !RefUrgIn) RefDone <= 0;
+		else if (RS==4 || RS==5) RefDone <= 1;
+	end
+	wire RefReq = RefReqIn && !RefDone;
+	wire RefUrg = RefUrgIn && !RefDone;
 
 	/* RAM control signals */
 	assign nRAS =   !((!nAS && RAMCS && RAMEN) || RASrr || RASrf);
@@ -65,7 +65,7 @@ module RAM(
 	wire RefFromRS2 = RefUrg;
 	wire RAMStart = BACT && RAMCS && RAMEN;
 	always @(posedge CLK) begin
-		case (RS[3:0])
+		case (RS[2:0])
 			0: begin
 				if (RAMStart) begin
 					RS <= 1;

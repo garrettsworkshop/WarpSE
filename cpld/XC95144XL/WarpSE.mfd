@@ -2,102 +2,76 @@ MDF Database:  version 1.0
 MDF_INFO | WarpSE | XC95144XL-10-TQ100
 MACROCELL | 5 | 1 | nVMA_IOBout
 ATTRIBUTES | 4622082 | 0
-OUTPUTMC | 2 | 5 | 1 | 5 | 0
-INPUTS | 9 | nVMA_IOB  | iobm/ES<0>  | iobm/ES<1>  | iobm/ES<2>  | iobm/ES<3>  | iobm/ES<4>  | IOACT  | iobm/VPAr  | nAoutOE
-INPUTMC | 9 | 5 | 1 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12 | 5 | 17 | 1 | 16 | 3 | 1
+OUTPUTMC | 2 | 5 | 1 | 0 | 14
+INPUTS | 8 | nVMA_IOB  | iobm/ES<0>  | iobm/ES<2>  | iobm/ES<1>  | iobm/ES<3>  | IOACT  | iobm/VPAr  | nAoutOE
+INPUTMC | 8 | 5 | 1 | 0 | 12 | 0 | 11 | 0 | 14 | 0 | 13 | 6 | 17 | 1 | 14 | 3 | 1
 EQ | 6 | 
-   nVMA_IOB.T = !nVMA_IOB & !iobm/ES<0> & !iobm/ES<1> & !iobm/ES<2> & 
-	!iobm/ES<3> & !iobm/ES<4>
-	# nVMA_IOB & iobm/ES<0> & iobm/ES<1> & iobm/ES<2> & 
-	!iobm/ES<3> & !iobm/ES<4> & IOACT & iobm/VPAr;
-   nVMA_IOB.CLK = C16M;	// GCK
+   nVMA_IOB.T = !nVMA_IOB & !iobm/ES<0> & !iobm/ES<2> & !iobm/ES<1> & 
+	!iobm/ES<3>
+	# nVMA_IOB & iobm/ES<0> & iobm/ES<2> & !iobm/ES<1> & 
+	!iobm/ES<3> & IOACT & iobm/VPAr;
+   nVMA_IOB.CLK = C8M;	// GCK
    nVMA_IOB.OE = !nAoutOE;
-GLOBALS | 1 | 2 | C16M
+GLOBALS | 1 | 2 | C8M
 
 MACROCELL | 5 | 11 | nAS_IOBout
-ATTRIBUTES | 8685314 | 0
-INPUTS | 4 | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd3  | nAoutOE
-INPUTMC | 4 | 0 | 16 | 5 | 9 | 5 | 3 | 3 | 1
-EQ | 4 | 
-   nAS_IOB.D = !iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd2
-	# iobm/IOS_FSM_FFd1 & !iobm/IOS_FSM_FFd2;
+ATTRIBUTES | 8816386 | 0
+OUTPUTMC | 2 | 1 | 16 | 0 | 15
+INPUTS | 9 | iobm/IOS_FSM_FFd3  | iobm/C8Mr  | iobm/IOS_FSM_FFd4  | iobm/IOS_FSM_FFd5  | iobm/IOS_FSM_FFd6  | iobm/IOS_FSM_FFd7  | iobm/IORDREQr  | iobm/IOWRREQr  | nAoutOE
+INPUTMC | 9 | 6 | 14 | 5 | 9 | 5 | 6 | 5 | 5 | 5 | 12 | 5 | 15 | 6 | 2 | 6 | 0 | 3 | 1
+EQ | 9 | 
+   nAS_IOB.D = !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6
+	# !iobm/IOS_FSM_FFd3 & iobm/C8Mr & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6
+	# !iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd4 & 
+	!iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & !iobm/IORDREQr & 
+	!iobm/IOWRREQr;
    !nAS_IOB.CLK = C16M;	// GCK
    nAS_IOB.OE = !nAoutOE;
 GLOBALS | 1 | 2 | C16M
 
 MACROCELL | 5 | 8 | nLDS_IOBout
-ATTRIBUTES | 8685314 | 0
-INPUTS | 6 | IOL0  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd1  | IORW0  | nAoutOE
-INPUTMC | 6 | 4 | 0 | 5 | 3 | 5 | 9 | 0 | 16 | 4 | 16 | 3 | 1
-EQ | 6 | 
-   !nLDS_IOB.D = IOL0 & !iobm/IOS_FSM_FFd3 & iobm/IOS_FSM_FFd2
-	# IOL0 & iobm/IOS_FSM_FFd1 & iobm/IOS_FSM_FFd2
-	# IORW0 & IOL0 & iobm/IOS_FSM_FFd3 & 
-	!iobm/IOS_FSM_FFd1;
+ATTRIBUTES | 8816386 | 0
+OUTPUTMC | 1 | 5 | 8
+INPUTS | 8 | iobm/IOS_FSM_FFd3  | IOL0  | iobm/IOS_FSM_FFd5  | iobm/IOS_FSM_FFd4  | nLDS_IOB  | iobm/IOS_FSM_FFd6  | iobm/IOS_FSM_FFd1.EXP  | nAoutOE
+INPUTMC | 8 | 6 | 14 | 0 | 17 | 5 | 5 | 5 | 6 | 5 | 8 | 5 | 12 | 5 | 7 | 3 | 1
+IMPORTS | 1 | 5 | 7
+EQ | 9 | 
+   !nLDS_IOB.D = iobm/IOS_FSM_FFd3 & IOL0
+	# iobm/IOS_FSM_FFd4 & IOL0
+	# iobm/IOS_FSM_FFd5 & IOL0
+	# !nLDS_IOB & iobm/IOS_FSM_FFd6 & IOL0
+;Imported pterms FB6_8
+	# iobm/IOS_FSM_FFd7 & !iobm/C8Mr & IOL0 & 
+	iobm/IORDREQr;
    !nLDS_IOB.CLK = C16M;	// GCK
    nLDS_IOB.OE = !nAoutOE;
 GLOBALS | 1 | 2 | C16M
 
 MACROCELL | 5 | 10 | nUDS_IOBout
-ATTRIBUTES | 8685314 | 0
-INPUTS | 6 | IOU0  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd1  | IORW0  | nAoutOE
-INPUTMC | 6 | 0 | 17 | 5 | 3 | 5 | 9 | 0 | 16 | 4 | 16 | 3 | 1
-EQ | 6 | 
-   !nUDS_IOB.D = IOU0 & !iobm/IOS_FSM_FFd3 & iobm/IOS_FSM_FFd2
-	# IOU0 & iobm/IOS_FSM_FFd1 & iobm/IOS_FSM_FFd2
-	# IORW0 & IOU0 & iobm/IOS_FSM_FFd3 & 
-	!iobm/IOS_FSM_FFd1;
+ATTRIBUTES | 8816386 | 0
+OUTPUTMC | 1 | 5 | 10
+INPUTS | 8 | iobm/IOS_FSM_FFd3  | IOU0  | iobm/IOS_FSM_FFd5  | iobm/IOS_FSM_FFd4  | nUDS_IOB  | iobm/IOS_FSM_FFd6  | iobm/C8Mr.EXP  | nAoutOE
+INPUTMC | 8 | 6 | 14 | 0 | 16 | 5 | 5 | 5 | 6 | 5 | 10 | 5 | 12 | 5 | 9 | 3 | 1
+IMPORTS | 1 | 5 | 9
+EQ | 9 | 
+   !nUDS_IOB.D = iobm/IOS_FSM_FFd3 & IOU0
+	# iobm/IOS_FSM_FFd4 & IOU0
+	# iobm/IOS_FSM_FFd5 & IOU0
+	# !nUDS_IOB & iobm/IOS_FSM_FFd6 & IOU0
+;Imported pterms FB6_10
+	# iobm/IOS_FSM_FFd7 & !iobm/C8Mr & IOU0 & 
+	iobm/IORDREQr;
    !nUDS_IOB.CLK = C16M;	// GCK
    nUDS_IOB.OE = !nAoutOE;
 GLOBALS | 1 | 2 | C16M
 
-MACROCELL | 2 | 12 | iobs/Sent
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 11 | 2 | 12 | 4 | 3 | 4 | 9 | 4 | 2 | 4 | 6 | 2 | 6 | 4 | 12 | 2 | 5 | 2 | 11 | 2 | 13 | 4 | 17
-INPUTS | 12 | iobs/Sent  | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1  | nADoutLE1  | A_FSB<22>  | cs/nOverlay  | A_FSB<20>  | cs/ODCSr.EXP  | EXP12_.EXP
-INPUTMC | 8 | 2 | 12 | 2 | 4 | 4 | 6 | 0 | 13 | 5 | 13 | 6 | 2 | 2 | 11 | 2 | 13
-INPUTP | 4 | 54 | 36 | 30 | 28
-IMPORTS | 2 | 2 | 11 | 2 | 13
-EQ | 32 | 
-   iobs/Sent.T = iobs/Sent & nAS_FSB & !fsb/ASrf
-	# A_FSB<23> & !iobs/Sent & !nAS_FSB & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & nADoutLE1
-	# A_FSB<23> & !iobs/Sent & !iobs/TS_FSM_FFd2 & 
-	!iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-	# A_FSB<22> & A_FSB<20> & !iobs/Sent & !nAS_FSB & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & nADoutLE1
-	# A_FSB<22> & !iobs/Sent & !cs/nOverlay & !nAS_FSB & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & nADoutLE1
-;Imported pterms FB3_12
-	# A_FSB<22> & A_FSB<21> & !iobs/Sent & !nAS_FSB & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & nADoutLE1
-	# A_FSB<22> & A_FSB<20> & !iobs/Sent & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-	# A_FSB<22> & !iobs/Sent & !cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-;Imported pterms FB3_14
-	# A_FSB<22> & A_FSB<21> & !iobs/Sent & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & fsb/ASrf & nADoutLE1;
-   iobs/Sent.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 3 | 17 | RefUrg
+MACROCELL | 2 | 17 | RefUrg
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 4 | 3 | 17 | 3 | 9 | 3 | 14 | 3 | 3
+OUTPUTMC | 9 | 2 | 17 | 2 | 14 | 7 | 17 | 2 | 9 | 7 | 8 | 7 | 15 | 7 | 13 | 7 | 16 | 7 | 0
 INPUTS | 7 | cnt/Timer<0>  | cnt/Timer<1>  | cnt/Timer<2>  | cnt/Er<0>  | cnt/Er<1>  | RefUrg  | cnt/TimerTC
-INPUTMC | 7 | 3 | 11 | 3 | 15 | 3 | 16 | 0 | 11 | 3 | 8 | 3 | 17 | 3 | 9
+INPUTMC | 7 | 6 | 12 | 1 | 17 | 2 | 15 | 2 | 7 | 6 | 6 | 2 | 17 | 2 | 9
 EQ | 9 | 
    RefUrg.T = RefUrg & cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>
 	# cnt/Timer<0> & cnt/Timer<1> & cnt/Timer<2> & 
@@ -110,22 +84,80 @@ EQ | 9 |
    RefUrg.CE = !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 0 | cnt/LTimer<0>
+MACROCELL | 3 | 17 | iobs/Sent
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 11 | 3 | 17 | 3 | 13 | 3 | 14 | 7 | 11 | 3 | 15 | 3 | 12 | 0 | 17 | 0 | 16 | 3 | 16 | 3 | 11 | 3 | 0
+INPUTS | 12 | nAS_FSB  | fsb/ASrf  | iobs/Sent  | nADoutLE1  | A_FSB<22>  | iobs/TS_FSM_FFd1  | A_FSB<23>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay  | iobs/TS_FSM_FFd2  | ram/BACTr.EXP
+INPUTMC | 7 | 7 | 3 | 3 | 17 | 5 | 13 | 3 | 8 | 0 | 10 | 3 | 15 | 3 | 0
+INPUTP | 5 | 54 | 30 | 36 | 29 | 28
+EXPORTS | 1 | 3 | 16
+IMPORTS | 1 | 3 | 0
+EQ | 14 | 
+   !iobs/Sent.D = !iobs/Sent & !nADoutLE1
+	# nAS_FSB & !fsb/ASrf
+	# A_FSB<23> & !iobs/Sent & iobs/TS_FSM_FFd1
+	# A_FSB<22> & !iobs/Sent & iobs/TS_FSM_FFd1
+;Imported pterms FB4_1
+	# A_FSB<23> & !iobs/Sent & iobs/TS_FSM_FFd2
+	# A_FSB<22> & !iobs/Sent & iobs/TS_FSM_FFd2
+	# !iobs/Sent & nWE_FSB & iobs/TS_FSM_FFd1
+	# !iobs/Sent & nWE_FSB & iobs/TS_FSM_FFd2
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	!iobs/Sent & cs/nOverlay;
+   iobs/Sent.CLK = FCLK;	// GCK
+    iobs/Sent.EXP  =  !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 1 | 16 | IOBERR
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 4 | 7 | 11 | 6 | 14 | 6 | 0 | 6 | 9
+INPUTS | 2 | nBERR_IOB  | nAS_IOB
+INPUTMC | 1 | 5 | 11
+INPUTP | 1 | 123
+EQ | 3 | 
+   IOBERR.D = !nBERR_IOB;
+   !IOBERR.CLK = C8M;	// GCK
+   IOBERR.AR = nAS_IOB;
+GLOBALS | 1 | 2 | C8M
+
+MACROCELL | 0 | 15 | IODONE
+ATTRIBUTES | 8553232 | 0
+OUTPUTMC | 5 | 6 | 14 | 6 | 0 | 6 | 9 | 2 | 5 | 0 | 16
+INPUTS | 10 | nRES.PIN  | nDTACK_IOB  | iobs/IOU1  | IOU0  | nADoutLE1  | nAS_FSB  | iobs/TS_FSM_FFd2  | nAS_IOB  | fsb/ASrf  | iobm/ES<1>.EXP
+INPUTMC | 7 | 7 | 9 | 0 | 16 | 5 | 13 | 3 | 15 | 5 | 11 | 7 | 3 | 0 | 14
+INPUTP | 3 | 145 | 127 | 54
+EXPORTS | 1 | 0 | 16
+IMPORTS | 1 | 0 | 14
+EQ | 10 | 
+   IODONE.D = !nRES.PIN
+	# !nDTACK_IOB
+;Imported pterms FB1_15
+	# !nVMA_IOB & !iobm/ES<0> & !iobm/ES<2> & !iobm/ES<1> & 
+	iobm/ES<3>;
+   !IODONE.CLK = C8M;	// GCK
+   IODONE.AR = nAS_IOB;
+    IODONE.EXP  =  !iobs/IOU1 & !IOU0 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+GLOBALS | 1 | 2 | C8M
+
+MACROCELL | 6 | 3 | cnt/LTimer<0>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 13 | 6 | 17 | 6 | 16 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 13 | 4 | 17 | 4 | 16 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 3 | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 3 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 3 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 3 | 
    cnt/LTimer<0>.T = Vcc;
    cnt/LTimer<0>.CLK = FCLK;	// GCK
    cnt/LTimer<0>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 11 | cnt/Timer<0>
+MACROCELL | 6 | 12 | cnt/Timer<0>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 5 | 3 | 17 | 3 | 11 | 3 | 15 | 3 | 16 | 3 | 9
+OUTPUTMC | 5 | 2 | 17 | 6 | 12 | 1 | 17 | 2 | 15 | 2 | 9
 INPUTS | 4 | cnt/Timer<0>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 4 | 3 | 11 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 4 | 6 | 12 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 4 | 
    !cnt/Timer<0>.T = !cnt/Timer<0> & cnt/TimerTC & !cnt/Er<0> & 
 	cnt/Er<1>;
@@ -133,11 +165,11 @@ EQ | 4 |
    cnt/Timer<0>.CE = !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 15 | cnt/Timer<1>
+MACROCELL | 1 | 17 | cnt/Timer<1>
 ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 5 | 3 | 17 | 3 | 15 | 3 | 16 | 3 | 9 | 3 | 14
+OUTPUTMC | 5 | 2 | 17 | 1 | 17 | 2 | 15 | 2 | 14 | 2 | 9
 INPUTS | 5 | cnt/Timer<0>  | cnt/Timer<1>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 5 | 3 | 11 | 3 | 15 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 5 | 6 | 12 | 1 | 17 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 5 | 
    !cnt/Timer<1>.D = cnt/Timer<0> & cnt/Timer<1>
 	# !cnt/Timer<0> & !cnt/Timer<1>
@@ -146,11 +178,11 @@ EQ | 5 |
    cnt/Timer<1>.CE = !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 16 | cnt/Timer<2>
+MACROCELL | 2 | 15 | cnt/Timer<2>
 ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 4 | 3 | 17 | 3 | 16 | 3 | 9 | 3 | 14
+OUTPUTMC | 4 | 2 | 17 | 2 | 15 | 2 | 14 | 2 | 9
 INPUTS | 6 | cnt/Timer<0>  | cnt/Timer<2>  | cnt/Timer<1>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 6 | 3 | 11 | 3 | 16 | 3 | 15 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 6 | 6 | 12 | 2 | 15 | 1 | 17 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 6 | 
    !cnt/Timer<2>.D = !cnt/Timer<0> & !cnt/Timer<2>
 	# !cnt/Timer<1> & !cnt/Timer<2>
@@ -160,24 +192,22 @@ EQ | 6 |
    cnt/Timer<2>.CE = !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 2 | cs/nOverlay
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 35 | 2 | 12 | 6 | 2 | 4 | 16 | 4 | 8 | 2 | 10 | 2 | 15 | 2 | 0 | 4 | 2 | 2 | 8 | 7 | 16 | 7 | 6 | 7 | 9 | 7 | 8 | 4 | 6 | 7 | 2 | 2 | 6 | 4 | 12 | 7 | 3 | 6 | 7 | 7 | 0 | 4 | 1 | 2 | 1 | 2 | 5 | 2 | 7 | 2 | 9 | 2 | 11 | 2 | 13 | 2 | 14 | 2 | 16 | 2 | 17 | 4 | 3 | 4 | 7 | 4 | 13 | 4 | 15 | 7 | 5
-INPUTS | 5 | nRES.PIN  | cs/nOverlay  | nAS_FSB  | fsb/ASrf  | cs/ODCSr
-INPUTMC | 3 | 6 | 2 | 2 | 4 | 2 | 11
-INPUTP | 2 | 145 | 54
-EQ | 4 | 
-   cs/nOverlay.T = !nRES.PIN & cs/nOverlay & nAS_FSB & !fsb/ASrf
-	# nRES.PIN & !cs/nOverlay & nAS_FSB & cs/ODCSr & 
-	!fsb/ASrf;
-   cs/nOverlay.CLK = FCLK;	// GCK
+MACROCELL | 2 | 14 | RefReq
+ATTRIBUTES | 8553280 | 0
+OUTPUTMC | 6 | 7 | 17 | 7 | 8 | 7 | 15 | 7 | 13 | 7 | 16 | 7 | 0
+INPUTS | 5 | RefUrg  | cnt/Timer<1>  | cnt/Timer<2>  | cnt/Er<0>  | cnt/Er<1>
+INPUTMC | 5 | 2 | 17 | 1 | 17 | 2 | 15 | 2 | 7 | 6 | 6
+EQ | 3 | 
+   !RefReq.D = !RefUrg & !cnt/Timer<1> & !cnt/Timer<2>;
+   RefReq.CLK = FCLK;	// GCK
+   RefReq.CE = !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 17 | cnt/LTimer<10>
+MACROCELL | 4 | 17 | cnt/LTimer<10>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 3 | 6 | 16 | 3 | 13 | 3 | 12
+OUTPUTMC | 3 | 4 | 16 | 4 | 15 | 4 | 0
 INPUTS | 13 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/LTimer<6>  | cnt/LTimer<7>  | cnt/LTimer<8>  | cnt/LTimer<9>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 13 | 6 | 0 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 13 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 5 | 
    cnt/LTimer<10>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2> & 
 	cnt/LTimer<3> & cnt/LTimer<4> & cnt/LTimer<5> & cnt/LTimer<6> & 
@@ -186,11 +216,11 @@ EQ | 5 |
    cnt/LTimer<10>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 16 | cnt/LTimer<11>
+MACROCELL | 4 | 16 | cnt/LTimer<11>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 2 | 3 | 13 | 3 | 12
+OUTPUTMC | 2 | 4 | 15 | 4 | 0
 INPUTS | 14 | cnt/LTimer<0>  | cnt/LTimer<10>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/LTimer<6>  | cnt/LTimer<7>  | cnt/LTimer<8>  | cnt/LTimer<9>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 14 | 6 | 0 | 6 | 17 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 14 | 6 | 3 | 4 | 17 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 5 | 
    cnt/LTimer<11>.T = cnt/LTimer<0> & cnt/LTimer<10> & cnt/LTimer<1> & 
 	cnt/LTimer<2> & cnt/LTimer<3> & cnt/LTimer<4> & cnt/LTimer<5> & 
@@ -199,44 +229,44 @@ EQ | 5 |
    cnt/LTimer<11>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 15 | cnt/LTimer<1>
+MACROCELL | 2 | 12 | cnt/LTimer<1>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 12 | 6 | 17 | 6 | 16 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 12 | 4 | 17 | 4 | 16 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 4 | cnt/LTimer<0>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 4 | 6 | 0 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 4 | 6 | 3 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 3 | 
    cnt/LTimer<1>.T = cnt/LTimer<0>;
    cnt/LTimer<1>.CLK = FCLK;	// GCK
    cnt/LTimer<1>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 14 | cnt/LTimer<2>
+MACROCELL | 2 | 11 | cnt/LTimer<2>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 11 | 6 | 17 | 6 | 16 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 11 | 4 | 17 | 4 | 16 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 5 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 5 | 6 | 0 | 6 | 15 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 5 | 6 | 3 | 2 | 12 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 3 | 
    cnt/LTimer<2>.T = cnt/LTimer<0> & cnt/LTimer<1>;
    cnt/LTimer<2>.CLK = FCLK;	// GCK
    cnt/LTimer<2>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 12 | cnt/LTimer<3>
+MACROCELL | 2 | 10 | cnt/LTimer<3>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 10 | 6 | 17 | 6 | 16 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 10 | 4 | 17 | 4 | 16 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 6 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 6 | 6 | 0 | 6 | 15 | 6 | 14 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 6 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 3 | 
    cnt/LTimer<3>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2>;
    cnt/LTimer<3>.CLK = FCLK;	// GCK
    cnt/LTimer<3>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 7 | 12 | cnt/LTimer<4>
+MACROCELL | 4 | 12 | cnt/LTimer<4>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 9 | 6 | 17 | 6 | 16 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 9 | 4 | 17 | 4 | 16 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 7 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 7 | 6 | 0 | 6 | 15 | 6 | 14 | 6 | 12 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 7 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 10 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 4 | 
    cnt/LTimer<4>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2> & 
 	cnt/LTimer<3>;
@@ -244,11 +274,11 @@ EQ | 4 |
    cnt/LTimer<4>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 7 | 13 | cnt/LTimer<5>
+MACROCELL | 4 | 9 | cnt/LTimer<5>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 8 | 6 | 17 | 6 | 16 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 8 | 4 | 17 | 4 | 16 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 8 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 8 | 6 | 0 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 8 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 4 | 
    cnt/LTimer<5>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2> & 
 	cnt/LTimer<3> & cnt/LTimer<4>;
@@ -256,11 +286,11 @@ EQ | 4 |
    cnt/LTimer<5>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 7 | 15 | cnt/LTimer<6>
+MACROCELL | 4 | 7 | cnt/LTimer<6>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 7 | 6 | 17 | 6 | 16 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 7 | 4 | 17 | 4 | 16 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 9 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 9 | 6 | 0 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 9 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 4 | 
    cnt/LTimer<6>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2> & 
 	cnt/LTimer<3> & cnt/LTimer<4> & cnt/LTimer<5>;
@@ -268,11 +298,11 @@ EQ | 4 |
    cnt/LTimer<6>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 9 | cnt/LTimer<7>
+MACROCELL | 4 | 6 | cnt/LTimer<7>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 6 | 6 | 17 | 6 | 16 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 6 | 4 | 17 | 4 | 16 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 10 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/LTimer<6>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 10 | 6 | 0 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 10 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 4 | 
    cnt/LTimer<7>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2> & 
 	cnt/LTimer<3> & cnt/LTimer<4> & cnt/LTimer<5> & cnt/LTimer<6>;
@@ -280,11 +310,11 @@ EQ | 4 |
    cnt/LTimer<7>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 6 | cnt/LTimer<8>
+MACROCELL | 4 | 3 | cnt/LTimer<8>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 5 | 6 | 17 | 6 | 16 | 6 | 3 | 3 | 13 | 3 | 12
+OUTPUTMC | 5 | 4 | 17 | 4 | 16 | 4 | 2 | 4 | 15 | 4 | 0
 INPUTS | 11 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/LTimer<6>  | cnt/LTimer<7>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 11 | 6 | 0 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 11 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 5 | 
    cnt/LTimer<8>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2> & 
 	cnt/LTimer<3> & cnt/LTimer<4> & cnt/LTimer<5> & cnt/LTimer<6> & 
@@ -293,11 +323,11 @@ EQ | 5 |
    cnt/LTimer<8>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 6 | 3 | cnt/LTimer<9>
+MACROCELL | 4 | 2 | cnt/LTimer<9>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 4 | 6 | 17 | 6 | 16 | 3 | 13 | 3 | 12
+OUTPUTMC | 4 | 4 | 17 | 4 | 16 | 4 | 15 | 4 | 0
 INPUTS | 12 | cnt/LTimer<0>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/LTimer<6>  | cnt/LTimer<7>  | cnt/LTimer<8>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 12 | 6 | 0 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 12 | 6 | 3 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 5 | 
    cnt/LTimer<9>.T = cnt/LTimer<0> & cnt/LTimer<1> & cnt/LTimer<2> & 
 	cnt/LTimer<3> & cnt/LTimer<4> & cnt/LTimer<5> & cnt/LTimer<6> & 
@@ -306,45 +336,34 @@ EQ | 5 |
    cnt/LTimer<9>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 4 | 16 | IORW0
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 6 | 5 | 8 | 5 | 10 | 4 | 16 | 5 | 7 | 4 | 0 | 4 | 17
-INPUTS | 12 | A_FSB<14>  | A_FSB<13>  | A_FSB<23>  | A_FSB<22>  | nADoutLE1  | cs/nOverlay  | A_FSB<20>  | nWE_FSB  | IORW0  | A_FSB<21>  | EXP16_.EXP  | EXP17_.EXP
-INPUTMC | 5 | 5 | 13 | 6 | 2 | 4 | 16 | 4 | 15 | 4 | 17
-INPUTP | 7 | 19 | 18 | 36 | 30 | 28 | 47 | 29
-IMPORTS | 2 | 4 | 15 | 4 | 17
-EQ | 24 | 
-   !IORW0.T = !nWE_FSB & !IORW0 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<21> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<20> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !cs/nOverlay & nADoutLE1
-	# !A_FSB<14> & !A_FSB<13> & !A_FSB<23> & !A_FSB<22> & 
-	nADoutLE1
-;Imported pterms FB5_16
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<19> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<18> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<17> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<16> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	nADoutLE1
-;Imported pterms FB5_18
-	# iobs/Sent & nADoutLE1
-	# IORW0 & iobs/IORW1 & !nADoutLE1
-	# !IORW0 & !iobs/IORW1 & !nADoutLE1
-	# nAS_FSB & !fsb/ASrf & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !IORW0 & nADoutLE1
-;Imported pterms FB5_1
-	# iobs/TS_FSM_FFd2
-	# iobs/TS_FSM_FFd1
-	# nWE_FSB & IORW0 & nADoutLE1;
-   IORW0.CLK = FCLK;	// GCK
+MACROCELL | 7 | 17 | ram/RAMEN
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 6 | 7 | 17 | 7 | 15 | 7 | 13 | 7 | 16 | 7 | 5 | 7 | 7
+INPUTS | 11 | ram/RAMEN  | nAS_FSB  | ram/Once  | fsb/ASrf  | ram/RS_FSM_FFd8  | ram/RS_FSM_FFd4  | RefUrg  | ram/RefDone  | RefReq  | ram/BACTr  | ram/RS_FSM_FFd3.EXP
+INPUTMC | 10 | 7 | 17 | 3 | 6 | 7 | 3 | 7 | 15 | 2 | 3 | 2 | 17 | 7 | 8 | 2 | 14 | 3 | 0 | 7 | 0
+INPUTP | 1 | 54
+IMPORTS | 1 | 7 | 0
+EQ | 13 | 
+   !ram/RAMEN.D = !ram/RAMEN & !nAS_FSB & ram/Once
+	# !ram/RAMEN & !ram/RS_FSM_FFd8 & !ram/RS_FSM_FFd4
+	# !ram/RAMEN & ram/Once & fsb/ASrf
+	# RefUrg & !ram/RAMEN & !ram/RefDone & 
+	ram/RS_FSM_FFd8
+	# RefReq & !ram/RefDone & !nAS_FSB & 
+	ram/RS_FSM_FFd8 & !ram/BACTr
+;Imported pterms FB8_1
+	# RefUrg & !ram/RefDone & nAS_FSB & 
+	ram/RS_FSM_FFd8 & !fsb/ASrf
+	# RefReq & !ram/RefDone & ram/RS_FSM_FFd8 & 
+	fsb/ASrf & !ram/BACTr;
+   ram/RAMEN.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 13 | cnt/LTimer<12>
+MACROCELL | 4 | 15 | cnt/LTimer<12>
 ATTRIBUTES | 4358976 | 0
-OUTPUTMC | 1 | 3 | 12
+OUTPUTMC | 1 | 4 | 0
 INPUTS | 15 | cnt/LTimer<0>  | cnt/LTimer<10>  | cnt/LTimer<11>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/LTimer<6>  | cnt/LTimer<7>  | cnt/LTimer<8>  | cnt/LTimer<9>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 15 | 6 | 0 | 6 | 17 | 6 | 16 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 15 | 6 | 3 | 4 | 17 | 4 | 16 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 6 | 
    cnt/LTimer<12>.T = cnt/LTimer<0> & cnt/LTimer<10> & cnt/LTimer<11> & 
 	cnt/LTimer<1> & cnt/LTimer<2> & cnt/LTimer<3> & cnt/LTimer<4> & 
@@ -354,97 +373,93 @@ EQ | 6 |
    cnt/LTimer<12>.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 9 | cnt/TimerTC
+MACROCELL | 2 | 9 | cnt/TimerTC
 ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 20 | 3 | 17 | 6 | 0 | 3 | 11 | 3 | 15 | 3 | 16 | 6 | 17 | 6 | 16 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 12 | 7 | 16 | 7 | 10
-INPUTS | 6 | RefUrg  | cnt/Timer<0>  | cnt/Timer<1>  | cnt/Timer<2>  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 6 | 3 | 17 | 3 | 11 | 3 | 15 | 3 | 16 | 0 | 11 | 3 | 8
-EQ | 4 | 
+OUTPUTMC | 21 | 2 | 17 | 6 | 3 | 6 | 12 | 1 | 17 | 2 | 15 | 4 | 17 | 4 | 16 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 4 | 0 | 2 | 6 | 2 | 13 | 2 | 8
+INPUTS | 12 | RefUrg  | cnt/Timer<0>  | cnt/Timer<1>  | cnt/Timer<2>  | cnt/Er<0>  | cnt/Er<1>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>
+INPUTMC | 6 | 2 | 17 | 6 | 12 | 1 | 17 | 2 | 15 | 2 | 7 | 6 | 6
+INPUTP | 6 | 36 | 30 | 29 | 28 | 26 | 24
+EXPORTS | 1 | 2 | 8
+EQ | 6 | 
    cnt/TimerTC.D = RefUrg & cnt/Timer<0> & !cnt/Timer<1> & 
 	!cnt/Timer<2>;
    cnt/TimerTC.CLK = FCLK;	// GCK
    cnt/TimerTC.CE = !cnt/Er<0> & cnt/Er<1>;
+    cnt/TimerTC.EXP  =  A_FSB<23> & A_FSB<22> & A_FSB<21> & A_FSB<20> & 
+	A_FSB<19> & A_FSB<18>
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 4 | 9 | iobs/DTACKEN
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 13 | 4 | 9 | 2 | 15 | 2 | 0 | 2 | 8 | 7 | 11 | 2 | 1 | 2 | 2 | 2 | 7 | 2 | 9 | 2 | 10 | 2 | 14 | 2 | 16 | 4 | 8
-INPUTS | 9 | nAS_FSB  | fsb/ASrf  | iobs/DTACKEN  | iobs/IOACTr  | iobs/Sent  | nADoutLE1  | A_FSB<23>  | A_FSB<22>  | RA_4_OBUF.EXP
-INPUTMC | 6 | 2 | 4 | 4 | 9 | 2 | 2 | 2 | 12 | 5 | 13 | 4 | 8
-INPUTP | 3 | 54 | 36 | 30
-IMPORTS | 1 | 4 | 8
-EQ | 9 | 
-   !iobs/DTACKEN.D = !iobs/Sent & !iobs/DTACKEN
-	# !iobs/DTACKEN & !iobs/IOACTr
-	# !iobs/DTACKEN & !nADoutLE1
-	# nAS_FSB & !fsb/ASrf
-	# !A_FSB<23> & !A_FSB<22> & !iobs/DTACKEN
-;Imported pterms FB5_9
-	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	!iobs/DTACKEN;
-   iobs/DTACKEN.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 0 | 12 | ram/RefDone
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 3 | 0 | 12 | 0 | 0 | 0 | 2
-INPUTS | 4 | ram/RefDone  | ram/RefReqSync  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd1
-INPUTMC | 4 | 0 | 12 | 0 | 1 | 7 | 6 | 7 | 9
+MACROCELL | 0 | 10 | cs/nOverlay
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 9 | 0 | 17 | 0 | 10 | 3 | 14 | 4 | 1 | 0 | 0 | 3 | 12 | 3 | 0 | 3 | 5 | 3 | 17
+INPUTS | 5 | nRES.PIN  | cs/nOverlay  | nAS_FSB  | fsb/ASrf  | cs/ODCSr
+INPUTMC | 3 | 0 | 10 | 7 | 3 | 3 | 9
+INPUTP | 2 | 145 | 54
 EQ | 4 | 
-   ram/RefDone.D = ram/RefDone & ram/RefReqSync
-	# ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	ram/RefReqSync;
-   ram/RefDone.CLK = FCLK;	// GCK
+   cs/nOverlay.T = !nRES.PIN & cs/nOverlay & nAS_FSB & !fsb/ASrf
+	# nRES.PIN & !cs/nOverlay & nAS_FSB & cs/ODCSr & 
+	!fsb/ASrf;
+   cs/nOverlay.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 4 | 0 | IOL0
-ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 2 | 5 | 8 | 4 | 17
-INPUTS | 7 | iobs/IOL1  | nADoutLE1  | nWE_FSB  | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1  | IORW0  | nROMCS_OBUF.EXP
-INPUTMC | 6 | 0 | 15 | 5 | 13 | 4 | 6 | 0 | 13 | 4 | 16 | 4 | 1
-INPUTP | 1 | 47
-EXPORTS | 1 | 4 | 17
-IMPORTS | 1 | 4 | 1
-EQ | 8 | 
-   IOL0.D = iobs/IOL1 & !nADoutLE1
-;Imported pterms FB5_2
-	# !nLDS_FSB & nADoutLE1;
-   IOL0.CLK = FCLK;	// GCK
-   IOL0.CE = iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1;
-    IOL0.EXP  =  iobs/TS_FSM_FFd2
-	# iobs/TS_FSM_FFd1
-	# nWE_FSB & IORW0 & nADoutLE1
+MACROCELL | 3 | 13 | iobs/IORW1
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 4 | 3 | 13 | 3 | 15 | 3 | 10 | 3 | 14
+INPUTS | 10 | A_FSB<23>  | A_FSB<22>  | iobs/Sent  | nWE_FSB  | iobs/IORW1  | nAS_FSB  | iobs/TS_FSM_FFd2  | nADoutLE1  | iobs/TS_FSM_FFd1  | fsb/ASrf
+INPUTMC | 6 | 3 | 17 | 3 | 13 | 3 | 15 | 5 | 13 | 3 | 8 | 7 | 3
+INPUTP | 4 | 36 | 30 | 47 | 54
+EXPORTS | 1 | 3 | 14
+EQ | 10 | 
+   iobs/IORW1.T = !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	iobs/IORW1 & !nAS_FSB & iobs/TS_FSM_FFd1 & nADoutLE1
+	# !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	iobs/IORW1 & !nAS_FSB & iobs/TS_FSM_FFd2 & nADoutLE1
+	# !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	iobs/IORW1 & iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
+	# !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	iobs/IORW1 & iobs/TS_FSM_FFd2 & fsb/ASrf & nADoutLE1;
+   iobs/IORW1.CLK = FCLK;	// GCK
+    iobs/IORW1.EXP  =  nAS_FSB & !fsb/ASrf
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 17 | IOU0
-ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 1 | 5 | 10
-INPUTS | 5 | iobs/IOU1  | nADoutLE1  | nUDS_FSB  | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1
-INPUTMC | 4 | 0 | 14 | 5 | 13 | 4 | 6 | 0 | 13
-INPUTP | 1 | 56
-EQ | 4 | 
-   IOU0.D = !nUDS_FSB & nADoutLE1
-	# iobs/IOU1 & !nADoutLE1;
-   IOU0.CLK = FCLK;	// GCK
-   IOU0.CE = iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1;
+MACROCELL | 3 | 14 | IONPReady
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 5 | 3 | 14 | 3 | 10 | 2 | 8 | 2 | 7 | 3 | 15
+INPUTS | 14 | A_FSB<23>  | A_FSB<22>  | nWE_FSB  | IONPReady  | iobs/Sent  | iobs/IODONEr<0>  | nAS_FSB  | iobs/TS_FSM_FFd2  | fsb/ASrf  | nADoutLE1  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay  | iobs/IORW1.EXP
+INPUTMC | 8 | 3 | 14 | 3 | 17 | 2 | 5 | 3 | 15 | 7 | 3 | 5 | 13 | 0 | 10 | 3 | 13
+INPUTP | 6 | 36 | 30 | 47 | 54 | 29 | 28
+EXPORTS | 1 | 3 | 15
+IMPORTS | 1 | 3 | 13
+EQ | 10 | 
+   !IONPReady.D = !iobs/Sent & !IONPReady
+	# !IONPReady & !iobs/IODONEr<0>
+	# !A_FSB<23> & !A_FSB<22> & !nWE_FSB & !IONPReady
+;Imported pterms FB4_14
+	# nAS_FSB & !fsb/ASrf;
+   IONPReady.CLK = FCLK;	// GCK
+    IONPReady.EXP  =  nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 14 | RefReq
-ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 1 | 0 | 1
-INPUTS | 5 | RefUrg  | cnt/Timer<1>  | cnt/Timer<2>  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 5 | 3 | 17 | 3 | 15 | 3 | 16 | 0 | 11 | 3 | 8
+MACROCELL | 7 | 12 | IOPWReady
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 2 | 7 | 12 | 2 | 7
+INPUTS | 5 | IOPWReady  | iobs/Clear1  | nADoutLE1  | nAS_FSB  | fsb/ASrf
+INPUTMC | 4 | 7 | 12 | 3 | 3 | 5 | 13 | 7 | 3
+INPUTP | 1 | 54
 EQ | 3 | 
-   !RefReq.D = !RefUrg & !cnt/Timer<1> & !cnt/Timer<2>;
-   RefReq.CLK = FCLK;	// GCK
-   RefReq.CE = !cnt/Er<0> & cnt/Er<1>;
+   !IOPWReady.D = nAS_FSB & !fsb/ASrf
+	# !IOPWReady & !iobs/Clear1 & !nADoutLE1;
+   IOPWReady.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 12 | cnt/LTimerTC
+MACROCELL | 4 | 0 | cnt/LTimerTC
 ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 2 | 7 | 16 | 7 | 10
+OUTPUTMC | 2 | 2 | 6 | 2 | 13
 INPUTS | 16 | cnt/LTimer<0>  | cnt/LTimer<10>  | cnt/LTimer<11>  | cnt/LTimer<1>  | cnt/LTimer<2>  | cnt/LTimer<3>  | cnt/LTimer<4>  | cnt/LTimer<5>  | cnt/LTimer<6>  | cnt/LTimer<7>  | cnt/LTimer<8>  | cnt/LTimer<9>  | cnt/LTimer<12>  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 16 | 6 | 0 | 6 | 17 | 6 | 16 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 9 | 0 | 11 | 3 | 8
+INPUTMC | 16 | 6 | 3 | 4 | 17 | 4 | 16 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 2 | 9 | 2 | 7 | 6 | 6
 EQ | 6 | 
    cnt/LTimerTC.D = !cnt/LTimer<0> & cnt/LTimer<10> & cnt/LTimer<11> & 
 	cnt/LTimer<1> & cnt/LTimer<2> & cnt/LTimer<3> & cnt/LTimer<4> & 
@@ -454,141 +469,11 @@ EQ | 6 |
    cnt/LTimerTC.CE = cnt/TimerTC & !cnt/Er<0> & cnt/Er<1>;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 2 | 10 | fsb/Ready0r
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 4 | 2 | 10 | 2 | 7 | 2 | 17 | 2 | 9
-INPUTS | 25 | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | fsb/Ready0r  | ram/RAMReady  | nAS_FSB  | fsb/ASrf  | A_FSB<9>  | A_FSB<8>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | fsb/Ready1r  | iobs/DTACKEN  | IOACT  | iobs/IODTACKr
-INPUTMC | 8 | 6 | 2 | 2 | 10 | 7 | 3 | 2 | 4 | 2 | 15 | 4 | 9 | 5 | 17 | 0 | 4
-INPUTP | 17 | 36 | 30 | 54 | 12 | 11 | 21 | 19 | 18 | 17 | 15 | 13 | 29 | 28 | 26 | 24 | 23 | 22
-EXPORTS | 1 | 2 | 9
-EQ | 16 | 
-   !fsb/Ready0r.D = nAS_FSB & !fsb/ASrf
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!fsb/Ready0r & !ram/RAMReady;
-   fsb/Ready0r.CLK = FCLK;	// GCK
-    fsb/Ready0r.EXP  =  A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & fsb/Ready1r
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & !IOACT
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & iobs/IODTACKr
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 2 | 15 | fsb/Ready1r
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 10 | 2 | 15 | 2 | 0 | 2 | 8 | 2 | 1 | 2 | 7 | 2 | 9 | 2 | 10 | 2 | 14 | 2 | 16 | 2 | 17
-INPUTS | 12 | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | iobs/DTACKEN  | fsb/Ready1r  | IOACT  | iobs/IODTACKr  | A_FSB<22>  | cs/nOverlay  | A_FSB<20>  | EXP13_.EXP  | nROMWE_OBUF.EXP
-INPUTMC | 8 | 2 | 4 | 4 | 9 | 2 | 15 | 5 | 17 | 0 | 4 | 6 | 2 | 2 | 14 | 2 | 16
-INPUTP | 4 | 54 | 36 | 30 | 28
-IMPORTS | 2 | 2 | 14 | 2 | 16
-EQ | 30 | 
-   !fsb/Ready1r.D = nAS_FSB & !fsb/ASrf
-	# A_FSB<23> & !iobs/DTACKEN & !fsb/Ready1r
-	# A_FSB<23> & !fsb/Ready1r & IOACT & !iobs/IODTACKr
-	# A_FSB<22> & A_FSB<20> & !iobs/DTACKEN & 
-	!fsb/Ready1r
-	# A_FSB<22> & !cs/nOverlay & !iobs/DTACKEN & 
-	!fsb/Ready1r
-;Imported pterms FB3_15
-	# A_FSB<22> & A_FSB<21> & !iobs/DTACKEN & 
-	!fsb/Ready1r
-	# A_FSB<22> & A_FSB<21> & !fsb/Ready1r & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<22> & A_FSB<20> & !fsb/Ready1r & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<22> & !cs/nOverlay & !fsb/Ready1r & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & !nADoutLE1
-;Imported pterms FB3_17
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & !nADoutLE1
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & IOACT & !iobs/IODTACKr & !nADoutLE1
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & IOACT & !iobs/IODTACKr & !nADoutLE1;
-   fsb/Ready1r.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 2 | 0 | fsb/VPA
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 4 | 2 | 0 | 3 | 10 | 2 | 1 | 2 | 17
-INPUTS | 13 | A_FSB<23>  | iobs/DTACKEN  | fsb/Ready1r  | fsb/VPA  | $OpTx$$OpTx$FX_DC$47_INV$153  | IOACT  | iobs/IODTACKr  | A_FSB<22>  | A_FSB<20>  | A_FSB<21>  | cs/nOverlay  | EXP10_.EXP  | ram/BACTr.EXP
-INPUTMC | 9 | 4 | 9 | 2 | 15 | 2 | 0 | 2 | 7 | 5 | 17 | 0 | 4 | 6 | 2 | 2 | 1 | 2 | 17
-INPUTP | 4 | 36 | 30 | 28 | 29
-IMPORTS | 2 | 2 | 1 | 2 | 17
-EQ | 54 | 
-   fsb/VPA.D = A_FSB<23> & !iobs/DTACKEN & !fsb/Ready1r & 
-	fsb/VPA & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<23> & !fsb/Ready1r & fsb/VPA & IOACT & 
-	!iobs/IODTACKr & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & A_FSB<21> & !iobs/DTACKEN & 
-	!fsb/Ready1r & fsb/VPA & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & A_FSB<20> & !iobs/DTACKEN & 
-	!fsb/Ready1r & fsb/VPA & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & !cs/nOverlay & !iobs/DTACKEN & 
-	!fsb/Ready1r & fsb/VPA & !$OpTx$$OpTx$FX_DC$47_INV$153
-;Imported pterms FB3_2
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & fsb/VPA & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & fsb/VPA & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & fsb/VPA & IOACT & !iobs/IODTACKr & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & fsb/VPA & IOACT & !iobs/IODTACKr & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & fsb/Ready1r & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-;Imported pterms FB3_3
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & !IOACT & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & iobs/IODTACKr & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-;Imported pterms FB3_18
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!fsb/Ready0r & fsb/VPA & !ram/RAMReady & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & A_FSB<21> & !fsb/Ready1r & fsb/VPA & 
-	IOACT & !iobs/IODTACKr & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & A_FSB<20> & !fsb/Ready1r & fsb/VPA & 
-	IOACT & !iobs/IODTACKr & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & !cs/nOverlay & !fsb/Ready1r & fsb/VPA & 
-	IOACT & !iobs/IODTACKr & !$OpTx$$OpTx$FX_DC$47_INV$153;
-   fsb/VPA.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 0 | 15 | iobs/IOL1
+MACROCELL | 7 | 10 | iobs/IOL1
 ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 1 | 4 | 0
+OUTPUTMC | 1 | 0 | 0
 INPUTS | 2 | nLDS_FSB  | iobs/Load1
-INPUTMC | 1 | 2 | 6
+INPUTMC | 1 | 3 | 12
 INPUTP | 1 | 49
 EQ | 3 | 
    iobs/IOL1.D = !nLDS_FSB;
@@ -596,55 +481,11 @@ EQ | 3 |
    iobs/IOL1.CE = iobs/Load1;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 4 | 2 | iobs/IORW1
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 3 | 4 | 3 | 4 | 2 | 4 | 17
-INPUTS | 20 | A_FSB<14>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | iobs/Sent  | cs/nOverlay  | iobs/IORW1  | nAS_FSB  | iobs/TS_FSM_FFd2  | nADoutLE1  | A_FSB<13>  | iobs/TS_FSM_FFd1  | fsb/ASrf  | EXP14_.EXP
-INPUTMC | 8 | 2 | 12 | 6 | 2 | 4 | 2 | 4 | 6 | 5 | 13 | 0 | 13 | 2 | 4 | 4 | 3
-INPUTP | 12 | 19 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 54 | 18
-IMPORTS | 1 | 4 | 3
-EQ | 34 | 
-   iobs/IORW1.T = A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & !nAS_FSB & 
-	iobs/TS_FSM_FFd2 & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & !nAS_FSB & 
-	iobs/TS_FSM_FFd1 & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & 
-	iobs/TS_FSM_FFd2 & fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & !nAS_FSB & 
-	iobs/TS_FSM_FFd2 & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & !nAS_FSB & 
-	iobs/TS_FSM_FFd1 & nADoutLE1
-;Imported pterms FB5_4
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & 
-	iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & 
-	iobs/TS_FSM_FFd2 & fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & 
-	iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1;
-   iobs/IORW1.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 0 | 14 | iobs/IOU1
+MACROCELL | 7 | 9 | iobs/IOU1
 ATTRIBUTES | 8553280 | 0
-OUTPUTMC | 1 | 0 | 17
+OUTPUTMC | 2 | 0 | 16 | 0 | 15
 INPUTS | 2 | nUDS_FSB  | iobs/Load1
-INPUTMC | 1 | 2 | 6
+INPUTMC | 1 | 3 | 12
 INPUTP | 1 | 56
 EQ | 3 | 
    iobs/IOU1.D = !nUDS_FSB;
@@ -652,68 +493,54 @@ EQ | 3 |
    iobs/IOU1.CE = iobs/Load1;
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 2 | 8 | nDTACK_FSB_OBUF
+MACROCELL | 7 | 8 | ram/RefDone
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 6 | 7 | 17 | 7 | 8 | 7 | 15 | 7 | 13 | 7 | 16 | 7 | 0
+INPUTS | 5 | ram/RefDone  | ram/RS_FSM_FFd3  | ram/RS_FSM_FFd2  | RefUrg  | RefReq
+INPUTMC | 5 | 7 | 8 | 7 | 0 | 7 | 2 | 2 | 17 | 2 | 14
+EQ | 3 | 
+   !ram/RefDone.D = !RefUrg & !RefReq
+	# !ram/RefDone & !ram/RS_FSM_FFd3 & !ram/RS_FSM_FFd2;
+   ram/RefDone.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 7 | 11 | nBERR_FSB_OBUF
 ATTRIBUTES | 8815362 | 0
-OUTPUTMC | 3 | 2 | 8 | 2 | 7 | 2 | 9
-INPUTS | 19 | A_FSB<13>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | cs/nOverlay  | fsb/Ready1r  | nDTACK_FSB  | IOACT  | iobs/IODTACKr  | nADoutLE1  | A_FSB<14>  | iobs/DTACKEN  | A_FSB<22>  | $OpTx$$OpTx$FX_DC$47_INV$153.EXP  | EXP11_.EXP
-INPUTMC | 9 | 6 | 2 | 2 | 15 | 2 | 8 | 5 | 17 | 0 | 4 | 5 | 13 | 4 | 9 | 2 | 7 | 2 | 9
-INPUTP | 10 | 18 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 19 | 30
-IMPORTS | 2 | 2 | 7 | 2 | 9
-EQ | 47 | 
-   nDTACK_FSB.D = A_FSB<22> & A_FSB<20> & !fsb/Ready1r & 
-	nDTACK_FSB & IOACT & !iobs/IODTACKr
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & nDTACK_FSB & !nADoutLE1
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & nDTACK_FSB & !nADoutLE1
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & nDTACK_FSB & IOACT & !iobs/IODTACKr & !nADoutLE1
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & nDTACK_FSB & IOACT & !iobs/IODTACKr & !nADoutLE1
-;Imported pterms FB3_8
-	# A_FSB<22> & A_FSB<20> & !iobs/DTACKEN & 
-	!fsb/Ready1r & nDTACK_FSB
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!fsb/Ready0r & nDTACK_FSB & !ram/RAMReady
-	# A_FSB<22> & A_FSB<21> & !fsb/Ready1r & 
-	nDTACK_FSB & IOACT & !iobs/IODTACKr
-	# A_FSB<22> & !cs/nOverlay & !fsb/Ready1r & 
-	nDTACK_FSB & IOACT & !iobs/IODTACKr
-;Imported pterms FB3_10
-	# nAS_FSB & !fsb/ASrf
-	# A_FSB<23> & !iobs/DTACKEN & !fsb/Ready1r & 
-	nDTACK_FSB
-	# A_FSB<23> & !fsb/Ready1r & nDTACK_FSB & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<22> & A_FSB<21> & !iobs/DTACKEN & 
-	!fsb/Ready1r & nDTACK_FSB
-	# A_FSB<22> & !cs/nOverlay & !iobs/DTACKEN & 
-	!fsb/Ready1r & nDTACK_FSB
-;Imported pterms FB3_11
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & fsb/Ready1r
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & !IOACT
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & iobs/IODTACKr;
-   nDTACK_FSB.CLK = FCLK;	// GCK
+OUTPUTMC | 1 | 7 | 11
+INPUTS | 5 | nAS_FSB  | fsb/ASrf  | iobs/Sent  | nBERR_FSB  | IOBERR
+INPUTMC | 4 | 7 | 3 | 3 | 17 | 7 | 11 | 1 | 16
+INPUTP | 1 | 54
+EQ | 4 | 
+   nBERR_FSB.D = !iobs/Sent & nBERR_FSB
+	# !IOBERR & nBERR_FSB
+	# nAS_FSB & !fsb/ASrf;
+   nBERR_FSB.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 3 | 10 | nVPA_FSB_OBUF
+ATTRIBUTES | 8684418 | 0
+OUTPUTMC | 1 | 3 | 11
+INPUTS | 12 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | IONPReady  | nAS_FSB  | fsb/ASrf  | iobs/IORW1  | iobs/TS_FSM_FFd2  | nADoutLE1
+INPUTMC | 5 | 3 | 14 | 7 | 3 | 3 | 13 | 3 | 15 | 5 | 13
+INPUTP | 7 | 36 | 30 | 29 | 28 | 26 | 24 | 54
+EXPORTS | 1 | 3 | 11
+EQ | 9 | 
+   !nVPA_FSB.D = A_FSB<23> & A_FSB<22> & A_FSB<21> & A_FSB<20> & 
+	A_FSB<19> & A_FSB<18> & IONPReady & !nAS_FSB
+	# A_FSB<23> & A_FSB<22> & A_FSB<21> & A_FSB<20> & 
+	A_FSB<19> & A_FSB<18> & IONPReady & fsb/ASrf;
+   nVPA_FSB.CLK = FCLK;	// GCK
+   nVPA_FSB.AP = nAS_FSB;
+    nVPA_FSB_OBUF.EXP  =  iobs/IORW1 & !iobs/TS_FSM_FFd2 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
 GLOBALS | 1 | 2 | FCLK
 
 MACROCELL | 7 | 14 | nBR_IOB_OBUF
 ATTRIBUTES | 4621058 | 0
 OUTPUTMC | 2 | 7 | 14 | 3 | 1
 INPUTS | 4 | nBR_IOB  | cnt/INITS_FSM_FFd1  | cnt/INITS_FSM_FFd2  | cnt/nIPL2r
-INPUTMC | 4 | 7 | 14 | 7 | 16 | 7 | 10 | 0 | 10
+INPUTMC | 4 | 7 | 14 | 2 | 6 | 2 | 13 | 1 | 15
 EQ | 5 | 
    nBR_IOB.T = nBR_IOB & !cnt/INITS_FSM_FFd1 & 
 	!cnt/INITS_FSM_FFd2
@@ -722,306 +549,189 @@ EQ | 5 |
    nBR_IOB.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 7 | 17 | ram/RASEL
+MACROCELL | 3 | 8 | iobs/TS_FSM_FFd1
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 10 | 6 | 5 | 6 | 1 | 4 | 13 | 4 | 10 | 4 | 8 | 4 | 4 | 4 | 14 | 6 | 4 | 6 | 7 | 6 | 10
-INPUTS | 8 | ram/RS_FSM_FFd1  | ram/RS_FSM_FFd3  | nAS_FSB  | ram/RS_FSM_FFd2  | fsb/ASrf  | ram/RefUrg  | EXP18_.EXP  | cnt/INITS_FSM_FFd1.EXP
-INPUTMC | 7 | 7 | 9 | 7 | 8 | 7 | 6 | 2 | 4 | 0 | 0 | 7 | 0 | 7 | 16
-INPUTP | 1 | 54
-IMPORTS | 2 | 7 | 0 | 7 | 16
-EQ | 27 | 
-   !ram/RASEL.D = ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3
-	# !nAS_FSB & ram/RS_FSM_FFd2 & ram/RS_FSM_FFd3
-	# ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3
-	# ram/RS_FSM_FFd2 & ram/RS_FSM_FFd3 & !ram/RefUrg
-	# ram/RS_FSM_FFd2 & ram/RS_FSM_FFd3 & fsb/ASrf
-;Imported pterms FB8_1
-	# A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !ram/RefReq
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !ram/RefReq
-	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !fsb/ASrf
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
-	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & !ram/RAMEN
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & !ram/RAMEN & fsb/ASrf
-;Imported pterms FB8_17
-	# A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & ram/BACTr
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & ram/BACTr
-	# !cs/nOverlay & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & ram/BACTr
-	# !cs/nOverlay & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !ram/RefReq;
-   ram/RASEL.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 7 | 6 | ram/RS_FSM_FFd2
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 12 | 0 | 12 | 7 | 17 | 7 | 4 | 7 | 9 | 7 | 8 | 7 | 2 | 7 | 3 | 0 | 3 | 7 | 0 | 7 | 1 | 7 | 7 | 7 | 16
-INPUTS | 11 | ram/RS_FSM_FFd1  | ram/RS_FSM_FFd3  | ram/RefUrg  | ram/RefReq  | ram/BACTr  | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | nAS_FSB  | fsb/ASrf  | nRAMUWE_OBUF.EXP
-INPUTMC | 8 | 7 | 9 | 7 | 8 | 0 | 0 | 0 | 2 | 2 | 17 | 6 | 2 | 2 | 4 | 7 | 7
-INPUTP | 3 | 36 | 30 | 54
-IMPORTS | 1 | 7 | 7
-EQ | 15 | 
-   !ram/RS_FSM_FFd2.T = !ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3 & !ram/RefUrg & 
-	ram/BACTr
-	# !ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3 & !ram/RefUrg & 
-	!ram/RefReq
-	# nAS_FSB & !ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !fsb/ASrf
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
-	!ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3 & fsb/ASrf
-;Imported pterms FB8_8
-	# ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3
-	# nAS_FSB & ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RefUrg & !fsb/ASrf;
-   ram/RS_FSM_FFd2.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 7 | 9 | ram/RS_FSM_FFd1
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 11 | 0 | 12 | 7 | 17 | 7 | 6 | 7 | 9 | 7 | 8 | 7 | 2 | 7 | 3 | 0 | 3 | 7 | 1 | 7 | 4 | 7 | 7
-INPUTS | 10 | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | nAS_FSB  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd1  | ram/RS_FSM_FFd3  | ram/RAMEN  | fsb/ASrf  | ram/RefUrg
-INPUTMC | 7 | 6 | 2 | 7 | 6 | 7 | 9 | 7 | 8 | 7 | 2 | 2 | 4 | 0 | 0
-INPUTP | 3 | 36 | 30 | 54
-EXPORTS | 1 | 7 | 8
-EQ | 11 | 
-   ram/RS_FSM_FFd1.T = ram/RS_FSM_FFd2 & ram/RS_FSM_FFd3
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
-	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3 & ram/RAMEN
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3 & ram/RAMEN & 
-	fsb/ASrf;
-   ram/RS_FSM_FFd1.CLK = FCLK;	// GCK
-    ram/RS_FSM_FFd1.EXP  =  nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !fsb/ASrf
-	# !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !ram/RAMEN
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 7 | 8 | ram/RS_FSM_FFd3
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 10 | 7 | 17 | 7 | 6 | 7 | 9 | 7 | 8 | 7 | 1 | 7 | 3 | 7 | 0 | 7 | 4 | 7 | 7 | 7 | 16
-INPUTS | 10 | cs/nOverlay  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd1  | ram/RS_FSM_FFd3  | A_FSB<22>  | A_FSB<23>  | nAS_FSB  | ram/RefUrg  | fsb/ASrf  | ram/RS_FSM_FFd1.EXP
-INPUTMC | 7 | 6 | 2 | 7 | 6 | 7 | 9 | 7 | 8 | 0 | 0 | 2 | 4 | 7 | 9
-INPUTP | 3 | 30 | 36 | 54
-IMPORTS | 1 | 7 | 9
-EQ | 16 | 
-   !ram/RS_FSM_FFd3.T = A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3
-	# !cs/nOverlay & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3
-	# !nAS_FSB & ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3 & ram/RefUrg
-	# ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3 & ram/RefUrg & fsb/ASrf
-;Imported pterms FB8_10
-	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !fsb/ASrf
-	# !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !ram/RAMEN;
-   ram/RS_FSM_FFd3.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 5 | 3 | iobm/IOS_FSM_FFd3
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 9 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 3 | 0 | 16 | 5 | 9 | 5 | 17 | 5 | 2 | 5 | 7
-INPUTS | 6 | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd3  | C8M  | iobm/IOREQr  | nAoutOE
-INPUTMC | 5 | 0 | 16 | 5 | 9 | 5 | 3 | 1 | 17 | 3 | 1
-INPUTP | 1 | 35
-EQ | 6 | 
-   iobm/IOS_FSM_FFd3.D = iobm/IOS_FSM_FFd1 & iobm/IOS_FSM_FFd2
-	# iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd1 & 
-	!iobm/IOS_FSM_FFd2
-	# !C8M & !iobm/IOS_FSM_FFd1 & !iobm/IOS_FSM_FFd2 & 
-	iobm/IOREQr & !nAoutOE;
-   iobm/IOS_FSM_FFd3.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 0 | 16 | iobm/IOS_FSM_FFd1
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 10 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 3 | 0 | 16 | 5 | 9 | 5 | 17 | 5 | 2 | 5 | 7 | 5 | 16
-INPUTS | 3 | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd1
-INPUTMC | 3 | 5 | 3 | 5 | 9 | 0 | 16
-EQ | 3 | 
-   iobm/IOS_FSM_FFd1.D = iobm/IOS_FSM_FFd3 & iobm/IOS_FSM_FFd1
-	# !iobm/IOS_FSM_FFd3 & iobm/IOS_FSM_FFd2;
-   iobm/IOS_FSM_FFd1.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 0 | 0 | ram/RefUrg
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 11 | 7 | 17 | 7 | 6 | 7 | 8 | 7 | 2 | 7 | 3 | 7 | 0 | 7 | 1 | 7 | 4 | 7 | 7 | 7 | 9 | 7 | 16
-INPUTS | 2 | ram/RefDone  | ram/RegUrgSync
-INPUTMC | 2 | 0 | 12 | 3 | 3
-EQ | 2 | 
-   ram/RefUrg.D = !ram/RefDone & ram/RegUrgSync;
-   ram/RefUrg.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 5 | 9 | iobm/IOS_FSM_FFd2
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 10 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 3 | 0 | 16 | 5 | 9 | 5 | 17 | 5 | 2 | 5 | 7 | 5 | 16
-INPUTS | 8 | C8M  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd1  | iobm/BERRrf  | iobm/DTACKrf  | iobm/ETACK  | iobm/RESrf
-INPUTMC | 7 | 5 | 9 | 5 | 3 | 0 | 16 | 0 | 9 | 0 | 8 | 5 | 0 | 0 | 5
-INPUTP | 1 | 35
-EQ | 6 | 
-   iobm/IOS_FSM_FFd2.D = !C8M & iobm/IOS_FSM_FFd2
-	# iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd1
-	# !iobm/IOS_FSM_FFd3 & iobm/IOS_FSM_FFd2
-	# iobm/IOS_FSM_FFd2 & !iobm/BERRrf & !iobm/DTACKrf & 
-	!iobm/ETACK & !iobm/RESrf;
-   iobm/IOS_FSM_FFd2.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 4 | 6 | iobs/TS_FSM_FFd2
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 17 | 2 | 12 | 4 | 13 | 4 | 0 | 0 | 17 | 4 | 2 | 4 | 6 | 0 | 13 | 2 | 6 | 2 | 5 | 4 | 12 | 2 | 3 | 2 | 11 | 2 | 13 | 4 | 3 | 4 | 5 | 4 | 7 | 4 | 11
-INPUTS | 12 | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1  | iobs/IOACTr  | iobs/Sent  | nADoutLE1  | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | nOE_OBUF.EXP  | EXP15_.EXP
-INPUTMC | 9 | 4 | 6 | 0 | 13 | 2 | 2 | 2 | 12 | 5 | 13 | 2 | 4 | 6 | 2 | 4 | 5 | 4 | 7
-INPUTP | 3 | 54 | 36 | 30
-IMPORTS | 2 | 4 | 5 | 4 | 7
-EQ | 28 | 
-   !iobs/TS_FSM_FFd2.D = !iobs/TS_FSM_FFd2 & iobs/TS_FSM_FFd1
-	# iobs/TS_FSM_FFd1 & iobs/IOACTr
-	# iobs/Sent & !iobs/TS_FSM_FFd2 & nADoutLE1
-	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
-	nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-;Imported pterms FB5_6
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<21> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<20> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<19> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<16> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-;Imported pterms FB5_8
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<18> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<17> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & nWE_FSB & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<14> & !A_FSB<13> & !A_FSB<23> & !A_FSB<22> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1;
-   iobs/TS_FSM_FFd2.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 5 | 6 | iobm/ES<0>
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 7 | 5 | 1 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12 | 5 | 0
-INPUTS | 7 | iobm/ES<0>  | iobm/Er  | iobm/Er2  | iobm/ES<1>  | iobm/ES<2>  | iobm/ES<3>  | iobm/ES<4>
-INPUTMC | 7 | 5 | 6 | 0 | 7 | 0 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12
-EQ | 6 | 
-   !iobm/ES<0>.T = iobm/ES<0> & !iobm/Er & iobm/Er2
-	# !iobm/ES<0> & !iobm/ES<1> & !iobm/ES<2> & 
-	!iobm/ES<3> & !iobm/ES<4> & iobm/Er
-	# !iobm/ES<0> & !iobm/ES<1> & !iobm/ES<2> & 
-	!iobm/ES<3> & !iobm/ES<4> & !iobm/Er2;
-   iobm/ES<0>.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 7 | 2 | ram/RAMEN
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 7 | 7 | 7 | 7 | 9 | 7 | 0 | 7 | 2 | 7 | 3 | 7 | 1 | 7 | 5
-INPUTS | 12 | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | nAS_FSB  | ram/RS_FSM_FFd1  | ram/RAMEN  | fsb/ASrf  | ram/RefUrg  | ram/RefReq  | ram/BACTr  | ram/RS_FSM_FFd2  | A_FSB_19_IBUF$BUF0.EXP
-INPUTMC | 9 | 6 | 2 | 7 | 9 | 7 | 2 | 2 | 4 | 0 | 0 | 0 | 2 | 2 | 17 | 7 | 6 | 7 | 1
-INPUTP | 3 | 36 | 30 | 54
-IMPORTS | 1 | 7 | 1
-EQ | 15 | 
-   ram/RAMEN.D = !ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & ram/RAMEN
-	# !ram/RefUrg & ram/RAMEN & ram/BACTr
-	# !ram/RefUrg & ram/RAMEN & !ram/RefReq
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
-	!ram/RS_FSM_FFd1 & ram/RAMEN
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!ram/RS_FSM_FFd1 & ram/RAMEN & fsb/ASrf
-;Imported pterms FB8_2
-	# ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & ram/RAMEN
-	# !ram/RS_FSM_FFd1 & ram/RS_FSM_FFd3 & ram/RAMEN
-	# ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3 & !ram/RefUrg
-	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !fsb/ASrf;
-   ram/RAMEN.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 5 | 5 | iobm/ES<1>
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 7 | 5 | 1 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12 | 5 | 0
-INPUTS | 4 | iobm/Er  | iobm/Er2  | iobm/ES<0>  | iobm/ES<1>
-INPUTMC | 4 | 0 | 7 | 0 | 6 | 5 | 6 | 5 | 5
-EQ | 4 | 
-   !iobm/ES<1>.D = iobm/ES<0> & iobm/ES<1>
-	# !iobm/ES<0> & !iobm/ES<1>
-	# !iobm/Er & iobm/Er2;
-   iobm/ES<1>.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 5 | 15 | iobm/ES<2>
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 6 | 5 | 1 | 5 | 6 | 5 | 15 | 5 | 4 | 5 | 12 | 5 | 0
-INPUTS | 7 | iobm/Er  | iobm/Er2  | iobm/ES<0>  | iobm/ES<2>  | iobm/ES<1>  | iobm/ES<3>  | iobm/ES<4>
-INPUTMC | 7 | 0 | 7 | 0 | 6 | 5 | 6 | 5 | 15 | 5 | 5 | 5 | 4 | 5 | 12
-EQ | 6 | 
-   !iobm/ES<2>.D = !iobm/ES<0> & !iobm/ES<2>
-	# !iobm/ES<1> & !iobm/ES<2>
-	# !iobm/Er & iobm/Er2
-	# iobm/ES<0> & iobm/ES<1> & iobm/ES<2>
-	# !iobm/ES<2> & !iobm/ES<3> & iobm/ES<4>;
-   iobm/ES<2>.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 0 | 13 | iobs/TS_FSM_FFd1
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 13 | 2 | 12 | 4 | 3 | 4 | 0 | 0 | 17 | 4 | 2 | 4 | 6 | 0 | 13 | 2 | 6 | 4 | 12 | 2 | 3 | 2 | 5 | 2 | 11 | 2 | 13
+OUTPUTMC | 11 | 3 | 17 | 3 | 13 | 3 | 8 | 3 | 15 | 3 | 12 | 0 | 17 | 0 | 16 | 3 | 16 | 3 | 11 | 3 | 3 | 3 | 0
 INPUTS | 3 | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1  | iobs/IOACTr
-INPUTMC | 3 | 4 | 6 | 0 | 13 | 2 | 2
+INPUTMC | 3 | 3 | 15 | 3 | 8 | 5 | 4
 EQ | 3 | 
    iobs/TS_FSM_FFd1.D = iobs/TS_FSM_FFd2
 	# iobs/TS_FSM_FFd1 & iobs/IOACTr;
    iobs/TS_FSM_FFd1.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 7 | 16 | cnt/INITS_FSM_FFd1
+MACROCELL | 3 | 15 | iobs/TS_FSM_FFd2
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 16 | 3 | 14 | 3 | 13 | 3 | 8 | 3 | 15 | 3 | 12 | 0 | 17 | 0 | 16 | 3 | 16 | 3 | 11 | 3 | 3 | 7 | 6 | 0 | 0 | 0 | 15 | 3 | 0 | 3 | 10 | 3 | 17
+INPUTS | 9 | iobs/TS_FSM_FFd1  | iobs/TS_FSM_FFd2  | iobs/IOACTr  | iobs/Sent  | nADoutLE1  | iobs/IORW1  | nAS_FSB  | fsb/ASrf  | IONPReady.EXP
+INPUTMC | 8 | 3 | 8 | 3 | 15 | 5 | 4 | 3 | 17 | 5 | 13 | 3 | 13 | 7 | 3 | 3 | 14
+INPUTP | 1 | 54
+EXPORTS | 1 | 3 | 16
+IMPORTS | 1 | 3 | 14
+EQ | 12 | 
+   !iobs/TS_FSM_FFd2.D = iobs/TS_FSM_FFd1 & !iobs/TS_FSM_FFd2
+	# iobs/TS_FSM_FFd1 & iobs/IOACTr
+	# iobs/Sent & !iobs/TS_FSM_FFd2 & nADoutLE1
+;Imported pterms FB4_15
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1;
+   iobs/TS_FSM_FFd2.CLK = FCLK;	// GCK
+    iobs/TS_FSM_FFd2.EXP  =  !iobs/IORW1 & !iobs/TS_FSM_FFd2 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 5 | 15 | iobm/IOS_FSM_FFd7
+ATTRIBUTES | 8553220 | 0
+OUTPUTMC | 10 | 5 | 11 | 5 | 7 | 5 | 9 | 5 | 15 | 5 | 12 | 6 | 17 | 5 | 17 | 6 | 15 | 6 | 16 | 6 | 0
+INPUTS | 6 | iobm/IOS_FSM_FFd7  | iobm/IOS_FSM_FFd1  | iobm/C8Mr  | iobm/IORDREQr  | nAoutOE  | iobm/IOWRREQr
+INPUTMC | 6 | 5 | 15 | 5 | 7 | 5 | 9 | 6 | 2 | 3 | 1 | 6 | 0
+EQ | 6 | 
+   !iobm/IOS_FSM_FFd7.D = !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd1
+	# !iobm/C8Mr & !iobm/IOS_FSM_FFd1 & iobm/IORDREQr & 
+	!nAoutOE
+	# !iobm/C8Mr & !iobm/IOS_FSM_FFd1 & iobm/IOWRREQr & 
+	!nAoutOE;
+   iobm/IOS_FSM_FFd7.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 6 | 14 | iobm/IOS_FSM_FFd3
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 11 | 5 | 11 | 5 | 8 | 5 | 10 | 6 | 14 | 6 | 17 | 6 | 9 | 5 | 17 | 6 | 15 | 6 | 16 | 5 | 16 | 6 | 0
+INPUTS | 5 | iobm/IOS_FSM_FFd4  | iobm/IOS_FSM_FFd3  | iobm/C8Mr  | IOBERR  | IODONE
+INPUTMC | 5 | 5 | 6 | 6 | 14 | 5 | 9 | 1 | 16 | 0 | 15
+EQ | 4 | 
+   iobm/IOS_FSM_FFd3.D = iobm/IOS_FSM_FFd4
+	# iobm/IOS_FSM_FFd3 & iobm/C8Mr
+	# !IOBERR & !IODONE & iobm/IOS_FSM_FFd3;
+   iobm/IOS_FSM_FFd3.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 5 | 9 | iobm/C8Mr
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 11 | 5 | 11 | 5 | 7 | 5 | 9 | 5 | 15 | 6 | 14 | 5 | 12 | 6 | 17 | 6 | 9 | 6 | 15 | 6 | 16 | 5 | 10
+INPUTS | 5 | C8M  | iobm/IOS_FSM_FFd7  | iobm/C8Mr  | IOU0  | iobm/IORDREQr
+INPUTMC | 4 | 5 | 15 | 5 | 9 | 0 | 16 | 6 | 2
+INPUTP | 1 | 35
+EXPORTS | 1 | 5 | 10
+EQ | 4 | 
+   iobm/C8Mr.D = C8M;
+   iobm/C8Mr.CLK = C16M;	// GCK
+    iobm/C8Mr.EXP  =  iobm/IOS_FSM_FFd7 & !iobm/C8Mr & IOU0 & 
+	iobm/IORDREQr
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 0 | 12 | iobm/ES<0>
 ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 6 | 7 | 14 | 7 | 16 | 7 | 10 | 3 | 6 | 3 | 1 | 7 | 17
-INPUTS | 15 | cnt/TimerTC  | cnt/LTimerTC  | cnt/INITS_FSM_FFd1  | cnt/INITS_FSM_FFd2  | cnt/Er<0>  | cnt/nIPL2r  | cnt/Er<1>  | A_FSB<23>  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd3  | ram/RefUrg  | ram/BACTr  | A_FSB<22>  | cs/nOverlay  | ram/RefReq
-INPUTMC | 13 | 3 | 9 | 3 | 12 | 7 | 16 | 7 | 10 | 0 | 11 | 0 | 10 | 3 | 8 | 7 | 6 | 7 | 8 | 0 | 0 | 2 | 17 | 6 | 2 | 0 | 2
-INPUTP | 2 | 36 | 30
-EXPORTS | 1 | 7 | 17
-EQ | 11 | 
+OUTPUTMC | 5 | 5 | 1 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 14
+INPUTS | 6 | iobm/ES<0>  | E  | iobm/Er  | iobm/ES<2>  | iobm/ES<1>  | iobm/ES<3>
+INPUTMC | 5 | 0 | 12 | 0 | 0 | 0 | 11 | 0 | 14 | 0 | 13
+INPUTP | 1 | 37
+EQ | 6 | 
+   !iobm/ES<0>.T = iobm/ES<0> & !E & iobm/Er
+	# !iobm/ES<0> & !iobm/ES<2> & !iobm/ES<1> & 
+	!iobm/ES<3> & E
+	# !iobm/ES<0> & !iobm/ES<2> & !iobm/ES<1> & 
+	!iobm/ES<3> & !iobm/Er;
+   !iobm/ES<0>.CLK = C8M;	// GCK
+GLOBALS | 1 | 2 | C8M
+
+MACROCELL | 5 | 6 | iobm/IOS_FSM_FFd4
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 9 | 5 | 11 | 5 | 8 | 5 | 10 | 6 | 14 | 6 | 17 | 5 | 17 | 6 | 15 | 6 | 16 | 5 | 16
+INPUTS | 1 | iobm/IOS_FSM_FFd5
+INPUTMC | 1 | 5 | 5
+EQ | 2 | 
+   iobm/IOS_FSM_FFd4.D = iobm/IOS_FSM_FFd5;
+   iobm/IOS_FSM_FFd4.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 0 | 11 | iobm/ES<2>
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 5 | 5 | 1 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 14
+INPUTS | 5 | iobm/ES<0>  | iobm/ES<1>  | iobm/Er  | E  | iobm/ES<2>
+INPUTMC | 4 | 0 | 12 | 0 | 14 | 0 | 0 | 0 | 11
+INPUTP | 1 | 37
+EQ | 4 | 
+   iobm/ES<2>.T = iobm/ES<0> & iobm/ES<1> & E
+	# iobm/ES<0> & iobm/ES<1> & !iobm/Er
+	# iobm/ES<2> & !E & iobm/Er;
+   !iobm/ES<2>.CLK = C8M;	// GCK
+GLOBALS | 1 | 2 | C8M
+
+MACROCELL | 5 | 5 | iobm/IOS_FSM_FFd5
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 8 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 6 | 6 | 17 | 5 | 17 | 6 | 15 | 6 | 16
+INPUTS | 1 | iobm/IOS_FSM_FFd6
+INPUTMC | 1 | 5 | 12
+EQ | 2 | 
+   iobm/IOS_FSM_FFd5.D = iobm/IOS_FSM_FFd6;
+   iobm/IOS_FSM_FFd5.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 5 | 12 | iobm/IOS_FSM_FFd6
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 8 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 5 | 6 | 17 | 5 | 17 | 6 | 15 | 6 | 16
+INPUTS | 5 | iobm/IOS_FSM_FFd7  | iobm/C8Mr  | iobm/IORDREQr  | nAoutOE  | iobm/IOWRREQr
+INPUTMC | 5 | 5 | 15 | 5 | 9 | 6 | 2 | 3 | 1 | 6 | 0
+EQ | 5 | 
+   iobm/IOS_FSM_FFd6.D = iobm/IOS_FSM_FFd7 & !iobm/C8Mr & iobm/IORDREQr & 
+	!nAoutOE
+	# iobm/IOS_FSM_FFd7 & !iobm/C8Mr & iobm/IOWRREQr & 
+	!nAoutOE;
+   iobm/IOS_FSM_FFd6.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 0 | 14 | iobm/ES<1>
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 6 | 5 | 1 | 0 | 13 | 0 | 12 | 0 | 11 | 0 | 14 | 0 | 15
+INPUTS | 7 | iobm/ES<0>  | iobm/ES<1>  | E  | iobm/Er  | iobm/ES<2>  | iobm/ES<3>  | nVMA_IOB
+INPUTMC | 6 | 0 | 12 | 0 | 14 | 0 | 0 | 0 | 11 | 0 | 13 | 5 | 1
+INPUTP | 1 | 37
+EXPORTS | 1 | 0 | 15
+EQ | 7 | 
+   !iobm/ES<1>.D = iobm/ES<0> & iobm/ES<1>
+	# !iobm/ES<0> & !iobm/ES<1>
+	# !E & iobm/Er
+	# iobm/ES<0> & !iobm/ES<2> & iobm/ES<3>;
+   !iobm/ES<1>.CLK = C8M;	// GCK
+    iobm/ES<1>.EXP  =  !nVMA_IOB & !iobm/ES<0> & !iobm/ES<2> & !iobm/ES<1> & 
+	iobm/ES<3>
+GLOBALS | 1 | 2 | C8M
+
+MACROCELL | 0 | 13 | iobm/ES<3>
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 4 | 5 | 1 | 0 | 13 | 0 | 12 | 0 | 14
+INPUTS | 6 | iobm/ES<3>  | E  | iobm/Er  | iobm/ES<0>  | iobm/ES<2>  | iobm/ES<1>
+INPUTMC | 5 | 0 | 13 | 0 | 0 | 0 | 12 | 0 | 11 | 0 | 14
+INPUTP | 1 | 37
+EQ | 6 | 
+   iobm/ES<3>.T = iobm/ES<3> & !E & iobm/Er
+	# iobm/ES<0> & iobm/ES<2> & iobm/ES<1> & E
+	# iobm/ES<0> & iobm/ES<2> & iobm/ES<1> & !iobm/Er
+	# iobm/ES<0> & !iobm/ES<2> & !iobm/ES<1> & 
+	iobm/ES<3>;
+   !iobm/ES<3>.CLK = C8M;	// GCK
+GLOBALS | 1 | 2 | C8M
+
+MACROCELL | 2 | 6 | cnt/INITS_FSM_FFd1
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 5 | 7 | 14 | 2 | 6 | 2 | 13 | 3 | 2 | 3 | 1
+INPUTS | 7 | cnt/TimerTC  | cnt/LTimerTC  | cnt/INITS_FSM_FFd1  | cnt/INITS_FSM_FFd2  | cnt/Er<0>  | cnt/nIPL2r  | cnt/Er<1>
+INPUTMC | 7 | 2 | 9 | 4 | 0 | 2 | 6 | 2 | 13 | 2 | 7 | 1 | 15 | 6 | 6
+EQ | 3 | 
    cnt/INITS_FSM_FFd1.T = cnt/TimerTC & cnt/LTimerTC & !cnt/INITS_FSM_FFd1 & 
 	cnt/INITS_FSM_FFd2 & !cnt/Er<0> & cnt/nIPL2r & cnt/Er<1>;
    cnt/INITS_FSM_FFd1.CLK = FCLK;	// GCK
-    cnt/INITS_FSM_FFd1.EXP  =  A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & ram/BACTr
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & ram/BACTr
-	# !cs/nOverlay & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & ram/BACTr
-	# !cs/nOverlay & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !ram/RefReq
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 7 | 10 | cnt/INITS_FSM_FFd2
+MACROCELL | 2 | 13 | cnt/INITS_FSM_FFd2
 ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 5 | 7 | 14 | 7 | 16 | 7 | 10 | 3 | 6 | 3 | 1
+OUTPUTMC | 5 | 7 | 14 | 2 | 6 | 2 | 13 | 3 | 2 | 3 | 1
 INPUTS | 6 | cnt/TimerTC  | cnt/LTimerTC  | cnt/INITS_FSM_FFd1  | cnt/INITS_FSM_FFd2  | cnt/Er<0>  | cnt/Er<1>
-INPUTMC | 6 | 3 | 9 | 3 | 12 | 7 | 16 | 7 | 10 | 0 | 11 | 3 | 8
+INPUTMC | 6 | 2 | 9 | 4 | 0 | 2 | 6 | 2 | 13 | 2 | 7 | 6 | 6
 EQ | 5 | 
    cnt/INITS_FSM_FFd2.T = cnt/TimerTC & cnt/LTimerTC & cnt/INITS_FSM_FFd1 & 
 	cnt/INITS_FSM_FFd2 & !cnt/Er<0> & cnt/Er<1>
@@ -1030,204 +740,276 @@ EQ | 5 |
    cnt/INITS_FSM_FFd2.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 5 | 4 | iobm/ES<3>
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 6 | 5 | 1 | 5 | 6 | 5 | 15 | 5 | 4 | 5 | 12 | 5 | 0
-INPUTS | 6 | iobm/ES<3>  | iobm/Er  | iobm/Er2  | iobm/ES<0>  | iobm/ES<1>  | iobm/ES<2>
-INPUTMC | 6 | 5 | 4 | 0 | 7 | 0 | 6 | 5 | 6 | 5 | 5 | 5 | 15
-EQ | 4 | 
-   iobm/ES<3>.T = iobm/ES<3> & !iobm/Er & iobm/Er2
-	# iobm/ES<0> & iobm/ES<1> & iobm/ES<2> & iobm/Er
-	# iobm/ES<0> & iobm/ES<1> & iobm/ES<2> & !iobm/Er2;
-   iobm/ES<3>.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 5 | 12 | iobm/ES<4>
-ATTRIBUTES | 4358912 | 0
-OUTPUTMC | 5 | 5 | 1 | 5 | 6 | 5 | 15 | 5 | 12 | 5 | 0
-INPUTS | 7 | iobm/ES<4>  | iobm/Er  | iobm/Er2  | iobm/ES<0>  | iobm/ES<1>  | iobm/ES<2>  | iobm/ES<3>
-INPUTMC | 7 | 5 | 12 | 0 | 7 | 0 | 6 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4
-EQ | 8 | 
-   iobm/ES<4>.T = iobm/ES<4> & !iobm/Er & iobm/Er2
-	# iobm/ES<0> & iobm/ES<1> & iobm/ES<2> & 
-	iobm/ES<3> & iobm/Er
-	# iobm/ES<0> & iobm/ES<1> & iobm/ES<2> & 
-	iobm/ES<3> & !iobm/Er2
-	# iobm/ES<0> & iobm/ES<1> & !iobm/ES<2> & 
-	!iobm/ES<3> & iobm/ES<4>;
-   iobm/ES<4>.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 5 | 17 | IOACT
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 12 | 5 | 1 | 2 | 15 | 2 | 0 | 2 | 8 | 2 | 2 | 2 | 1 | 2 | 7 | 2 | 9 | 2 | 10 | 2 | 14 | 2 | 16 | 2 | 17
-INPUTS | 7 | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd2  | iobm/IOREQr  | iobm/DTACKrf  | C8M  | nDinLE_OBUF.EXP
-INPUTMC | 6 | 5 | 3 | 0 | 16 | 5 | 9 | 1 | 17 | 0 | 8 | 5 | 16
-INPUTP | 1 | 35
-IMPORTS | 1 | 5 | 16
+MACROCELL | 7 | 15 | ram/RS_FSM_FFd8
+ATTRIBUTES | 8553220 | 0
+OUTPUTMC | 5 | 7 | 17 | 7 | 15 | 7 | 13 | 7 | 16 | 7 | 0
+INPUTS | 9 | ram/RS_FSM_FFd8  | ram/RS_FSM_FFd4  | RefUrg  | ram/RAMEN  | ram/RefDone  | RefReq  | nAS_FSB  | ram/BACTr  | fsb/ASrf
+INPUTMC | 8 | 7 | 15 | 2 | 3 | 2 | 17 | 7 | 17 | 7 | 8 | 2 | 14 | 3 | 0 | 7 | 3
+INPUTP | 1 | 54
 EQ | 10 | 
-   IOACT.D = iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd1
-	# !iobm/IOS_FSM_FFd1 & iobm/IOS_FSM_FFd2
-	# !iobm/IOS_FSM_FFd1 & iobm/IOREQr
-	# !C8M & iobm/IOS_FSM_FFd3 & iobm/IOS_FSM_FFd2
-	# !iobm/IOS_FSM_FFd3 & iobm/IOS_FSM_FFd2 & 
-	!iobm/DTACKrf
-;Imported pterms FB6_17
-	# iobm/IOS_FSM_FFd2 & !iobm/BERRrf & !iobm/DTACKrf & 
-	!iobm/ETACK & !iobm/RESrf;
+   !ram/RS_FSM_FFd8.D = !ram/RS_FSM_FFd8 & !ram/RS_FSM_FFd4
+	# RefUrg & !ram/RAMEN & !ram/RefDone & 
+	!ram/RS_FSM_FFd4
+	# RefUrg & !ram/RefDone & nAS_FSB & 
+	!ram/RS_FSM_FFd4 & !fsb/ASrf
+	# RefReq & !ram/RefDone & !nAS_FSB & 
+	!ram/RS_FSM_FFd4 & !ram/BACTr
+	# RefReq & !ram/RefDone & !ram/RS_FSM_FFd4 & 
+	fsb/ASrf & !ram/BACTr;
+   ram/RS_FSM_FFd8.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 6 | 17 | IOACT
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 3 | 5 | 1 | 6 | 0 | 5 | 4
+INPUTS | 9 | iobm/IOS_FSM_FFd5  | iobm/IOS_FSM_FFd6  | iobm/IOS_FSM_FFd4  | iobm/IOS_FSM_FFd3  | iobm/C8Mr  | iobm/IOS_FSM_FFd7  | iobm/IORDREQr  | nAoutOE  | iobm/IOWRREQr.EXP
+INPUTMC | 9 | 5 | 5 | 5 | 12 | 5 | 6 | 6 | 14 | 5 | 9 | 5 | 15 | 6 | 2 | 3 | 1 | 6 | 0
+IMPORTS | 1 | 6 | 0
+EQ | 11 | 
+   IOACT.D = iobm/IOS_FSM_FFd4
+	# iobm/IOS_FSM_FFd5
+	# iobm/IOS_FSM_FFd6
+	# iobm/IOS_FSM_FFd3 & iobm/C8Mr
+	# iobm/IOS_FSM_FFd7 & iobm/IORDREQr & !nAoutOE
+;Imported pterms FB7_1
+	# !IOBERR & !IODONE & iobm/IOS_FSM_FFd3
+	# iobm/IOS_FSM_FFd7 & iobm/IOWRREQr & !nAoutOE
+	# !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & IOACT & 
+	!iobm/IOS_FSM_FFd1 & !iobm/IOS_FSM_FFd2;
    IOACT.CLK = C16M;	// GCK
 GLOBALS | 1 | 2 | C16M
 
-MACROCELL | 0 | 7 | iobm/Er
+MACROCELL | 5 | 7 | iobm/IOS_FSM_FFd1
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 6 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12 | 0 | 6
-INPUTS | 1 | E
-INPUTP | 1 | 37
-EQ | 2 | 
-   iobm/Er.D = E;
-   !iobm/Er.CLK = C8M;	// GCK
-GLOBALS | 1 | 2 | C8M
-
-MACROCELL | 1 | 17 | iobm/IOREQr
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 4 | 5 | 3 | 5 | 17 | 5 | 2 | 5 | 7
-INPUTS | 1 | IOREQ
-INPUTMC | 1 | 4 | 12
-EQ | 2 | 
-   iobm/IOREQr.D = IOREQ;
-   !iobm/IOREQr.CLK = C16M;	// GCK
+OUTPUTMC | 5 | 5 | 15 | 6 | 0 | 5 | 17 | 6 | 16 | 5 | 8
+INPUTS | 5 | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd7  | iobm/C8Mr  | IOL0  | iobm/IORDREQr
+INPUTMC | 5 | 6 | 9 | 5 | 15 | 5 | 9 | 0 | 17 | 6 | 2
+EXPORTS | 1 | 5 | 8
+EQ | 4 | 
+   iobm/IOS_FSM_FFd1.D = iobm/IOS_FSM_FFd2;
+   iobm/IOS_FSM_FFd1.CLK = C16M;	// GCK
+    iobm/IOS_FSM_FFd1.EXP  =  iobm/IOS_FSM_FFd7 & !iobm/C8Mr & IOL0 & 
+	iobm/IORDREQr
 GLOBALS | 1 | 2 | C16M
 
-MACROCELL | 2 | 2 | iobs/IOACTr
+MACROCELL | 6 | 9 | iobm/IOS_FSM_FFd2
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 5 | 4 | 9 | 4 | 6 | 0 | 13 | 4 | 12 | 2 | 1
-INPUTS | 20 | IOACT  | A_FSB<9>  | A_FSB<8>  | A_FSB<15>  | A_FSB<14>  | A_FSB<13>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | iobs/DTACKEN  | $OpTx$$OpTx$FX_DC$47_INV$153  | iobs/IODTACKr
-INPUTMC | 4 | 5 | 17 | 4 | 9 | 2 | 7 | 0 | 4
-INPUTP | 16 | 12 | 11 | 21 | 19 | 18 | 17 | 15 | 13 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22
-EXPORTS | 1 | 2 | 1
-EQ | 12 | 
+OUTPUTMC | 4 | 6 | 0 | 5 | 7 | 5 | 17 | 6 | 16
+INPUTS | 4 | IODONE  | iobm/IOS_FSM_FFd3  | iobm/C8Mr  | IOBERR
+INPUTMC | 4 | 0 | 15 | 6 | 14 | 5 | 9 | 1 | 16
+EQ | 3 | 
+   iobm/IOS_FSM_FFd2.D = IOBERR & iobm/IOS_FSM_FFd3 & !iobm/C8Mr
+	# IODONE & iobm/IOS_FSM_FFd3 & !iobm/C8Mr;
+   iobm/IOS_FSM_FFd2.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 5 | 4 | iobs/IOACTr
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 4 | 3 | 8 | 3 | 15 | 3 | 16 | 3 | 11
+INPUTS | 1 | IOACT
+INPUTMC | 1 | 6 | 17
+EQ | 2 | 
    iobs/IOACTr.D = IOACT;
    iobs/IOACTr.CLK = FCLK;	// GCK
-    iobs/IOACTr.EXP  =  A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & !IOACT & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & iobs/IODTACKr & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 2 | 6 | iobs/Load1
+MACROCELL | 3 | 12 | iobs/Load1
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 3 | 0 | 15 | 0 | 14 | 5 | 13
-INPUTS | 19 | A_FSB<14>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | iobs/Sent  | cs/nOverlay  | nAS_FSB  | iobs/TS_FSM_FFd2  | nADoutLE1  | A_FSB<13>  | iobs/TS_FSM_FFd1  | fsb/ASrf  | ALE0S.EXP
-INPUTMC | 7 | 2 | 12 | 6 | 2 | 4 | 6 | 5 | 13 | 0 | 13 | 2 | 4 | 2 | 5
-INPUTP | 12 | 19 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 54 | 18
-IMPORTS | 1 | 2 | 5
-EQ | 34 | 
-   iobs/Load1.D = A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & 
-	iobs/TS_FSM_FFd2 & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & 
-	iobs/TS_FSM_FFd1 & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/TS_FSM_FFd2 & 
-	fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & 
-	iobs/TS_FSM_FFd2 & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & 
-	iobs/TS_FSM_FFd1 & nADoutLE1
-;Imported pterms FB3_6
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/TS_FSM_FFd1 & 
-	fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/TS_FSM_FFd2 & 
-	fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/TS_FSM_FFd1 & 
-	fsb/ASrf & nADoutLE1;
+OUTPUTMC | 4 | 7 | 10 | 7 | 9 | 5 | 13 | 3 | 11
+INPUTS | 12 | A_FSB<23>  | A_FSB<22>  | iobs/Sent  | nWE_FSB  | nAS_FSB  | iobs/TS_FSM_FFd2  | nADoutLE1  | iobs/TS_FSM_FFd1  | fsb/ASrf  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay
+INPUTMC | 6 | 3 | 17 | 3 | 15 | 5 | 13 | 3 | 8 | 7 | 3 | 0 | 10
+INPUTP | 6 | 36 | 30 | 47 | 54 | 29 | 28
+EXPORTS | 1 | 3 | 11
+EQ | 11 | 
+   iobs/Load1.D = !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	!nAS_FSB & iobs/TS_FSM_FFd1 & nADoutLE1
+	# !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	!nAS_FSB & iobs/TS_FSM_FFd2 & nADoutLE1
+	# !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
+	# !A_FSB<23> & !A_FSB<22> & !iobs/Sent & !nWE_FSB & 
+	iobs/TS_FSM_FFd2 & fsb/ASrf & nADoutLE1;
    iobs/Load1.CLK = FCLK;	// GCK
+    iobs/Load1.EXP  =  !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 6 | iobm/Er2
+MACROCELL | 0 | 17 | IOL0
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 5 | 5 | 8 | 0 | 17 | 0 | 0 | 5 | 7 | 0 | 16
+INPUTS | 12 | iobs/TS_FSM_FFd1  | iobs/Sent  | iobs/TS_FSM_FFd2  | nADoutLE1  | nLDS_FSB  | IOL0  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay  | iobm/Er.EXP
+INPUTMC | 7 | 3 | 8 | 3 | 17 | 3 | 15 | 5 | 13 | 0 | 17 | 0 | 10 | 0 | 0
+INPUTP | 5 | 49 | 36 | 30 | 29 | 28
+EXPORTS | 1 | 0 | 16
+IMPORTS | 1 | 0 | 0
+EQ | 14 | 
+   !IOL0.T = iobs/TS_FSM_FFd1
+	# iobs/Sent & !iobs/TS_FSM_FFd2 & nADoutLE1
+	# nLDS_FSB & !IOL0 & nADoutLE1
+	# !nLDS_FSB & IOL0 & nADoutLE1
+;Imported pterms FB1_1
+	# iobs/IOL1 & IOL0 & !nADoutLE1
+	# !iobs/IOL1 & !IOL0 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1;
+   IOL0.CLK = FCLK;	// GCK
+    IOL0.EXP  =  !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 0 | 16 | IOU0
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 4 | 5 | 10 | 0 | 16 | 0 | 15 | 5 | 9
+INPUTS | 9 | iobs/TS_FSM_FFd1  | iobs/Sent  | iobs/TS_FSM_FFd2  | nADoutLE1  | nUDS_FSB  | IOU0  | iobs/IOU1  | IODONE.EXP  | IOL0.EXP
+INPUTMC | 8 | 3 | 8 | 3 | 17 | 3 | 15 | 5 | 13 | 0 | 16 | 7 | 9 | 0 | 15 | 0 | 17
+INPUTP | 1 | 56
+IMPORTS | 2 | 0 | 15 | 0 | 17
+EQ | 13 | 
+   !IOU0.T = iobs/TS_FSM_FFd1
+	# iobs/Sent & !iobs/TS_FSM_FFd2 & nADoutLE1
+	# nUDS_FSB & !IOU0 & nADoutLE1
+	# !nUDS_FSB & IOU0 & nADoutLE1
+	# iobs/IOU1 & IOU0 & !nADoutLE1
+;Imported pterms FB1_16
+	# !iobs/IOU1 & !IOU0 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+;Imported pterms FB1_18
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1;
+   IOU0.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 6 | 2 | iobm/IORDREQr
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 5 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12
-INPUTS | 1 | iobm/Er
-INPUTMC | 1 | 0 | 7
+OUTPUTMC | 9 | 5 | 11 | 5 | 7 | 5 | 9 | 5 | 15 | 5 | 12 | 6 | 17 | 5 | 17 | 6 | 16 | 3 | 4
+INPUTS | 1 | IORDREQ
+INPUTMC | 1 | 3 | 16
 EQ | 2 | 
-   iobm/Er2.D = iobm/Er;
-   iobm/Er2.CLK = C16M;	// GCK
+   iobm/IORDREQr.D = IORDREQ;
+   iobm/IORDREQr.CLK = C16M;	// GCK
 GLOBALS | 1 | 2 | C16M
 
-MACROCELL | 2 | 17 | ram/BACTr
+MACROCELL | 7 | 0 | ram/RS_FSM_FFd3
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 6 | 7 | 16 | 7 | 6 | 7 | 2 | 7 | 3 | 7 | 4 | 2 | 0
-INPUTS | 14 | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | fsb/Ready0r  | fsb/VPA  | ram/RAMReady  | $OpTx$$OpTx$FX_DC$47_INV$153  | A_FSB<21>  | fsb/Ready1r  | IOACT  | iobs/IODTACKr  | A_FSB<20>
-INPUTMC | 9 | 2 | 4 | 6 | 2 | 2 | 10 | 2 | 0 | 7 | 3 | 2 | 7 | 2 | 15 | 5 | 17 | 0 | 4
-INPUTP | 5 | 54 | 36 | 30 | 29 | 28
-EXPORTS | 1 | 2 | 0
-EQ | 11 | 
-   !ram/BACTr.D = nAS_FSB & !fsb/ASrf;
-   ram/BACTr.CLK = FCLK;	// GCK
-    ram/BACTr.EXP  =  !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!fsb/Ready0r & fsb/VPA & !ram/RAMReady & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & A_FSB<21> & !fsb/Ready1r & fsb/VPA & 
-	IOACT & !iobs/IODTACKr & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & A_FSB<20> & !fsb/Ready1r & fsb/VPA & 
-	IOACT & !iobs/IODTACKr & !$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<22> & !cs/nOverlay & !fsb/Ready1r & fsb/VPA & 
-	IOACT & !iobs/IODTACKr & !$OpTx$$OpTx$FX_DC$47_INV$153
+OUTPUTMC | 4 | 7 | 8 | 7 | 2 | 7 | 4 | 7 | 17
+INPUTS | 8 | ram/RS_FSM_FFd6  | RefUrg  | ram/RefDone  | nAS_FSB  | ram/RS_FSM_FFd8  | fsb/ASrf  | RefReq  | ram/BACTr
+INPUTMC | 7 | 7 | 13 | 2 | 17 | 7 | 8 | 7 | 15 | 7 | 3 | 2 | 14 | 3 | 0
+INPUTP | 1 | 54
+EXPORTS | 1 | 7 | 17
+EQ | 6 | 
+   ram/RS_FSM_FFd3.D = ram/RS_FSM_FFd6;
+   ram/RS_FSM_FFd3.CLK = FCLK;	// GCK
+    ram/RS_FSM_FFd3.EXP  =  RefUrg & !ram/RefDone & nAS_FSB & 
+	ram/RS_FSM_FFd8 & !fsb/ASrf
+	# RefReq & !ram/RefDone & ram/RS_FSM_FFd8 & 
+	fsb/ASrf & !ram/BACTr
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 2 | ram/RefReq
+MACROCELL | 7 | 13 | ram/RS_FSM_FFd6
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 6 | 7 | 16 | 7 | 6 | 7 | 2 | 7 | 3 | 7 | 0 | 7 | 4
-INPUTS | 2 | ram/RefDone  | ram/RefReqSync
-INPUTMC | 2 | 0 | 12 | 0 | 1
-EQ | 2 | 
-   ram/RefReq.D = !ram/RefDone & ram/RefReqSync;
-   ram/RefReq.CLK = FCLK;	// GCK
+OUTPUTMC | 3 | 7 | 0 | 7 | 16 | 7 | 4
+INPUTS | 8 | RefUrg  | ram/RAMEN  | ram/RefDone  | ram/RS_FSM_FFd8  | RefReq  | nAS_FSB  | ram/BACTr  | fsb/ASrf
+INPUTMC | 7 | 2 | 17 | 7 | 17 | 7 | 8 | 7 | 15 | 2 | 14 | 3 | 0 | 7 | 3
+INPUTP | 1 | 54
+EQ | 9 | 
+   ram/RS_FSM_FFd6.D = RefUrg & !ram/RAMEN & !ram/RefDone & 
+	ram/RS_FSM_FFd8
+	# RefUrg & !ram/RefDone & nAS_FSB & 
+	ram/RS_FSM_FFd8 & !fsb/ASrf
+	# RefReq & !ram/RefDone & !nAS_FSB & 
+	ram/RS_FSM_FFd8 & !ram/BACTr
+	# RefReq & !ram/RefDone & ram/RS_FSM_FFd8 & 
+	fsb/ASrf & !ram/BACTr;
+   ram/RS_FSM_FFd6.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 1 | ram/RefReqSync
+MACROCELL | 5 | 17 | ALE0M
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 2 | 0 | 12 | 0 | 2
-INPUTS | 1 | RefReq
-INPUTMC | 1 | 3 | 14
-EQ | 2 | 
-   ram/RefReqSync.D = RefReq;
-   ram/RefReqSync.CLK = FCLK;	// GCK
+OUTPUTMC | 2 | 5 | 17 | 5 | 14
+INPUTS | 11 | iobm/IOS_FSM_FFd7  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd4  | iobm/IOS_FSM_FFd5  | iobm/IOS_FSM_FFd6  | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd2  | ALE0M  | nAoutOE  | iobm/IORDREQr  | iobm/IOWRREQr
+INPUTMC | 11 | 5 | 15 | 6 | 14 | 5 | 6 | 5 | 5 | 5 | 12 | 5 | 7 | 6 | 9 | 5 | 17 | 3 | 1 | 6 | 2 | 6 | 0
+EQ | 14 | 
+   !ALE0M.D = iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & nAoutOE
+	# !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & 
+	iobm/IOS_FSM_FFd1
+	# !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & 
+	iobm/IOS_FSM_FFd2
+	# !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & !ALE0M
+	# iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & 
+	!iobm/IORDREQr & !iobm/IOWRREQr;
+   ALE0M.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 3 | 16 | IORDREQ
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 2 | 6 | 2 | 3 | 16
+INPUTS | 9 | iobs/TS_FSM_FFd1  | iobs/TS_FSM_FFd2  | iobs/IOACTr  | IORDREQ  | iobs/Sent  | nADoutLE1  | nWE_FSB  | iobs/TS_FSM_FFd2.EXP  | iobs/Sent.EXP
+INPUTMC | 8 | 3 | 8 | 3 | 15 | 5 | 4 | 3 | 16 | 3 | 17 | 5 | 13 | 3 | 15 | 3 | 17
+INPUTP | 1 | 47
+IMPORTS | 2 | 3 | 15 | 3 | 17
+EQ | 13 | 
+   !IORDREQ.D = iobs/TS_FSM_FFd1 & !iobs/TS_FSM_FFd2
+	# iobs/TS_FSM_FFd1 & iobs/IOACTr
+	# iobs/TS_FSM_FFd2 & !IORDREQ
+	# iobs/Sent & !iobs/TS_FSM_FFd2 & nADoutLE1
+	# !nWE_FSB & !iobs/TS_FSM_FFd2 & nADoutLE1
+;Imported pterms FB4_16
+	# !iobs/IORW1 & !iobs/TS_FSM_FFd2 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+;Imported pterms FB4_18
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1;
+   IORDREQ.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 11 | cnt/Er<0>
+MACROCELL | 3 | 11 | IOWRREQ
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 23 | 3 | 17 | 6 | 0 | 3 | 11 | 3 | 15 | 3 | 16 | 6 | 17 | 6 | 16 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 9 | 3 | 14 | 3 | 12 | 7 | 16 | 7 | 10 | 3 | 8
-INPUTS | 1 | E
-INPUTP | 1 | 37
-EQ | 2 | 
+OUTPUTMC | 2 | 3 | 11 | 6 | 0
+INPUTS | 9 | iobs/TS_FSM_FFd1  | iobs/TS_FSM_FFd2  | iobs/IOACTr  | IOWRREQ  | iobs/Sent  | nADoutLE1  | nWE_FSB  | nVPA_FSB_OBUF.EXP  | iobs/Load1.EXP
+INPUTMC | 8 | 3 | 8 | 3 | 15 | 5 | 4 | 3 | 11 | 3 | 17 | 5 | 13 | 3 | 10 | 3 | 12
+INPUTP | 1 | 47
+IMPORTS | 2 | 3 | 10 | 3 | 12
+EQ | 13 | 
+   !IOWRREQ.D = iobs/TS_FSM_FFd1 & !iobs/TS_FSM_FFd2
+	# iobs/TS_FSM_FFd1 & iobs/IOACTr
+	# iobs/TS_FSM_FFd2 & !IOWRREQ
+	# iobs/Sent & !iobs/TS_FSM_FFd2 & nADoutLE1
+	# nWE_FSB & !iobs/TS_FSM_FFd2 & nADoutLE1
+;Imported pterms FB4_11
+	# iobs/IORW1 & !iobs/TS_FSM_FFd2 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+;Imported pterms FB4_13
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1;
+   IOWRREQ.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 2 | 7 | cnt/Er<0>
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 24 | 2 | 17 | 6 | 3 | 6 | 12 | 1 | 17 | 2 | 15 | 2 | 14 | 4 | 17 | 4 | 16 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 2 | 9 | 4 | 0 | 2 | 6 | 2 | 13 | 6 | 6 | 2 | 8
+INPUTS | 4 | E  | A_FSB<22>  | IONPReady  | IOPWReady
+INPUTMC | 2 | 3 | 14 | 7 | 12
+INPUTP | 2 | 37 | 30
+EXPORTS | 1 | 2 | 8
+EQ | 3 | 
    cnt/Er<0>.D = E;
    cnt/Er<0>.CLK = FCLK;	// GCK
+    cnt/Er<0>.EXP  =  !A_FSB<22> & !IONPReady & !IOPWReady
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 10 | cnt/nIPL2r
+MACROCELL | 1 | 15 | cnt/nIPL2r
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 2 | 7 | 14 | 7 | 16
+OUTPUTMC | 2 | 7 | 14 | 2 | 6
 INPUTS | 1 | nIPL2
 INPUTP | 1 | 146
 EQ | 2 | 
@@ -1235,165 +1017,164 @@ EQ | 2 |
    cnt/nIPL2r.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 9 | iobm/BERRrf
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 2 | 5 | 9 | 5 | 16
-INPUTS | 1 | nBERR_IOB
-INPUTP | 1 | 123
-EQ | 2 | 
-   iobm/BERRrf.D = !nBERR_IOB;
-   !iobm/BERRrf.CLK = C8M;	// GCK
-GLOBALS | 1 | 2 | C8M
-
-MACROCELL | 0 | 8 | iobm/DTACKrf
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 3 | 5 | 9 | 5 | 17 | 5 | 16
-INPUTS | 1 | nDTACK_IOB
-INPUTP | 1 | 127
-EQ | 2 | 
-   iobm/DTACKrf.D = !nDTACK_IOB;
-   !iobm/DTACKrf.CLK = C8M;	// GCK
-GLOBALS | 1 | 2 | C8M
-
-MACROCELL | 5 | 0 | iobm/ETACK
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 2 | 5 | 9 | 5 | 16
-INPUTS | 6 | nVMA_IOB  | iobm/ES<0>  | iobm/ES<1>  | iobm/ES<2>  | iobm/ES<3>  | iobm/ES<4>
-INPUTMC | 6 | 5 | 1 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12
-EQ | 3 | 
-   iobm/ETACK.D = !nVMA_IOB & !iobm/ES<0> & !iobm/ES<1> & !iobm/ES<2> & 
-	!iobm/ES<3> & iobm/ES<4>;
-   iobm/ETACK.CLK = C16M;	// GCK
+MACROCELL | 6 | 15 | iobm/DoutOE
+ATTRIBUTES | 4358912 | 0
+OUTPUTMC | 2 | 6 | 15 | 3 | 4
+INPUTS | 8 | iobm/IOS_FSM_FFd7  | iobm/C8Mr  | iobm/DoutOE  | iobm/IOWRREQr  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd4  | iobm/IOS_FSM_FFd5  | iobm/IOS_FSM_FFd6
+INPUTMC | 8 | 5 | 15 | 5 | 9 | 6 | 15 | 6 | 0 | 6 | 14 | 5 | 6 | 5 | 5 | 5 | 12
+EQ | 11 | 
+   iobm/DoutOE.T = iobm/IOS_FSM_FFd7 & !iobm/C8Mr & !iobm/DoutOE & 
+	iobm/IOWRREQr
+	# !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & 
+	iobm/DoutOE
+	# !iobm/IOS_FSM_FFd3 & iobm/C8Mr & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & 
+	iobm/DoutOE
+	# !iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd4 & 
+	!iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & iobm/DoutOE & !iobm/IOWRREQr;
+   iobm/DoutOE.CLK = C16M;	// GCK
 GLOBALS | 1 | 2 | C16M
 
-MACROCELL | 0 | 5 | iobm/RESrf
+MACROCELL | 0 | 0 | iobm/Er
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 2 | 5 | 9 | 5 | 16
-INPUTS | 1 | nRES.PIN
-INPUTP | 1 | 145
-EQ | 2 | 
-   iobm/RESrf.D = !nRES.PIN;
-   !iobm/RESrf.CLK = C8M;	// GCK
+OUTPUTMC | 5 | 0 | 12 | 0 | 11 | 0 | 14 | 0 | 13 | 0 | 17
+INPUTS | 12 | E  | iobs/IOL1  | IOL0  | nADoutLE1  | nAS_FSB  | iobs/TS_FSM_FFd2  | fsb/ASrf  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay
+INPUTMC | 6 | 7 | 10 | 0 | 17 | 5 | 13 | 3 | 15 | 7 | 3 | 0 | 10
+INPUTP | 6 | 37 | 54 | 36 | 30 | 29 | 28
+EXPORTS | 1 | 0 | 17
+EQ | 8 | 
+   iobm/Er.D = E;
+   !iobm/Er.CLK = C8M;	// GCK
+    iobm/Er.EXP  =  iobs/IOL1 & IOL0 & !nADoutLE1
+	# !iobs/IOL1 & !IOL0 & !nADoutLE1
+	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
+	nADoutLE1
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	cs/nOverlay & !iobs/TS_FSM_FFd2 & nADoutLE1
 GLOBALS | 1 | 2 | C8M
 
-MACROCELL | 1 | 16 | iobm/VPAr
+MACROCELL | 6 | 16 | iobm/IOS0
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 2 | 6 | 16 | 3 | 4
+INPUTS | 12 | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd7  | iobm/C8Mr  | nAoutOE  | iobm/IORDREQr  | iobm/IOWRREQr  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd4  | iobm/IOS_FSM_FFd5  | iobm/IOS_FSM_FFd6  | iobm/IOS_FSM_FFd2  | iobm/IOS0
+INPUTMC | 12 | 5 | 7 | 5 | 15 | 5 | 9 | 3 | 1 | 6 | 2 | 6 | 0 | 6 | 14 | 5 | 6 | 5 | 5 | 5 | 12 | 6 | 9 | 6 | 16
+EQ | 9 | 
+   iobm/IOS0.D = iobm/IOS_FSM_FFd1
+	# iobm/IOS_FSM_FFd7 & iobm/C8Mr
+	# iobm/IOS_FSM_FFd7 & nAoutOE
+	# iobm/IOS_FSM_FFd7 & !iobm/IORDREQr & 
+	!iobm/IOWRREQr
+	# !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & 
+	!iobm/IOS_FSM_FFd4 & !iobm/IOS_FSM_FFd5 & !iobm/IOS_FSM_FFd6 & 
+	!iobm/IOS_FSM_FFd2 & iobm/IOS0;
+   iobm/IOS0.CLK = C16M;	// GCK
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 6 | 0 | iobm/IOWRREQr
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 9 | 5 | 11 | 5 | 15 | 5 | 12 | 6 | 0 | 5 | 17 | 6 | 15 | 6 | 16 | 3 | 4 | 6 | 17
+INPUTS | 10 | IOWRREQ  | IOBERR  | IODONE  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd7  | iobm/IOWRREQr  | nAoutOE  | IOACT  | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd2
+INPUTMC | 10 | 3 | 11 | 1 | 16 | 0 | 15 | 6 | 14 | 5 | 15 | 6 | 0 | 3 | 1 | 6 | 17 | 5 | 7 | 6 | 9
+EXPORTS | 1 | 6 | 17
+EQ | 6 | 
+   iobm/IOWRREQr.D = IOWRREQ;
+   iobm/IOWRREQr.CLK = C16M;	// GCK
+    iobm/IOWRREQr.EXP  =  !IOBERR & !IODONE & iobm/IOS_FSM_FFd3
+	# iobm/IOS_FSM_FFd7 & iobm/IOWRREQr & !nAoutOE
+	# !iobm/IOS_FSM_FFd7 & !iobm/IOS_FSM_FFd3 & IOACT & 
+	!iobm/IOS_FSM_FFd1 & !iobm/IOS_FSM_FFd2
+GLOBALS | 1 | 2 | C16M
+
+MACROCELL | 1 | 14 | iobm/VPAr
 ATTRIBUTES | 8553216 | 0
 OUTPUTMC | 1 | 5 | 1
 INPUTS | 1 | nVPA_IOB
 INPUTP | 1 | 125
 EQ | 2 | 
    iobm/VPAr.D = !nVPA_IOB;
-   !iobm/VPAr.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
+   !iobm/VPAr.CLK = C8M;	// GCK
+GLOBALS | 1 | 2 | C8M
 
-MACROCELL | 5 | 2 | ALE0M
+MACROCELL | 3 | 3 | iobs/Clear1
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 2 | 7 | 12 | 5 | 13
+INPUTS | 2 | iobs/TS_FSM_FFd1  | iobs/TS_FSM_FFd2
+INPUTMC | 2 | 3 | 8 | 3 | 15
+EQ | 2 | 
+   iobs/Clear1.D = !iobs/TS_FSM_FFd1 & iobs/TS_FSM_FFd2;
+   iobs/Clear1.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 7 | 2 | ram/RS_FSM_FFd2
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 2 | 7 | 8 | 2 | 4
+INPUTS | 1 | ram/RS_FSM_FFd3
+INPUTMC | 1 | 7 | 0
+EQ | 2 | 
+   ram/RS_FSM_FFd2.D = ram/RS_FSM_FFd3;
+   ram/RS_FSM_FFd2.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 2 | 3 | ram/RS_FSM_FFd4
+ATTRIBUTES | 8553216 | 0
+OUTPUTMC | 2 | 7 | 17 | 7 | 15
+INPUTS | 1 | ram/RS_FSM_FFd1
+INPUTMC | 1 | 2 | 4
+EQ | 2 | 
+   ram/RS_FSM_FFd4.D = ram/RS_FSM_FFd1;
+   ram/RS_FSM_FFd4.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 3 | 6 | ram/Once
+ATTRIBUTES | 8553280 | 0
+OUTPUTMC | 1 | 7 | 17
+INPUTS | 2 | nAS_FSB  | fsb/ASrf
+INPUTMC | 1 | 7 | 3
+INPUTP | 1 | 54
+EQ | 3 | 
+   !ram/Once.D = nAS_FSB & !fsb/ASrf;
+   ram/Once.CLK = FCLK;	// GCK
+   ram/Once.CE = nAS_FSB & !fsb/ASrf;
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 7 | 6 | ALE0S
 ATTRIBUTES | 8553216 | 0
 OUTPUTMC | 1 | 5 | 14
-INPUTS | 4 | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd3  | iobm/IOREQr
-INPUTMC | 4 | 0 | 16 | 5 | 9 | 5 | 3 | 1 | 17
-EQ | 4 | 
-   !ALE0M.D = iobm/IOS_FSM_FFd1 & !iobm/IOS_FSM_FFd2
-	# !iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd2 & 
-	!iobm/IOREQr;
-   ALE0M.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 2 | 5 | ALE0S
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 2 | 5 | 14 | 2 | 6
-INPUTS | 17 | iobs/TS_FSM_FFd2  | A_FSB<14>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | iobs/Sent  | cs/nOverlay  | iobs/TS_FSM_FFd1  | fsb/ASrf  | nADoutLE1  | A_FSB<13>
-INPUTMC | 6 | 4 | 6 | 2 | 12 | 6 | 2 | 0 | 13 | 2 | 4 | 5 | 13
-INPUTP | 11 | 19 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 18
-EXPORTS | 1 | 2 | 6
-EQ | 14 | 
+INPUTS | 1 | iobs/TS_FSM_FFd2
+INPUTMC | 1 | 3 | 15
+EQ | 2 | 
    ALE0S.D = iobs/TS_FSM_FFd2;
    ALE0S.CLK = FCLK;	// GCK
-    ALE0S.EXP  =  A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/TS_FSM_FFd1 & 
-	fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/TS_FSM_FFd2 & 
-	fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/TS_FSM_FFd1 & 
-	fsb/ASrf & nADoutLE1
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 4 | 12 | IOREQ
+MACROCELL | 6 | 6 | cnt/Er<1>
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 1 | 1 | 17
-INPUTS | 12 | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1  | iobs/IOACTr  | iobs/Sent  | nADoutLE1  | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | RA_5_OBUF.EXP  | RA_2_OBUF.EXP
-INPUTMC | 9 | 4 | 6 | 0 | 13 | 2 | 2 | 2 | 12 | 5 | 13 | 2 | 4 | 6 | 2 | 4 | 11 | 4 | 13
-INPUTP | 3 | 54 | 36 | 30
-IMPORTS | 2 | 4 | 11 | 4 | 13
-EQ | 28 | 
-   !IOREQ.D = !iobs/TS_FSM_FFd2 & iobs/TS_FSM_FFd1
-	# iobs/TS_FSM_FFd1 & iobs/IOACTr
-	# iobs/Sent & !iobs/TS_FSM_FFd2 & nADoutLE1
-	# nAS_FSB & !iobs/TS_FSM_FFd2 & !fsb/ASrf & 
-	nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-;Imported pterms FB5_12
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<21> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<20> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<19> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<17> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<16> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-;Imported pterms FB5_14
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<18> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & nWE_FSB & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<14> & !A_FSB<13> & !A_FSB<23> & !A_FSB<22> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1;
-   IOREQ.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 3 | 8 | cnt/Er<1>
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 22 | 3 | 17 | 6 | 0 | 3 | 11 | 3 | 15 | 3 | 16 | 6 | 17 | 6 | 16 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 3 | 13 | 3 | 9 | 3 | 14 | 3 | 12 | 7 | 16 | 7 | 10
+OUTPUTMC | 22 | 2 | 17 | 6 | 3 | 6 | 12 | 1 | 17 | 2 | 15 | 2 | 14 | 4 | 17 | 4 | 16 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 4 | 15 | 2 | 9 | 4 | 0 | 2 | 6 | 2 | 13
 INPUTS | 1 | cnt/Er<0>
-INPUTMC | 1 | 0 | 11
+INPUTMC | 1 | 2 | 7
 EQ | 2 | 
    cnt/Er<1>.D = cnt/Er<0>;
    cnt/Er<1>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 2 | 11 | cs/ODCSr
+MACROCELL | 3 | 9 | cs/ODCSr
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 2 | 6 | 2 | 2 | 12
-INPUTS | 11 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | nAS_FSB  | fsb/ASrf  | iobs/Sent  | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1  | nADoutLE1  | cs/nOverlay
-INPUTMC | 6 | 2 | 4 | 2 | 12 | 4 | 6 | 0 | 13 | 5 | 13 | 6 | 2
+OUTPUTMC | 1 | 0 | 10
+INPUTS | 6 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | nAS_FSB  | fsb/ASrf
+INPUTMC | 1 | 7 | 3
 INPUTP | 5 | 36 | 30 | 29 | 28 | 54
-EXPORTS | 1 | 2 | 12
-EQ | 11 | 
+EQ | 5 | 
    cs/ODCSr.D = !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
 	!nAS_FSB
 	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
 	fsb/ASrf;
    cs/ODCSr.CLK = FCLK;	// GCK
-    cs/ODCSr.EXP  =  A_FSB<22> & A_FSB<21> & !iobs/Sent & !nAS_FSB & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & nADoutLE1
-	# A_FSB<22> & A_FSB<20> & !iobs/Sent & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-	# A_FSB<22> & !iobs/Sent & !cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 2 | 4 | fsb/ASrf
+MACROCELL | 7 | 3 | fsb/ASrf
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 26 | 2 | 12 | 6 | 2 | 4 | 3 | 4 | 9 | 2 | 10 | 2 | 15 | 4 | 2 | 2 | 5 | 7 | 17 | 7 | 6 | 7 | 9 | 7 | 8 | 4 | 6 | 7 | 2 | 2 | 6 | 2 | 17 | 4 | 12 | 2 | 11 | 7 | 3 | 2 | 7 | 2 | 9 | 2 | 13 | 4 | 17 | 7 | 0 | 7 | 1 | 7 | 7
+OUTPUTMC | 20 | 3 | 17 | 7 | 17 | 0 | 10 | 3 | 13 | 7 | 16 | 7 | 12 | 7 | 11 | 3 | 10 | 3 | 14 | 7 | 15 | 3 | 12 | 0 | 0 | 0 | 15 | 7 | 13 | 3 | 15 | 3 | 1 | 3 | 6 | 3 | 9 | 2 | 8 | 7 | 0
 INPUTS | 1 | nAS_FSB
 INPUTP | 1 | 54
 EQ | 2 | 
@@ -1401,378 +1182,231 @@ EQ | 2 |
    !fsb/ASrf.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 5 | 7 | iobm/DoutOE
+MACROCELL | 2 | 5 | iobs/IODONEr<0>
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 1 | 3 | 4
-INPUTS | 6 | IORW0  | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd2  | iobm/IOS_FSM_FFd1  | iobm/IOREQr  | nAoutOE
-INPUTMC | 6 | 4 | 16 | 5 | 3 | 5 | 9 | 0 | 16 | 1 | 17 | 3 | 1
-EQ | 5 | 
-   iobm/DoutOE.D = !IORW0 & iobm/IOS_FSM_FFd3
-	# !IORW0 & iobm/IOS_FSM_FFd2
-	# !iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd1 & 
-	!iobm/IOS_FSM_FFd2 & !iobm/IOREQr & !nAoutOE;
-   iobm/DoutOE.CLK = C16M;	// GCK
-GLOBALS | 1 | 2 | C16M
-
-MACROCELL | 2 | 3 | iobs/Clear1
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 1 | 5 | 13
-INPUTS | 2 | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1
-INPUTMC | 2 | 4 | 6 | 0 | 13
+OUTPUTMC | 1 | 3 | 14
+INPUTS | 1 | IODONE
+INPUTMC | 1 | 0 | 15
 EQ | 2 | 
-   iobs/Clear1.D = iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1;
-   iobs/Clear1.CLK = FCLK;	// GCK
+   iobs/IODONEr<0>.D = IODONE;
+   iobs/IODONEr<0>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 4 | iobs/IODTACKr
-ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 11 | 2 | 15 | 2 | 0 | 2 | 8 | 2 | 1 | 2 | 2 | 2 | 7 | 2 | 9 | 2 | 10 | 2 | 14 | 2 | 16 | 2 | 17
-INPUTS | 1 | nDTACK_IOB
-INPUTP | 1 | 127
-EQ | 2 | 
-   iobs/IODTACKr.D = !nDTACK_IOB;
-   iobs/IODTACKr.CLK = FCLK;	// GCK
-GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 3 | 6 | nRESout
+MACROCELL | 3 | 2 | nRESout
 ATTRIBUTES | 8553216 | 0
 OUTPUTMC | 1 | 3 | 7
 INPUTS | 2 | cnt/INITS_FSM_FFd1  | cnt/INITS_FSM_FFd2
-INPUTMC | 2 | 7 | 16 | 7 | 10
+INPUTMC | 2 | 2 | 6 | 2 | 13
 EQ | 2 | 
    nRESout.D = cnt/INITS_FSM_FFd1 & !cnt/INITS_FSM_FFd2;
    nRESout.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 7 | 3 | ram/RAMReady
+MACROCELL | 3 | 0 | ram/BACTr
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 3 | 2 | 10 | 2 | 7 | 2 | 17
-INPUTS | 13 | A_FSB<23>  | A_FSB<22>  | cs/nOverlay  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd1  | ram/RS_FSM_FFd3  | ram/RefUrg  | ram/RAMEN  | nAS_FSB  | fsb/ASrf  | ram/RefReq  | ram/BACTr  | nRAS_OBUF.EXP
-INPUTMC | 10 | 6 | 2 | 7 | 6 | 7 | 9 | 7 | 8 | 0 | 0 | 7 | 2 | 2 | 4 | 0 | 2 | 2 | 17 | 7 | 4
-INPUTP | 3 | 36 | 30 | 54
-IMPORTS | 1 | 7 | 4
-EQ | 21 | 
-   ram/RAMReady.D = ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3 & !ram/RefUrg
-	# !cs/nOverlay & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & ram/BACTr
-	# !cs/nOverlay & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !ram/RefReq
-	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !fsb/ASrf
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & !ram/RS_FSM_FFd3 & !ram/RefUrg & 
-	!ram/RAMEN
-;Imported pterms FB8_5
-	# A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & ram/BACTr
-	# A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !ram/RefReq
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & ram/BACTr
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !ram/RefReq;
-   ram/RAMReady.CLK = FCLK;	// GCK
+OUTPUTMC | 6 | 7 | 17 | 7 | 15 | 7 | 13 | 7 | 16 | 7 | 0 | 3 | 17
+INPUTS | 10 | A_FSB<23>  | iobs/Sent  | iobs/TS_FSM_FFd2  | A_FSB<22>  | nWE_FSB  | iobs/TS_FSM_FFd1  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay  | nAoutOE_OBUF.EXP
+INPUTMC | 5 | 3 | 17 | 3 | 15 | 3 | 8 | 0 | 10 | 3 | 1
+INPUTP | 5 | 36 | 30 | 47 | 29 | 28
+EXPORTS | 1 | 3 | 17
+IMPORTS | 1 | 3 | 1
+EQ | 9 | 
+   !ram/BACTr.D = ;Imported pterms FB4_2
+	  nAS_FSB & !fsb/ASrf;
+   ram/BACTr.CLK = FCLK;	// GCK
+    ram/BACTr.EXP  =  A_FSB<23> & !iobs/Sent & iobs/TS_FSM_FFd2
+	# A_FSB<22> & !iobs/Sent & iobs/TS_FSM_FFd2
+	# !iobs/Sent & nWE_FSB & iobs/TS_FSM_FFd1
+	# !iobs/Sent & nWE_FSB & iobs/TS_FSM_FFd2
+	# !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20> & 
+	!iobs/Sent & cs/nOverlay
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 0 | 3 | ram/RefRAS
+MACROCELL | 7 | 16 | ram/CAS
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 1 | 7 | 4
-INPUTS | 2 | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd1
-INPUTMC | 2 | 7 | 6 | 7 | 9
-EQ | 2 | 
-   ram/RefRAS.D = ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1;
-   ram/RefRAS.CLK = FCLK;	// GCK
+OUTPUTMC | 1 | 4 | 4
+INPUTS | 9 | ram/RS_FSM_FFd6  | RefUrg  | ram/RAMEN  | ram/RefDone  | ram/RS_FSM_FFd8  | RefReq  | nAS_FSB  | ram/BACTr  | fsb/ASrf
+INPUTMC | 8 | 7 | 13 | 2 | 17 | 7 | 17 | 7 | 8 | 7 | 15 | 2 | 14 | 3 | 0 | 7 | 3
+INPUTP | 1 | 54
+EQ | 10 | 
+   ram/CAS.D = ram/RS_FSM_FFd6
+	# RefUrg & !ram/RAMEN & !ram/RefDone & 
+	ram/RS_FSM_FFd8
+	# RefUrg & !ram/RefDone & nAS_FSB & 
+	ram/RS_FSM_FFd8 & !fsb/ASrf
+	# RefReq & !ram/RefDone & !nAS_FSB & 
+	ram/RS_FSM_FFd8 & !ram/BACTr
+	# RefReq & !ram/RefDone & ram/RS_FSM_FFd8 & 
+	fsb/ASrf & !ram/BACTr;
+   ram/CAS.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
-MACROCELL | 3 | 3 | ram/RegUrgSync
+MACROCELL | 2 | 4 | ram/RS_FSM_FFd1
 ATTRIBUTES | 8553216 | 0
-OUTPUTMC | 1 | 0 | 0
-INPUTS | 1 | RefUrg
-INPUTMC | 1 | 3 | 17
+OUTPUTMC | 1 | 2 | 3
+INPUTS | 1 | ram/RS_FSM_FFd2
+INPUTMC | 1 | 7 | 2
 EQ | 2 | 
-   ram/RegUrgSync.D = RefUrg;
-   ram/RegUrgSync.CLK = FCLK;	// GCK
+   ram/RS_FSM_FFd1.D = ram/RS_FSM_FFd2;
+   ram/RS_FSM_FFd1.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
-
-MACROCELL | 6 | 5 | RA_0_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 3 | A_FSB<10>  | ram/RASEL  | A_FSB<1>
-INPUTMC | 1 | 7 | 17
-INPUTP | 2 | 13 | 149
-EQ | 2 | 
-   RA<0> = A_FSB<10> & !ram/RASEL
-	# ram/RASEL & A_FSB<1>;
-
-MACROCELL | 6 | 1 | RA_1_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 3 | A_FSB<11>  | ram/RASEL  | A_FSB<2>
-INPUTMC | 1 | 7 | 17
-INPUTP | 2 | 15 | 153
-EQ | 2 | 
-   RA<1> = A_FSB<11> & !ram/RASEL
-	# ram/RASEL & A_FSB<2>;
-
-MACROCELL | 4 | 13 | RA_2_OBUF
-ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 4 | 12
-INPUTS | 14 | A_FSB<12>  | ram/RASEL  | A_FSB<23>  | A_FSB<22>  | A_FSB<18>  | iobs/TS_FSM_FFd2  | nADoutLE1  | nWE_FSB  | A_FSB<14>  | A_FSB<13>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay  | RA_6_OBUF.EXP
-INPUTMC | 5 | 7 | 17 | 4 | 6 | 5 | 13 | 6 | 2 | 4 | 14
-INPUTP | 9 | 17 | 36 | 30 | 24 | 47 | 19 | 18 | 29 | 28
-EXPORTS | 1 | 4 | 12
-IMPORTS | 1 | 4 | 14
-EQ | 11 | 
-   RA<2> = A_FSB<12> & !ram/RASEL
-;Imported pterms FB5_15
-	# ram/RASEL & A_FSB<3>;
-    RA_2_OBUF.EXP  =  !A_FSB<23> & !A_FSB<22> & !A_FSB<18> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & nWE_FSB & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<14> & !A_FSB<13> & !A_FSB<23> & !A_FSB<22> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-
-MACROCELL | 4 | 10 | RA_3_OBUF
-ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 4 | 11
-INPUTS | 5 | A_FSB<13>  | ram/RASEL  | A_FSB<4>  | A_FSB<15>  | A_FSB<6>
-INPUTMC | 1 | 7 | 17
-INPUTP | 4 | 18 | 157 | 21 | 6
-EXPORTS | 1 | 4 | 11
-EQ | 4 | 
-   RA<3> = A_FSB<13> & !ram/RASEL
-	# ram/RASEL & A_FSB<4>;
-    RA_3_OBUF.EXP  =  A_FSB<15> & !ram/RASEL
-	# ram/RASEL & A_FSB<6>
-
-MACROCELL | 4 | 8 | RA_4_OBUF
-ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 4 | 9
-INPUTS | 8 | A_FSB<14>  | ram/RASEL  | A_FSB<5>  | A_FSB<23>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay  | iobs/DTACKEN
-INPUTMC | 3 | 7 | 17 | 6 | 2 | 4 | 9
-INPUTP | 5 | 19 | 4 | 36 | 29 | 28
-EXPORTS | 1 | 4 | 9
-EQ | 4 | 
-   RA<4> = A_FSB<14> & !ram/RASEL
-	# ram/RASEL & A_FSB<5>;
-    RA_4_OBUF.EXP  =  !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	!iobs/DTACKEN
-
-MACROCELL | 4 | 11 | RA_5_OBUF
-ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 4 | 12
-INPUTS | 10 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | iobs/TS_FSM_FFd2  | nADoutLE1  | A_FSB<20>  | A_FSB<19>  | A_FSB<17>  | A_FSB<16>  | RA_3_OBUF.EXP
-INPUTMC | 3 | 4 | 6 | 5 | 13 | 4 | 10
-INPUTP | 7 | 36 | 30 | 29 | 28 | 26 | 23 | 22
-EXPORTS | 1 | 4 | 12
-IMPORTS | 1 | 4 | 10
-EQ | 13 | 
-   RA<5> = ;Imported pterms FB5_11
-	  A_FSB<15> & !ram/RASEL
-	# ram/RASEL & A_FSB<6>;
-    RA_5_OBUF.EXP  =  !A_FSB<23> & !A_FSB<22> & !A_FSB<21> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<20> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<19> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<17> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<16> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-
-MACROCELL | 4 | 14 | RA_6_OBUF
-ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 4 | 13
-INPUTS | 4 | A_FSB<16>  | ram/RASEL  | A_FSB<7>  | A_FSB<3>
-INPUTMC | 1 | 7 | 17
-INPUTP | 3 | 22 | 8 | 155
-EXPORTS | 1 | 4 | 13
-EQ | 3 | 
-   RA<6> = A_FSB<16> & !ram/RASEL
-	# ram/RASEL & A_FSB<7>;
-    RA_6_OBUF.EXP  =  ram/RASEL & A_FSB<3>
-
-MACROCELL | 6 | 4 | RA_7_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 3 | A_FSB<17>  | ram/RASEL  | A_FSB<8>
-INPUTMC | 1 | 7 | 17
-INPUTP | 2 | 23 | 11
-EQ | 2 | 
-   RA<7> = A_FSB<8> & ram/RASEL
-	# A_FSB<17> & !ram/RASEL;
-
-MACROCELL | 6 | 7 | RA_8_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 6 | A_FSB<18>  | cs/nOverlay  | A_FSB<22>  | A_FSB<23>  | ram/RASEL  | A_FSB<9>
-INPUTMC | 2 | 6 | 2 | 7 | 17
-INPUTP | 4 | 24 | 30 | 36 | 12
-EQ | 6 | 
-   RA<8> = A_FSB<23> & A_FSB<18>
-	# A_FSB<22> & A_FSB<18>
-	# A_FSB<18> & !cs/nOverlay
-	# A_FSB<18> & !ram/RASEL
-	# A_FSB<9> & !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	ram/RASEL;
-
-MACROCELL | 6 | 10 | RA_9_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 3 | A_FSB<19>  | ram/RASEL  | A_FSB<20>
-INPUTMC | 1 | 7 | 17
-INPUTP | 2 | 26 | 28
-EQ | 2 | 
-   RA<9> = A_FSB<20> & ram/RASEL
-	# A_FSB<19> & !ram/RASEL;
-
-MACROCELL | 7 | 11 | nBERR_FSB_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 2 | iobs/DTACKEN  | nBERR_IOB
-INPUTMC | 1 | 4 | 9
-INPUTP | 1 | 123
-EQ | 1 | 
-   !nBERR_FSB = iobs/DTACKEN & !nBERR_IOB;
-
-MACROCELL | 3 | 4 | nDoutOE_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 2 | iobm/DoutOE  | nAoutOE
-INPUTMC | 2 | 5 | 7 | 3 | 1
-EQ | 1 | 
-   !nDoutOE = iobm/DoutOE & !nAoutOE;
 
 MACROCELL | 4 | 5 | nOE_OBUF
 ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 4 | 6
-INPUTS | 10 | nWE_FSB  | nAS_FSB  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | iobs/TS_FSM_FFd2  | nADoutLE1  | A_FSB<20>  | A_FSB<19>  | A_FSB<16>
-INPUTMC | 2 | 4 | 6 | 5 | 13
-INPUTP | 8 | 47 | 54 | 36 | 30 | 29 | 28 | 26 | 22
-EXPORTS | 1 | 4 | 6
-EQ | 9 | 
+INPUTS | 2 | nWE_FSB  | nAS_FSB
+INPUTP | 2 | 47 | 54
+EQ | 1 | 
    !nOE = nWE_FSB & !nAS_FSB;
-    nOE_OBUF.EXP  =  !A_FSB<23> & !A_FSB<22> & !A_FSB<21> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<20> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<19> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<16> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
 
 MACROCELL | 2 | 16 | nROMWE_OBUF
 ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 2 | 15
-INPUTS | 16 | nWE_FSB  | nAS_FSB  | A_FSB<13>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | cs/nOverlay  | iobs/DTACKEN  | fsb/Ready1r  | nADoutLE1  | A_FSB<14>  | IOACT  | iobs/IODTACKr
-INPUTMC | 6 | 6 | 2 | 4 | 9 | 2 | 15 | 5 | 13 | 5 | 17 | 0 | 4
-INPUTP | 10 | 47 | 54 | 18 | 29 | 28 | 26 | 24 | 23 | 22 | 19
-EXPORTS | 1 | 2 | 15
-EQ | 10 | 
-   !nROMWE = !nWE_FSB & !nAS_FSB;
-    nROMWE_OBUF.EXP  =  A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & !nADoutLE1
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & IOACT & !iobs/IODTACKr & !nADoutLE1
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & IOACT & !iobs/IODTACKr & !nADoutLE1
-
-MACROCELL | 3 | 10 | nVPA_FSB_OBUF
-ATTRIBUTES | 264962 | 0
-INPUTS | 2 | fsb/VPA  | nAS_FSB
-INPUTMC | 1 | 2 | 0
-INPUTP | 1 | 54
+INPUTS | 2 | nWE_FSB  | nAS_FSB
+INPUTP | 2 | 47 | 54
 EQ | 1 | 
-   !nVPA_FSB = fsb/VPA & !nAS_FSB;
+   !nROMWE = !nWE_FSB & !nAS_FSB;
 
 MACROCELL | 5 | 14 | nADoutLE0_OBUF
 ATTRIBUTES | 264962 | 0
 INPUTS | 2 | ALE0M  | ALE0S
-INPUTMC | 2 | 5 | 2 | 2 | 5
+INPUTMC | 2 | 5 | 17 | 7 | 6
 EQ | 1 | 
    nADoutLE0 = !ALE0M & !ALE0S;
 
 MACROCELL | 4 | 4 | nCAS_OBUF
 ATTRIBUTES | 8684290 | 0
-INPUTS | 1 | ram/RASEL
-INPUTMC | 1 | 7 | 17
+INPUTS | 1 | ram/CAS
+INPUTMC | 1 | 7 | 16
 EQ | 2 | 
-   nCAS.D = !ram/RASEL;
+   nCAS.D = !ram/CAS;
    !nCAS.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
+
+MACROCELL | 2 | 8 | nDTACK_FSB_OBUF
+ATTRIBUTES | 8684290 | 0
+INPUTS | 10 | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | IONPReady  | A_FSB<22>  | A_FSB<20>  | A_FSB<21>  | nWE_FSB  | cnt/Er<0>.EXP  | cnt/TimerTC.EXP
+INPUTMC | 4 | 7 | 3 | 3 | 14 | 2 | 7 | 2 | 9
+INPUTP | 6 | 54 | 36 | 30 | 28 | 29 | 47
+IMPORTS | 2 | 2 | 7 | 2 | 9
+EQ | 11 | 
+   nDTACK_FSB.D = A_FSB<23> & !IONPReady
+	# nAS_FSB & !fsb/ASrf
+	# A_FSB<22> & A_FSB<21> & !IONPReady
+	# A_FSB<22> & A_FSB<20> & !IONPReady
+	# !A_FSB<22> & nWE_FSB & !IONPReady
+;Imported pterms FB3_8
+	# !A_FSB<22> & !IONPReady & !IOPWReady
+;Imported pterms FB3_10
+	# A_FSB<23> & A_FSB<22> & A_FSB<21> & A_FSB<20> & 
+	A_FSB<19> & A_FSB<18>;
+   nDTACK_FSB.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
 MACROCELL | 5 | 16 | nDinLE_OBUF
 ATTRIBUTES | 8684290 | 0
-OUTPUTMC | 1 | 5 | 17
-INPUTS | 6 | iobm/IOS_FSM_FFd1  | iobm/IOS_FSM_FFd2  | iobm/BERRrf  | iobm/DTACKrf  | iobm/ETACK  | iobm/RESrf
-INPUTMC | 6 | 0 | 16 | 5 | 9 | 0 | 9 | 0 | 8 | 5 | 0 | 0 | 5
-EXPORTS | 1 | 5 | 17
-EQ | 4 | 
-   nDinLE.D = iobm/IOS_FSM_FFd1 & iobm/IOS_FSM_FFd2;
+INPUTS | 2 | iobm/IOS_FSM_FFd3  | iobm/IOS_FSM_FFd4
+INPUTMC | 2 | 6 | 14 | 5 | 6
+EQ | 2 | 
+   !nDinLE.D = !iobm/IOS_FSM_FFd3 & !iobm/IOS_FSM_FFd4;
    !nDinLE.CLK = C16M;	// GCK
-    nDinLE_OBUF.EXP  =  iobm/IOS_FSM_FFd2 & !iobm/BERRrf & !iobm/DTACKrf & 
-	!iobm/ETACK & !iobm/RESrf
 GLOBALS | 1 | 2 | C16M
 
-MACROCELL | 7 | 4 | nRAS_OBUF
-ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 7 | 3
-INPUTS | 10 | ram/RefRAS  | A_FSB<23>  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd1  | ram/RS_FSM_FFd3  | ram/RefUrg  | ram/BACTr  | ram/RefReq  | A_FSB<22>  | nRAMLWE_OBUF.EXP
-INPUTMC | 8 | 0 | 3 | 7 | 6 | 7 | 9 | 7 | 8 | 0 | 0 | 2 | 17 | 0 | 2 | 7 | 5
-INPUTP | 2 | 36 | 30
-EXPORTS | 1 | 7 | 3
-IMPORTS | 1 | 7 | 5
-EQ | 12 | 
-   !nRAS = ram/RefRAS
-;Imported pterms FB8_6
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
-	ram/RAMEN;
-    nRAS_OBUF.EXP  =  A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & ram/BACTr
-	# A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !ram/RefReq
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & ram/BACTr
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !ram/RefReq
-
-MACROCELL | 3 | 7 | N0
+MACROCELL | 3 | 7 | C20MEN_OBUF
 ATTRIBUTES | 265986 | 0
 INPUTS | 1 | nRESout
-INPUTMC | 1 | 3 | 6
+INPUTMC | 1 | 3 | 2
 EQ | 2 | 
    nRES = Gnd;
    nRES.OE = !nRESout;
 
-MACROCELL | 7 | 1 | A_FSB_19_IBUF$BUF0
+MACROCELL | 6 | 1 | A_FSB_10_IBUF$BUF0
 ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 7 | 2
-INPUTS | 8 | A_FSB<19>  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd3  | ram/RAMEN  | ram/RS_FSM_FFd1  | ram/RefUrg  | nAS_FSB  | fsb/ASrf
-INPUTMC | 6 | 7 | 6 | 7 | 8 | 7 | 2 | 7 | 9 | 0 | 0 | 2 | 4
-INPUTP | 2 | 26 | 54
-EXPORTS | 1 | 7 | 2
-EQ | 7 | 
-   RA<11> = A_FSB<19>;
-    A_FSB_19_IBUF$BUF0.EXP  =  ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & ram/RAMEN
-	# !ram/RS_FSM_FFd1 & ram/RS_FSM_FFd3 & ram/RAMEN
-	# ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RS_FSM_FFd3 & !ram/RefUrg
-	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd1 & 
-	!ram/RS_FSM_FFd3 & !ram/RefUrg & !fsb/ASrf
-
-MACROCELL | 6 | 8 | A_FSB_21_IBUF$BUF0
-ATTRIBUTES | 264962 | 0
-INPUTS | 1 | A_FSB<21>
-INPUTP | 1 | 29
+INPUTS | 1 | A_FSB<10>
+INPUTP | 1 | 13
 EQ | 1 | 
-   RA<10> = A_FSB<21>;
+   RA<1> = A_FSB<10>;
+
+MACROCELL | 4 | 8 | A_FSB_11_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<11>
+INPUTP | 1 | 15
+EQ | 1 | 
+   RA<4> = A_FSB<11>;
+
+MACROCELL | 4 | 11 | A_FSB_12_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<12>
+INPUTP | 1 | 17
+EQ | 1 | 
+   RA<5> = A_FSB<12>;
+
+MACROCELL | 4 | 14 | A_FSB_13_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<13>
+INPUTP | 1 | 18
+EQ | 1 | 
+   RA<6> = A_FSB<13>;
+
+MACROCELL | 6 | 4 | A_FSB_14_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<14>
+INPUTP | 1 | 19
+EQ | 1 | 
+   RA<7> = A_FSB<14>;
+
+MACROCELL | 6 | 10 | A_FSB_15_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<15>
+INPUTP | 1 | 21
+EQ | 1 | 
+   RA<9> = A_FSB<15>;
+
+MACROCELL | 4 | 13 | A_FSB_16_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<16>
+INPUTP | 1 | 22
+EQ | 1 | 
+   RA<2> = A_FSB<16>;
+
+MACROCELL | 6 | 8 | A_FSB_17_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<17>
+INPUTP | 1 | 23
+EQ | 1 | 
+   RA<10> = A_FSB<17>;
+
+MACROCELL | 6 | 7 | A_FSB_18_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<18>
+INPUTP | 1 | 24
+EQ | 1 | 
+   RA<8> = A_FSB<18>;
+
+MACROCELL | 4 | 10 | A_FSB_19_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<19>
+INPUTP | 1 | 26
+EQ | 1 | 
+   RA<3> = A_FSB<19>;
+
+MACROCELL | 7 | 1 | A_FSB_19_IBUF$BUF1
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<19>
+INPUTP | 1 | 26
+EQ | 1 | 
+   RA<11> = A_FSB<19>;
+
+MACROCELL | 6 | 5 | A_FSB_9_IBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 1 | A_FSB<9>
+INPUTP | 1 | 12
+EQ | 1 | 
+   RA<0> = A_FSB<9>;
 
 MACROCELL | 5 | 13 | nADoutLE1_OBUF
 ATTRIBUTES | 8815366 | 0
-OUTPUTMC | 25 | 2 | 12 | 4 | 16 | 4 | 9 | 4 | 0 | 0 | 17 | 2 | 14 | 5 | 13 | 4 | 2 | 2 | 8 | 4 | 6 | 2 | 6 | 4 | 12 | 2 | 1 | 2 | 5 | 2 | 11 | 2 | 13 | 2 | 16 | 4 | 1 | 4 | 3 | 4 | 5 | 4 | 7 | 4 | 11 | 4 | 13 | 4 | 15 | 4 | 17
+OUTPUTMC | 14 | 3 | 17 | 3 | 13 | 7 | 12 | 3 | 15 | 3 | 12 | 0 | 17 | 0 | 16 | 3 | 16 | 3 | 11 | 5 | 13 | 0 | 0 | 0 | 15 | 3 | 10 | 3 | 14
 INPUTS | 3 | iobs/Clear1  | nADoutLE1  | iobs/Load1
-INPUTMC | 3 | 2 | 3 | 5 | 13 | 2 | 6
+INPUTMC | 3 | 3 | 3 | 5 | 13 | 3 | 12
 EQ | 3 | 
    !nADoutLE1.D = iobs/Load1
 	# !iobs/Clear1 & !nADoutLE1;
@@ -1781,62 +1415,79 @@ GLOBALS | 1 | 2 | FCLK
 
 MACROCELL | 3 | 1 | nAoutOE_OBUF
 ATTRIBUTES | 8815366 | 0
-OUTPUTMC | 8 | 5 | 1 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 3 | 5 | 7 | 3 | 4 | 3 | 1
-INPUTS | 4 | nBR_IOB  | cnt/INITS_FSM_FFd1  | cnt/INITS_FSM_FFd2  | nAoutOE
-INPUTMC | 4 | 7 | 14 | 7 | 16 | 7 | 10 | 3 | 1
-EQ | 5 | 
+OUTPUTMC | 13 | 5 | 1 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 15 | 5 | 12 | 6 | 17 | 5 | 17 | 6 | 16 | 3 | 1 | 3 | 4 | 6 | 0 | 3 | 0
+INPUTS | 6 | nBR_IOB  | cnt/INITS_FSM_FFd1  | cnt/INITS_FSM_FFd2  | nAoutOE  | nAS_FSB  | fsb/ASrf
+INPUTMC | 5 | 7 | 14 | 2 | 6 | 2 | 13 | 3 | 1 | 7 | 3
+INPUTP | 1 | 54
+EXPORTS | 1 | 3 | 0
+EQ | 6 | 
    !nAoutOE.D = !nBR_IOB & cnt/INITS_FSM_FFd1 & 
 	cnt/INITS_FSM_FFd2
 	# cnt/INITS_FSM_FFd1 & !cnt/INITS_FSM_FFd2 & 
 	!nAoutOE;
    nAoutOE.CLK = FCLK;	// GCK
+    nAoutOE_OBUF.EXP  =  nAS_FSB & !fsb/ASrf
 GLOBALS | 1 | 2 | FCLK
 
 MACROCELL | 3 | 5 | nDinOE_OBUF
 ATTRIBUTES | 264962 | 0
-INPUTS | 6 | A_FSB<23>  | nWE_FSB  | nAS_FSB  | A_FSB<22>  | A_FSB<20>  | A_FSB<21>
-INPUTP | 6 | 36 | 47 | 54 | 30 | 28 | 29
-EQ | 3 | 
+INPUTS | 7 | A_FSB<20>  | nWE_FSB  | nAS_FSB  | A_FSB<23>  | A_FSB<21>  | A_FSB<22>  | cs/nOverlay
+INPUTMC | 1 | 0 | 10
+INPUTP | 6 | 28 | 47 | 54 | 36 | 29 | 30
+EQ | 4 | 
    !nDinOE = A_FSB<23> & nWE_FSB & !nAS_FSB
-	# A_FSB<22> & A_FSB<21> & nWE_FSB & !nAS_FSB
-	# A_FSB<22> & A_FSB<20> & nWE_FSB & !nAS_FSB;
+	# A_FSB<21> & nWE_FSB & !nAS_FSB
+	# A_FSB<20> & nWE_FSB & !nAS_FSB
+	# !A_FSB<22> & cs/nOverlay & nWE_FSB & !nAS_FSB;
+
+MACROCELL | 3 | 4 | nDoutOE_OBUF
+ATTRIBUTES | 264962 | 0
+INPUTS | 5 | iobm/DoutOE  | nAoutOE  | iobm/IORDREQr  | iobm/IOS0  | iobm/IOWRREQr
+INPUTMC | 5 | 6 | 15 | 3 | 1 | 6 | 2 | 6 | 16 | 6 | 0
+EQ | 3 | 
+   !nDoutOE = iobm/DoutOE & !nAoutOE
+	# !iobm/IORDREQr & iobm/IOS0 & !iobm/IOWRREQr & 
+	!nAoutOE;
 
 MACROCELL | 7 | 5 | nRAMLWE_OBUF
 ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 7 | 4
-INPUTS | 7 | nWE_FSB  | nLDS_FSB  | nAS_FSB  | ram/RAMEN  | A_FSB<23>  | A_FSB<22>  | cs/nOverlay
-INPUTMC | 2 | 7 | 2 | 6 | 2
-INPUTP | 5 | 47 | 49 | 54 | 36 | 30
-EXPORTS | 1 | 7 | 4
-EQ | 3 | 
-   !nRAMLWE = !nWE_FSB & !nLDS_FSB & !nAS_FSB & ram/RAMEN;
-    nRAMLWE_OBUF.EXP  =  !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
-	ram/RAMEN
+INPUTS | 4 | ram/RAMEN  | nWE_FSB  | nLDS_FSB  | nAS_FSB
+INPUTMC | 1 | 7 | 17
+INPUTP | 3 | 47 | 49 | 54
+EQ | 1 | 
+   !nRAMLWE = ram/RAMEN & !nWE_FSB & !nLDS_FSB & !nAS_FSB;
 
 MACROCELL | 7 | 7 | nRAMUWE_OBUF
 ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 7 | 6
-INPUTS | 9 | nWE_FSB  | nUDS_FSB  | nAS_FSB  | ram/RAMEN  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd3  | ram/RS_FSM_FFd1  | ram/RefUrg  | fsb/ASrf
-INPUTMC | 6 | 7 | 2 | 7 | 6 | 7 | 8 | 7 | 9 | 0 | 0 | 2 | 4
+INPUTS | 4 | ram/RAMEN  | nWE_FSB  | nUDS_FSB  | nAS_FSB
+INPUTMC | 1 | 7 | 17
 INPUTP | 3 | 47 | 56 | 54
-EXPORTS | 1 | 7 | 6
-EQ | 4 | 
-   !nRAMUWE = !nWE_FSB & !nUDS_FSB & !nAS_FSB & ram/RAMEN;
-    nRAMUWE_OBUF.EXP  =  ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3
-	# nAS_FSB & ram/RS_FSM_FFd2 & ram/RS_FSM_FFd1 & 
-	ram/RefUrg & !fsb/ASrf
+EQ | 1 | 
+   !nRAMUWE = ram/RAMEN & !nWE_FSB & !nUDS_FSB & !nAS_FSB;
+
+MACROCELL | 7 | 4 | nRAS_OBUF
+ATTRIBUTES | 8684294 | 0
+INPUTS | 2 | ram/RS_FSM_FFd3  | ram/RS_FSM_FFd6
+INPUTMC | 2 | 7 | 0 | 7 | 13
+EQ | 2 | 
+   nRAS.D = !ram/RS_FSM_FFd3 & !ram/RS_FSM_FFd6;
+   nRAS.CLK = FCLK;	// GCK
+GLOBALS | 1 | 2 | FCLK
 
 MACROCELL | 4 | 1 | nROMCS_OBUF
 ATTRIBUTES | 264962 | 0
-OUTPUTMC | 1 | 4 | 0
-INPUTS | 7 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay  | nLDS_FSB  | nADoutLE1
-INPUTMC | 2 | 6 | 2 | 5 | 13
-INPUTP | 5 | 36 | 30 | 29 | 28 | 49
-EXPORTS | 1 | 4 | 0
-EQ | 3 | 
+INPUTS | 5 | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay
+INPUTMC | 1 | 0 | 10
+INPUTP | 4 | 36 | 30 | 29 | 28
+EQ | 2 | 
    !nROMCS = !A_FSB<23> & A_FSB<22> & !A_FSB<21> & !A_FSB<20>
 	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & !cs/nOverlay;
-    nROMCS_OBUF.EXP  =  !nLDS_FSB & nADoutLE1
+
+MACROCELL | 6 | 13 | C20MEN_OBUF$BUF0
+ATTRIBUTES | 264962 | 0
+INPUTS | 0
+EQ | 1 | 
+   C20MEN = Gnd;
 
 MACROCELL | 6 | 11 | C25MEN_OBUF
 ATTRIBUTES | 264962 | 0
@@ -1844,308 +1495,66 @@ INPUTS | 0
 EQ | 1 | 
    C25MEN = Vcc;
 
-MACROCELL | 6 | 13 | C25MEN_OBUF$BUF0
-ATTRIBUTES | 264962 | 0
-INPUTS | 0
-EQ | 1 | 
-   C20MEN = Vcc;
-
-MACROCELL | 2 | 7 | $OpTx$$OpTx$FX_DC$47_INV$153
-ATTRIBUTES | 133888 | 0
-OUTPUTMC | 5 | 2 | 0 | 2 | 1 | 2 | 2 | 2 | 17 | 2 | 8
-INPUTS | 14 | nAS_FSB  | fsb/ASrf  | A_FSB<22>  | A_FSB<20>  | iobs/DTACKEN  | fsb/Ready1r  | nDTACK_FSB  | A_FSB<23>  | cs/nOverlay  | fsb/Ready0r  | ram/RAMReady  | A_FSB<21>  | IOACT  | iobs/IODTACKr
-INPUTMC | 9 | 2 | 4 | 4 | 9 | 2 | 15 | 2 | 8 | 6 | 2 | 2 | 10 | 7 | 3 | 5 | 17 | 0 | 4
-INPUTP | 5 | 54 | 30 | 28 | 36 | 29
-EXPORTS | 1 | 2 | 8
-EQ | 9 | 
-   $OpTx$$OpTx$FX_DC$47_INV$153 = nAS_FSB & !fsb/ASrf;
-    $OpTx$$OpTx$FX_DC$47_INV$153.EXP  =  A_FSB<22> & A_FSB<20> & !iobs/DTACKEN & 
-	!fsb/Ready1r & nDTACK_FSB
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!fsb/Ready0r & nDTACK_FSB & !ram/RAMReady
-	# A_FSB<22> & A_FSB<21> & !fsb/Ready1r & 
-	nDTACK_FSB & IOACT & !iobs/IODTACKr
-	# A_FSB<22> & !cs/nOverlay & !fsb/Ready1r & 
-	nDTACK_FSB & IOACT & !iobs/IODTACKr
-
-MACROCELL | 2 | 1 | EXP10_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 2 | 0
-INPUTS | 26 | A_FSB<14>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | cs/nOverlay  | iobs/DTACKEN  | fsb/Ready1r  | fsb/VPA  | nADoutLE1  | $OpTx$$OpTx$FX_DC$47_INV$153  | A_FSB<13>  | IOACT  | iobs/IODTACKr  | A_FSB<9>  | A_FSB<8>  | A_FSB<15>  | A_FSB<12>  | A_FSB<11>  | A_FSB<10>  | A_FSB<23>  | A_FSB<22>  | iobs/IOACTr.EXP
-INPUTMC | 9 | 6 | 2 | 4 | 9 | 2 | 15 | 2 | 0 | 5 | 13 | 2 | 7 | 5 | 17 | 0 | 4 | 2 | 2
-INPUTP | 17 | 19 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 18 | 12 | 11 | 21 | 17 | 15 | 13 | 36 | 30
-EXPORTS | 1 | 2 | 0
-IMPORTS | 1 | 2 | 2
-EQ | 32 | 
-       EXP10_.EXP  =  A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & fsb/VPA & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & fsb/VPA & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & fsb/VPA & IOACT & !iobs/IODTACKr & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<13> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!fsb/Ready1r & fsb/VPA & IOACT & !iobs/IODTACKr & !nADoutLE1 & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & fsb/Ready1r & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-;Imported pterms FB3_3
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & !IOACT & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & iobs/IODTACKr & 
-	!$OpTx$$OpTx$FX_DC$47_INV$153
-
-MACROCELL | 2 | 9 | EXP11_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 2 | 8
-INPUTS | 12 | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | iobs/DTACKEN  | fsb/Ready1r  | nDTACK_FSB  | IOACT  | iobs/IODTACKr  | A_FSB<22>  | A_FSB<21>  | cs/nOverlay  | fsb/Ready0r.EXP
-INPUTMC | 8 | 2 | 4 | 4 | 9 | 2 | 15 | 2 | 8 | 5 | 17 | 0 | 4 | 6 | 2 | 2 | 10
-INPUTP | 4 | 54 | 36 | 30 | 29
-EXPORTS | 1 | 2 | 8
-IMPORTS | 1 | 2 | 10
-EQ | 22 | 
-       EXP11_.EXP  =  nAS_FSB & !fsb/ASrf
-	# A_FSB<23> & !iobs/DTACKEN & !fsb/Ready1r & 
-	nDTACK_FSB
-	# A_FSB<23> & !fsb/Ready1r & nDTACK_FSB & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<22> & A_FSB<21> & !iobs/DTACKEN & 
-	!fsb/Ready1r & nDTACK_FSB
-	# A_FSB<22> & !cs/nOverlay & !iobs/DTACKEN & 
-	!fsb/Ready1r & nDTACK_FSB
-;Imported pterms FB3_11
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & fsb/Ready1r
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & !IOACT
-	# A_FSB<9> & A_FSB<8> & A_FSB<15> & A_FSB<14> & 
-	A_FSB<13> & A_FSB<12> & A_FSB<11> & A_FSB<10> & A_FSB<23> & 
-	A_FSB<22> & A_FSB<21> & A_FSB<20> & A_FSB<19> & A_FSB<18> & 
-	A_FSB<17> & A_FSB<16> & iobs/DTACKEN & iobs/IODTACKr
-
-MACROCELL | 2 | 13 | EXP12_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 2 | 12
-INPUTS | 18 | A_FSB<22>  | A_FSB<21>  | iobs/Sent  | iobs/TS_FSM_FFd2  | iobs/TS_FSM_FFd1  | fsb/ASrf  | nADoutLE1  | A_FSB<14>  | A_FSB<23>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | cs/nOverlay  | nAS_FSB  | A_FSB<13>
-INPUTMC | 6 | 2 | 12 | 4 | 6 | 0 | 13 | 2 | 4 | 5 | 13 | 6 | 2
-INPUTP | 12 | 30 | 29 | 19 | 36 | 28 | 26 | 24 | 23 | 22 | 47 | 54 | 18
-EXPORTS | 1 | 2 | 12
-EQ | 14 | 
-       EXP12_.EXP  =  A_FSB<22> & A_FSB<21> & !iobs/Sent & 
-	!iobs/TS_FSM_FFd2 & !iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & nADoutLE1
-	# A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & !nAS_FSB & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & fsb/ASrf & nADoutLE1
-
-MACROCELL | 2 | 14 | EXP13_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 2 | 15
-INPUTS | 15 | A_FSB<22>  | A_FSB<21>  | iobs/DTACKEN  | fsb/Ready1r  | IOACT  | iobs/IODTACKr  | A_FSB<20>  | cs/nOverlay  | A_FSB<14>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | nADoutLE1
-INPUTMC | 6 | 4 | 9 | 2 | 15 | 5 | 17 | 0 | 4 | 6 | 2 | 5 | 13
-INPUTP | 9 | 30 | 29 | 28 | 19 | 26 | 24 | 23 | 22 | 47
-EXPORTS | 1 | 2 | 15
-EQ | 11 | 
-       EXP13_.EXP  =  A_FSB<22> & A_FSB<21> & !iobs/DTACKEN & 
-	!fsb/Ready1r
-	# A_FSB<22> & A_FSB<21> & !fsb/Ready1r & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<22> & A_FSB<20> & !fsb/Ready1r & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<22> & !cs/nOverlay & !fsb/Ready1r & IOACT & 
-	!iobs/IODTACKr
-	# A_FSB<14> & A_FSB<21> & A_FSB<20> & A_FSB<19> & 
-	A_FSB<18> & A_FSB<17> & A_FSB<16> & !nWE_FSB & cs/nOverlay & 
-	!iobs/DTACKEN & !fsb/Ready1r & !nADoutLE1
-
-MACROCELL | 4 | 3 | EXP14_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 4 | 2
-INPUTS | 18 | A_FSB<14>  | A_FSB<23>  | A_FSB<22>  | A_FSB<21>  | A_FSB<20>  | A_FSB<19>  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | nWE_FSB  | iobs/Sent  | cs/nOverlay  | iobs/IORW1  | iobs/TS_FSM_FFd1  | fsb/ASrf  | nADoutLE1  | A_FSB<13>  | iobs/TS_FSM_FFd2
-INPUTMC | 7 | 2 | 12 | 6 | 2 | 4 | 2 | 0 | 13 | 2 | 4 | 5 | 13 | 4 | 6
-INPUTP | 11 | 19 | 36 | 30 | 29 | 28 | 26 | 24 | 23 | 22 | 47 | 18
-EXPORTS | 1 | 4 | 2
-EQ | 12 | 
-       EXP14_.EXP  =  A_FSB<14> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & 
-	iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & 
-	iobs/TS_FSM_FFd2 & fsb/ASrf & nADoutLE1
-	# A_FSB<13> & !A_FSB<23> & !A_FSB<22> & A_FSB<21> & 
-	A_FSB<20> & A_FSB<19> & A_FSB<18> & A_FSB<17> & A_FSB<16> & 
-	!nWE_FSB & !iobs/Sent & cs/nOverlay & iobs/IORW1 & 
-	iobs/TS_FSM_FFd1 & fsb/ASrf & nADoutLE1
-
-MACROCELL | 4 | 7 | EXP15_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 4 | 6
-INPUTS | 12 | A_FSB<23>  | A_FSB<22>  | A_FSB<18>  | iobs/TS_FSM_FFd2  | nADoutLE1  | A_FSB<17>  | nWE_FSB  | A_FSB<14>  | A_FSB<13>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay
-INPUTMC | 3 | 4 | 6 | 5 | 13 | 6 | 2
-INPUTP | 9 | 36 | 30 | 24 | 23 | 47 | 19 | 18 | 29 | 28
-EXPORTS | 1 | 4 | 6
-EQ | 10 | 
-       EXP15_.EXP  =  !A_FSB<23> & !A_FSB<22> & !A_FSB<18> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<17> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & nWE_FSB & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<14> & !A_FSB<13> & !A_FSB<23> & !A_FSB<22> & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	!iobs/TS_FSM_FFd2 & nADoutLE1
-
-MACROCELL | 4 | 15 | EXP16_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 4 | 16
-INPUTS | 10 | A_FSB<23>  | A_FSB<22>  | A_FSB<19>  | nADoutLE1  | A_FSB<18>  | A_FSB<17>  | A_FSB<16>  | A_FSB<21>  | A_FSB<20>  | cs/nOverlay
-INPUTMC | 2 | 5 | 13 | 6 | 2
-INPUTP | 8 | 36 | 30 | 26 | 24 | 23 | 22 | 29 | 28
-EXPORTS | 1 | 4 | 16
-EQ | 6 | 
-       EXP16_.EXP  =  !A_FSB<23> & !A_FSB<22> & !A_FSB<19> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<18> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<17> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !A_FSB<16> & nADoutLE1
-	# !A_FSB<23> & !A_FSB<21> & !A_FSB<20> & cs/nOverlay & 
-	nADoutLE1
-
-MACROCELL | 4 | 17 | EXP17_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 4 | 16
-INPUTS | 9 | iobs/Sent  | nADoutLE1  | IORW0  | iobs/IORW1  | nAS_FSB  | fsb/ASrf  | A_FSB<23>  | A_FSB<22>  | IOL0.EXP
-INPUTMC | 6 | 2 | 12 | 5 | 13 | 4 | 16 | 4 | 2 | 2 | 4 | 4 | 0
-INPUTP | 3 | 54 | 36 | 30
-EXPORTS | 1 | 4 | 16
-IMPORTS | 1 | 4 | 0
-EQ | 9 | 
-       EXP17_.EXP  =  iobs/Sent & nADoutLE1
-	# IORW0 & iobs/IORW1 & !nADoutLE1
-	# !IORW0 & !iobs/IORW1 & !nADoutLE1
-	# nAS_FSB & !fsb/ASrf & nADoutLE1
-	# !A_FSB<23> & !A_FSB<22> & !IORW0 & nADoutLE1
-;Imported pterms FB5_1
-	# iobs/TS_FSM_FFd2
-	# iobs/TS_FSM_FFd1
-	# nWE_FSB & IORW0 & nADoutLE1
-
-MACROCELL | 7 | 0 | EXP18_
-ATTRIBUTES | 2048 | 0
-OUTPUTMC | 1 | 7 | 17
-INPUTS | 10 | A_FSB<23>  | ram/RS_FSM_FFd2  | ram/RS_FSM_FFd3  | ram/RefUrg  | ram/RefReq  | A_FSB<22>  | nAS_FSB  | fsb/ASrf  | cs/nOverlay  | ram/RAMEN
-INPUTMC | 7 | 7 | 6 | 7 | 8 | 0 | 0 | 0 | 2 | 2 | 4 | 6 | 2 | 7 | 2
-INPUTP | 3 | 36 | 30 | 54
-EXPORTS | 1 | 7 | 17
-EQ | 10 | 
-       EXP18_.EXP  =  A_FSB<23> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !ram/RefReq
-	# A_FSB<22> & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !ram/RefReq
-	# nAS_FSB & !ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & 
-	!ram/RefUrg & !fsb/ASrf
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & !nAS_FSB & 
-	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & !ram/RAMEN
-	# !A_FSB<23> & !A_FSB<22> & cs/nOverlay & 
-	!ram/RS_FSM_FFd2 & !ram/RS_FSM_FFd3 & !ram/RAMEN & fsb/ASrf
-
-PIN | A_FSB<9> | 64 | 0 | N/A | 12 | 4 | 6 | 7 | 2 | 2 | 2 | 1 | 2 | 10
-PIN | A_FSB<8> | 64 | 0 | N/A | 11 | 4 | 6 | 4 | 2 | 2 | 2 | 1 | 2 | 10
-PIN | A_FSB<15> | 64 | 0 | N/A | 21 | 4 | 4 | 10 | 2 | 2 | 2 | 1 | 2 | 10
-PIN | A_FSB<14> | 64 | 0 | N/A | 19 | 15 | 2 | 10 | 4 | 16 | 2 | 14 | 4 | 8 | 4 | 2 | 2 | 8 | 4 | 3 | 2 | 6 | 4 | 7 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 13 | 2 | 16 | 4 | 13
-PIN | A_FSB<13> | 64 | 0 | N/A | 18 | 14 | 2 | 10 | 4 | 16 | 2 | 13 | 4 | 10 | 4 | 2 | 2 | 8 | 4 | 3 | 2 | 6 | 4 | 7 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 16 | 4 | 13
-PIN | A_FSB<12> | 64 | 0 | N/A | 17 | 4 | 4 | 13 | 2 | 2 | 2 | 1 | 2 | 10
-PIN | A_FSB<11> | 64 | 0 | N/A | 15 | 4 | 6 | 1 | 2 | 2 | 2 | 1 | 2 | 10
-PIN | A_FSB<10> | 64 | 0 | N/A | 13 | 4 | 6 | 5 | 2 | 2 | 2 | 1 | 2 | 10
-PIN | A_FSB<23> | 64 | 0 | N/A | 36 | 38 | 2 | 12 | 4 | 16 | 4 | 9 | 2 | 10 | 2 | 15 | 2 | 0 | 4 | 2 | 2 | 7 | 7 | 16 | 7 | 6 | 7 | 9 | 7 | 8 | 4 | 6 | 7 | 2 | 2 | 6 | 4 | 12 | 2 | 11 | 7 | 3 | 6 | 7 | 7 | 0 | 3 | 5 | 4 | 1 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 9 | 2 | 13 | 2 | 17 | 4 | 3 | 4 | 5 | 4 | 7 | 4 | 8 | 4 | 11 | 4 | 13 | 4 | 15 | 4 | 17 | 7 | 4 | 7 | 5
-PIN | A_FSB<22> | 64 | 0 | N/A | 30 | 39 | 2 | 12 | 4 | 16 | 4 | 9 | 2 | 10 | 2 | 15 | 2 | 0 | 4 | 2 | 2 | 8 | 7 | 16 | 7 | 6 | 7 | 9 | 7 | 8 | 4 | 6 | 7 | 2 | 2 | 6 | 4 | 12 | 2 | 11 | 7 | 3 | 6 | 7 | 7 | 0 | 3 | 5 | 4 | 1 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 7 | 2 | 9 | 2 | 13 | 2 | 14 | 2 | 17 | 4 | 3 | 4 | 5 | 4 | 7 | 4 | 11 | 4 | 13 | 4 | 15 | 4 | 17 | 7 | 4 | 7 | 5
-PIN | A_FSB<21> | 64 | 0 | N/A | 29 | 26 | 2 | 10 | 4 | 16 | 4 | 8 | 2 | 14 | 2 | 0 | 4 | 2 | 2 | 8 | 4 | 5 | 2 | 6 | 4 | 11 | 2 | 11 | 6 | 8 | 3 | 5 | 4 | 1 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 7 | 2 | 9 | 2 | 13 | 2 | 16 | 2 | 17 | 4 | 3 | 4 | 7 | 4 | 13 | 4 | 15
-PIN | A_FSB<20> | 64 | 0 | N/A | 28 | 27 | 2 | 12 | 4 | 16 | 4 | 8 | 2 | 15 | 2 | 0 | 4 | 2 | 2 | 8 | 4 | 5 | 2 | 6 | 4 | 11 | 2 | 11 | 6 | 10 | 3 | 5 | 4 | 1 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 7 | 2 | 10 | 2 | 13 | 2 | 14 | 2 | 16 | 2 | 17 | 4 | 3 | 4 | 7 | 4 | 13 | 4 | 15
-PIN | A_FSB<19> | 64 | 0 | N/A | 26 | 16 | 2 | 10 | 4 | 15 | 2 | 14 | 7 | 1 | 4 | 2 | 2 | 8 | 4 | 5 | 2 | 6 | 4 | 11 | 6 | 10 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 13 | 2 | 16 | 4 | 3
-PIN | A_FSB<18> | 64 | 0 | N/A | 24 | 15 | 2 | 10 | 4 | 15 | 2 | 14 | 6 | 7 | 4 | 2 | 2 | 8 | 4 | 3 | 2 | 6 | 4 | 7 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 13 | 2 | 16 | 4 | 13
-PIN | A_FSB<17> | 64 | 0 | N/A | 23 | 15 | 2 | 10 | 4 | 15 | 2 | 14 | 6 | 4 | 4 | 2 | 2 | 8 | 4 | 3 | 2 | 6 | 4 | 11 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 13 | 2 | 16 | 4 | 7
-PIN | A_FSB<16> | 64 | 0 | N/A | 22 | 15 | 2 | 10 | 4 | 15 | 2 | 14 | 4 | 14 | 4 | 2 | 2 | 8 | 4 | 5 | 2 | 6 | 4 | 11 | 2 | 1 | 2 | 2 | 2 | 5 | 2 | 13 | 2 | 16 | 4 | 3
-PIN | C16M | 4096 | 0 | N/A | 33 | 20 | 5 | 1 | 5 | 3 | 0 | 16 | 5 | 9 | 5 | 6 | 5 | 5 | 5 | 15 | 5 | 4 | 5 | 12 | 5 | 17 | 0 | 6 | 5 | 0 | 5 | 2 | 5 | 7 | 5 | 11 | 5 | 8 | 5 | 10 | 1 | 17 | 1 | 16 | 5 | 16
-PIN | nWE_FSB | 64 | 0 | N/A | 47 | 17 | 2 | 5 | 4 | 16 | 2 | 14 | 7 | 7 | 4 | 2 | 2 | 8 | 4 | 3 | 2 | 6 | 4 | 7 | 4 | 5 | 2 | 16 | 3 | 5 | 7 | 5 | 2 | 1 | 2 | 13 | 4 | 0 | 4 | 13
-PIN | FCLK | 16384 | 0 | N/A | 42 | 66 | 2 | 12 | 3 | 17 | 6 | 0 | 3 | 11 | 3 | 15 | 3 | 16 | 6 | 2 | 6 | 17 | 6 | 16 | 6 | 15 | 6 | 14 | 6 | 12 | 7 | 12 | 7 | 13 | 7 | 15 | 6 | 9 | 6 | 6 | 6 | 3 | 4 | 16 | 3 | 13 | 3 | 9 | 4 | 9 | 0 | 12 | 4 | 0 | 0 | 17 | 3 | 14 | 3 | 12 | 2 | 10 | 2 | 15 | 2 | 0 | 0 | 15 | 4 | 2 | 0 | 14 | 2 | 8 | 7 | 14 | 7 | 17 | 7 | 6 | 7 | 9 | 7 | 8 | 0 | 0 | 4 | 6 | 7 | 2 | 0 | 13 | 7 | 16 | 7 | 10 | 2 | 2 | 2 | 6 | 2 | 17 | 0 | 2 | 0 | 1 | 0 | 11 | 0 | 10 | 2 | 5 | 4 | 12 | 3 | 8 | 2 | 11 | 2 | 3 | 0 | 4 | 3 | 6 | 7 | 3 | 0 | 3 | 3 | 3 | 5 | 13 | 3 | 1 | 2 | 4 | 4 | 4
-PIN | nAS_FSB | 64 | 0 | N/A | 54 | 30 | 2 | 12 | 6 | 2 | 2 | 13 | 4 | 9 | 2 | 10 | 2 | 15 | 4 | 2 | 2 | 7 | 7 | 17 | 7 | 6 | 7 | 9 | 7 | 8 | 4 | 6 | 7 | 2 | 2 | 6 | 2 | 17 | 4 | 12 | 2 | 11 | 2 | 4 | 7 | 3 | 4 | 5 | 2 | 16 | 3 | 10 | 7 | 1 | 3 | 5 | 7 | 5 | 7 | 7 | 2 | 9 | 4 | 17 | 7 | 0
-PIN | nLDS_FSB | 64 | 0 | N/A | 49 | 3 | 7 | 5 | 0 | 15 | 4 | 1
-PIN | nUDS_FSB | 64 | 0 | N/A | 56 | 3 | 0 | 17 | 0 | 14 | 7 | 7
-PIN | C8M | 8256 | 0 | N/A | 35 | 7 | 5 | 3 | 5 | 9 | 5 | 17 | 0 | 7 | 0 | 9 | 0 | 8 | 0 | 5
-PIN | E | 64 | 0 | N/A | 37 | 2 | 0 | 7 | 0 | 11
-PIN | nIPL2 | 64 | 0 | N/A | 146 | 1 | 0 | 10
-PIN | nBERR_IOB | 64 | 0 | N/A | 123 | 2 | 0 | 9 | 7 | 11
-PIN | nDTACK_IOB | 64 | 0 | N/A | 127 | 2 | 0 | 8 | 0 | 4
-PIN | nVPA_IOB | 64 | 0 | N/A | 125 | 1 | 1 | 16
-PIN | A_FSB<1> | 64 | 0 | N/A | 149 | 1 | 6 | 5
-PIN | A_FSB<2> | 64 | 0 | N/A | 153 | 1 | 6 | 1
-PIN | A_FSB<3> | 64 | 0 | N/A | 155 | 1 | 4 | 14
-PIN | A_FSB<4> | 64 | 0 | N/A | 157 | 1 | 4 | 10
-PIN | A_FSB<5> | 64 | 0 | N/A | 4 | 1 | 4 | 8
-PIN | A_FSB<6> | 64 | 0 | N/A | 6 | 1 | 4 | 10
-PIN | A_FSB<7> | 64 | 0 | N/A | 8 | 1 | 4 | 14
+PIN | A_FSB<23> | 64 | 0 | N/A | 36 | 13 | 3 | 17 | 3 | 13 | 3 | 14 | 3 | 10 | 2 | 9 | 3 | 12 | 4 | 1 | 0 | 0 | 0 | 17 | 3 | 0 | 3 | 9 | 2 | 8 | 3 | 5
+PIN | A_FSB<22> | 64 | 0 | N/A | 30 | 14 | 3 | 17 | 3 | 13 | 3 | 14 | 3 | 10 | 2 | 9 | 3 | 12 | 4 | 1 | 0 | 0 | 2 | 7 | 3 | 0 | 3 | 9 | 2 | 8 | 3 | 5 | 0 | 17
+PIN | A_FSB<21> | 64 | 0 | N/A | 29 | 12 | 2 | 9 | 3 | 10 | 3 | 14 | 4 | 1 | 0 | 0 | 3 | 12 | 3 | 0 | 3 | 9 | 2 | 8 | 3 | 5 | 0 | 17 | 3 | 17
+PIN | A_FSB<20> | 64 | 0 | N/A | 28 | 12 | 2 | 9 | 3 | 10 | 3 | 14 | 4 | 1 | 0 | 0 | 3 | 12 | 3 | 0 | 3 | 9 | 2 | 8 | 3 | 5 | 0 | 17 | 3 | 17
+PIN | A_FSB<19> | 64 | 0 | N/A | 26 | 4 | 3 | 10 | 7 | 1 | 4 | 10 | 2 | 9
+PIN | A_FSB<18> | 64 | 0 | N/A | 24 | 3 | 3 | 10 | 6 | 7 | 2 | 9
+PIN | C8M | 8256 | 0 | N/A | 35 | 10 | 5 | 9 | 5 | 1 | 1 | 16 | 0 | 15 | 0 | 12 | 0 | 11 | 0 | 14 | 0 | 13 | 0 | 0 | 1 | 14
+PIN | C16M | 4096 | 0 | N/A | 33 | 18 | 5 | 15 | 6 | 14 | 5 | 9 | 5 | 6 | 5 | 5 | 5 | 12 | 6 | 17 | 5 | 7 | 6 | 9 | 6 | 2 | 5 | 17 | 6 | 15 | 6 | 16 | 6 | 0 | 5 | 11 | 5 | 8 | 5 | 10 | 5 | 16
+PIN | FCLK | 16384 | 0 | N/A | 42 | 65 | 2 | 17 | 3 | 17 | 6 | 3 | 6 | 12 | 1 | 17 | 2 | 15 | 2 | 14 | 4 | 17 | 4 | 16 | 2 | 12 | 2 | 11 | 2 | 10 | 4 | 12 | 4 | 9 | 4 | 7 | 4 | 6 | 4 | 3 | 4 | 2 | 7 | 17 | 4 | 15 | 2 | 9 | 0 | 10 | 3 | 13 | 3 | 14 | 7 | 12 | 4 | 0 | 7 | 10 | 7 | 9 | 7 | 8 | 7 | 11 | 3 | 10 | 7 | 14 | 3 | 8 | 3 | 15 | 2 | 6 | 2 | 13 | 7 | 15 | 5 | 4 | 3 | 12 | 0 | 17 | 0 | 16 | 7 | 0 | 7 | 13 | 3 | 16 | 3 | 11 | 2 | 7 | 1 | 15 | 3 | 3 | 7 | 2 | 2 | 3 | 3 | 6 | 7 | 6 | 6 | 6 | 3 | 9 | 2 | 5 | 3 | 2 | 3 | 0 | 7 | 16 | 2 | 4 | 2 | 8 | 5 | 13 | 3 | 1 | 7 | 4 | 7 | 3 | 4 | 4
+PIN | nAS_FSB | 64 | 0 | N/A | 54 | 26 | 3 | 17 | 7 | 17 | 0 | 10 | 3 | 13 | 7 | 5 | 7 | 12 | 7 | 11 | 3 | 10 | 3 | 14 | 7 | 15 | 3 | 12 | 0 | 0 | 0 | 15 | 7 | 13 | 3 | 15 | 3 | 1 | 3 | 6 | 3 | 9 | 7 | 3 | 7 | 7 | 7 | 16 | 4 | 5 | 2 | 16 | 2 | 8 | 3 | 5 | 7 | 0
+PIN | nWE_FSB | 64 | 0 | N/A | 47 | 12 | 3 | 0 | 3 | 13 | 3 | 14 | 3 | 12 | 3 | 16 | 3 | 11 | 4 | 5 | 2 | 16 | 2 | 8 | 3 | 5 | 7 | 5 | 7 | 7
+PIN | nBERR_IOB | 64 | 0 | N/A | 123 | 1 | 1 | 16
+PIN | nDTACK_IOB | 64 | 0 | N/A | 127 | 1 | 0 | 15
+PIN | nLDS_FSB | 64 | 0 | N/A | 49 | 3 | 7 | 10 | 0 | 17 | 7 | 5
+PIN | nUDS_FSB | 64 | 0 | N/A | 56 | 3 | 7 | 9 | 0 | 16 | 7 | 7
+PIN | E | 64 | 0 | N/A | 37 | 6 | 0 | 12 | 0 | 11 | 0 | 14 | 0 | 13 | 2 | 7 | 0 | 0
+PIN | nIPL2 | 64 | 0 | N/A | 146 | 1 | 1 | 15
+PIN | nVPA_IOB | 64 | 0 | N/A | 125 | 1 | 1 | 14
+PIN | A_FSB<10> | 64 | 0 | N/A | 13 | 1 | 6 | 1
+PIN | A_FSB<11> | 64 | 0 | N/A | 15 | 1 | 4 | 8
+PIN | A_FSB<12> | 64 | 0 | N/A | 17 | 1 | 4 | 11
+PIN | A_FSB<13> | 64 | 0 | N/A | 18 | 1 | 4 | 14
+PIN | A_FSB<14> | 64 | 0 | N/A | 19 | 1 | 6 | 4
+PIN | A_FSB<15> | 64 | 0 | N/A | 21 | 1 | 6 | 10
+PIN | A_FSB<16> | 64 | 0 | N/A | 22 | 1 | 4 | 13
+PIN | A_FSB<17> | 64 | 0 | N/A | 23 | 1 | 6 | 8
+PIN | A_FSB<9> | 64 | 0 | N/A | 12 | 1 | 6 | 5
 PIN | nVMA_IOB | 536871040 | 0 | N/A | 118
 PIN | nAS_IOB | 536871040 | 0 | N/A | 135
 PIN | nLDS_IOB | 536871040 | 0 | N/A | 130
 PIN | nUDS_IOB | 536871040 | 0 | N/A | 134
-PIN | nDTACK_FSB | 536871040 | 0 | N/A | 44
+PIN | nBERR_FSB | 536871040 | 0 | N/A | 112
+PIN | nVPA_FSB | 536871040 | 0 | N/A | 147
 PIN | nBR_IOB | 536871040 | 0 | N/A | 116
-PIN | RA<0> | 536871040 | 0 | N/A | 86
+PIN | nOE | 536871040 | 0 | N/A | 60
+PIN | nROMWE | 536871040 | 0 | N/A | 57
+PIN | nADoutLE0 | 536871040 | 0 | N/A | 139
+PIN | nCAS | 536871040 | 0 | N/A | 59
+PIN | nDTACK_FSB | 536871040 | 0 | N/A | 44
+PIN | nDinLE | 536871040 | 0 | N/A | 140
 PIN | RA<1> | 536871040 | 0 | N/A | 79
-PIN | RA<2> | 536871040 | 0 | N/A | 69
-PIN | RA<3> | 536871040 | 0 | N/A | 64
 PIN | RA<4> | 536871040 | 0 | N/A | 63
 PIN | RA<5> | 536871040 | 0 | N/A | 68
 PIN | RA<6> | 536871040 | 0 | N/A | 72
 PIN | RA<7> | 536871040 | 0 | N/A | 82
-PIN | RA<8> | 536871040 | 0 | N/A | 88
 PIN | RA<9> | 536871040 | 0 | N/A | 92
-PIN | nBERR_FSB | 536871040 | 0 | N/A | 112
-PIN | nDoutOE | 536871040 | 0 | N/A | 143
-PIN | nOE | 536871040 | 0 | N/A | 60
-PIN | nROMWE | 536871040 | 0 | N/A | 57
-PIN | nVPA_FSB | 536871040 | 0 | N/A | 147
-PIN | nADoutLE0 | 536871040 | 0 | N/A | 139
-PIN | nCAS | 536871040 | 0 | N/A | 59
-PIN | nDinLE | 536871040 | 0 | N/A | 140
-PIN | nRAS | 536871040 | 0 | N/A | 103
-PIN | RA<11> | 536871040 | 0 | N/A | 102
+PIN | RA<2> | 536871040 | 0 | N/A | 69
 PIN | RA<10> | 536871040 | 0 | N/A | 90
+PIN | RA<8> | 536871040 | 0 | N/A | 88
+PIN | RA<3> | 536871040 | 0 | N/A | 64
+PIN | RA<11> | 536871040 | 0 | N/A | 102
+PIN | RA<0> | 536871040 | 0 | N/A | 86
 PIN | nADoutLE1 | 536871040 | 0 | N/A | 136
 PIN | nAoutOE | 536871040 | 0 | N/A | 141
 PIN | nDinOE | 536871040 | 0 | N/A | 144
+PIN | nDoutOE | 536871040 | 0 | N/A | 143
 PIN | nRAMLWE | 536871040 | 0 | N/A | 104
 PIN | nRAMUWE | 536871040 | 0 | N/A | 105
+PIN | nRAS | 536871040 | 0 | N/A | 103
 PIN | nROMCS | 536871040 | 0 | N/A | 58
-PIN | C25MEN | 536871040 | 0 | N/A | 95
 PIN | C20MEN | 536871040 | 0 | N/A | 96
-PIN | nRES | 536870976 | 0 | N/A | 145 | 2 | 6 | 2 | 0 | 5
+PIN | C25MEN | 536871040 | 0 | N/A | 95
+PIN | nRES | 536870976 | 0 | N/A | 145 | 2 | 0 | 15 | 0 | 10

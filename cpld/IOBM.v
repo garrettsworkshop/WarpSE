@@ -16,6 +16,27 @@ module IOBM(
 	reg IORDREQr; always @(posedge C16M) IORDREQr <= IORDREQ;
 	reg IOWRREQr; always @(posedge C16M) IOWRREQr <= IOWRREQ;
 	wire IOREQr = IORDREQr || IOWRREQr;
+
+	/* VPA synchronization */
+	reg VPAr; always @(negedge C8M) VPAr <= !nVPA;
+	
+	/* E clock synchronization */
+	reg Er; always @(negedge C8M) begin Er <= E; end
+	
+	/* E clock state */
+	reg [3:0] ES;
+	always @(negedge C8M) begin
+		if (!E && Er) ES <= 1;
+		else if (ES==0 || ES==9) ES <= 0;
+		else ES <= ES+1;
+	end
+
+	/* ETACK and VMA generation */
+	wire ETACK = (ES==8) && !nVMA;
+	always @(posedge C8M) begin
+		if ((ES==5) && IOACT && VPAr) nVMA <= 0;
+		else if(ES==0) nVMA <= 1;
+	end
 	
 	/* DTACK and BERR synchronization */
 	always @(negedge C8M, posedge nASout) begin
@@ -24,32 +45,8 @@ module IOBM(
 			IOBERR <= 0;
 		end else begin
 			IODONE <= (!nDTACK || ETACK || !nRES);
-			IOBERR <= !nIOBERR;
+			IOBERR <= !nBERR;
 		end
-	end
-
-	/* VPA and RESET synchronization */
-	reg RESr; always @(posedge C16M) RESr <= !nRES;
-	reg VPAr; always @(posedge C16M) VPAr <= !nVPA;
-	
-	/* E clock synchronization */
-	reg Er;  always @(negedge C8M)  begin Er <= E; end
-	reg Er2; always @(posedge C16M) begin Er2 <= Er; end
-	
-	/* E clock state */
-	reg [4:0] ES;
-	always @(posedge C16M) begin
-		if (Er2 && ~Er) ES <= 1;
-		else if (ES==0 || ES==19) ES <= 0;
-		else ES <= ES+1;
-	end
-
-	/* ETACK and VMA generation */
-	reg ETACK = 0;
-	always @(posedge C16M) begin ETACK <= ES==16 && ~nVMA; end
-	always @(posedge C16M) begin
-		if (ES==7 && IOACT && VPAr) nVMA <= 0;
-		else if (ES==0) nVMA <= 1;
 	end
 
 	/* I/O bus state */
@@ -111,13 +108,13 @@ module IOBM(
 		DoutOE <= (IOS==0 && IOWRREQr && !C8Mr) ||
 				  (DoutOE && (IOS==2 || IOS==3 || IOS==4 || IOS==5));
 	end
-	assign nDoutOE = !(AoutOE && (DoutOE || (IOS==0 && !IOREQr)));
+	assign nDoutOE = !(AoutOE && (DoutOE || (IOS0 && !IOREQr)));
 
 	/* AS, DS control */
 	always @(negedge C16M) begin
-		nASout <= ~((IOS==0 && IOREQr && !C8Mr) || IOS==2 || IOS==3 || IOS==4 || IOS==5);
-		nLDS <= ~(IOLDS && ((IOS==0 && IORDREQr && !C8Mr) || (IOS==2 && IORDREQr) || IOS==3 || IOS==4 || IOS==5));
-		nUDS <= ~(IOUDS && ((IOS==0 && IORDREQr && !C8Mr) || (IOS==2 && IORDREQr) || IOS==3 || IOS==4 || IOS==5));
+		nASout <= !((IOS==0 && IOREQr && !C8Mr) || IOS==2 || IOS==3 || IOS==4 || IOS==5);
+		nLDS <= !(IOLDS && ((IOS==0 && IORDREQr && !C8Mr) || (IOS==2 && !nLDS) || IOS==3 || IOS==4 || IOS==5));
+		nUDS <= !(IOUDS && ((IOS==0 && IORDREQr && !C8Mr) || (IOS==2 && !nUDS) || IOS==3 || IOS==4 || IOS==5));
 	end
 
 endmodule
