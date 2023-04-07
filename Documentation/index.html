@@ -193,8 +193,12 @@ The Ready signals are always high during ROM access so all ROM accesses complete
 {name: 'DTACK',   wave: '1.0..10..1',								phase:-0.20, period: 2},
 {name: 'D (RD)',  wave: 'z....x2.z....x2.z...',						phase:-0.30},
 {name: 'D (WR)',  wave: 'z......x.2......z......x.2......z......',	phase:-0.30, period:0.5},
-{name: 'RS',      wave: '2222222222',								phase:-0.20, period: 2, data:[0,0,5,6,7,0,5,6,7,0]},
-{name: 'RAS',     wave: '1...x.0.......x.1...x.0.......x.1......',	phase:-0.35, period: 0.5},
+{name: 'RS',      wave: '2222222222',								phase:-0.20, period: 2, data:[0,0,1,2,7,0,1,2,7,0]},
+{name: 'RASEN',   wave: '1..0.1.0.1',								phase: 0.00, period: 2.0},
+{name: 'RASrr',   wave: '1.01..01..',								phase: 0.00, period: 2.0},
+{name: 'RASrf',   wave: '1..01..01.',								phase: 1.00, period: 2.0},
+{name: 'RS',      wave: '2222222222',								phase:-0.20, period: 2.0},
+{name: 'RAS',     wave: '1...x.0......x1.....x.0......x1........',	phase:-0.35, period: 0.5},
 {name: 'RASEL',   wave: '0.1.0.1.0.',								phase:-0.20, period: 2},
 {name: 'RA',      wave: 'x...x2..x2......x....2..x2......x......',	phase:-0.20, period:0.5, data:['row','col','row','col']},
 {name: 'CAS',     wave: '1..0.1.0.1',								phase: 0.80, period: 2},
@@ -248,8 +252,11 @@ Since /OE is held high during write cycles, the order of the /WE signals and /CA
 {name: 'DTACK',   wave: '1.....0..1',                     phase:-0.20, period: 2},
 {name: 'D (RD)',  wave: 'z....x2..z..........',           phase:-0.30},
 {name: 'D (WR)',  wave: 'z..x2...........z...',           phase: 0.00},
-{name: 'RS',      wave: '2222222222',                     phase:-0.20, period: 2, data:[0,0,5,6,7,0,0,0,0,0]},
-{name: 'RAS',     wave: '1...x.0.......................x.1......',            phase:-0.25, period: 0.5},
+{name: 'RS',      wave: '2222222222',                     phase:-0.20, period: 2, data:[0,0,1,2,3,0,0,0,0,0]},
+{name: 'RASEN',   wave: '1..0.....1',								phase: 0.00, period: 2, data:[0,0,1,2,3,0,1,2,3,0]},
+{name: 'RASrr',   wave: '1.01......',								phase: 0.00, period: 2, data:[0,0,1,2,3,0,1,2,3,0]},
+{name: 'RASrf',   wave: '1..01.....',								phase: 1.00, period: 2, data:[0,0,1,2,3,0,1,2,3,0]},
+{name: 'RAS',     wave: '1...x.0......x1...........................',            phase:-0.25, period: 0.5},
 {name: 'RASEL',   wave: '0.1.0.....',                     phase:-0.20, period: 2},
 {name: 'RA',      wave: 'x...x2..x2......2...............x........', phase:-0.20, period:0.5, data:['row','col','row']},
 {name: 'CAS',     wave: '1..0.1....',                     phase: 0.80, period: 2},
@@ -277,14 +284,14 @@ DRAM controller conform to the DRAM "hidden refresh" protocol but it is not nece
 
 
 <h3 id="t7">7. Refresh During Idle</h3><script type="WaveDrom">{signal: [
-{name: 'MCLK',    wave: 'p......',                 phase: 0.00, period: 2},
-{name: 'AS',      wave: '1............',  phase:-0.75},
-{name: 'RS',      wave: '2222222',                 phase:-0.2, period: 2, data:[0,0,2,3,4,7,0,0,0]},
-{name: 'RefReq',  wave: '01..0..',                 phase:-0.2, period: 2},
-{name: 'RASEN',   wave: '1.0...1',                 phase:-0.2, period: 2},
-{name: 'RRAS',    wave: '1.....0...1...',  phase:-0.20},
-{name: 'RAS',     wave: '1.....0...1...',  phase:-0.40},
-{name: 'CAS',     wave: '1..0.1.',                 phase: 0.80, period: 2},
+{name: 'MCLK',    wave: 'p.......',                 phase: 0.00, period: 2},
+{name: 'RS',      wave: '22222222',                 phase:-0.2, period: 2, data:[0,0,3,4,5,6,7,0]},
+{name: 'RASEN',   wave: '1.0....1',								phase: 0.00, period: 2},
+{name: 'RASrr',   wave: '1..0.1..',								phase: 0.00, period: 2},
+{name: 'RASrf',   wave: '1.......',								phase: 1.00, period: 2},
+{name: 'RAS',     wave: '1..........x0......x1......x....',  phase:-0.40, period:0.5},
+{name: 'CAS',     wave: '1..0..1.',                 phase: 0.80, period: 2},
+{name: 'RASEL',   wave: '1.0..1..',								phase: 0.00, period: 2},
 ]}</script><br/><p>
 This diagram shows the timing of a refresh occurring after the bus and DRAM are and have been idle for at least one clock cycle.
 </p><p>
@@ -309,17 +316,50 @@ there may be a tRAS timing violation. This constrains the timing of a refresh.
 </p>
 
 
-<h3 id="t8">8. Refresh Immediately Following DRAM Access - Bus Transaction Terminated Immediately</h3>
+<h3 id="t8">8A. Refresh Immediately Following DRAM Access - Bus Transaction Terminated Immediately</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p...',                 phase: 0.00, period: 2},
-{name: 'AS',      wave: '0.x1....x.......',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '2222',                 phase:-0.20, period: 2, data:[6,7,2,3,4]},
-{name: 'RefReq',  wave: '21..',                 phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '1.0.',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1..0',  phase:-0.20, period:2},
-{name: 'RAS',     wave: '0.x.1.......0..',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0.10',                 phase: 0.80, period: 2},
+{name: 'MCLK',    wave: 'p......',                 phase: 0.00, period: 2},
+{name: 'AS',      wave: '0.x1........................',  phase:-0.25, period:0.5},
+{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[2,3,4,5,6,7,0]},
+{name: 'RASEN',   wave: '0.....1',								phase: 0.00, period: 2},
+{name: 'RASrr',   wave: '1.0.1..',								phase: 0.00, period: 2},
+{name: 'RASrf',   wave: '01.....',								phase: 1.00, period: 2},
+{name: 'RAS',     wave: '0x1....x0......x1...........',  phase:-0.40, period:0.5},
+{name: 'CAS',     wave: '0....1.',                 phase: 0.80, period: 2},
+{name: 'RASEL',   wave: '0...1..',								phase: 0.00, period: 2},
+]}
+</script><br/>
+
+
+<h3 id="t8">9. Refresh Immediately Following DRAM Access - Bus Transaction Terminated Immediately</h3>
+<script type="WaveDrom">
+{signal: [
+{name: 'MCLK',    wave: 'p......',                 phase: 0.00, period: 2},
+{name: 'AS',      wave: '0.x1....................x0..',  phase:-0.25, period:0.5},
+{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[2,3,4,5,6,7,0]},
+{name: 'RASEN',   wave: '0.....1',								phase: 0.00, period: 2},
+{name: 'RASrr',   wave: '1.0.1..',								phase: 0.00, period: 2},
+{name: 'RASrf',   wave: '01.....',								phase: 1.00, period: 2},
+{name: 'RAS',     wave: '0x1....x0......x1.......x0..',  phase:-0.40, period:0.5},
+{name: 'CAS',     wave: '0....1.',                 phase: 0.80, period: 2},
+{name: 'RASEL',   wave: '0...1..',								phase: 0.00, period: 2},
+]}
+</script><br/>
+
+
+<h3 id="t8">10. Refresh Immediately Following DRAM Access - Bus Transaction Terminated Immediately</h3>
+<script type="WaveDrom">
+{signal: [
+{name: 'MCLK',    wave: 'p......',                 phase: 0.00, period: 2},
+{name: 'AS',      wave: '0.x1....x0..................',  phase:-0.25, period:0.5},
+{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[2,3,4,5,6,7,0]},
+{name: 'RASEN',   wave: '0.....1',								phase: 0.00, period: 2},
+{name: 'RASrr',   wave: '1.0.1..',								phase: 0.00, period: 2},
+{name: 'RASrf',   wave: '01.....',								phase: 1.00, period: 2},
+{name: 'RAS',     wave: '0x1....x0......x1......x.0..',  phase:-0.40, period:0.5},
+{name: 'CAS',     wave: '0....1.',                 phase: 0.80, period: 2},
+{name: 'RASEL',   wave: '0...1..',								phase: 0.00, period: 2},
 ]}
 </script><br/><p>
 This diagram shows the timing of a refresh occurring immediately after a RAM access cycle.
@@ -334,113 +374,6 @@ Therefore the timing is only shown through S4.<br/>
 The purpose of this diagram is mainly to demonstrate that adequate /RAS and /CAS precharge time exists 
 after the previous DRAM access is terminated before /RAS is pulsed for refresh.
 </p>
-
-
-<h3 id="t9">9. Refresh Immediately Following DRAM Access - Bus Transaction Terminated While Refresh In-Progress</h3>
-<script type="WaveDrom">
-{signal: [
-{name: 'MCLK',    wave: 'p......',             phase: 0.00, period: 2},
-{name: 'AS',      wave: '0.............x1....x......',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[6,7,2,3,4,7,0,0,0,0]},
-{name: 'RefReq',  wave: '21..0..',                 phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '1.0...1',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1..0.1.',  phase:-0.20, period:2},
-{name: 'RAS',     wave: '0.......1...0.......1...x..',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0.10.1.',                 phase: 0.80, period: 2},
-]}
-</script><br/><p>
-This diagram shows the case where a refresh request occurs during a long-running DRAM access 
-and the /AS cycle terminates before the refresh ends.
-</p><p>
-It is possible for a DRAM access cycle to be extended for a long time, during which the DRAM may be deprived of refresh. <br/>
-Therefore we must provide for the case where a DRAM access completes and a refresh begins but before /AS ever goes high. <br/>
-In this case, the rising edge of RASEN causes /RAS to go inactive, as opposed to the rising edge of /AS. <br/>
-Therefore, the /RAS precharge pulse width in this case is much shorter than 
-a refresh occurring during idle or immediately following a DRAM access. <br/>
-At 25 MHz, the /RAS precharge width is only 40ns. This is the minimum tRP for 60ns DRAM and is the tightest timing parameter in the Warp-SE. <br/>
-We could purpose RS1 to add additional precharge time if necessary.
-</p>
-
-
-<h3 id="t10">10. Refresh Immediately Following DRAM Access - Bus Transaction Terminated After Refresh Completes</h3>
-<script type="WaveDrom">
-{signal: [
-{name: 'MCLK',    wave: 'p........',             phase: 0.00, period: 2},
-{name: 'AS',      wave: '0.........................x1....x...',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '222222222',                 phase:-0.20, period: 2, data:[6,7,2,3,4,7,0,0,0]},
-{name: 'RefReq',  wave: '21..0....',                  phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '1.0.....1',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1..0.1...',  phase:-0.20, period:2},
-{name: 'RAS',     wave: '0.......1...0.......1...........x...',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0.10.1...',                 phase: 0.80, period: 2},
-]}
-</script><br/><p>
-This diagram shows the case where a refresh request occurs during a long-running DRAM access 
-and the /AS cycle does not terminate before the refresh ends.
-</p><p>
-This case is similar to the previous but there is a key difference. 
-/AS does not rise until after the refresh cycle completes. <br/>
-Therefore if RASEN were brought high upon exit from RS7 into RS0, there may be an improperly-short /RAS pulse
-terminated by the rising edge of the /AS. <br/>
-Consequently RASEN enablement is held off the first rising edge during which BACT is low. 
-</p>
-
-<h3 id="t11">11. Refresh in the "Middle" of DRAM Access</h3>
-<script type="WaveDrom">
-{signal: [
-{name: 'MCLK',    wave: 'p......',             phase: 0.00, period: 2},
-{name: 'AS',      wave: '0...........................',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[6,7,0,0,0,2,3]},
-{name: 'RefReq',  wave: '0...1..',                 phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '1....0.',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1.....0',  phase:-0.20, period:2},
-{name: 'RAS',     wave: '0...................1...0...',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0.1...0',                 phase: 0.80, period: 2},
-]}
-</script><br/><p>
-This diagram shows the case where a refresh request occurs in the "middle" of a long-running DRAM access. <br/>
-The remainder of the timing is given by diagrams 9 or 10.
-</p>
-
-<h3 id="t12">12. Concurrent DRAM Access and Refresh Requests</h3>
-<script type="WaveDrom">
-{signal: [
-{name: 'MCLK',    wave: 'p.........',                     phase: 0.00, period: 2},
-{name: 'A',       wave: 'x2......x.',                     phase: 0.25, period: 2, data:['000000-4FFFFF']},
-{name: '/AS',      wave: '1..x0........................x1........',            phase:-0.75, period: 0.5},
-{name: 'DTACK',   wave: '1.....0..1',                     phase:-0.30, period: 2},
-{name: 'DS (RD)', wave: '1..x0........................x1.......',            phase:-0.75, period: 0.5},
-{name: 'OE (RD)', wave: '1...x.0......................x.1.....',            phase:-0.75, period: 0.5},
-{name: 'DS (WR)', wave: '1......x0....................x1.......',            phase:-0.75, period: 0.5},
-{name: 'WE (WR)', wave: '1.......................0....x.1......',            phase:-0.75, period: 0.5},
-{name: 'RS',      wave: '2222222222',                 phase:-0.20, period: 2, data:[0,2,3,4,7,0,5,6,7,0]},
-{name: 'Ready0',  wave: 'x0...10.x.',                 phase:-0.20, period: 2},
-{name: 'RefReq',  wave: '1..0......',                 phase:-0.20, period: 2},
-{name: 'RASEN',   wave: '10...1....',                 phase:-0.20, period: 2},
-{name: 'RRAS',    wave: '1...0...1...........',  phase:-0.20},
-{name: '/RAS',      wave: '1.......0.......1...0.........x.1......',            phase:-0.45, period: 0.5},
-{name: '/CAS',     wave: '1.0.1..0.1',                 phase: 0.70, period: 2},
-]}
-</script><br/><p>
-This diagram shows the timing of a refresh starting concurrently with the beginning of a RAM access cycle.
-</p><p>
-Here we see the timing of refresh being entered concurrently with the start of a RAM access. 
-In this case, there is a little bit of a race condition. <br/>
-RASEN and /AS both fall following the rising edge of FCLK. /AS causes /RAS activation asynchronously, 
-but RASEN gates this from occurring. <br/>
-Therefore the internal RASEN feedback in the CPLD must occur sooner than /AS transitions, 
-otherwise an erroneous /RAS pulse will be generated. <br/>
-Fortunately the CPLDs intended to be used (ispMACH4000, XC9500XL) are some 10 years newer than MC68HC000, 
-so their speed advantage mitigates the problem. <br/>
-The negation of Ready0 causes /DTACK generation and termination of the bus cycle 
-to be delayed until completion of the refresh. <br/>
-</p>
-
-<p>
-Before showing the timing for the I/O bus slave port on the FSB, 
-it's instructive to understand the timing of the I/O bus master controller.
-</p>
-
 
 <h3 id="t13">13. I/O Bus E State, VMA, "ETACK"</h3>
 <script type="WaveDrom">
@@ -483,7 +416,7 @@ terminate the /AS cycle in synchronization with the E clock going low.
 <h3 id="t14">14. I/O Bus Access (Even Phase)</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'IOS',     wave:'22222222222222222222|222222', period: 1,data:[0,0,0,0,0,0,1,2,3,4,5,6,7,0,1,2,3,4,5,5,5,6,7,0,0,0,0]},
+{name: 'IOS',     wave:'22222222222222222222|222222', period: 1,data:[0,0,0,0,0,0,0,2,3,4,5,6,7,0,1,2,3,4,5,5,5,6,7,0,0,0,0]},
 {name: 'C16M',    wave:'p...................|......', period: 1},
 {name: 'C8M',     wave:'10101010101010101010|101010', phase:-0.25, period: 1},
 {name: 'C8Mr',    wave:'01010101010101010101|010101', phase:-0.10, period: 1},

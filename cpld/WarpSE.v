@@ -42,7 +42,7 @@ module WarpSE(
 
 	/* FSB clock oscillator enables */
 	// Enable both oscillators... only mount one
-	assign C20MEN = 1;
+	assign C20MEN = 0;
 	assign C25MEN = 1;
 
 	/* Reset input and open-drain output */
@@ -57,50 +57,56 @@ module WarpSE(
 	wire RefReq, RefUrg;
 	
 	/* FSB chip select signals */
-	wire IOCS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR;
+	wire IOCS, IOPWCS, IACS;
+	wire ROMCS, ROMCS4X;
+	wire RAMCS, RAMCS0X, SndRAMCSWR;
 	CS cs(
 		/* MC68HC000 interface */
 		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
 		/*  AS cycle detection */
 		BACT,
 		/* Device select outputs */
-		IOCS, IOPWCS, IACS, ROMCS, RAMCS, SndRAMCSWR);
+		IOCS, IOPWCS, IACS,
+		ROMCS, ROMCS4X,
+		RAMCS, RAMCS0X, SndRAMCSWR);
 
-	wire RAM_Ready;
+	wire RAMReady;
 	RAM ram(
 		/* MC68HC000 interface */
 		FCLK, A_FSB[21:1], nWE_FSB, nAS_FSB, nLDS_FSB, nUDS_FSB,
-		/*  AS cycle detection */
+		/* AS cycle detection */
 		BACT,
 		/* Select and ready signals */
-		RAMCS, ROMCS, RAM_Ready,
+		RAMCS, ROMCS, RAMReady,
 		/* Refresh Counter Interface */
 		RefReq, RefUrg,
 		/* DRAM and NOR flash interface */
 		RA[11:0], nRAS, nCAS,
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
 
-	wire IOBS_Ready;
-	wire IOREQ, IOACT;
+	wire IONPReady, IOPWReady;
+	wire IORDREQ, IOWRREQ;
+	wire IOL0, IOU0;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
 	assign nADoutLE1 = ~ALE1;
-	wire IORW0, IOL0, IOU0;
+	wire IOACT, IODONE, IOBERR;
 	IOBS iobs(
 		/* MC68HC000 interface */
 		FCLK, nWE_FSB, nAS_FSB, nLDS_FSB, nUDS_FSB,
-		/* AS cycle detection, FSB BERR */
+		/* AS cycle detection */
 		BACT,
 		/* Select signals */
 		IOCS, IOPWCS, ROMCS,
 		/* FSB cycle termination outputs */
-		IOBS_Ready, nBERR_FSB,
+		IONPReady, IOPWReady, nBERR_FSB,
 		/* Read data OE control */
 		nDinOE,
 		/* IOB Master Controller Interface */
-		IOREQ, IOACT, nBERR_IOB, nDTACK_IOB,
+		IORDREQ, IOWRREQ,
+		IOACT, IODONE, IOBERR,
 		/* FIFO primary level control */
-		ALE0S, IORW0, IOL0, IOU0,
+		ALE0S, IOL0, IOU0,
 		/* FIFO secondary level control */
 		ALE1);
 	
@@ -119,8 +125,8 @@ module WarpSE(
 		/* PDS address and data latch control */
 		AoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
-		IOACT,
-		IOREQ, IOL0, IOU0, !IORW0);
+		IORDREQ, IOWRREQ, IOL0, IOU0,
+		IOACT, IODONE, IOBERR);
 
 	CNT cnt(
 		/* FSB clock and E clock inputs */
@@ -138,7 +144,10 @@ module WarpSE(
 		/* FSB cycle detection */
 		BACT,
 		/* Ready inputs */
-		RAM_Ready, IOBS_Ready, 1,
+		ROMCS4X,
+		RAMCS0X, RAMReady,
+		IOPWCS, IOPWReady, IONPReady,
+		SndRAMCSWR, 1,
 		/* Interrupt acknowledge select */
 		IACS);
 

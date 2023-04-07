@@ -6,27 +6,34 @@ module IOBM(
 	/* PDS address and data latch control */
 	input AoutOE, output nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
-	output reg IOACT,
-	input IOREQ, input IOLDS, input IOUDS, input IOWE);
+	input IORDREQ, input IOWRREQ, input IOLDS, input IOUDS,
+	output reg IOACT, output reg IODONE, output reg IOBERR);
 
-	/* I/O bus slave port input synchronization */
-	reg IOREQr = 0;
-	always @(negedge C16M) begin IOREQr <= IOREQ; end
+	/* C8M clock registration */
+	reg C8Mr; always @(posedge C16M) C8Mr <= C8M;
+
+	/* I/O request input synchronization */
+	reg IORDREQr; always @(posedge C16M) IORDREQr <= IORDREQ;
+	reg IOWRREQr; always @(posedge C16M) IOWRREQr <= IOWRREQ;
+	wire IOREQr = IORDREQr || IOWRREQr;
 	
-	/* DTACK, BERR, RESET synchronization */
-	reg DTACKrf, BERRrf, RESrf;
-	always @(negedge C8M) begin
-		DTACKrf <= !nDTACK;
-		BERRrf <= !nBERR;
-		RESrf <= !nRES;
+	/* DTACK and BERR synchronization */
+	always @(negedge C8M, posedge nASout) begin
+		if (nASout) begin
+			IODONE <= 0;
+			IOBERR <= 0;
+		end else begin
+			IODONE <= (!nDTACK || ETACK || !nRES);
+			IOBERR <= !nIOBERR;
+		end
 	end
-	
-	/* VPA synchronization */
-	reg VPAr;
-	always @(negedge C16M) VPAr <= !nVPA;
+
+	/* VPA and RESET synchronization */
+	reg RESr; always @(posedge C16M) RESr <= !nRES;
+	reg VPAr; always @(posedge C16M) VPAr <= !nVPA;
 	
 	/* E clock synchronization */
-	reg Er; always @(negedge C8M) begin Er <= E; end
+	reg Er;  always @(negedge C8M)  begin Er <= E; end
 	reg Er2; always @(posedge C16M) begin Er2 <= Er; end
 	
 	/* E clock state */
@@ -47,44 +54,51 @@ module IOBM(
 
 	/* I/O bus state */
 	reg [2:0] IOS = 0;
+	reg IOS0;
 	always @(posedge C16M) begin
 		if (IOS==0) begin
-			if (~C8M && IOREQr && AoutOE) IOS <= 1;
-			else IOS <= 0;
-			IOACT <= IOREQr;
-			ALE0 <= IOREQr;
-		end else if (IOS==1) begin
-			IOS <= 2;
-			IOACT <= 1;
-			ALE0 <= 1;
+			if (IOREQr && !C8Mr && AoutOE) begin // "IOS1"
+				IOS <= 2;
+				IOS0 <= 0;
+			end else begin // "regular" IOS0
+				IOS <= 0;
+				IOS0 <= 1;
+			end
+			IOACT <= IOREQr && AoutOE;
+			ALE0 <= IOREQr && AoutOE;
 		end else if (IOS==2) begin
 			IOS <= 3;
+			IOS0 <= 0;
 			IOACT <= 1;
 			ALE0 <= 1;
 		end else if (IOS==3) begin
 			IOS <= 4;
+			IOS0 <= 0;
 			IOACT <= 1;
 			ALE0 <= 1;
 		end else if (IOS==4) begin
 			IOS <= 5;
+			IOS0 <= 0;
+			IOACT <= 1;
 			ALE0 <= 1;
-			if (DTACKrf) IOACT <= 0;
-			else IOACT <= 1;
 		end else if (IOS==5) begin
-			if (C8M && (DTACKrf || ETACK || BERRrf || RESrf)) begin
+			if (!C8Mr && (IODONE || IOBERR)) begin
 				IOS <= 6;
 				IOACT <= 0;
 			end else begin
 				IOS <= 5;
 				IOACT <= 1;
 			end
+			IOS0 <= 0;
 			ALE0 <= 1;
 		end else if (IOS==6) begin
 			IOS <= 7;
+			IOS0 <= 0;
 			IOACT <= 0;
 			ALE0 <= 0;
 		end else if (IOS==7) begin
 			IOS <= 0;
+			IOS0 <= 1;
 			IOACT <= 0;
 			ALE0 <= 0;
 		end
@@ -92,17 +106,18 @@ module IOBM(
 
 	/* PDS address and data latch control */
 	always @(negedge C16M) begin nDinLE = IOS==4 || IOS==5; end
-	reg DoutOE = 0; assign nDoutOE = !(AoutOE && DoutOE);
+	reg DoutOE = 0;
 	always @(posedge C16M) begin
-		DoutOE <= ( IOWE   && (IOS==1 || IOS==2 || IOS==3 ||  IOS==4 || IOS==5 || IOS==6)) ||
-					 (!IOREQr && IOS==0 && AoutOE);
+		DoutOE <= (IOS==0 && IOWRREQr && !C8Mr) ||
+				  (DoutOE && (IOS==2 || IOS==3 || IOS==4 || IOS==5));
 	end
+	assign nDoutOE = !(AoutOE && (DoutOE || (IOS==0 && !IOREQr)));
 
 	/* AS, DS control */
 	always @(negedge C16M) begin
-		nASout <= ~(IOS==1 || IOS==2 || IOS==3 || IOS==4 || IOS==5);
-		nLDS <= ~(IOLDS && (((IOS==1 || IOS==2) && ~IOWE) || IOS==3 || IOS==4 || IOS==5));
-		nUDS <= ~(IOUDS && (((IOS==1 || IOS==2) && ~IOWE) || IOS==3 || IOS==4 || IOS==5));
+		nASout <= ~((IOS==0 && IOREQr && !C8Mr) || IOS==2 || IOS==3 || IOS==4 || IOS==5);
+		nLDS <= ~(IOLDS && ((IOS==0 && IORDREQr && !C8Mr) || (IOS==2 && IORDREQr) || IOS==3 || IOS==4 || IOS==5));
+		nUDS <= ~(IOUDS && ((IOS==0 && IORDREQr && !C8Mr) || (IOS==2 && IORDREQr) || IOS==3 || IOS==4 || IOS==5));
 	end
 
 endmodule
