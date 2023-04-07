@@ -136,8 +136,9 @@ module IOBS(
 
 	/* Posted ready */
 	always @(posedge CLK) begin
-		if (!BACT) IOPWReady <= 0;
-		else if (Clear1 || !ALE1) IOPWReady <= 1;
+		if (Clear1) IOPWReady <= 1;
+		else if (Load1) IOPWReady <= 0;
+		else IOPWReady <= !ALE;
 	end
 
 	/* BERR control */
