@@ -8,7 +8,7 @@ module FSB(
 	input RAMCS, input RAMReady,
 	input IOPWCS, input IOPWReady, input IONPReady,
 	input QoSReady,
-	/* Interrupt acknowledge select */z
+	/* Interrupt acknowledge select */
 	input IACS);
 
 	/* AS cycle detection */

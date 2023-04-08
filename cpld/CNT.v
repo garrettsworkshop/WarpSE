@@ -8,7 +8,7 @@ module CNT(
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* Sound QoS */
-	input BACT, input SndRAMCSWR, output QoSReady);
+	input BACT, input SndRAMCSWR, output reg QoSReady);
 	
 	/* E clock synchronization */
 	reg [1:0] Er;
@@ -17,6 +17,9 @@ module CNT(
 	
 	/* NMI button synchronization */
 	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
+	
+	/* Startup sequence state */
+	reg [1:0] IS = 0;
 
 	/* Timer counts from 0 to 1010 (10) -- 11 states == 14.042 us
     *	Refresh timer sequence
@@ -57,7 +60,7 @@ module CNT(
 		if (EFall && TimerTC) begin
 			if (IS==3) begin
 				LTimer[12:10] <= 3'b000;
-				if (LTimer==0 && BACT && VidRAMCSWR) LTimer <= 1;
+				if (LTimer==0 && BACT && SndRAMCSWR) LTimer <= 1;
 				else if (LTimer==0) LTimer <= 0;
 				else LTimer[9:0] <= LTimer+1;
 			end else LTimer <= LTimer+1;
@@ -68,19 +71,18 @@ module CNT(
 	/* Sound QoS */
 	reg [3:0] WS = 0;
 	always @(posedge CLK) begin
-		if (BACT) begin
-			if (QoSReady) QoSReady <= 1;
-			else if (WS==12) QoSReady <= 1;
-			WS <= WS+1;
-		end else begin
+		if (!BACT) begin
 			if (LTimer!=0) QoSReady <= 0;
 			else QoSReady <= 1;
 			WS <= 0;
+		end else begin
+			if (QoSReady) QoSReady <= 1;
+			else if (WS==12) QoSReady <= 1;
+			WS <= WS+1;
 		end
 	end
 
-	/* Startup sequence control */
-	reg [1:0] IS = 0;
+	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;
 	always @(posedge CLK) begin
 		case (IS[1:0])
