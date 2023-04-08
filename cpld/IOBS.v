@@ -138,7 +138,7 @@ module IOBS(
 	always @(posedge CLK) begin
 		if (Clear1) IOPWReady <= 1;
 		else if (Load1) IOPWReady <= 0;
-		else IOPWReady <= !ALE;
+		else IOPWReady <= !ALE1;
 	end
 
 	/* BERR control */
