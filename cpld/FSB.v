@@ -7,7 +7,8 @@ module FSB(
 	input ROMCS,
 	input RAMCS, input RAMReady,
 	input IOPWCS, input IOPWReady, input IONPReady,
-	/* Interrupt acknowledge select */
+	input QoSReady,
+	/* Interrupt acknowledge select */z
 	input IACS);
 
 	/* AS cycle detection */
@@ -17,9 +18,10 @@ module FSB(
 
 
 	/* DTACK/VPA control */
-	wire Ready = (RAMCS && RAMReady && !IOPWCS) ||
+	wire Ready = QoSReady &&
+				((RAMCS && RAMReady && !IOPWCS) ||
 				 (RAMCS && RAMReady &&  IOPWCS && IOPWReady) ||
-				 (ROMCS) || (IONPReady);
+				 (ROMCS) || (IONPReady));
 	always @(posedge FCLK) nDTACK <= !(Ready && BACT && !IACS);
 	always @(posedge FCLK, posedge nAS) begin
 		if (nAS) nVPA <= 1;

@@ -88,25 +88,25 @@ module CS(
 			(A[11:8]==4'hC && !A[7]) ||
 			 A[11:8]==4'hD ||
 			 A[11:8]==4'hE ||
-			 A[11:8]==4'hF));
+			 A[11:8]==4'hF)));
 	assign SndRAMCSWR = VidRAMCSWR64k && (
 		((A[15:12]==4'hF) && ((A[11:8]==4'hD) || (A[11:8]==4'hE) || (A[11:8]==4'hF))) ||
 		((A[15:12]==4'hA) && ((A[11:8]==4'h1) || (A[11:8]==4'h2) || (A[11:8]==4'h3))));
 
 	/* Select signals - IOB domain */
-	assign IACS =  (A[23:20]==4'hF) && (A[19:18]==2'b11); // IACK
-	assign IOCS =  (A[23:20]==4'hF) || // IACK
-				   (A[23:20]==4'hE) || // VIA
-				   (A[23:20]==4'hD) || // IWM
-				   (A[23:20]==4'hC) || // empty / fast ROM
-				   (A[23:20]==4'hB) || // SCC write
-				   (A[23:20]==4'hA) || // empty
-				   (A[23:20]==4'h9) || // SCC read/reset
-				   (A[23:20]==4'h8) || // empty
-				   (A[23:20]==4'h7) || // empty
-				   (A[23:20]==4'h6) || // empty
-				   (A[23:20]==4'h5) || // SCSI
-				  ((A[23:20]==4'h4) && Overlay) || // ROM once
+	assign IACS =  A[23:16]==4'hFF; // IACK
+	assign IOCS =  A[23:20]==4'hF || // IACK
+				   A[23:20]==4'hE || // VIA
+				   A[23:20]==4'hD || // IWM
+				   A[23:20]==4'hC || // empty / fast ROM
+				   A[23:20]==4'hB || // SCC write
+				   A[23:20]==4'hA || // empty
+				   A[23:20]==4'h9 || // SCC read/reset
+				   A[23:20]==4'h8 || // empty
+				   A[23:20]==4'h7 || // empty
+				   A[23:20]==4'h6 || // empty
+				   A[23:20]==4'h5 || // SCSI
+				  (A[23:20]==4'h4 && Overlay) || // ROM once
 				    VidRAMCSWR; // Write to video RAM
 	assign IOPWCS = VidRAMCSWR;
 endmodule

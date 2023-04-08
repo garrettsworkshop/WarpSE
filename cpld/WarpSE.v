@@ -59,7 +59,7 @@ module WarpSE(
 	/* FSB chip select signals */
 	wire IOCS, IOPWCS, IACS;
 	wire ROMCS, ROMCS4X;
-	wire RAMCS, RAMCS0X;
+	wire RAMCS, RAMCS0X, SndRAMCSWR;
 	CS cs(
 		/* MC68HC000 interface */
 		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
@@ -68,7 +68,7 @@ module WarpSE(
 		/* Device select outputs */
 		IOCS, IOPWCS, IACS,
 		ROMCS, ROMCS4X,
-		RAMCS, RAMCS0X);
+		RAMCS, RAMCS0X, SndRAMCSWR);
 
 	wire RAMReady;
 	RAM ram(
@@ -128,6 +128,7 @@ module WarpSE(
 		IORDREQ, IOWRREQ, IOL0, IOU0,
 		IOACT, IODONE, IOBERR);
 
+	wire QoSReady;
 	CNT cnt(
 		/* FSB clock and E clock inputs */
 		FCLK, E,
@@ -136,7 +137,9 @@ module WarpSE(
 		/* Reset, button */
 		nRESout, nIPL2, 
 		/* Mac PDS bus master control outputs */
-		AoutOE, nBR_IOB);
+		AoutOE, nBR_IOB,
+		/* Sound QoS */
+		BACT, SndRAMCSWR, QoSReady);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
@@ -148,6 +151,8 @@ module WarpSE(
 		RAMCS0X, RAMReady,
 		IOPWCS, IOPWReady, IONPReady,
 		/* Interrupt acknowledge select */
-		IACS);
+		IACS,
+		/* Sound QoS */
+		QoSReady);
 
 endmodule
