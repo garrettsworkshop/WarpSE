@@ -37,12 +37,10 @@ module WarpSE(
 	output nDinOE,
 	output nDinLE,
 	input [3:1] SW,
-	output C20MEN,
+	input C20MEN,
 	output C25MEN);
 
-	/* FSB clock oscillator enables */
-	// Enable both oscillators... only mount one
-	assign C20MEN = 0;
+	/* FSB clock oscillator enable */
 	assign C25MEN = 1;
 
 	/* Reset input and open-drain output */
