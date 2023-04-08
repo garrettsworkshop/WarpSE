@@ -26,7 +26,7 @@ module CS(
 	/* RAM select signals */
 	assign RAMCS0X = A[23:22]==2'b00;
 	assign RAMCS = RAMCS0X && !Overlay;
-	wire VidRAMCSWR64k = RAMCS && !nWE && (A[23:20]==4'h3) && (A[19:16]==4'hF); // 3F0000-3FFFFF
+	wire VidRAMCSWR64k = RAMCS0X && !nWE && (A[23:20]==4'h3) && (A[19:16]==4'hF); // 3F0000-3FFFFF
 	wire VidRAMCSWR = VidRAMCSWR64k && (
 	    (A[15:12]==4'h2 && // 1792 bytes RAM, 2304 bytes video
 			 (A[11:8]==4'h7 ||
@@ -55,7 +55,7 @@ module CS(
 			  A[11:8]==4'h9 ||
 			  A[11:8]==4'hA ||
 			  A[11:8]==4'hB ||
-			 (A[11:8]==4'hC && !A[7]))) ||
+			  A[11:8]==4'hC)) ||
 		(A[15:12]==4'hA && // 256 bytes RAM, 768 bytes sound, 768 bytes RAM, 2304 bytes video
 			(A[11:8]==4'h1 ||
 			 A[11:8]==4'h2 ||
@@ -71,6 +71,7 @@ module CS(
 			 A[11:8]==4'hF)) ||
 		(A[15:12]==4'hB) || // 4096 bytes video
 		(A[15:12]==4'hC) || // 4096 bytes video
+		(A[15:12]==4'hD) || // 4096 bytes video
 		(A[15:12]==4'hE) || // 4096 bytes video
 		(A[15:12]==4'hF && // 3200 bytes video, 128 bytes RAM (system error space), 768 bytes sound
 			(A[11:8]==4'h0 ||
@@ -85,10 +86,10 @@ module CS(
 			 A[11:8]==4'h9 ||
 			 A[11:8]==4'hA ||
 			 A[11:8]==4'hB ||
-			(A[11:8]==4'hC && !A[7]) ||
+			 A[11:8]==4'hC ||
 			 A[11:8]==4'hD ||
 			 A[11:8]==4'hE ||
-			 A[11:8]==4'hF));
+			 A[11:8]==4'hF)));
 	assign SndRAMCSWR = VidRAMCSWR64k && (
 		((A[15:12]==4'hF) && ((A[11:8]==4'hD) || (A[11:8]==4'hE) || (A[11:8]==4'hF))) ||
 		((A[15:12]==4'hA) && ((A[11:8]==4'h1) || (A[11:8]==4'h2) || (A[11:8]==4'h3))));
