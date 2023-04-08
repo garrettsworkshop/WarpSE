@@ -2,7 +2,7 @@ module CNT(
 	/* FSB clock and E clock inputs */
 	input CLK, input E,
 	/* Refresh request */
-	output reg RefReq, output RefUrg,
+	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
 	output reg nRESout, input nIPL2, 
 	/* Mac PDS bus master control outputs */
@@ -15,32 +15,31 @@ module CNT(
 
 	/* Timer counts from 0 to 1010 (10) -- 11 states == 14.042 us
     *	Refresh timer sequence
-	 * |  Timer  | RefReq | RefUrg |
-	 * |------------------------------|
+	 * |  Timer  | RefReq |   RefUrg  |
+	 * |---------|--------|-----------|
 	 * | 0  0000 |   0    |     0     |
-	 * | 1  0001 |   0    |     0     |
+	 * | 1  0001 |   1    |     0     |
 	 * | 2  0010 |   1    |     0     |
 	 * | 3  0011 |   1    |     0     |
 	 * | 4  0100 |   1    |     0     |
 	 * | 5  0101 |   1    |     0     |
 	 * | 6  0110 |   1    |     0     |
 	 * | 7  0111 |   1    |     0     |
-	 * | 8  1000 |   1    |     1     |
-	 * | 9  1001 |   1    |     1     |
+	 * | 8  1000 |   1    |     0     |
+	 * | 9  1001 |   1    |     0     |
 	 * | 10 1010 |   1    |     1     |
 	 * back to timer==0
 	 */
 	reg [3:0] Timer = 0;
-	reg TimerTC;
+	wire TimerTC = RefUrg;
 	always @(posedge CLK) begin
 		if (EFall) begin
 			if (TimerTC) Timer <= 0;
 			else Timer <= Timer+1;
-			RefReq <= !(Timer==4'h0 || Timer==4'h1);
-			TimerTC <= Timer[3:0]==4'h9;
+			RefUrg <= Timer==9;
+			RefReq <= !(Timer==10);
 		end
 	end
-	assign RefUrg = Timer[3];
 	
 	/* Long timer counts from 0 to 8191 -- 8192 states == 115.033 ms */
 	reg [12:0] LTimer;
