@@ -8,7 +8,9 @@ module CNT(
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* Sound QoS */
-	input BACT, input SndRAMCSWR, output reg QoSReady);
+	input BACT, input nWE,
+	input SndROMCS, input SndRAMCSWR, input RAMCS, 
+	output reg QoSReady);
 	
 	/* E clock synchronization */
 	reg [1:0] Er;
@@ -49,37 +51,30 @@ module CNT(
 		end
 	end
 	
-	/* During init (IS!=3) long timer counts from 0 to 8191.
-	 * 8192 states == 115.033 ms 
-	 * During operation (IS==3) long timer counts from 0 to 1023
+	/* During init (IS!=3) long timer counts from 0 to 4095.
+	 * 4096 states == 57.516 ms 
+	 * During operation (IS==3) long timer counts from 0 to 3
 	 * starting at first sound RAM access.
-	 * 8192 states == 14.379 ms */
-	reg [12:0] LTimer;
+	 * 4 states == 56.168 us */
+	reg [11:0] LTimer;
 	reg LTimerTC;
 	always @(posedge CLK) begin
-		if (EFall && TimerTC) begin
-			if (IS==3) begin
-				LTimer[12:10] <= 3'b000;
-				if (LTimer==0 && BACT && SndRAMCSWR) LTimer <= 1;
-				else if (LTimer==0) LTimer <= 0;
-				else LTimer[9:0] <= LTimer+1;
-			end else LTimer <= LTimer+1;
-			LTimerTC <= LTimer[12:0]==13'h1FFE;
-		end
+		if (IS==3) begin
+			LTimer[11:2] <= 0;
+			if (BACT && SndRAMCSWR) LTimer[1:0] <= 1;
+			else if (LTimer==0) LTimer[1:0] <= 0;
+			else if (EFall && TimerTC) LTimer[1:0] <= LTimer+1;
+		end else if (EFall && TimerTC) LTimer <= LTimer+1;
+		LTimerTC <= LTimer[11:0]==12'hFFE;
 	end
 
 	/* Sound QoS */
 	reg [3:0] WS = 0;
 	always @(posedge CLK) begin
-		if (!BACT) begin
-			if (LTimer!=0) QoSReady <= 0;
-			else QoSReady <= 1;
-			WS <= 0;
-		end else begin
-			if (QoSReady) QoSReady <= 1;
-			else if (WS==12) QoSReady <= 1;
-			WS <= WS+1;
-		end
+		if (!BACT) WS <= 0;
+		else WS <= WS+1;
+		QoSReady <= (LTimer[1:0]==0) || (BACT && (
+		   QoSReady || WS==15 || !nWE || (!RAMCS && !SndROMCS)));
 	end
 
 	/* Startup sequence state control */

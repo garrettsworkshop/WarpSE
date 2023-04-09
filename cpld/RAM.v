@@ -59,9 +59,8 @@ module RAM(
 	assign RA[01] = !RASEL ? A[10] : A[02];
 	assign RA[00] = !RASEL ? A[09] : A[01];
 
-	wire RefFromRS0 = ((RefReq &&  BACT && !BACTr && !RAMCS) ||
-					   (RefUrg && !BACT) ||
-					   (RefUrg &&  BACT && !RAMEN));
+	wire RefFromRS0 = ((RefReq && !BACT) ||
+					   (RefUrg && !BACT));
 	wire RefFromRS2 = RefUrg;
 	wire RAMStart = BACT && RAMCS && RAMEN;
 	always @(posedge CLK) begin
