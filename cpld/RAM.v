@@ -4,7 +4,7 @@ module RAM(
 	/* AS cycle detection */
 	input BACT, 
 	/* Select and ready signals */
-	input RAMCS, input ROMCS, output reg RAMReady,
+	input RAMCS, input RAMCS0X, input ROMCS, output reg RAMReady,
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgIn,
 	/* DRAM and NOR flash interface */
@@ -16,8 +16,8 @@ module RAM(
 	
 	/* RAM control state */
 	reg [2:0] RS = 0;
-	reg RAMEN = 0;
 	reg Once = 0;
+	reg RAMEN = 0;
 	reg RASEL = 0;
 	reg CAS = 0;
 	reg RASrr = 0;
@@ -59,8 +59,10 @@ module RAM(
 	assign RA[01] = !RASEL ? A[10] : A[02];
 	assign RA[00] = !RASEL ? A[09] : A[01];
 
-	wire RefFromRS0 = ((RefReq && !BACT) ||
-					   (RefUrg && !BACT));
+	wire RefFromRS0 = ((RefReq &&  BACT && !BACTr && !RAMCS0X) ||
+					   (RefUrg && !BACT) ||
+					   (RefUrg &&  BACT && !RAMCS0X) ||
+					   (RefUrg &&  BACT && !RAMEN && !nWE));
 	wire RefFromRS2 = RefUrg;
 	wire RAMStart = BACT && RAMCS && RAMEN;
 	always @(posedge CLK) begin
