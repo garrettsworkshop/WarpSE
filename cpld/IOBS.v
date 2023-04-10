@@ -6,7 +6,7 @@ module IOBS(
 	/* Select signals */
 	input IOCS, input IOPWCS, input ROMCS,
 	/* FSB cycle termination outputs */
-	output reg IONPReady, output IOPWReady, output reg nBERR_FSB,
+	output reg IONPReady, output reg IOPWReady, output reg nBERR_FSB,
 	/* Read data OE control */
 	output nDinOE,
 	/* IOB master controller interface */
@@ -42,8 +42,11 @@ module IOBS(
 	reg Sent = 0;
 
 	/* FIFO secondary level control */
-	reg Load1; reg Clear1;
-	reg IORW1; reg IOL1; reg IOU1;
+	reg Load1;
+	reg Clear1;
+	reg IORW1;
+	reg IOL1;
+	reg IOU1;
 	always @(posedge CLK) begin // ALE and R/W load control
 		// If write currently posting (TS!=0),
 		// I/O selected, and FIFO secondary level empty
@@ -125,11 +128,17 @@ module IOBS(
 		else if (BACT && IOCS && !ALE1 && (IOPWCS || TS==0)) Sent <= 1;
 	end
 
-	/* Nonposted and posted ready */
-	assign IOPWReady = !ALE1; // Posted write reaedy
-	always @(posedge CLK) begin // Nonposted read/write ready
+	/* Nonposted ready */
+	always @(posedge CLK) begin
 		if (!BACT) IONPReady <= 0;
 		else if (Sent && !IOPWCS && IODONE) IONPReady <= 1;
+	end
+
+	/* Posted ready */
+	always @(posedge CLK) begin
+		if (Clear1) IOPWReady <= 1;
+		else if (Load1) IOPWReady <= 0;
+		else IOPWReady <= !ALE1;
 	end
 
 	/* BERR control */
