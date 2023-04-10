@@ -71,7 +71,8 @@ module WarpSE(
 	wire RAMReady;
 	RAM ram(
 		/* MC68HC000 interface */
-		FCLK, A_FSB[21:1], nWE_FSB, nAS_FSB, nLDS_FSB, nUDS_FSB,
+		FCLK, A_FSB[21:1], nWE_FSB,
+		nAS_FSB, nLDS_FSB, nUDS_FSB, nDTACK_FSB,
 		/* AS cycle detection */
 		BACT,
 		/* Select and ready signals */
