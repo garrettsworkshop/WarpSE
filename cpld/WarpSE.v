@@ -75,9 +75,9 @@ module WarpSE(
 		/* AS cycle detection */
 		BACT,
 		/* Select and ready signals */
-		RAMCS, ROMCS, RAMReady,
+		RAMCS, RAMCS0X, ROMCS, RAMReady,
 		/* Refresh Counter Interface */
-		RefReq, RefUrg,
+		RefReq, RefUrg, 
 		/* DRAM and NOR flash interface */
 		RA[11:0], nRAS, nCAS,
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);

@@ -140,16 +140,6 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-A_FSB<10>_RA<1>_delay:
-CELL_RISE(scalar) {
-  VALUES("10");
-}
-CELL_FALL(scalar) {
-  VALUES("10");
-}
-ENDARCDATA
-
-ARCDATA
 A_FSB<2>_RA<1>_delay:
 CELL_RISE(scalar) {
   VALUES("10");
@@ -160,7 +150,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-A_FSB<16>_RA<2>_delay:
+A_FSB<10>_RA<1>_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -180,7 +170,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-A_FSB<19>_RA<3>_delay:
+A_FSB<16>_RA<2>_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -191,6 +181,16 @@ ENDARCDATA
 
 ARCDATA
 A_FSB<20>_RA<3>_delay:
+CELL_RISE(scalar) {
+  VALUES("10");
+}
+CELL_FALL(scalar) {
+  VALUES("10");
+}
+ENDARCDATA
+
+ARCDATA
+A_FSB<19>_RA<3>_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -222,20 +222,20 @@ ENDARCDATA
 ARCDATA
 A_FSB<12>_RA<5>_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<4>_RA<5>_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
@@ -260,7 +260,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-A_FSB<6>_RA<7>_delay:
+A_FSB<14>_RA<7>_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -270,7 +270,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-A_FSB<14>_RA<7>_delay:
+A_FSB<6>_RA<7>_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -320,37 +320,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-A_FSB<23>_nDinOE_delay:
-CELL_RISE(scalar) {
-  VALUES("10");
-}
-CELL_FALL(scalar) {
-  VALUES("10");
-}
-ENDARCDATA
-
-ARCDATA
 nAS_FSB_nDinOE_delay:
-CELL_RISE(scalar) {
-  VALUES("10");
-}
-CELL_FALL(scalar) {
-  VALUES("10");
-}
-ENDARCDATA
-
-ARCDATA
-A_FSB<20>_nDinOE_delay:
-CELL_RISE(scalar) {
-  VALUES("10");
-}
-CELL_FALL(scalar) {
-  VALUES("10");
-}
-ENDARCDATA
-
-ARCDATA
-A_FSB<22>_nDinOE_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -370,6 +340,16 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
+A_FSB<20>_nDinOE_delay:
+CELL_RISE(scalar) {
+  VALUES("10");
+}
+CELL_FALL(scalar) {
+  VALUES("10");
+}
+ENDARCDATA
+
+ARCDATA
 A_FSB<21>_nDinOE_delay:
 CELL_RISE(scalar) {
   VALUES("10");
@@ -380,7 +360,17 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-nWE_FSB_nOE_delay:
+A_FSB<22>_nDinOE_delay:
+CELL_RISE(scalar) {
+  VALUES("10");
+}
+CELL_FALL(scalar) {
+  VALUES("10");
+}
+ENDARCDATA
+
+ARCDATA
+A_FSB<23>_nDinOE_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -400,7 +390,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-nLDS_FSB_nRAMLWE_delay:
+nWE_FSB_nOE_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -410,7 +400,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-nAS_FSB_nRAMLWE_delay:
+nLDS_FSB_nRAMLWE_delay:
 CELL_RISE(scalar) {
   VALUES("10");
 }
@@ -430,26 +420,6 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-nWE_FSB_nRAMUWE_delay:
-CELL_RISE(scalar) {
-  VALUES("11");
-}
-CELL_FALL(scalar) {
-  VALUES("11");
-}
-ENDARCDATA
-
-ARCDATA
-nAS_FSB_nRAMUWE_delay:
-CELL_RISE(scalar) {
-  VALUES("11");
-}
-CELL_FALL(scalar) {
-  VALUES("11");
-}
-ENDARCDATA
-
-ARCDATA
 nUDS_FSB_nRAMUWE_delay:
 CELL_RISE(scalar) {
   VALUES("11");
@@ -460,7 +430,7 @@ CELL_FALL(scalar) {
 ENDARCDATA
 
 ARCDATA
-nAS_FSB_nRAS_delay:
+nWE_FSB_nRAMUWE_delay:
 CELL_RISE(scalar) {
   VALUES("11");
 }
@@ -471,6 +441,16 @@ ENDARCDATA
 
 ARCDATA
 A_FSB<22>_nRAS_delay:
+CELL_RISE(scalar) {
+  VALUES("11");
+}
+CELL_FALL(scalar) {
+  VALUES("11");
+}
+ENDARCDATA
+
+ARCDATA
+nAS_FSB_nRAS_delay:
 CELL_RISE(scalar) {
   VALUES("11");
 }
@@ -492,60 +472,60 @@ ENDARCDATA
 ARCDATA
 A_FSB<22>_nROMCS_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<20>_nROMCS_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<23>_nROMCS_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<21>_nROMCS_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
 ARCDATA
 nWE_FSB_nROMWE_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
 ARCDATA
 nAS_FSB_nROMWE_delay:
 CELL_RISE(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 CELL_FALL(scalar) {
-  VALUES("10");
+  VALUES("11");
 }
 ENDARCDATA
 
@@ -702,10 +682,10 @@ ENDARCDATA
 ARCDATA
 FCLK_RA<5>_delay:
 CELL_RISE(scalar) {
-  VALUES("13.5");
+  VALUES("14.5");
 }
 CELL_FALL(scalar) {
-  VALUES("13.5");
+  VALUES("14.5");
 }
 ENDARCDATA
 
@@ -842,10 +822,10 @@ ENDARCDATA
 ARCDATA
 FCLK_nROMCS_delay:
 CELL_RISE(scalar) {
-  VALUES("13.5");
+  VALUES("14.5");
 }
 CELL_FALL(scalar) {
-  VALUES("13.5");
+  VALUES("14.5");
 }
 ENDARCDATA
 
@@ -922,112 +902,112 @@ ENDARCDATA
 ARCDATA
 A_FSB<10>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<11>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<12>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<13>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<14>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<15>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<16>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<17>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<18>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<19>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<20>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<21>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<22>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<23>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<8>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<9>_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
@@ -1076,119 +1056,119 @@ ENDARCDATA
 ARCDATA
 nWE_FSB_FCLK_setup:
 CONSTRAINT(scalar) {
-  VALUES("19.6");
+  VALUES("20");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<10>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<11>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<12>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<13>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<14>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<15>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<16>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<17>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<18>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<19>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<20>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<21>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<22>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<23>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<8>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
 ARCDATA
 A_FSB<9>_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 
@@ -1237,7 +1217,7 @@ ENDARCDATA
 ARCDATA
 nWE_FSB_FCLK_hold:
 CONSTRAINT(scalar) {
-  VALUES("-13.1");
+  VALUES("-13.5");
 }
 ENDARCDATA
 

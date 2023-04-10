@@ -36,18 +36,19 @@ module CNT(
 	 * | 6  0110 |   1    |     0     |
 	 * | 7  0111 |   1    |     0     |
 	 * | 8  1000 |   1    |     0     |
-	 * | 9  1001 |   1    |     0     |
+	 * | 9  1001 |   1    |     1     |
 	 * | 10 1010 |   1    |     1     |
 	 * back to timer==0
 	 */
 	reg [3:0] Timer = 0;
-	wire TimerTC = RefUrg;
+	reg TimerTC;
 	always @(posedge CLK) begin
 		if (EFall) begin
 			if (TimerTC) Timer <= 0;
 			else Timer <= Timer+1;
-			RefUrg <= Timer==9;
-			RefReq <= !(Timer==10);
+			RefUrg <= Timer==8 || Timer==9;
+			RefReq <= Timer!=10;
+			TimerTC <= Timer==9;
 		end
 	end
 	

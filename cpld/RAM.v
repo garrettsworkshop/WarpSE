@@ -4,20 +4,16 @@ module RAM(
 	/* AS cycle detection */
 	input BACT, 
 	/* Select and ready signals */
-	input RAMCS, input ROMCS, output reg RAMReady,
+	input RAMCS, input RAMCS0X, input ROMCS, output reg RAMReady,
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgIn,
 	/* DRAM and NOR flash interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
 	output nLWE, output nUWE, output nOE, output nROMCS, output nROMWE);
 	
-	/* BACT saved from last cycle */
-	reg BACTr; always @(posedge CLK) BACTr <= BACT;
-	
 	/* RAM control state */
-	reg [2:0] RS = 0;
-	reg RAMEN = 0;
-	reg Once = 0;
+	reg [3:0] RS = 0;
+	reg RASEN = 0;
 	reg RASEL = 0;
 	reg CAS = 0;
 	reg RASrr = 0;
@@ -27,16 +23,16 @@ module RAM(
 	reg RefDone; // Refresh done "remember"
 	always @(posedge CLK) begin
 		if (!RefReqIn && !RefUrgIn) RefDone <= 0;
-		else if (RS==4 || RS==5) RefDone <= 1;
+		else if (RS[3]) RefDone <= 1;
 	end
 	wire RefReq = RefReqIn && !RefDone;
 	wire RefUrg = RefUrgIn && !RefDone;
 
 	/* RAM control signals */
-	assign nRAS =   !((!nAS && RAMCS && RAMEN) || RASrr || RASrf);
-	assign nOE =    !((!nAS &&  nWE)); // Shared with ROM
-	assign nLWE =   !((!nAS && !nWE && !nLDS && RAMEN));
-	assign nUWE =   !((!nAS && !nWE && !nUDS && RAMEN));
+	assign nRAS =   !((!nAS && RAMCS && RASEN) || RASrr || RASrf);
+	assign nOE =    !(!nAS &&  nWE); // Shared with ROM
+	assign nLWE =   !(!nLDS && !nWE && RASEL);
+	assign nUWE =   !(!nUDS && !nWE && RASEL);
 
 	/* ROM control signals */
 	assign nROMCS = !ROMCS;
@@ -58,95 +54,120 @@ module RAM(
 	assign RA[04] = !RASEL ? A[11] : A[03];
 	assign RA[01] = !RASEL ? A[10] : A[02];
 	assign RA[00] = !RASEL ? A[09] : A[01];
-
-	wire RefFromRS0 = ((RefReq && !BACT) ||
-					   (RefUrg && !BACT));
-	wire RefFromRS2 = RefUrg;
-	wire RAMStart = BACT && RAMCS && RAMEN;
+	
+	reg BACTr; always @(posedge CLK) BACTr <= BACT;
+	
 	always @(posedge CLK) begin
-		case (RS[2:0])
+		case (RS[3:0])
 			0: begin
-				if (RAMStart) begin
+				if (( BACT && !BACTr && !RAMCS0X && RefReq) ||
+					 (!BACT && RefUrg) ||
+					 ( BACT && RefUrg && !RAMCS0X) ||
+					 (!RASEN)) begin
+					RS <= 8;
+					RASEL <= 0;
+					CAS <= 1;
+					RASrr <= 0;
+					RASEN <= 0;
+					RAMReady <= 0;
+				end else if (BACT && RAMCS && RASEN) begin
 					RS <= 1;
 					RASEL <= 1;
 					CAS <= 1;
 					RASrr <= 1;
-				end else if (RefFromRS0) begin
-					RS <= 3;
-					RASEL <= 0;
-					CAS <= 1;
-					RASrr <= 0;
+					RASEN <= 1;
+					RAMReady <= 1;
 				end else begin
 					RS <= 0;
 					RASEL <= 0;
 					CAS <= 0;
 					RASrr <= 0;
+					RASEN <= 1;
+					RAMReady <= 1;
 				end
 			end 1: begin
 				RS <= 2;
 				RASEL <= 1;
 				CAS <= 1;
 				RASrr <= 0;
+				RASEN <= 0;
+				RAMReady <= 1;
 			end 2: begin
-				if (RefFromRS2) begin
+				RS <= 3;
+				RASEL <= 0;
+				CAS <= 0;
+				RASrr <= 0;
+				RASEN <= 0;
+				RAMReady <= 1;
+			end 3: begin
+				if (BACT) begin
 					RS <= 3;
-					RASEL <= 0;
-					CAS <= 1;
-					RASrr <= 0;
-				end else begin
-					RS <= 7;
 					RASEL <= 0;
 					CAS <= 0;
 					RASrr <= 0;
+					RASEN <= 0;
+					RAMReady <= 1;
+				end else if (RefUrg) begin
+					RS <= 8;
+					RASEL <= 0;
+					CAS <= 1;
+					RASrr <= 0;
+					RASEN <= 0;
+					RAMReady <= 0;
+				end else begin
+					RS <= 0;
+					RASEL <= 0;
+					CAS <= 0;
+					RASrr <= 0;
+					RASEN <= 1;
+					RAMReady <= 1;
 				end
-			end 3: begin
-				RS <= 4;
+			end 8: begin
+				RS <= 9;
 				RASEL <= 0;
 				CAS <= 1;
 				RASrr <= 1;
-			end 4: begin
-				RS <= 5;
+				RASEN <= 0;
+				RAMReady <= 0;
+			end 9: begin
+				RS <= 10;
 				RASEL <= 0;
 				CAS <= 0;
 				RASrr <= 1;
-			end 5: begin
-				RS <= 6;
+				RASEN <= 0;
+				RAMReady <= 0;
+			end 10: begin
+				RS <= 11;
 				RASEL <= 0;
 				CAS <= 0;
 				RASrr <= 0;
-			end 6: begin
-				RS <= 7;
+				RASEN <= 0;
+				RAMReady <= 0;
+			end 11: begin
+				RS <= 15;
 				RASEL <= 0;
 				CAS <= 0;
 				RASrr <= 0;
-			end 7: begin
+				RASEN <= 0;
+				RAMReady <= 0;
+			end 15: begin
 				RS <= 0;
 				RASEL <= 0;
 				CAS <= 0;
 				RASrr <= 0;
+				RASEN <= 1;
+				RAMReady <= 1;
+			end default: begin
+				RS <= 0;
+				RASEL <= 0;
+				CAS <= 0;
+				RASrr <= 0;
+				RASEN <= 1;
+				RAMReady <= 1;
 			end
 		endcase
 	end
 	always @(negedge CLK) RASrf <= RS==1;
 	always @(negedge CLK) nCAS <= !CAS;
-
-	/* RAM state control */
-	always @(posedge CLK) begin
-		if (RS==0 && RefFromRS0) RAMEN <= 0;
-		else if (RS==1) RAMEN <= 0;
-		else if (!BACT && RS==7) RAMEN <= 1;
-		else if (!BACT && RS==0) RAMEN <= 1;
-		else if (!Once && RS==7) RAMEN <= 1;
-		else if (!Once && RS==0) RAMEN <= 1; // not needed?
-	end
-	always @(posedge CLK) begin
-		if (!BACT) Once <= 0;
-		else if (RS==0 && RAMStart) Once <= 1;
-	end
-
-	/* RAM ready signal */
-	always @(posedge CLK) begin
-		RAMReady <= (BACT && RAMReady) || (RS==7) || (RS==0 && !RefFromRS0);
-	end	
 
 endmodule
