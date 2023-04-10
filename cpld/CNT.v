@@ -55,7 +55,7 @@ module CNT(
 	 * 4096 states == 57.516 ms 
 	 * During operation (IS==3) long timer counts from 0 to 3
 	 * starting at first sound RAM access.
-	 * 4 states == 56.168 us */
+	 * Period is 28.124 us - 42.240 us */
 	reg [11:0] LTimer;
 	reg LTimerTC;
 	always @(posedge CLK) begin
@@ -81,21 +81,21 @@ module CNT(
 	wire ISTC = EFall && TimerTC && LTimerTC;
 	always @(posedge CLK) begin
 		case (IS[1:0])
-			2'h0: begin
+			0: begin
 				AoutOE <= 0; // Tristate PDS address and control
 				nRESout <= 0; // Hold reset low
 				nBR_IOB <= 0; // Default to request bus
 				if (ISTC) IS <= 1;
-			end 2'h1: begin
+			end 1: begin
 				AoutOE <= 0;
 				nRESout <= 0;
 				nBR_IOB <= !(!nBR_IOB && nIPL2r); // Disable bus request if NMI pressed
 				if (ISTC && nIPL2r) IS <= 2;
-			end 2'h2: begin
+			end 2: begin
 				AoutOE <= !nBR_IOB;
 				nRESout <= 0;
 				if (ISTC) IS <= 3;
-			end 2'h3: begin
+			end 3: begin
 				nRESout <= 1; // Release reset
 				IS <= 3;
 			end
