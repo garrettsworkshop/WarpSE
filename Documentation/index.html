@@ -182,27 +182,30 @@ The Ready signals are always high during ROM access so all ROM accesses complete
 
 <h3 id="t5">5. Back-to-Back RAM Access</h3><script type="WaveDrom">{signal: [
 {name: 'MCLK',    wave: 'p.........',								phase: 0.00, period: 2},
-{name: 'A',       wave: 'x2..x2..x.',								phase: 0.25, period: 2, data:['000000-3FFFFF','000000-3FFFFF']},
-{name: 'RW',      wave: 'x..1....x..1....x...',						phase: 0.25, period: 1, data:['read or write','read or write']},
-{name: 'AS',      wave: '1...x0........x1....x0........x1....x2.',	phase:-0.25, period: 0.5},
-{name: 'DS (RD)', wave: '1...x0........x1....x0........x1.......',	phase:-0.25, period: 0.5},
-{name: 'OE (RD)', wave: '1...x.0.......x.1...x.0.......x.1......',	phase:-0.35, period: 0.5},
-{name: 'DS (WR)', wave: '1.......x0....x1........x0....x1.......',	phase:-0.25, period: 0.5},
-{name: 'WE (WR)', wave: '1.......x.0...x.1.......x.0...x.1......',	phase:-0.35, period: 0.5},
-{name: 'Ready',   wave: 'x10.x10.x.',								phase:-0.20, period: 2},
-{name: 'DTACK',   wave: '1.0..10..1',								phase:-0.20, period: 2},
-{name: 'D (RD)',  wave: 'z....x2.z....x2.z...',						phase:-0.30},
-{name: 'D (WR)',  wave: 'z......x.2......z......x.2......z......',	phase:-0.30, period:0.5},
-{name: 'RS',      wave: '2222222222',								phase:-0.20, period: 2, data:[0,0,1,2,7,0,1,2,7,0]},
+{name: 'A',       wave: 'x..2............x..2............x......',	phase: 0.00, period: 0.5, data:['000000-3FFFFF','000000-3FFFFF']},
+{name: 'RW',      wave: 'x....2..........x....2..........x......',	phase: 0.00, period: 0.5, data:['read or write','read or write']},
+{name: 'AS',      wave: '1...x0........x1....x0........x1....x2.',	phase:-0.10, period: 0.5},
+{name: 'BACT',    wave: '2.0.x.1...........0.x.1...........0.x.2',	phase: 0.00, period: 0.5},
+{name: 'BACTr',   wave: '201..01..0',								phase: 0.00, period: 2.0},
+{name: 'DS (RD)', wave: '1...x0........x1....x0........x1....x2.',	phase:-0.10, period: 0.5},
+{name: 'OE (RD)', wave: '1.0.1.0.1.',	 							phase:-0.10, period: 2.0},
+{name: 'DS (WR)', wave: '1.......x0....x1........x0....x1....x2.',	phase:-0.10, period: 0.5},
+{name: 'WE (WR)', wave: '1.......x.0...x.1.......x.0...x.1......',	phase:-0.10, period: 0.5},
+{name: 'RAMReady',wave: '1.........',								phase: 0.00, period: 2},
+{name: 'DTACK',   wave: '210..10..1',								phase:-0.10, period: 2},
+{name: 'DTACKr',  wave: '2.10..10..',								phase: 0.00, period: 2},
+{name: 'D (FPMR)',wave: 'z.........x.2.xz..........x.2.xz.......',	phase: 0.05, period: 0.5},
+{name: 'D (EDOR)',wave: 'z.........x.2...xz........x.2...xz.....',	phase: 0.05, period: 0.5},
+{name: 'D (WR)',  wave: 'z.....x.2.......xz....x.2.......xz.....',	phase: 0.05, period: 0.5},
+{name: 'RS',      wave: '2222222222',								phase: 0.00, period: 2, data:[0,0,1,2,3,0,1,2,3,0]},
 {name: 'RASEN',   wave: '1..0.1.0.1',								phase: 0.00, period: 2.0},
 {name: 'RASrr',   wave: '1.01..01..',								phase: 0.00, period: 2.0},
 {name: 'RASrf',   wave: '1..01..01.',								phase: 1.00, period: 2.0},
-{name: 'RS',      wave: '2222222222',								phase:-0.20, period: 2.0},
-{name: 'RAS',     wave: '1...x.0......x1.....x.0......x1........',	phase:-0.35, period: 0.5},
-{name: 'RASEL',   wave: '0.1.0.1.0.',								phase:-0.20, period: 2},
+{name: 'RAS',     wave: '1...x.0.......x1....x.0.......x1....x2.',	phase:-0.10, period: 0.5},
+{name: 'RASEL',   wave: '0.1.0.1.0.',								phase: 0.00, period: 2},
 {name: 'RA',      wave: 'x...x2..x2......x....2..x2......x......',	phase:-0.20, period:0.5, data:['row','col','row','col']},
-{name: 'CAS',     wave: '1..0.1.0.1',								phase: 0.80, period: 2},
-]}</script><br/><p>
+{name: 'CAS',     wave: '1..01..01.',								phase: 0.90, period: 2},
+]}</script><p>
 This diagram introduces the DRAM access timing.
 </p><p>
 At 25 MHz for a 4-clock read cycle, there are only 2.5 clock cycles (100 ns) between 
@@ -218,116 +221,117 @@ which outputs row addresses to the DRAM array when RASEL is low and column addre
 The /CAS signal is a function of RASEL. RASEL changes after FCLK rises. If RASEL is high at the next falling edge, /CAS is asserted. 
 Otherwise if RASEL is low, /CAS is deasserted at the next falling edge.
 </p><p>
-"RS" is the RAM state. The RS state changes after the rising edge of the clock 
-and can take on values 0-7. <br/>
-In RS0, the RAM is considered to be idle. <br/>
-At the rising edge of the clock in RS0 a RAM cycle begins if, if /AS is asserted, 
-a RAM address is present, and a RAM cycle has not already occurred for this /AS cycle. <br/>
-In this case, we know that /RAS has been active for at least 10 nanoseconds, so RASEL is brogught high. <br/>
-This switches the RA bus from row to column addresses and RS0 transitions to RS5. <br/>
-At the falling edge in the middle of RS5, /CAS is brought low. RS5 always transitions to RS6. <br/>
-At the end of RS6, RASEL is brought low again, switching the RA multiplexers back to row addresses 
-in preparation for the next DRAM access cycle. RS6 always transitions to RS7. <br/>
-RS7 is the state in which a RAM access or refresh is concluded. At the falling edge in the middle of RS7, /CAS is brought high. <br/>
-RS7 transitions to RS2 if a refresh request is pending, otherwise RS7 transitions to RS0. <br/>
-The states RS1 and RS2-RS4 will be discussed in association with the subsequent refresh cycle diagrams. <br/>
-The RS and RAMCS signals are used to generate the Ready0 ready signal input to the FSB. 
-Ready0 is high if and only if RS==0 and RAMCS is active.<br/>
-</p><p>
-Also notice how, during write cycles, 
-it is undefined whether the cycle is conducted as an "early write" or an "OE-controlled write" cycle. <br/>
-/OE is held high at all times during write cycles, 
-but /LWE and /UWE are asynchronous functions of MC68k's /LDS and /UDS signals. <br/>
-It is undefined during a write cycle whether /LWE and /UWE will go low before or after /CAS falls. <br/>
-Since /OE is held high during write cycles, the order of the /WE signals and /CAS is of no consequence.
 </p>
 
 
 <h3 id="t6">6. Long-running RAM Access</h3><script type="WaveDrom">{signal: [
-{name: 'MCLK',    wave: 'p.........',                     phase: 0.00, period: 2},
-{name: 'A',       wave: 'x2......x.',                     phase: 0.25, period: 2, data:['000000-3FFFFF']},
-{name: 'RW',      wave: 'x..1............x...',            phase: 0.25, period: 1, data:['read or write','read or write']},
-{name: 'AS',      wave: '1...x0........................x1.......',            phase:-0.25, period: 0.5},
-{name: 'Ready',   wave: '0....1....',                 phase:-0.20, period: 2},
-{name: 'DTACK',   wave: '1.....0..1',                     phase:-0.20, period: 2},
-{name: 'D (RD)',  wave: 'z....x2..z..........',           phase:-0.30},
-{name: 'D (WR)',  wave: 'z..x2...........z...',           phase: 0.00},
-{name: 'RS',      wave: '2222222222',                     phase:-0.20, period: 2, data:[0,0,1,2,3,0,0,0,0,0]},
-{name: 'RASEN',   wave: '1..0.....1',								phase: 0.00, period: 2, data:[0,0,1,2,3,0,1,2,3,0]},
-{name: 'RASrr',   wave: '1.01......',								phase: 0.00, period: 2, data:[0,0,1,2,3,0,1,2,3,0]},
-{name: 'RASrf',   wave: '1..01.....',								phase: 1.00, period: 2, data:[0,0,1,2,3,0,1,2,3,0]},
-{name: 'RAS',     wave: '1...x.0......x1...........................',            phase:-0.25, period: 0.5},
-{name: 'RASEL',   wave: '0.1.0.....',                     phase:-0.20, period: 2},
-{name: 'RA',      wave: 'x...x2..x2......2...............x........', phase:-0.20, period:0.5, data:['row','col','row']},
-{name: 'CAS',     wave: '1..0.1....',                     phase: 0.80, period: 2},
+{name: 'MCLK',    wave: 'p.........',								phase: 0.00, period: 2.0},
+{name: 'A',       wave: 'x..2............................x......',	phase: 0.00, period: 0.5, data:['000000-3FFFFF']},
+{name: 'RW',      wave: 'x....2..........................x......',	phase: 0.00, period: 0.5, data:['read or write']},
+{name: 'AS',      wave: '1...x0........................x1....x2.',	phase:-0.10, period: 0.5},
+{name: 'BACT',    wave: '2.0.x.1...........................0.x.2',	phase: 0.00, period: 0.5},
+{name: 'BACTr',   wave: '201......0',								phase: 0.00, period: 2.0},
+{name: 'DS (RD)', wave: '1...x0........................x1....x2.',	phase:-0.10, period: 0.5},
+{name: 'OE (RD)', wave: '1.0.....1.',	 							phase:-0.10, period: 2.0},
+{name: 'DS (WR)', wave: '1.......x0....................x1....x2.',	phase:-0.10, period: 0.5},
+{name: 'WE (WR)', wave: '1.......x.0.....x1.....................',	phase:-0.10, period: 0.5},
+{name: 'RAMReady',wave: '1.........',								phase: 0.00, period: 2.0},
+{name: 'DTACK',   wave: '21....0..1',								phase:-0.10, period: 2.0},
+{name: 'DTACKr',  wave: '2.1....0..',								phase: 0.00, period: 2.0},
+{name: 'D (RD)',  wave: 'z.........x.2...................xz.....',	phase: 0.05, period: 0.5},
+{name: 'D (WR)',  wave: 'z.....x.2.......................xz.....',	phase: 0.05, period: 0.5},
+{name: 'RS',      wave: '2222222222',								phase: 0.00, period: 2.0, data:[0,0,1,2,2,2,2,2,3,0]},
+{name: 'RASEN',   wave: '1..0.....1',								phase: 0.00, period: 2.0},
+{name: 'RASrr',   wave: '1.01......',								phase: 0.00, period: 2.0},
+{name: 'RASrf',   wave: '1..01.....',								phase: 1.00, period: 2.0},
+{name: 'RAS',     wave: '1...x.0.......x1....................x2.',	phase:-0.10, period: 0.5},
+{name: 'RASEL',   wave: '0.1.0.....',								phase: 0.00, period: 2.0},
+{name: 'RA',      wave: 'x...2...x2......x2..............x......',	phase: 0.00, period: 0.5, data:['row','col','row']},
+{name: 'CAS',     wave: '1..0....1.',								phase: 0.90, period: 2.0},
 ]}</script><br/><p>
-This diagram shows the timing for a long-running RAM access, 
-in which the RAM read or write completes sooner than MC68k removes /AS. <br/>
+This diagram shows the timing for a long-running RAM access, in which the RAM read or write completes sooner than MC68k removes /AS.
 </p><p>
-There are cases in which a DRAM access completes in time for termination of a 4-clock bus cycle, 
-but the bus cycle is lengthened because not all of the Ready signals to the FSB controller have gone high. <br/>
-If RS0 is returned to after a DRAM access but /AS remains asserted, 
-then the DRAM must not enter RS5-7 and thus not initiate any additional /CAS cycles. <br/>
-Notice how /CAS goes high in the middle of RS7 but /RAS stays low until the end of the /AS cycle.
-Using EDO DRAM allows the data bus output to be maintained while /RAS is low. <br/>
-However, if FPM DRAM is used or if a refresh cycle occurs before /AS rises,
-then maintenance of read data on the data bus falls to the bus capacitance and the bus hold resistors. <br/>
-Therefore it is best not to prolong DRAM read cycles, even when using EDO DRAM, so that there is no possibility of
-an intervening DRAM refresh cycle causing the data outputs to tristate. <br/>
-Fortunately, although DRAM write cycles shadowed to main sound and video memory need to be extended
-when the posted write FIFO is full, there is no need to extend DRAM read cycles. <br/>
-Therefore we do not attempt to extend the /CAS pulse to fix this problem until /AS rises since the /CAS pulse 
-could be interrupted by a refresh cycle anyway. <br/>
-To fix this problem, we could extend the /CAS pulse until /AS is high and have the
-DRAM controller conform to the DRAM "hidden refresh" protocol but it is not necessary.
 </p>
 
 
 <h3 id="t7">7. Refresh During Idle</h3><script type="WaveDrom">{signal: [
-{name: 'MCLK',    wave: 'p.......',                 phase: 0.00, period: 2},
-{name: 'RS',      wave: '22222222',                 phase:-0.2, period: 2, data:[0,0,3,4,5,6,7,0]},
-{name: 'RASEN',   wave: '1.0....1',								phase: 0.00, period: 2},
-{name: 'RASrr',   wave: '1..0.1..',								phase: 0.00, period: 2},
-{name: 'RASrf',   wave: '1.......',								phase: 1.00, period: 2},
-{name: 'RAS',     wave: '1..........x0......x1......x....',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '1..0..1.',                 phase: 0.80, period: 2},
-{name: 'RASEL',   wave: '1.0..1..',								phase: 0.00, period: 2},
+{name: 'MCLK',		wave: 'p.......',							phase: 0.00, period: 2.0},
+{name: 'A',			wave: 'x...............................',	phase: 0.00, period: 0.5, data:['000000-3FFFFF']},
+{name: 'RW',		wave: 'x...............................',	phase: 0.00, period: 0.5, data:['read or write']},
+{name: 'AS',		wave: '1...............................',	phase:-0.10, period: 0.5},
+{name: 'BACT',		wave: '1...............................',	phase: 0.00, period: 0.5},
+{name: 'BACTr',		wave: '1.......',							phase: 0.00, period: 2.0},
+{name: 'DS',		wave: '1...............................',	phase:-0.10, period: 0.5},
+{name: 'OE (RD)',	wave: '1.......',							phase:-0.10, period: 2.0},
+{name: 'WE (WR)',	wave: '1...............................',	phase:-0.10, period: 0.5},
+{name: 'RAMReady',	wave: '1.......',							phase: 0.00, period: 2.0},
+{name: 'DTACK',		wave: '1.......',							phase:-0.10, period: 2.0},
+{name: 'DTACKr',	wave: '1.......',							phase: 0.00, period: 2.0},
+{name: 'RS',		wave: '22222222',							phase: 0.00, period: 2.0, data:[0,0,4,5,6,7,0,0]},
+{name: 'RASEN',		wave: '1.0...1.',							phase: 0.00, period: 2.0},
+{name: 'RASrr',		wave: '1.0.1...',							phase: 0.00, period: 2.0},
+{name: 'RASrf',		wave: '1.......',							phase: 1.00, period: 2.0},
+{name: 'RAS',		wave: '1.......x0......x1..............',	phase:-0.10, period: 0.5},
+{name: 'RASEL',		wave: '0.......',							phase: 0.00, period: 2.0},
+{name: 'RA',		wave: 'x...............................',	phase: 0.00, period: 0.5, data:['row','col','row']},
+{name: 'CAS',		wave: '1.0.1...',							phase: 0.90, period: 2.0},
 ]}</script><br/><p>
 This diagram shows the timing of a refresh occurring after the bus and DRAM are and have been idle for at least one clock cycle.
-</p><p>
-RAM states RS2, RS3, RS4, and RS7 are used for refresh. <br/>
-RS2-RS4 implement the main refresh behavior. <br/>
-When a refresh request is pending at the rising edge ending RS0 or RS7 while /RAS is inactive, 
-RASEN is brought low and RS2 is entered. <br/>
-With RASEN low, /AS activity does not cause a /RAS pulse and the DRAM controller uses the registered /RRAS signal 
-to initiate refresh cycles. <br/>
-At the falling edge in the middle of RS2, /CAS is activated. Then at the rising edge concluding RS2, /RAS is activated 
-and RS2 transitions to RS3. <br/>
-In RS3, /RAS and /CAS remain active, and RS3 transitions to RS4.
-RS3 and RS4 serve to implement the requisite /RAS pulse width for a refresh. <br/>
-At the falling edge in the middle of RS4, /CAS is deactivated. Then at the rising edge concluding RS4, /RAS is deactivated
-and RS4 transitions to RS7. <br/>
-RREQ is cleared after the first rising edge on which RefRAS is active.<br/>
-In RS7, /RAS and /CAS remain inactive. RS7 serves to implement the requisite RAS precharge time between DRAM cycles.<br/> 
-RASEN is brought high again after the rising edge concluding RS7 and RS7 transitions to RS0 and the DRAM is considered idle again.<br/>
-</p><p>
-Also notice how a RASEN can only be disabled if /RAS is high or if a DRAM cycle is complete, otherwise
-there may be a tRAS timing violation. This constrains the timing of a refresh.
+</p>
 </p>
 
 
-<h3 id="t8">8A. Refresh Immediately Following DRAM Access - Bus Transaction Terminated Immediately</h3>
+<h3 id="t8">8A. Refresh Immediately Following DRAM Access - Idle afterwards</h3>
 <script type="WaveDrom">
 {signal: [
-{name: 'MCLK',    wave: 'p......',                 phase: 0.00, period: 2},
-{name: 'AS',      wave: '0.x1........................',  phase:-0.25, period:0.5},
-{name: 'RS',      wave: '2222222',                 phase:-0.20, period: 2, data:[2,3,4,5,6,7,0]},
-{name: 'RASEN',   wave: '0.....1',								phase: 0.00, period: 2},
-{name: 'RASrr',   wave: '1.0.1..',								phase: 0.00, period: 2},
-{name: 'RASrf',   wave: '01.....',								phase: 1.00, period: 2},
-{name: 'RAS',     wave: '0x1....x0......x1...........',  phase:-0.40, period:0.5},
-{name: 'CAS',     wave: '0....1.',                 phase: 0.80, period: 2},
-{name: 'RASEL',   wave: '0...1..',								phase: 0.00, period: 2},
+{name: 'MCLK',		wave: 'p............',											phase: 0.00, period: 2.0},
+{name: 'A',			wave: '2...x...............................................',	phase: 0.00, period: 0.5},
+{name: 'RW',		wave: '2...x...............................................',	phase: 0.00, period: 0.5},
+{name: 'AS',		wave: '0.x1................................................',	phase:-0.10, period: 0.5},
+{name: 'BACT',		wave: '1.....0.............................................',	phase: 0.00, period: 0.5},
+{name: 'BACTr',		wave: '1.0..........',											phase: 0.00, period: 2.0},
+{name: 'DS',		wave: '0.x1................................................',	phase:-0.10, period: 0.5},
+{name: 'OE (RD)',	wave: '01...........',	 										phase:-0.10, period: 2.0},
+{name: 'WE (WR)',	wave: '2.x.1...............................................',	phase:-0.10, period: 0.5},
+{name: 'RAMReady',	wave: '1............',											phase: 0.00, period: 2.0},
+{name: 'DTACK',		wave: '0.1..........',											phase:-0.10, period: 2.0},
+{name: 'DTACKr',	wave: '0..1.........',											phase: 0.00, period: 2.0},
+{name: 'RS',		wave: '2222222222222',											phase: 0.00, period: 2.0, data:[2,3,4,5,6,7,0,0,0,0,0,0,0]},
+{name: 'RASEN',		wave: '0.....1......',											phase: 0.00, period: 2.0},
+{name: 'RASrr',		wave: '1.0.1........',											phase: 0.00, period: 2.0},
+{name: 'RASrf',		wave: '1............',											phase: 1.00, period: 2.0},
+{name: 'RAS',		wave: '2.x1....x0......x1..................................',	phase:-0.10, period: 0.5},
+{name: 'RASEL',		wave: '20...........',											phase: 0.00, period: 2.0},
+{name: 'RA',		wave: '2...x...............................................',	phase: 0.00, period: 0.5},
+{name: 'CAS',		wave: '010.1........',											phase: 0.90, period: 2.0},
+]}
+</script><br/>
+
+
+<h3 id="t8">8B. Refresh Immediately Following DRAM Access - RAM access immediately afterwards</h3>
+<script type="WaveDrom">
+{signal: [
+{name: 'MCLK',		wave: 'p............',											phase: 0.00, period: 2.0},
+{name: 'A',			wave: '2...x...............................................',	phase: 0.00, period: 0.5},
+{name: 'RW',		wave: '2...x...............................................',	phase: 0.00, period: 0.5},
+{name: 'AS',		wave: '0.x1....x0..........................................',	phase:-0.10, period: 0.5},
+{name: 'BACT',		wave: '1.....0.x.1.........................................',	phase: 0.00, period: 0.5},
+{name: 'BACTr',		wave: '1.01.........',											phase: 0.00, period: 2.0},
+{name: 'DS (RD)',	wave: '0.x1....x0..........................................',	phase:-0.10, period: 0.5},
+{name: 'DS (WR)',	wave: '0.x1........x0......................................',	phase:-0.10, period: 0.5},
+{name: 'OE (RD)',	wave: '010..........',	 										phase:-0.10, period: 2.0},
+{name: 'WE (WR)',	wave: '2.x..1......................x0......................',	phase:-0.10, period: 0.5},
+{name: 'RAMReady',	wave: '1............',											phase: 0.00, period: 2.0},
+{name: 'DTACK',		wave: '0.1..........',											phase:-0.10, period: 2.0},
+{name: 'DTACKr',	wave: '0..1.........',											phase: 0.00, period: 2.0},
+{name: 'RS',		wave: '2222222222222',											phase: 0.00, period: 2.0, data:[2,3,4,5,6,7,0,1,2,3,0,0,0]},
+{name: 'RASEN',		wave: '0.....1......',											phase: 0.00, period: 2.0},
+{name: 'RASrr',		wave: '1.0.1..01....',											phase: 0.00, period: 2.0},
+{name: 'RASrf',		wave: '1.......01...',											phase: 1.00, period: 2.0},
+{name: 'RAS',		wave: '2.x1....x0......x1......x0........x1................',	phase:-0.10, period: 0.5},
+{name: 'RASEL',		wave: '20.....1.0...',											phase: 0.00, period: 2.0},
+{name: 'RA',		wave: '2...x...............................................',	phase: 0.00, period: 0.5},
+{name: 'CAS',		wave: '010.1...01...',											phase: 0.90, period: 2.0},
 ]}
 </script><br/>
 

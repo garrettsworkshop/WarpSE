@@ -42,7 +42,7 @@ module RAM(
 	assign nROMWE = !(!nAS && !nWE);
 
 	/* Shared ROM and RAM /OE control */
-	always @(posedge CLK) nOE <= !(BACT && !nWE && !(BACTr && DTACKr));
+	always @(posedge CLK) nOE <= !(BACT && nWE && !(BACTr && DTACKr));
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.
@@ -69,10 +69,10 @@ module RAM(
 	always @(posedge CLK) begin
 		case (RS[2:0])
 			0: begin // Idle/ready
-				if (RS0toRef) begin // Go to refresh
+				if (RS0toRef) begin // Refresh RAS I
 					RS <= 4;
 					RASEL <= 0;
-					RASrr <= 0;
+					RASrr <= 1;
 					RASEN <= 0;
 					RAMReady <= 0;
 				end else if (BACT && RAMCS && RASEN) begin // Access RAM
@@ -95,19 +95,12 @@ module RAM(
 				RASEN <= 0;
 				RAMReady <= 1;
 			end 2: begin // finish RAM access
-				if (DTACKr) begin // Cycle ending
-					RS <= 3;
-					RASEL <= 0;
-					RASrr <= 0;
-					RASEN <= 0;
-					RAMReady <= 1;
-				end else begin
-					RS <= 2;
-					RASEL <= 1;
-					RASrr <= 0;
-					RASEN <= 0;
-					RAMReady <= 1;
-				end
+				if (DTACKr) RS <= 3; // Cycle ending
+				else RS <= 2; // Cycle not ending yet
+				RASEL <= 0;
+				RASrr <= 0;
+				RASEN <= 0;
+				RAMReady <= 1;
 			end 3: begin  //AS cycle complete
 				if (RefUrg)  begin // Refresh RAS
 					RS <= 4;
@@ -122,32 +115,24 @@ module RAM(
 					RASEN <= 1;
 					RAMReady <= 1;
 				end
-			end 4: begin // Refresh RAS I
+			end 4: begin // Refresh RAS II
 				RS <= 5;
 				RASEL <= 0;
 				RASrr <= 1;
 				RASEN <= 0;
 				RAMReady <= 0;
-			end 5: begin // Refresh RAS II
+			end 5: begin // Refresh precharge I
 				RS <= 6;
 				RASEL <= 0;
-				RASrr <= 1;
+				RASrr <= 0;
 				RASEN <= 0;
 				RAMReady <= 0;
-			end 6: begin // Refresh precharge I / II
-				if (RASrr) begin
-					RS <= 6;
-					RASEL <= 0;
-					RASrr <= 0;
-					RASEN <= 0;
-					RAMReady <= 0;
-				end else begin
-					RS <= 7;
-					RASEL <= 0;
-					RASrr <= 0;
-					RASEN <= 0;
-					RAMReady <= 0;
-				end
+			end 6: begin // Refresh precharge II
+				RS <= 7;
+				RASEL <= 0;
+				RASrr <= 0;
+				RASEN <= 0;
+				RAMReady <= 0;
 			end 7: begin // Reenable RAM and go to idle/ready
 				RS <= 0;
 				RASEL <= 0;
