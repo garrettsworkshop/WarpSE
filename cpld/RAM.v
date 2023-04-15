@@ -61,10 +61,14 @@ module RAM(
 	assign RA[01] = !RASEL ? A[10] : A[02];
 	assign RA[00] = !RASEL ? A[09] : A[01];
 
-	wire RS0toRef = (RefReq &&  BACT && !BACTr && !RAMCS0X) ||
-					(RefUrg && !RASEN) ||
+	wire RS0toRef = // Refresh during first clock of non-RAM access
+					(RefReq &&  BACT && !BACTr && !RAMCS0X) ||
+					// Urgent refresh while bus inactive
+					(RefUrg && !BACT) ||
+					// Urgent refresh during non-RAM access
 					(RefUrg &&  BACT && !RAMCS0X) ||
-					(RefUrg && !BACT);
+					// Urgent refresh if RAM is disabled
+					(RefUrg && !RASEN);
 	
 	always @(posedge CLK) begin
 		case (RS[2:0])
