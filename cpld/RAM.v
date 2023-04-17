@@ -120,12 +120,6 @@ module RAM(
 					RAMReady <= 1;
 				end
 			end 4: begin // Refresh RAS II
-				RS <= 5;
-				RASEL <= 0;
-				RASrr <= 1;
-				RASEN <= 0;
-				RAMReady <= 0;
-			end 5: begin // Refresh precharge I
 				RS <= 6;
 				RASEL <= 0;
 				RASrr <= 0;
@@ -147,7 +141,7 @@ module RAM(
 		endcase
 	end
 	always @(negedge CLK) begin
-		RASrf <= RS==1;
+		RASrf <= RS==1 || RS==4;
 		case (RS[2:0])
 			0: nCAS <= !RS0toRef;
 			1: nCAS <= 0;
