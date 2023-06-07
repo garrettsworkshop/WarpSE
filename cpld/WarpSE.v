@@ -50,22 +50,27 @@ module WarpSE(
 
 	/* AS cycle detection */
 	wire BACT;
+	wire [3:1] BACTr;
+	wire WS;
 
-	/* Refresh request/ack signals */
-	wire RefReq, RefUrg;
+	/* Refresh request clock */
+	wire RefClk;
 	
 	/* FSB chip select signals */
+	wire Overlay;
 	wire IOCS, IOPWCS, IACS;
 	wire ROMCS, ROMCS4X, SndROMCS;
 	wire RAMCS, RAMCS0X, SndRAMCSWR;
 	CS cs(
 		/* MC68HC000 interface */
 		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
-		/*  AS cycle detection */
+		/* /AS cycle detection */
 		BACT,
+		/* Overlay */
+		Overlay,
 		/* Device select outputs */
 		IOCS, IOPWCS, IACS,
-		ROMCS, ROMCS4X, SndROMCS,
+		ROMCS, ROMCS4X,
 		RAMCS, RAMCS0X, SndRAMCSWR);
 
 	wire RAMReady;
@@ -74,16 +79,16 @@ module WarpSE(
 		FCLK, A_FSB[21:1], nWE_FSB,
 		nAS_FSB, nLDS_FSB, nUDS_FSB, nDTACK_FSB,
 		/* AS cycle detection */
-		BACT,
+		BACT, BACTr,
 		/* Select and ready signals */
 		RAMCS, RAMCS0X, ROMCS, RAMReady,
 		/* Refresh Counter Interface */
-		RefReq, RefUrg, 
+		RefClk, 
 		/* DRAM and NOR flash interface */
 		RA[11:0], nRAS, nCAS,
 		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
 
-	wire IONPReady, IOPWReady;
+	wire IOReady, IOPWReady;
 	wire IORDREQ, IOWRREQ;
 	wire IOL0, IOU0;
 	wire ALE0S, ALE0M, ALE1;
@@ -96,9 +101,9 @@ module WarpSE(
 		/* AS cycle detection */
 		BACT,
 		/* Select signals */
-		IOCS, IOPWCS, ROMCS,
+		IOCS, IOPWCS, Overlay,
 		/* FSB cycle termination outputs */
-		IONPReady, IOPWReady, nBERR_FSB,
+		IOReady, IOPWReady, nBERR_FSB,
 		/* Read data OE control */
 		nDinOE,
 		/* IOB Master Controller Interface */
@@ -129,28 +134,26 @@ module WarpSE(
 
 	wire QoSReady;
 	CNT cnt(
-		/* FSB clock and E clock inputs */
-		FCLK, E,
+		/* FSB clock, C8M clock, E clock inputs */
+		FCLK, C8M, E,
 		/* Refresh request */
-		RefReq, RefUrg,
+		RefClk,
 		/* Reset, button */
 		nRESout, nIPL2, 
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
 		/* Sound QoS */
-		BACT, nWE_FSB,
-		SndROMCS, SndRAMCSWR, RAMCS0X,
-		QoSReady);
+		BACT, SndRAMCSWR, QoSReady);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
 		FCLK, nAS_FSB, nDTACK_FSB, nVPA_FSB,
 		/* FSB cycle detection */
-		BACT,
+		BACT, BACTr, WS,
 		/* Ready inputs */
 		ROMCS4X,
 		RAMCS0X, RAMReady,
-		IOPWCS, IOPWReady, IONPReady,
+		IOPWCS, IOPWReady, IOReady,
 		QoSReady,
 		/* Interrupt acknowledge select */
 		IACS);

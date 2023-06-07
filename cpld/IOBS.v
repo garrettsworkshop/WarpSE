@@ -4,9 +4,9 @@ module IOBS(
 	/* AS cycle detection */
 	input BACT,
 	/* Select signals */
-	input IOCS, input IOPWCS, input ROMCS,
+	input IOCS, input IOPWCS, input Overlay,
 	/* FSB cycle termination outputs */
-	output reg IONPReady, output IOPWReady, output reg nBERR_FSB,
+	output reg IOReady, output IOPWReady, output reg nBERR_FSB,
 	/* Read data OE control */
 	output nDinOE,
 	/* IOB master controller interface */
@@ -25,7 +25,7 @@ module IOBS(
 	wire IODONE = IODONEr;
 
 	/* Read data OE control */
-	assign nDinOE = !(!nAS && IOCS && nWE && !ROMCS);
+	assign nDinOE = !(!nAS && IOCS && nWE && !Overlay);
 	
 	/* I/O transfer state
 	 * TS0 - I/O bridge idle:
@@ -47,7 +47,7 @@ module IOBS(
 	always @(posedge CLK) begin // ALE and R/W load control
 		// If write currently posting (TS!=0),
 		// I/O selected, and FIFO secondary level empty
-		if (BACT && IOCS && !ALE1 && !Sent && IOPWCS && TS!=0) begin
+		if (BACT && !ALE1 && !Sent && IOPWCS && TS!=0) begin
 			// Latch R/W now but latch address and LDS/UDS next cycle
 			IORW1 <= nWE;
 			Load1 <= 1;
@@ -122,14 +122,17 @@ module IOBS(
 	/* Sent control */
 	always @(posedge CLK) begin
 		if (!BACT) Sent <= 0;
-		else if (BACT && IOCS && !ALE1 && (IOPWCS || TS==0)) Sent <= 1;
+		else if (IOCS && !ALE1 && (IOPWCS || TS==0)) Sent <= 1;
 	end
 
-	/* Nonposted and posted ready */
+	/* Posted write ready */
 	assign IOPWReady = !ALE1; // Posted write reaedy
+
+	/* Nonposted ready / posted write submitted ready continuation */
 	always @(posedge CLK) begin // Nonposted read/write ready
-		if (!BACT) IONPReady <= 0;
-		else if (Sent && !IOPWCS && IODONE) IONPReady <= 1;
+		if (!BACT) IOReady <= 0;
+		else if (Sent && IODONE) IOReady <= 1;
+		else if (IOPWCS && !ALE1) IOReady <= 1;
 	end
 
 	/* BERR control */

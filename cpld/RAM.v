@@ -3,17 +3,16 @@ module RAM(
 	input CLK, input [21:1] A, input nWE,
 	input nAS, input nLDS, input nUDS, input nDTACK,
 	/* AS cycle detection */
-	input BACT, 
+	input BACT, input [3:1] BACTr,
 	/* Select and ready signals */
 	input RAMCS, input RAMCS0X, input ROMCS, output reg RAMReady,
 	/* Refresh Counter Interface */
-	input RefReqIn, input RefUrgIn,
+	input RefClk,
 	/* DRAM and NOR flash interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
 	output nLWE, output nUWE, output reg nOE, output nROMCS, output nROMWE);
 
 	/* BACT and /DTACK registration */
-	reg BACTr; always @(posedge CLK) BACTr <= BACT;
 	reg DTACKr; always @(posedge CLK) DTACKr <= !nDTACK;
 
 	/* RAM control state */
@@ -24,13 +23,19 @@ module RAM(
 	reg RASrf = 0;
 
 	/* Refresh command generation */
-	reg RefDone; // Refresh done "remember"
+	reg nRefClkR; always @(posedge CLK) nRefClkR <= !RefClk;
+	reg RefReq;
+	reg RefUrg;
 	always @(posedge CLK) begin
-		if (!RefReqIn && !RefUrgIn) RefDone <= 0;
-		else if (RS[2]) RefDone <= 1;
+		if (!nRefClkR && !RefClk) begin
+			RefReq <= 1;
+		else if (nRefClkR && RefClk) begin
+			RefUrg <= RefReq;
+		else if (RS[2]) beign
+			RefReq <= 0;
+			RefUrg <= 0;
+		end
 	end
-	wire RefReq = RefReqIn && !RefDone;
-	wire RefUrg = RefUrgIn && !RefDone;
 
 	/* RAM control signals */
 	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrr || RASrf);
@@ -42,7 +47,7 @@ module RAM(
 	assign nROMWE = !(!nAS && !nWE);
 
 	/* Shared ROM and RAM /OE control */
-	always @(posedge CLK) nOE <= !(BACT && nWE && !(BACTr && DTACKr));
+	always @(posedge CLK) nOE <= !(BACT && nWE && !(BACTr[1] && DTACKr));
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.
@@ -62,7 +67,7 @@ module RAM(
 	assign RA[00] = !RASEL ? A[09] : A[01];
 
 	wire RS0toRef = // Refresh during first clock of non-RAM access
-					(RefReq &&  BACT && !BACTr && !RAMCS0X) ||
+					(RefReq &&  BACT && !BACTr[1] && !RAMCS0X) ||
 					// Urgent refresh while bus inactive
 					(RefUrg && !BACT) ||
 					// Urgent refresh during non-RAM access
