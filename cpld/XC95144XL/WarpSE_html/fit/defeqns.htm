@@ -5,9 +5,6 @@
 </td></tr><tr><td>
 ********** Mapped Logic **********
 </td></tr><tr><td>
-</td></tr><tr><td>
-$OpTx$$OpTx$FX_DC$346_INV$533 <= (nAS_FSB AND NOT fsb/ASrf);
-</td></tr><tr><td>
 FDCPE_ALE0M: FDCPE port map (ALE0M,ALE0M_D,C16M,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ALE0M_D <= ((iobm/IOS_FSM_FFd7 AND NOT iobm/IOS_FSM_FFd3 AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobm/IOS_FSM_FFd4 AND NOT iobm/IOS_FSM_FFd5 AND NOT iobm/IOS_FSM_FFd6 AND nAoutOE)
@@ -25,26 +22,11 @@ FDCPE_ALE0M: FDCPE port map (ALE0M,ALE0M_D,C16M,'0','0');
 </td></tr><tr><td>
 FDCPE_ALE0S: FDCPE port map (ALE0S,iobs/TS_FSM_FFd2,FCLK,'0','0');
 </td></tr><tr><td>
+FDCPE_BACTr1: FDCPE port map (BACTr(1),BACTr_D(1),FCLK,'0','0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BACTr_D(1) <= (nAS_FSB AND NOT fsb/ASrf);
+</td></tr><tr><td>
 </td></tr><tr><td>
 C25MEN <= '1';
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
-</td></tr><tr><td>
 </td></tr><tr><td>
 </td></tr><tr><td>
 </td></tr><tr><td>
@@ -85,70 +67,75 @@ FDCPE_IODONE: FDCPE port map (IODONE,IODONE_D,NOT C8M,nAS_IOB,'0');
 </td></tr><tr><td>
 FTCPE_IOL0: FTCPE port map (IOL0,IOL0_T,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOL0_T <= ((iobs/TS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(19) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT iobs/IOL1 AND NOT IOL0 AND NOT nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT iobs/TS_FSM_FFd2 AND NOT fsb/ASrf AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(18) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(17) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(16) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(21) AND NOT A_FSB(20) AND cs/nOverlay AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/IORW1.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT iobs/IOL1 AND NOT IOL0 AND NOT nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT iobs/TS_FSM_FFd2 AND NOT fsb/ASrf AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(21) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(20) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(19) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND nWE_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(21) AND NOT A_FSB(20) AND cs/nOverlay AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nLDS_FSB AND NOT IOL0 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT nLDS_FSB AND IOL0 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/IOL1 AND IOL0 AND NOT nADoutLE1));
 </td></tr><tr><td>
-FDCPE_IONPReady: FDCPE port map (IONPReady,IONPReady_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IONPReady_D <= ((NOT iobs/Sent AND NOT IONPReady)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT IONPReady AND NOT iobs/IODONEr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT IONPReady)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT IONPReady));
-</td></tr><tr><td>
 FDCPE_IORDREQ: FDCPE port map (IORDREQ,IORDREQ_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IORDREQ_D <= ((iobs/Load1.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd2 AND NOT IORDREQ)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT nWE_FSB AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT iobs/IORW1 AND NOT iobs/TS_FSM_FFd2 AND NOT nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IORDREQ_D <= ((NOT iobs/IORW1 AND NOT iobs/TS_FSM_FFd2 AND NOT nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT iobs/TS_FSM_FFd2 AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT iobs/TS_FSM_FFd2 AND NOT fsb/ASrf AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(21) AND NOT A_FSB(20) AND cs/nOverlay AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd1 AND iobs/IOACTr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd1 AND iobs/IOACTr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd2 AND NOT IORDREQ)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT nWE_FSB AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1));
+</td></tr><tr><td>
+FTCPE_IOReady: FTCPE port map (IOReady,IOReady_T,FCLK,'0','0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOReady_T <= ((IOReady AND nAS_FSB AND NOT fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT IOReady AND NOT nAS_FSB AND iobs/IODONEr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT IOReady AND fsb/ASrf AND iobs/IODONEr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT nWE_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IOReady AND NOT nAS_FSB AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT nWE_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT IOReady AND fsb/ASrf AND nADoutLE1));
 </td></tr><tr><td>
 FTCPE_IOU0: FTCPE port map (IOU0,IOU0_T,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOU0_T <= ((iobs/TS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nBERR_FSB_OBUF.EXP)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT iobs/IOU1 AND NOT IOU0 AND NOT nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT iobs/TS_FSM_FFd2 AND NOT fsb/ASrf AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(21) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND nWE_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(18) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(17) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(16) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(21) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(20) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(19) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND nWE_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(21) AND NOT A_FSB(20) AND cs/nOverlay AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nUDS_FSB AND NOT IOU0 AND nADoutLE1)
@@ -169,16 +156,10 @@ FDCPE_IOWRREQ: FDCPE port map (IOWRREQ,IOWRREQ_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT iobs/Sent AND NOT cs/nOverlay AND NOT nWE_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND NOT iobs/Sent AND NOT nWE_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nAS_FSB AND NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND NOT iobs/Sent AND NOT nWE_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND NOT iobs/Sent AND NOT nWE_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nAS_FSB AND NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND NOT iobs/Sent AND NOT nWE_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND NOT nWE_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT iobs/TS_FSM_FFd1 AND iobs/TS_FSM_FFd2 AND IOWRREQ)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd2 AND NOT iobs/IOACTr AND IOWRREQ)
@@ -189,72 +170,45 @@ FDCPE_IOWRREQ: FDCPE port map (IOWRREQ,IOWRREQ_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT iobs/Sent AND NOT nWE_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1));
 </td></tr><tr><td>
-FDCPE_QoSReady: FDCPE port map (QoSReady,QoSReady_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QoSReady_D <= ((A_FSB(22) AND NOT A_FSB(17) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT A_FSB(16) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nROMWE_OBUF.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(21) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(19) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(18) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(12) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND NOT cnt/LTimer(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT nWE_FSB AND NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (QoSReady AND NOT $OpTx$$OpTx$FX_DC$346_INV$533)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT $OpTx$$OpTx$FX_DC$346_INV$533));
-</td></tr><tr><td>
 </td></tr><tr><td>
 RA(0) <= ((ram/RASEL AND A_FSB(1))
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RASEL AND A_FSB(9)));
 </td></tr><tr><td>
 </td></tr><tr><td>
-RA(1) <= ((A_FSB(10) AND NOT ram/RASEL)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND A_FSB(2)));
+RA(1) <= ((ram/RASEL AND A_FSB(2))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RASEL AND A_FSB(10)));
 </td></tr><tr><td>
 </td></tr><tr><td>
-RA(2) <= ((ram/RASEL AND A_FSB(7))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(16) AND NOT ram/RASEL));
+RA(2) <= ((A_FSB(16) AND NOT ram/RASEL)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND A_FSB(7)));
 </td></tr><tr><td>
 </td></tr><tr><td>
 RA(3) <= ((A_FSB(20) AND ram/RASEL)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(19) AND NOT ram/RASEL));
 </td></tr><tr><td>
 </td></tr><tr><td>
-RA(4) <= ((A_FSB(11) AND NOT ram/RASEL)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND A_FSB(3)));
+RA(4) <= ((ram/RASEL AND A_FSB(3))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RASEL AND A_FSB(11)));
 </td></tr><tr><td>
 </td></tr><tr><td>
-RA(5) <= ((A_FSB(12) AND NOT ram/RASEL)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND A_FSB(4)));
+RA(5) <= ((ram/RASEL AND A_FSB(4))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RASEL AND A_FSB(12)));
 </td></tr><tr><td>
 </td></tr><tr><td>
-RA(6) <= ((A_FSB(13) AND NOT ram/RASEL)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND A_FSB(5)));
+RA(6) <= ((ram/RASEL AND A_FSB(5))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RASEL AND A_FSB(13)));
 </td></tr><tr><td>
 </td></tr><tr><td>
-RA(7) <= ((A_FSB(14) AND NOT ram/RASEL)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND A_FSB(6)));
+RA(7) <= ((ram/RASEL AND A_FSB(6))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RASEL AND A_FSB(14)));
 </td></tr><tr><td>
 </td></tr><tr><td>
 RA(8) <= ((A_FSB(21) AND ram/RASEL)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(18) AND NOT ram/RASEL));
 </td></tr><tr><td>
 </td></tr><tr><td>
-RA(9) <= ((A_FSB(15) AND NOT ram/RASEL)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND A_FSB(8)));
+RA(9) <= ((ram/RASEL AND A_FSB(8))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RASEL AND A_FSB(15)));
 </td></tr><tr><td>
 </td></tr><tr><td>
 RA(10) <= ((A_FSB(17) AND NOT ram/RASEL)
@@ -265,277 +219,119 @@ RA(11) <= ((A_FSB(20) AND ram/RASEL)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(19) AND NOT ram/RASEL));
 </td></tr><tr><td>
 FDCPE_RAMReady: FDCPE port map (RAMReady,RAMReady_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAMReady_D <= ((EXP20_.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd3 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND NOT RAMReady)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND ram/RS_FSM_FFd7 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RASEN AND NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND NOT ram/RS_FSM_FFd7 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd3 AND NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd3 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RAMReady_D <= ((ram/RefUrg AND nAS_FSB AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6 AND NOT fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND ram/RefReq AND NOT nAS_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd6)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd3 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd6 AND NOT BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND ram/RefReq AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6 AND NOT BACTr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND ram/RefReq AND NOT nAS_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd2));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd6 AND NOT BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND ram/RefReq AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6 AND NOT BACTr(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND ram/RefUrg AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND ram/RefUrg AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefUrg AND NOT ram/RS_FSM_FFd8 AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefUrg AND NOT ram/RASEN AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd8 AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6));
 </td></tr><tr><td>
-FDCPE_RefReq: FDCPE port map (RefReq,RefReq_D,FCLK,'0','0',RefReq_CE);
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RefReq_D <= (NOT cnt/Timer(0) AND cnt/Timer(1) AND NOT cnt/Timer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Timer(3));
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RefReq_CE <= (NOT cnt/Er(0) AND cnt/Er(1));
-</td></tr><tr><td>
-FDCPE_RefUrg: FDCPE port map (RefUrg,RefUrg_D,FCLK,'0','0',RefUrg_CE);
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RefUrg_D <= (NOT cnt/Timer(1) AND NOT cnt/Timer(2) AND cnt/Timer(3));
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RefUrg_CE <= (NOT cnt/Er(0) AND cnt/Er(1));
+FTCPE_RefClk: FTCPE port map (RefClk,RefClk_T,FCLK,'0','0',RefClk_CE);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RefClk_T <= ((RefClk AND cnt/TimerTC AND NOT cnt/Er(0) AND cnt/Er(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/Timer(0) AND cnt/Timer(1) AND cnt/Timer(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/TimerTC)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/Timer(0) AND cnt/Timer(1) AND cnt/Timer(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(0))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/Timer(0) AND cnt/Timer(1) AND cnt/Timer(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(1)));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RefClk_CE <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
 FDCPE_cnt/Er0: FDCPE port map (cnt/Er(0),E,FCLK,'0','0');
 </td></tr><tr><td>
 FDCPE_cnt/Er1: FDCPE port map (cnt/Er(1),cnt/Er(0),FCLK,'0','0');
 </td></tr><tr><td>
 FTCPE_cnt/IS_FSM_FFd1: FTCPE port map (cnt/IS_FSM_FFd1,cnt/IS_FSM_FFd1_T,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/IS_FSM_FFd1_T <= (cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/nIPL2r AND cnt/Er(1) AND cnt/LTimerTC);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/IS_FSM_FFd1_T <= (cnt/TimerTC AND cnt/LTimerTC AND NOT cnt/IS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/nIPL2r AND cnt/Er(1));
 </td></tr><tr><td>
 FTCPE_cnt/IS_FSM_FFd2: FTCPE port map (cnt/IS_FSM_FFd2,cnt/IS_FSM_FFd2_T,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/IS_FSM_FFd2_T <= ((cnt/TimerTC AND cnt/IS_FSM_FFd1 AND cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1) AND cnt/LTimerTC)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1) AND cnt/LTimerTC));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/IS_FSM_FFd2_T <= ((cnt/TimerTC AND cnt/LTimerTC AND cnt/IS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/TimerTC AND cnt/LTimerTC AND NOT cnt/IS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1)));
 </td></tr><tr><td>
-FDCPE_cnt/LTimer0: FDCPE port map (cnt/LTimer(0),cnt/LTimer_D(0),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_D(0) <= ((nAoutOE_OBUF.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(8) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(9) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(11) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(8) AND cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(1).EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(3) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(4) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(5) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(7) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(1) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND NOT cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2));
+FTCPE_cnt/LTimer0: FTCPE port map (cnt/LTimer(0),'1',FCLK,'0','0',cnt/LTimer_CE(0));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(0) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FDCPE_cnt/LTimer1: FDCPE port map (cnt/LTimer(1),cnt/LTimer_D(1),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_D(1) <= (($OpTx$$OpTx$FX_DC$346_INV$533.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(9) AND cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(8) AND cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND A_FSB(8) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf AND cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND NOT A_FSB(12) AND NOT A_FSB(14) AND NOT A_FSB(11) AND NOT A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(9) AND cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND NOT A_FSB(12) AND NOT A_FSB(14) AND NOT A_FSB(11) AND NOT A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(8) AND cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND NOT cnt/LTimer(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(1) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2));
+FTCPE_cnt/LTimer1: FTCPE port map (cnt/LTimer(1),cnt/LTimer(0),FCLK,'0','0',cnt/LTimer_CE(1));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(1) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer2: FTCPE port map (cnt/LTimer(2),cnt/LTimer_T(2),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(2) <= ((cnt/LTimer(2) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1)));
+FTCPE_cnt/LTimer2: FTCPE port map (cnt/LTimer(2),cnt/LTimer_T(2),FCLK,'0','0',cnt/LTimer_CE(2));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(2) <= (cnt/LTimer(0) AND cnt/LTimer(1));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(2) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer3: FTCPE port map (cnt/LTimer(3),cnt/LTimer_T(3),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(3) <= ((cnt/LTimer(3) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/TimerTC AND cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1)));
+FTCPE_cnt/LTimer3: FTCPE port map (cnt/LTimer(3),cnt/LTimer_T(3),FCLK,'0','0',cnt/LTimer_CE(3));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(3) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(3) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer4: FTCPE port map (cnt/LTimer(4),cnt/LTimer_T(4),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(4) <= ((cnt/LTimer(4) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/TimerTC AND cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(1)));
+FTCPE_cnt/LTimer4: FTCPE port map (cnt/LTimer(4),cnt/LTimer_T(4),FCLK,'0','0',cnt/LTimer_CE(4));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(4) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(4) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer5: FTCPE port map (cnt/LTimer(5),cnt/LTimer_T(5),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(5) <= ((cnt/LTimer(5) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/TimerTC AND cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1)));
+FTCPE_cnt/LTimer5: FTCPE port map (cnt/LTimer(5),cnt/LTimer_T(5),FCLK,'0','0',cnt/LTimer_CE(5));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(5) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(5) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer6: FTCPE port map (cnt/LTimer(6),cnt/LTimer_T(6),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(6) <= ((cnt/LTimer(6) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1)));
+FTCPE_cnt/LTimer6: FTCPE port map (cnt/LTimer(6),cnt/LTimer_T(6),FCLK,'0','0',cnt/LTimer_CE(6));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(6) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(6) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer7: FTCPE port map (cnt/LTimer(7),cnt/LTimer_T(7),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(7) <= ((cnt/LTimer(7) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
+FTCPE_cnt/LTimer7: FTCPE port map (cnt/LTimer(7),cnt/LTimer_T(7),FCLK,'0','0',cnt/LTimer_CE(7));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(7) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(7) <= (NOT cnt/Er(0) AND cnt/Er(1));
+</td></tr><tr><td>
+FTCPE_cnt/LTimer8: FTCPE port map (cnt/LTimer(8),cnt/LTimer_T(8),FCLK,'0','0',cnt/LTimer_CE(8));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(8) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/TimerTC AND cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1)));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(8) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer8: FTCPE port map (cnt/LTimer(8),cnt/LTimer_T(8),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(8) <= ((cnt/LTimer(8) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
+FTCPE_cnt/LTimer9: FTCPE port map (cnt/LTimer(9),cnt/LTimer_T(9),FCLK,'0','0',cnt/LTimer_CE(9));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(9) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/TimerTC AND cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(1)));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/LTimer(8));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(9) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer9: FTCPE port map (cnt/LTimer(9),cnt/LTimer_T(9),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(9) <= ((cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
+FTCPE_cnt/LTimer10: FTCPE port map (cnt/LTimer(10),cnt/LTimer_T(10),FCLK,'0','0',cnt/LTimer_CE(10));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(10) <= (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/TimerTC AND cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(9) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1)));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(10) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/LTimer10: FTCPE port map (cnt/LTimer(10),cnt/LTimer_T(10),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(10) <= ((cnt/LTimer(10) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9) AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND cnt/LTimer(6) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9) AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1)));
-</td></tr><tr><td>
-FTCPE_cnt/LTimer11: FTCPE port map (cnt/LTimer(11),cnt/LTimer_T(11),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(11) <= ((cnt/LTimer(11) AND cnt/IS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(10) AND 
+FTCPE_cnt/LTimer11: FTCPE port map (cnt/LTimer(11),cnt/LTimer_T(11),FCLK,'0','0',cnt/LTimer_CE(11));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_T(11) <= (cnt/LTimer(0) AND cnt/LTimer(10) AND cnt/LTimer(1) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(2) AND cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(6) AND cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/TimerTC AND NOT cnt/IS_FSM_FFd1 AND NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(2) AND cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(6) AND cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/TimerTC AND cnt/IS_FSM_FFd2 AND NOT cnt/Er(0) AND cnt/Er(1)));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(6) AND cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimer_CE(11) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FDCPE_cnt/LTimerTC: FDCPE port map (cnt/LTimerTC,cnt/LTimerTC_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimerTC_D <= (NOT cnt/LTimer(0) AND cnt/LTimer(1) AND cnt/LTimer(10) AND 
+FDCPE_cnt/LTimerTC: FDCPE port map (cnt/LTimerTC,cnt/LTimerTC_D,FCLK,'0','0',cnt/LTimerTC_CE);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimerTC_D <= (NOT cnt/LTimer(0) AND cnt/LTimer(10) AND cnt/LTimer(1) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(2) AND cnt/LTimer(3) AND cnt/LTimer(4) AND cnt/LTimer(5) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(6) AND cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/LTimer(11));
-</td></tr><tr><td>
-</td></tr><tr><td>
-cnt/LTimer_1_not0001/cnt/LTimer_1_not0001_D2 <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND A_FSB(9) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND NOT A_FSB(12) AND NOT A_FSB(14) AND NOT A_FSB(11) AND NOT A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND A_FSB(9) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND NOT A_FSB(12) AND NOT A_FSB(14) AND NOT A_FSB(11) AND NOT A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND A_FSB(8) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND A_FSB(8) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND NOT A_FSB(12) AND NOT A_FSB(14) AND NOT A_FSB(11) AND NOT A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(9))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/TimerTC AND NOT cnt/Er(0) AND cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/LTimer(0) AND NOT cnt/LTimer(1) AND NOT cnt/LTimer(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/LTimer(2) AND NOT cnt/LTimer(3) AND NOT cnt/LTimer(4) AND NOT cnt/LTimer(5) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/LTimer(6) AND NOT cnt/LTimer(7) AND NOT cnt/LTimer(8) AND NOT cnt/LTimer(9) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/LTimer(11) AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(9))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND A_FSB(12) AND A_FSB(14) AND A_FSB(11) AND A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(8))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(15) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(13) AND NOT A_FSB(12) AND NOT A_FSB(14) AND NOT A_FSB(11) AND NOT A_FSB(10) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(8)));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/LTimerTC_CE <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
 FTCPE_cnt/Timer0: FTCPE port map (cnt/Timer(0),cnt/Timer_T(0),FCLK,'0','0',cnt/Timer_CE(0));
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/Timer_T(0) <= (NOT cnt/Timer(0) AND cnt/TimerTC AND NOT cnt/Er(0) AND 
@@ -555,39 +351,10 @@ FDCPE_cnt/Timer2: FDCPE port map (cnt/Timer(2),cnt/Timer_D(2),FCLK,'0','0',cnt/T
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/TimerTC AND NOT cnt/Er(0) AND cnt/Er(1)));
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/Timer_CE(2) <= (NOT cnt/Er(0) AND cnt/Er(1));
 </td></tr><tr><td>
-FTCPE_cnt/Timer3: FTCPE port map (cnt/Timer(3),cnt/Timer_T(3),FCLK,'0','0',cnt/Timer_CE(3));
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/Timer_T(3) <= ((cnt/Timer(0) AND cnt/Timer(1) AND cnt/Timer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/TimerTC)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/Timer(0) AND cnt/Timer(1) AND cnt/Timer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(0))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/Timer(0) AND cnt/Timer(1) AND cnt/Timer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/Timer(3) AND cnt/TimerTC AND NOT cnt/Er(0) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(1)));
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/Timer_CE(3) <= (NOT cnt/Er(0) AND cnt/Er(1));
-</td></tr><tr><td>
 FDCPE_cnt/TimerTC: FDCPE port map (cnt/TimerTC,cnt/TimerTC_D,FCLK,'0','0',cnt/TimerTC_CE);
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/TimerTC_D <= (cnt/Timer(0) AND NOT cnt/Timer(1) AND NOT cnt/Timer(2) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Timer(3));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/TimerTC_D <= (RefClk AND cnt/Timer(0) AND NOT cnt/Timer(1) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Timer(2));
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/TimerTC_CE <= (NOT cnt/Er(0) AND cnt/Er(1));
-</td></tr><tr><td>
-FTCPE_cnt/WS0: FTCPE port map (cnt/WS(0),cnt/WS_T(0),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/WS_T(0) <= (nAS_FSB AND NOT cnt/WS(0) AND NOT fsb/ASrf);
-</td></tr><tr><td>
-FDCPE_cnt/WS1: FDCPE port map (cnt/WS(1),cnt/WS_D(1),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/WS_D(1) <= ((nAS_FSB AND NOT fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/WS(0) AND cnt/WS(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/WS(0) AND NOT cnt/WS(1)));
-</td></tr><tr><td>
-FTCPE_cnt/WS2: FTCPE port map (cnt/WS(2),cnt/WS_T(2),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/WS_T(2) <= ((nAS_FSB AND cnt/WS(2) AND NOT fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT nAS_FSB AND cnt/WS(0) AND cnt/WS(1))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/WS(0) AND cnt/WS(1) AND fsb/ASrf));
-</td></tr><tr><td>
-FTCPE_cnt/WS3: FTCPE port map (cnt/WS(3),cnt/WS_T(3),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/WS_T(3) <= ((NOT nAS_FSB AND cnt/WS(0) AND cnt/WS(1) AND cnt/WS(2))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/WS(0) AND cnt/WS(1) AND cnt/WS(2) AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND cnt/WS(3) AND NOT fsb/ASrf));
 </td></tr><tr><td>
 FDCPE_cnt/nIPL2r: FDCPE port map (cnt/nIPL2r,nIPL2,FCLK,'0','0');
 </td></tr><tr><td>
@@ -696,95 +463,53 @@ FDCPE_iobs/IOL1: FDCPE port map (iobs/IOL1,NOT nLDS_FSB,FCLK,'0','0',iobs/Load1)
 </td></tr><tr><td>
 FTCPE_iobs/IORW1: FTCPE port map (iobs/IORW1,iobs/IORW1_T,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobs/IORW1_T <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND iobs/TS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND iobs/IORW1 AND NOT nAS_FSB AND iobs/TS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND iobs/TS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND iobs/IORW1 AND NOT nAS_FSB AND iobs/TS_FSM_FFd2 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND iobs/TS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND iobs/IORW1 AND iobs/TS_FSM_FFd1 AND fsb/ASrf AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND iobs/TS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	iobs/TS_FSM_FFd1 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	iobs/TS_FSM_FFd1 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/IORW1 AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	iobs/TS_FSM_FFd2 AND nADoutLE1));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND iobs/IORW1 AND iobs/TS_FSM_FFd2 AND fsb/ASrf AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1));
 </td></tr><tr><td>
 FDCPE_iobs/IOU1: FDCPE port map (iobs/IOU1,NOT nUDS_FSB,FCLK,'0','0',iobs/Load1);
 </td></tr><tr><td>
 FDCPE_iobs/Load1: FDCPE port map (iobs/Load1,iobs/Load1_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobs/Load1_D <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND iobs/TS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND iobs/TS_FSM_FFd1 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/TS_FSM_FFd1 AND fsb/ASrf AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/TS_FSM_FFd2 AND fsb/ASrf AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND iobs/TS_FSM_FFd1 AND fsb/ASrf AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/TS_FSM_FFd1 AND fsb/ASrf AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND iobs/TS_FSM_FFd2 AND fsb/ASrf AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND iobs/TS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND iobs/TS_FSM_FFd1 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND iobs/TS_FSM_FFd2 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1));
 </td></tr><tr><td>
 FTCPE_iobs/Sent: FTCPE port map (iobs/Sent,iobs/Sent_T,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobs/Sent_T <= ((A_FSB(22) AND A_FSB(21) AND NOT iobs/Sent AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(20) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobs/Sent_T <= ((A_FSB(22) AND A_FSB(20) AND NOT iobs/Sent AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT iobs/Sent AND NOT cs/nOverlay AND NOT nAS_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(21) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT iobs/Sent AND NOT cs/nOverlay AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND fsb/ASrf AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND NOT nAS_FSB AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(13) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND fsb/ASrf AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND A_FSB(14) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/Sent AND NOT nWE_FSB AND fsb/ASrf AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nWE_FSB AND fsb/ASrf AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND nAS_FSB AND NOT fsb/ASrf)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT iobs/Sent AND NOT nAS_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
@@ -800,20 +525,27 @@ FDCPE_iobs/TS_FSM_FFd1: FDCPE port map (iobs/TS_FSM_FFd1,iobs/TS_FSM_FFd1_D,FCLK
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd1 AND iobs/IOACTr));
 </td></tr><tr><td>
 FDCPE_iobs/TS_FSM_FFd2: FDCPE port map (iobs/TS_FSM_FFd2,iobs/TS_FSM_FFd2_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobs/TS_FSM_FFd2_D <= ((nRAS_OBUF.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT iobs/TS_FSM_FFd2 AND NOT fsb/ASrf AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(21) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobs/TS_FSM_FFd2_D <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(21) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(20) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(16) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(19) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(18) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(17) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND nWE_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(21) AND NOT A_FSB(20) AND cs/nOverlay AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd1 AND NOT iobs/TS_FSM_FFd2)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/TS_FSM_FFd1 AND iobs/IOACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (iobs/Sent AND NOT iobs/TS_FSM_FFd2 AND nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT iobs/TS_FSM_FFd2 AND NOT fsb/ASrf AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT A_FSB(16) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT iobs/TS_FSM_FFd2 AND nADoutLE1));
 </td></tr><tr><td>
 </td></tr><tr><td>
 nADoutLE0 <= (NOT ALE0M AND NOT ALE0S);
@@ -838,8 +570,8 @@ FDCPE_nAoutOE: FDCPE port map (nAoutOE,nAoutOE_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2 AND NOT nAoutOE));
 </td></tr><tr><td>
 FDCPE_nBERR_FSB: FDCPE port map (nBERR_FSB,nBERR_FSB_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nBERR_FSB_D <= ((NOT IOBERR AND nBERR_FSB)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT iobs/Sent AND nBERR_FSB)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nBERR_FSB_D <= ((NOT iobs/Sent AND nBERR_FSB)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT IOBERR AND nBERR_FSB)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT fsb/ASrf));
 </td></tr><tr><td>
 FTCPE_nBR_IOB: FTCPE port map (nBR_IOB,nBR_IOB_T,FCLK,'0','0');
@@ -850,37 +582,41 @@ FTCPE_nBR_IOB: FTCPE port map (nBR_IOB,nBR_IOB_T,FCLK,'0','0');
 FDCPE_nCAS: FDCPE port map (nCAS,nCAS_D,NOT FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nCAS_D <= ((ram/RS_FSM_FFd1)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RS_FSM_FFd2)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefDone AND ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefDone AND ram/RS_FSM_FFd3)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RS_FSM_FFd4 AND ram/DTACKr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND NOT RefReq AND ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND ram/RS_FSM_FFd7 AND ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT RefUrg AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND nAS_FSB AND ram/RS_FSM_FFd7 AND NOT fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RS_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND ram/RS_FSM_FFd4)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND NOT ram/RefReq AND ram/RS_FSM_FFd8)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND ram/RS_FSM_FFd8 AND BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RefUrg AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND nAS_FSB AND ram/RS_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT fsb/ASrf)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND ram/RASEN)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND ram/RS_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND ram/RS_FSM_FFd8 AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RASEN AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND ram/RS_FSM_FFd3)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND ram/RS_FSM_FFd6)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefDone AND ram/RS_FSM_FFd6));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/DTACKr AND ram/RS_FSM_FFd5));
 </td></tr><tr><td>
 FDCPE_nDTACK_FSB: FDCPE port map (nDTACK_FSB,nDTACK_FSB_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nDTACK_FSB_D <= ((cnt/WS(3).EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT IONPReady)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT IONPReady AND NOT QoSReady)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nDTACK_FSB_D <= ((A_FSB(23) AND A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(17) AND A_FSB(16) AND NOT nWE_FSB AND NOT IOReady AND NOT nADoutLE1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT IOReady)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(21) AND NOT IONPReady)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(20) AND NOT IONPReady));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(21) AND NOT IOReady)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(20) AND NOT IOReady)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(22) AND NOT IOReady AND NOT RAMReady));
 </td></tr><tr><td>
 FDCPE_nDinLE: FDCPE port map (nDinLE,nDinLE_D,NOT C16M,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nDinLE_D <= (NOT iobm/IOS_FSM_FFd3 AND NOT iobm/IOS_FSM_FFd4);
 </td></tr><tr><td>
 </td></tr><tr><td>
-nDinOE <= NOT (((A_FSB(23) AND nWE_FSB AND NOT nAS_FSB)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(21) AND nWE_FSB AND NOT nAS_FSB)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(20) AND nWE_FSB AND NOT nAS_FSB)));
+nDinOE <= NOT (((A_FSB(23) AND cs/nOverlay AND nWE_FSB AND NOT nAS_FSB)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(21) AND cs/nOverlay AND nWE_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nAS_FSB)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND A_FSB(20) AND cs/nOverlay AND nWE_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nAS_FSB)));
 </td></tr><tr><td>
 </td></tr><tr><td>
 nDoutOE <= NOT (((iobm/DoutOE AND NOT nAoutOE)
@@ -899,8 +635,8 @@ FDCPE_nLDS_IOB: FDCPE port map (nLDS_IOB_I,nLDS_IOB,NOT C16M,'0','0');
 </td></tr><tr><td>
 FDCPE_nOE: FDCPE port map (nOE,nOE_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nOE_D <= ((NOT nWE_FSB)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/DTACKr AND ram/BACTr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/DTACKr AND BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nAS_FSB AND NOT fsb/ASrf));
 </td></tr><tr><td>
 </td></tr><tr><td>
 nRAMLWE <= NOT ((NOT nWE_FSB AND NOT nLDS_FSB AND ram/RASEL));
@@ -909,8 +645,8 @@ nRAMLWE <= NOT ((NOT nWE_FSB AND NOT nLDS_FSB AND ram/RASEL));
 nRAMUWE <= NOT ((NOT nWE_FSB AND NOT nUDS_FSB AND ram/RASEL));
 </td></tr><tr><td>
 </td></tr><tr><td>
-nRAS <= NOT (((ram/RASrr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASrf)
+nRAS <= NOT (((ram/RASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASrr)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND NOT nAS_FSB AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RASEN)));
 </td></tr><tr><td>
@@ -923,8 +659,8 @@ FDCPE_nRESout: FDCPE port map (nRESout,nRESout_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nRESout_D <= (cnt/IS_FSM_FFd1 AND NOT cnt/IS_FSM_FFd2);
 </td></tr><tr><td>
 </td></tr><tr><td>
-nROMCS <= NOT (((NOT A_FSB(23) AND A_FSB(22) AND NOT A_FSB(21) AND NOT A_FSB(20))
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cs/nOverlay)));
+nROMCS <= NOT (((NOT cs/nOverlay)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND A_FSB(22) AND NOT A_FSB(21) AND NOT A_FSB(20))));
 </td></tr><tr><td>
 </td></tr><tr><td>
 nROMWE <= NOT ((NOT nWE_FSB AND NOT nAS_FSB));
@@ -949,137 +685,126 @@ FTCPE_nVMA_IOB: FTCPE port map (nVMA_IOB_I,nVMA_IOB_T,C8M,'0','0');
 </td></tr><tr><td>
 FDCPE_nVPA_FSB: FDCPE port map (nVPA_FSB,nVPA_FSB_D,FCLK,'0',nAS_FSB);
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nVPA_FSB_D <= ((A_FSB(23) AND A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND IONPReady AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nAS_FSB)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND IOReady AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND A_FSB(22) AND A_FSB(21) AND A_FSB(20) AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND IONPReady AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	fsb/ASrf));
-</td></tr><tr><td>
-FDCPE_ram/BACTr: FDCPE port map (ram/BACTr,ram/BACTr_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/BACTr_D <= (nAS_FSB AND NOT fsb/ASrf);
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND A_FSB(16) AND IOReady AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT nAS_FSB));
 </td></tr><tr><td>
 FDCPE_ram/DTACKr: FDCPE port map (ram/DTACKr,NOT nDTACK_FSB,FCLK,'0','0');
 </td></tr><tr><td>
 FDCPE_ram/RASEL: FDCPE port map (ram/RASEL,ram/RASEL_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RASEL_D <= ((ram/RS_FSM_FFd5)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RASEL_D <= ((ram/RS_FSM_FFd6)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND ram/RASEN)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND ram/RASEN AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RASEL AND NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd3 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd6 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd2));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN AND fsb/ASrf));
 </td></tr><tr><td>
 FDCPE_ram/RASEN: FDCPE port map (ram/RASEN,ram/RASEN_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RASEN_D <= ((ram/RS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RA_4_OBUF.EXP)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefDone AND ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefDone AND ram/RS_FSM_FFd3)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND NOT RefReq AND ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND ram/RS_FSM_FFd7 AND ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND nAS_FSB AND ram/RS_FSM_FFd7 AND NOT fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefUrg AND ram/RS_FSM_FFd3)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd3 AND ram/RASEN AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd2));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RefUrg AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND nAS_FSB AND ram/RS_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND ram/RS_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RASEN AND fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND ram/RS_FSM_FFd4)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND NOT ram/RefReq AND ram/RS_FSM_FFd8)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND ram/RS_FSM_FFd8 AND BACTr(1)));
 </td></tr><tr><td>
-FDCPE_ram/RASrf: FDCPE port map (ram/RASrf,ram/RASrf_D,NOT FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RASrf_D <= (NOT ram/RS_FSM_FFd5 AND NOT ram/RS_FSM_FFd6);
+FDCPE_ram/RASrf: FDCPE port map (ram/RASrf,ram/RS_FSM_FFd6,NOT FCLK,'0','0');
 </td></tr><tr><td>
 FDCPE_ram/RASrr: FDCPE port map (ram/RASrr,ram/RASrr_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RASrr_D <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND ram/RASEN)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND ram/RASEN AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefReq AND NOT ram/RefDone AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefReq AND NOT ram/RefDone AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefReq AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefReq AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd3 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd5 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd6 AND NOT ram/RS_FSM_FFd2 AND ram/RASrr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND ram/RS_FSM_FFd3)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND ram/RS_FSM_FFd7 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RASEN)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT fsb/ASrf));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RASrr_D <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND NOT cs/nOverlay AND ram/RASEN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd7 AND fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT ram/RefUrg AND NOT ram/RS_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT ram/RefUrg AND NOT ram/RS_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RefUrg AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cs/nOverlay AND NOT ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RefUrg AND NOT ram/RASEN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT cs/nOverlay AND NOT nAS_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RASEN AND NOT ram/RS_FSM_FFd4 AND NOT ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND NOT ram/RS_FSM_FFd8 AND NOT ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd8 AND NOT ram/RS_FSM_FFd4 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT ram/RefUrg AND NOT ram/RefReq AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT ram/RefUrg AND NOT ram/RefReq AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd7)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND nAS_FSB AND NOT ram/RS_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT fsb/ASrf));
 </td></tr><tr><td>
 FDCPE_ram/RS_FSM_FFd1: FDCPE port map (ram/RS_FSM_FFd1,ram/RS_FSM_FFd2,FCLK,'0','0');
 </td></tr><tr><td>
-FDCPE_ram/RS_FSM_FFd2: FDCPE port map (ram/RS_FSM_FFd2,ram/RS_FSM_FFd6,FCLK,'0','0');
+FDCPE_ram/RS_FSM_FFd2: FDCPE port map (ram/RS_FSM_FFd2,ram/RS_FSM_FFd3,FCLK,'0','0');
 </td></tr><tr><td>
-FDCPE_ram/RS_FSM_FFd3: FDCPE port map (ram/RS_FSM_FFd3,ram/RS_FSM_FFd3_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd3_D <= (ram/RS_FSM_FFd4 AND ram/DTACKr);
+FDCPE_ram/RS_FSM_FFd3: FDCPE port map (ram/RS_FSM_FFd3,ram/RS_FSM_FFd7,FCLK,'0','0');
 </td></tr><tr><td>
 FDCPE_ram/RS_FSM_FFd4: FDCPE port map (ram/RS_FSM_FFd4,ram/RS_FSM_FFd4_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd4_D <= ((ram/RS_FSM_FFd5)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RS_FSM_FFd4 AND NOT ram/DTACKr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd4_D <= (ram/DTACKr AND ram/RS_FSM_FFd5);
 </td></tr><tr><td>
 FDCPE_ram/RS_FSM_FFd5: FDCPE port map (ram/RS_FSM_FFd5,ram/RS_FSM_FFd5_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd5_D <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND ram/RASEN)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND ram/RASEN AND fsb/ASrf));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd5_D <= ((ram/RS_FSM_FFd6)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/DTACKr AND ram/RS_FSM_FFd5));
 </td></tr><tr><td>
 FDCPE_ram/RS_FSM_FFd6: FDCPE port map (ram/RS_FSM_FFd6,ram/RS_FSM_FFd6_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd6_D <= ((A_FSB(23) AND RefReq AND NOT ram/RefDone AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefReq AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefReq AND NOT ram/RefDone AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefReq AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT ram/BACTr AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND ram/RS_FSM_FFd3)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND ram/RS_FSM_FFd7 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RASEN)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd7 AND NOT fsb/ASrf));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd6_D <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND NOT nAS_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN AND fsb/ASrf));
 </td></tr><tr><td>
 FDCPE_ram/RS_FSM_FFd7: FDCPE port map (ram/RS_FSM_FFd7,ram/RS_FSM_FFd7_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd7_D <= ((A_FSB(23) AND RefReq AND NOT ram/RefDone AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd3 AND NOT ram/RS_FSM_FFd1 AND NOT ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefReq AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd3 AND NOT ram/RS_FSM_FFd1 AND NOT ram/BACTr AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd3 AND ram/RASEN AND NOT ram/RS_FSM_FFd1 AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefReq AND NOT ram/RefDone AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd3 AND NOT ram/RS_FSM_FFd1 AND NOT ram/BACTr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefReq AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd3 AND NOT ram/RS_FSM_FFd1 AND NOT ram/BACTr AND fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND NOT ram/RS_FSM_FFd7 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1 AND NOT fsb/ASrf)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND cs/nOverlay AND NOT nAS_FSB AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd3 AND ram/RASEN AND NOT ram/RS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd3 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND RefUrg AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND cs/nOverlay AND NOT ram/RefDone AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefUrg AND NOT ram/RefDone AND NOT ram/RASEN AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd1));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd7_D <= ((NOT ram/RefUrg AND nAS_FSB AND NOT fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB AND ram/RASEN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd4)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND ram/RASEN AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd4 AND fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND NOT ram/RefReq)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND NOT ram/RS_FSM_FFd8)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RS_FSM_FFd8 AND NOT ram/RS_FSM_FFd4)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RefUrg));
 </td></tr><tr><td>
-FDCPE_ram/RefDone: FDCPE port map (ram/RefDone,ram/RefDone_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RefDone_D <= ((NOT RefUrg AND NOT RefReq)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefDone AND NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd6 AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd2));
+FDCPE_ram/RS_FSM_FFd8: FDCPE port map (ram/RS_FSM_FFd8,ram/RS_FSM_FFd8_D,FCLK,'0','0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RS_FSM_FFd8_D <= ((ram/RS_FSM_FFd1)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT ram/RefUrg AND ram/RS_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT ram/RefUrg AND ram/RS_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	BACTr(1))
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RefUrg AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND NOT ram/RASEN)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT cs/nOverlay AND NOT nAS_FSB AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT cs/nOverlay AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8 AND ram/RASEN AND fsb/ASrf)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND ram/RS_FSM_FFd4)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(23) AND NOT ram/RefUrg AND NOT ram/RefReq AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (A_FSB(22) AND NOT ram/RefUrg AND NOT ram/RefReq AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	ram/RS_FSM_FFd8)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT ram/RefUrg AND nAS_FSB AND ram/RS_FSM_FFd8 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT fsb/ASrf));
+</td></tr><tr><td>
+FDCPE_ram/RefReq: FDCPE port map (ram/RefReq,ram/RefReq_D,FCLK,'0','0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RefReq_D <= ((NOT RefClk AND NOT ram/nRefClkR)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (RefClk AND ram/RefReq AND ram/nRefClkR)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefReq AND NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd2 AND NOT ram/RS_FSM_FFd3));
+</td></tr><tr><td>
+FDCPE_ram/RefUrg: FDCPE port map (ram/RefUrg,ram/RefUrg_D,FCLK,'0','0');
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ram/RefUrg_D <= ((RefClk AND ram/RefReq AND ram/nRefClkR)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefClk AND ram/RefUrg AND NOT ram/nRefClkR)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT RefClk AND ram/RefUrg AND NOT ram/RS_FSM_FFd1 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/RS_FSM_FFd7 AND NOT ram/RS_FSM_FFd2 AND NOT ram/RS_FSM_FFd3)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (ram/RefUrg AND NOT ram/RS_FSM_FFd1 AND NOT ram/RS_FSM_FFd7 AND 
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT ram/nRefClkR AND NOT ram/RS_FSM_FFd2 AND NOT ram/RS_FSM_FFd3));
+</td></tr><tr><td>
+FDCPE_ram/nRefClkR: FDCPE port map (ram/nRefClkR,NOT RefClk,FCLK,'0','0');
 </td></tr><tr><td>
 Register Legend:
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FDCPE (Q,D,C,CLR,PRE,CE); 
