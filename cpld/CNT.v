@@ -1,6 +1,6 @@
 module CNT(
 	/* FSB clock and E clock inputs */
-	input CLK, input E,
+	input CLK, input C8M, input E,
 	/* Refresh request */
 	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
@@ -8,14 +8,17 @@ module CNT(
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* Sound QoS */
-	input BACT, input nWE,
+	input BACT, input WS, input nWE,
 	input SndROMCS, input SndRAMCSWR, input RAMCS, 
 	output reg QoSReady);
 	
 	/* E clock synchronization */
-	reg [1:0] Er;
+	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
 	wire EFall = Er[1] && !Er[0];
-	always @(posedge CLK) Er[1:0] <= { Er[0], E };
+	
+	/* C8M clock synchronization */
+	reg [1:0] C8Mr; always @(posedge CLK) C8Mr[1:0] <= { C8Mr[0], C8M };
+	wire C8MFall = C8Mr[1] && !C8Mr[0];
 	
 	/* NMI button synchronization */
 	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
@@ -68,14 +71,28 @@ module CNT(
 		end else if (EFall && TimerTC) LTimer <= LTimer+1;
 		LTimerTC <= LTimer[11:0]==12'hFFE;
 	end
-
-	/* Sound QoS */
-	reg [3:0] WS = 0;
+	
+	
+	/* Old Sound QoS */
+	/*reg [3:0] WS = 0;
 	always @(posedge CLK) begin
 		if (!BACT) WS <= 0;
 		else WS <= WS+1;
 		QoSReady <= (LTimer[1:0]==0) || (BACT && (
 		   QoSReady || WS==15 || !nWE || (!RAMCS && !SndROMCS)));
+	end*/
+
+	/* Sound QoS */
+	wire SndSlow = LTimer[1:0]!=0;
+	reg [7:0] Credits;
+	always @(posedge CLK) begin
+		if (!SndSlow) Credits <= 0;
+		else if (!C8MFall && !WS) Credits <= Credits-1;
+		else if (!C8MFall &&  WS) Credits <= Credits;
+		else if ( C8MFall && !WS) Credits <= Credits;
+		else if ( C8MFall &&  WS) Credits <= Credits+1;
+		
+		if (!BACT || !QoSReady) QoSReady <= !SndSlow || !Credits[7]; 
 	end
 
 	/* Startup sequence state control */

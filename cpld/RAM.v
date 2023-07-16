@@ -3,7 +3,7 @@ module RAM(
 	input CLK, input [21:1] A, input nWE,
 	input nAS, input nLDS, input nUDS, input nDTACK,
 	/* AS cycle detection */
-	input BACT, 
+	input BACT, input BACTr,
 	/* Select and ready signals */
 	input RAMCS, input RAMCS0X, input ROMCS, output reg RAMReady,
 	/* Refresh Counter Interface */
@@ -13,7 +13,6 @@ module RAM(
 	output nLWE, output nUWE, output reg nOE, output nROMCS, output nROMWE);
 
 	/* BACT and /DTACK registration */
-	reg BACTr; always @(posedge CLK) BACTr <= BACT;
 	reg DTACKr; always @(posedge CLK) DTACKr <= !nDTACK;
 
 	/* RAM control state */
