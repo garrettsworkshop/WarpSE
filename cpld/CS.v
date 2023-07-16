@@ -3,15 +3,13 @@ module CS(
 	input [23:08] A, input CLK, input nRES, input nWE, 
 	/* AS cycle detection */
 	input BACT,
-	/* Overlay */
-	output Overlay,
 	/* Device select outputs */
 	output IOCS, output IOPWCS, output IACS,
-	output ROMCS, output ROMCS4X,
+	output ROMCS, output ROMCS4X, output SndROMCS,
 	output RAMCS, output RAMCS0X, output SndRAMCSWR);
 
 	/* Overlay control */
-	reg nOverlay = 0; assign Overlay = !nOverlay;
+	reg nOverlay = 0; wire Overlay = !nOverlay;
 	always @(posedge CLK) begin
 		if (!BACT && !nRES) nOverlay <= 0;
 		else if (BACT && ROMCS4X) nOverlay <= 1;
@@ -19,12 +17,14 @@ module CS(
 
 	/* ROM select signals */
 	assign ROMCS4X = A[23:20]==4'h4;
-	assign ROMCS = Overlay || ROMCS4X;
+	assign ROMCS = (A[23:20]==4'h0 && Overlay) || ROMCS4X;
+	assign SndROMCS = ROMCS4X && 
+		(A[20:8]==12'h36C || A[20:8]==12'h36D || A[20:8]==12'h36F);
 
 	/* RAM select signals */
 	assign RAMCS0X = A[23:22]==2'b00;
 	assign RAMCS = RAMCS0X && !Overlay;
-	wire VidRAMCSWR64k = A[23:16]==8'h3F && !nWE; // 3F0000-3FFFFF
+	wire VidRAMCSWR64k = RAMCS0X && !nWE && A[23:16]==8'h3F; // 3F0000-3FFFFF
 	wire VidRAMCSWR = VidRAMCSWR64k && (
 		A[15:12]==4'h2 || // 1792 bytes RAM, 2304 bytes video
 		A[15:12]==4'h3 || // 4096 bytes video
@@ -56,6 +56,6 @@ module CS(
 				   A[23:20]==4'h6 || // empty
 				   A[23:20]==4'h5 || // SCSI
 				  (A[23:20]==4'h4 && Overlay) || // ROM once
-				   VidRAMCSWR64k; // Write to video RAM
-	assign IOPWCS = VidRAMCSWR64k;
+				   VidRAMCSWR; // Write to video RAM
+	assign IOPWCS = VidRAMCSWR;
 endmodule

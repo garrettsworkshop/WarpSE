@@ -2,11 +2,11 @@ module FSB(
 	/* MC68HC000 interface */
 	input FCLK, input nAS, output reg nDTACK, output reg nVPA,
 	/* AS cycle detection */
-	output BACT, output reg [3:1] BACTr, output reg WS,
+	output BACT,
 	/* Ready inputs */
 	input ROMCS,
 	input RAMCS, input RAMReady,
-	input IOPWCS, input IOPWReady, input IOReady,
+	input IOPWCS, input IOPWReady, input IONPReady,
 	input QoSReady,
 	/* Interrupt acknowledge select */
 	input IACS);
@@ -15,13 +15,12 @@ module FSB(
 	reg ASrf = 0;
 	always @(negedge FCLK) begin ASrf <= !nAS; end
 	assign BACT = !nAS || ASrf; // BACT - bus active
-	always @(posedge FCLK) BACTr[3:1] <= { BACTr[2:1], BACT };
-	always @(posedge FCLK) WS <= BACTr[3:1]==3'b111 && BACT;
+
 
 	/* DTACK/VPA control */
 	wire Ready = (QoSReady && RAMCS && RAMReady && !IOPWCS) ||
-				 (            RAMCS && RAMReady &&  IOPWCS && IOPWReady) ||
-				 (QoSReady && ROMCS) || (IOReady);
+				 (QoSReady && RAMCS && RAMReady &&  IOPWCS && IOPWReady) ||
+				 (QoSReady && ROMCS) || (IONPReady);
 	always @(posedge FCLK) nDTACK <= !(Ready && BACT && !IACS);
 	always @(posedge FCLK, posedge nAS) begin
 		if (nAS) nVPA <= 1;
