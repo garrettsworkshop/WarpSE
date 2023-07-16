@@ -50,7 +50,7 @@ module WarpSE(
 
 	/* AS cycle detection */
 	wire BACT;
-	wire BACTr;
+	wire [3:1] BACTr;
 	wire WS;
 
 	/* Refresh request clock */
@@ -132,7 +132,7 @@ module WarpSE(
 		IORDREQ, IOWRREQ, IOL0, IOU0,
 		IOACT, IODONE, IOBERR);
 
-	wire SndReady;
+	wire QoSReady;
 	CNT cnt(
 		/* FSB clock, C8M clock, E clock inputs */
 		FCLK, C8M, E,
@@ -143,7 +143,7 @@ module WarpSE(
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
 		/* Sound QoS */
-		BACT, WS, SndRAMCSWR, SndReady);
+		BACT, WS, SndRAMCSWR, QoSReady);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
@@ -154,7 +154,7 @@ module WarpSE(
 		ROMCS4X,
 		RAMCS0X, RAMReady,
 		IOPWCS, IOPWReady, IOReady,
-		SndReady,
+		QoSReady,
 		/* Interrupt acknowledge select */
 		IACS);
 

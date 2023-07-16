@@ -3,7 +3,7 @@ module RAM(
 	input CLK, input [21:1] A, input nWE,
 	input nAS, input nLDS, input nUDS, input nDTACK,
 	/* AS cycle detection */
-	input BACT, input BACTr,
+	input BACT, input [3:1] BACTr,
 	/* Select and ready signals */
 	input RAMCS, input RAMCS0X, input ROMCS, output reg RAMReady,
 	/* Refresh Counter Interface */
@@ -47,7 +47,7 @@ module RAM(
 	assign nROMWE = !(!nAS && !nWE);
 
 	/* Shared ROM and RAM /OE control */
-	always @(posedge CLK) nOE <= !(BACT && nWE && !(BACTr && DTACKr));
+	always @(posedge CLK) nOE <= !(BACT && nWE && !(BACTr[1] && DTACKr));
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.
@@ -67,7 +67,7 @@ module RAM(
 	assign RA[00] = !RASEL ? A[09] : A[01];
 
 	wire RS0toRef = // Refresh during first clock of non-RAM access
-					(RefReq &&  BACT && !BACTr && !RAMCS0X) ||
+					(RefReq &&  BACT && !BACTr[1] && !RAMCS0X) ||
 					// Urgent refresh while bus inactive
 					(RefUrg && !BACT) ||
 					// Urgent refresh during non-RAM access

@@ -8,7 +8,7 @@ module CNT(
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* Sound QoS */
-	input BACT, input WS, input SndRAMCSWR, output reg SndReady);
+	input BACT, input WS, input SndRAMCSWR, output reg QoSReady);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
@@ -56,42 +56,36 @@ module CNT(
 	 * 4096 states == 57.516 ms */
 	reg [11:0] LTimer;
 	reg LTimerTC;
-	always @(posedge CLK) begin
-		if (EFall) begin
-			LTimer <= LTimer+1;
-			LTimerTC <= LTimer[11:0]==12'hFFE;
-		end
-	end
-	
 	/* Sound QoS trigger
 	 * Sound timer counts from 1 to 3
 	 * starting at first sound RAM access.
 	 * Period is 28.124 us - 42.240 us */
 	reg [1:0] STimer;
-	reg SndSlow;
+	reg SndSlowEN;
 	always @(posedge CLK) begin
 		if (BACT && SndRAMCSWR) begin
 			STimer <= 1;
-			SndSlow <= 1;
+			SndSlowEN <= 1;
 		end else if (STimer==0) begin
 			STimer <= 0;
-			SndSlow <= 0;
+			SndSlowEN <= 0;
 		end else if (EFall && TimerTC) begin
-			STimer <= LTimer+1;
-			SndSlow <= STimer!=3;
+			LTimer <= LTimer+1;
+			SndSlowEN <= STimer!=3;
 		end
+		LTimerTC <= LTimer[11:0]==12'hFFE;
 	end
 
 	/* Sound QoS */
 	reg [6:0] Credits;
 	always @(posedge CLK) begin
-		if (!SndSlow) Credits <= 8;
+		if (!SndSlowEN) Credits <= 8;
 		else if (!C8MFall && !WS) Credits <= Credits+1;
 		else if ( C8MFall && !WS) Credits <= Credits;
 		else if (!C8MFall &&  WS) Credits <= Credits;
 		else if ( C8MFall &&  WS) Credits <= Credits-1;
 	end
-	always @(posedge CLK) if (!BACT || !SndReady) SndReady <= !SndSlow || Credits[6:3]==0;
+	always @(posedge CLK) if (!BACT || !QoSReady) QoSReady <= Credits[6:3]==0;
 
 	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;

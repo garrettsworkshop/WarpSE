@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Reading design: WarpSE.prj
 
@@ -151,6 +151,7 @@ Unit <CS> synthesized.
 
 Synthesizing Unit <RAM>.
     Related source file is "../RAM.v".
+WARNING:Xst:647 - Input <BACTr<3:2>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found finite state machine <FSM_0> for signal <RS>.
     -----------------------------------------------------------------------
     | States             | 8                                              |
@@ -265,35 +266,33 @@ Synthesizing Unit <CNT>.
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
     Found 1-bit register for signal <nBR_IOB>.
-    Found 1-bit register for signal <SndReady>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
+    Found 1-bit register for signal <QoSReady>.
     Found 2-bit register for signal <C8Mr>.
     Found 7-bit updown counter for signal <Credits>.
     Found 2-bit register for signal <Er>.
     Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTC>.
     Found 1-bit register for signal <nIPL2r>.
-    Found 1-bit register for signal <SndSlow>.
+    Found 1-bit register for signal <SndSlowEN>.
     Found 2-bit register for signal <STimer>.
-    Found 2-bit adder for signal <STimer$addsub0000> created at line 80.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTC>.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   3 Counter(s).
 	inferred   7 D-type flip-flop(s).
-	inferred   1 Adder/Subtractor(s).
 Unit <CNT> synthesized.
 
 
 Synthesizing Unit <FSB>.
     Related source file is "../FSB.v".
     Found 1-bit register for signal <nVPA>.
+    Found 3-bit register for signal <BACTr>.
     Found 1-bit register for signal <nDTACK>.
     Found 1-bit register for signal <WS>.
     Found 1-bit register for signal <ASrf>.
-    Found 3-bit register for signal <BACTr>.
     Summary:
 	inferred   4 D-type flip-flop(s).
 Unit <FSB> synthesized.
@@ -319,8 +318,6 @@ Unit <WarpSE> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# Adders/Subtractors                                   : 1
- 2-bit adder                                           : 1
 # Counters                                             : 4
  12-bit up counter                                     : 1
  4-bit up counter                                      : 2
@@ -385,14 +382,13 @@ Optimizing FSM <ram/RS/FSM> on signal <RS[1:8]> with one-hot encoding.
  110   | 01000000
  111   | 10000000
 -------------------
+WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <0>. This FF/Latch will be trimmed during the optimization process.
 
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
 # FSMs                                                 : 4
-# Adders/Subtractors                                   : 1
- 2-bit adder                                           : 1
 # Counters                                             : 4
  12-bit up counter                                     : 1
  4-bit up counter                                      : 2
@@ -405,6 +401,7 @@ Macro Statistics
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
+WARNING:Xst:1710 - FF/Latch <STimer_1> (without init value) has a constant value of 0 in block <CNT>. This FF/Latch will be trimmed during the optimization process.
 
 Optimizing unit <WarpSE> ...
 
@@ -446,8 +443,8 @@ Optimizing unit <IOBM> ...
 
 Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : IS_FSM_FFd1
-  implementation constraint: INIT=r	 : IS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_3
+  implementation constraint: INIT=r	 : IS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
   implementation constraint: INIT=r	 : Timer_2
@@ -482,24 +479,24 @@ Design Statistics
 # IOs                              : 75
 
 Cell Usage :
-# BELS                             : 671
-#      AND2                        : 207
-#      AND3                        : 26
+# BELS                             : 659
+#      AND2                        : 205
+#      AND3                        : 25
 #      AND4                        : 13
 #      AND5                        : 2
 #      AND7                        : 1
 #      AND8                        : 2
 #      GND                         : 6
-#      INV                         : 257
-#      OR2                         : 105
-#      OR3                         : 19
+#      INV                         : 250
+#      OR2                         : 104
+#      OR3                         : 18
 #      OR4                         : 3
 #      VCC                         : 1
 #      XOR2                        : 29
-# FlipFlops/Latches                : 111
-#      FD                          : 68
+# FlipFlops/Latches                : 110
+#      FD                          : 69
 #      FDC                         : 2
-#      FDCE                        : 40
+#      FDCE                        : 38
 #      FDP                         : 1
 # IO Buffers                       : 70
 #      IBUF                        : 35
@@ -510,13 +507,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.11 secs
+Total CPU time to Xst completion: 5.10 secs
  
 --> 
 
-Total memory usage is 264820 kilobytes
+Total memory usage is 266244 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    5 (   0 filtered)
+Number of warnings :    8 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
