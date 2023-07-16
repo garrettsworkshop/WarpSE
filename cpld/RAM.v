@@ -29,9 +29,9 @@ module RAM(
 	always @(posedge CLK) begin
 		if (!nRefClkR && !RefClk) begin
 			RefReq <= 1;
-		end else if (nRefClkR && RefClk) begin
+		else if (nRefClkR && RefClk) begin
 			RefUrg <= RefReq;
-		end else if (RS[2]) begin
+		else if (RS[2]) beign
 			RefReq <= 0;
 			RefUrg <= 0;
 		end

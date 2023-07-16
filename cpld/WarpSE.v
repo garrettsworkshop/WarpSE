@@ -143,7 +143,7 @@ module WarpSE(
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
 		/* Sound QoS */
-		BACT, WS, SndRAMCSWR, QoSReady);
+		BACT, SndRAMCSWR, QoSReady);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
