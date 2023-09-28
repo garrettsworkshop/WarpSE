@@ -63,36 +63,27 @@ module CNT(
 	reg [11:0] LTimer;
 	reg LTimerTC;
 	always @(posedge CLK) begin
-		if (IS==3) begin
-			LTimer[11:2] <= 0;
-			if (BACT && SndRAMCSWR) LTimer[1:0] <= 1;
-			else if (LTimer==0) LTimer[1:0] <= 0;
-			else if (EFall && TimerTC) LTimer[1:0] <= LTimer+1;
-		end else if (EFall && TimerTC) LTimer <= LTimer+1;
-		LTimerTC <= LTimer[11:0]==12'hFFE;
+		if (EFall && TimerTC) begin
+			LTimer <= LTimer+1;
+			LTimerTC <= LTimer[11:0]==12'hFFE;
+		end
 	end
 	
+	/* Sound QoS trigger */
+	reg [1:0] QS;
+	wire QoSEN = QS!=0;
+	always @(posedge CLK) begin
+		if (BACT && SndRAMCSWR) QS[1:0] <= 1;
+		else if (QS==0) QS[1:0] <= 0;
+		else if (EFall && TimerTC) QS[1:0] <= QS+1;
+	end
 	
-	/* Old Sound QoS */
-	/*reg [3:0] WS = 0;
-	always @(posedge CLK) begin
-		if (!BACT) WS <= 0;
-		else WS <= WS+1;
-		QoSReady <= (LTimer[1:0]==0) || (BACT && (
-		   QoSReady || WS==15 || !nWE || (!RAMCS && !SndROMCS)));
-	end*/
-
 	/* Sound QoS */
-	wire SndSlow = LTimer[1:0]!=0;
-	reg [7:0] Credits;
+	reg [4:0] Wait = 0;
 	always @(posedge CLK) begin
-		if (!SndSlow) Credits <= 0;
-		else if (!C8MFall && !WS) Credits <= Credits-1;
-		else if (!C8MFall &&  WS) Credits <= Credits;
-		else if ( C8MFall && !WS) Credits <= Credits;
-		else if ( C8MFall &&  WS) Credits <= Credits+1;
-		
-		if (!BACT || !QoSReady) QoSReady <= !SndSlow || !Credits[7]; 
+		if (!BACT) Wait <= 0;
+		else Wait <= Wait+1;
+		if (!BACT || !QoSReady) QoSReady <= !QoSEN || (Wait==16);
 	end
 
 	/* Startup sequence state control */

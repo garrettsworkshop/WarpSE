@@ -251,14 +251,16 @@ Unit <IOBM> synthesized.
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
 WARNING:Xst:647 - Input <SndROMCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <WS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <nWE> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <RAMCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:646 - Signal <C8MFall> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found finite state machine <FSM_3> for signal <IS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
     | Transitions        | 8                                              |
     | Inputs             | 2                                              |
-    | Outputs            | 5                                              |
+    | Outputs            | 4                                              |
     | Clock              | CLK                       (rising_edge)        |
     | Power Up State     | 00                                             |
     | Encoding           | automatic                                      |
@@ -270,21 +272,19 @@ WARNING:Xst:647 - Input <RAMCS> is never used. This port will be preserved and l
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <QoSReady>.
-    Found 2-bit adder for signal <$add0000> created at line 70.
-    Found 12-bit adder for signal <$add0001> created at line 71.
     Found 2-bit register for signal <C8Mr>.
-    Found 8-bit updown counter for signal <Credits>.
     Found 2-bit register for signal <Er>.
-    Found 12-bit register for signal <LTimer>.
+    Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTC>.
     Found 1-bit register for signal <nIPL2r>.
+    Found 2-bit up counter for signal <QS>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTC>.
+    Found 5-bit up counter for signal <Wait>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred   2 Counter(s).
-	inferred  11 D-type flip-flop(s).
-	inferred   2 Adder/Subtractor(s).
+	inferred   4 Counter(s).
+	inferred   9 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
 
@@ -320,14 +320,13 @@ Unit <WarpSE> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# Adders/Subtractors                                   : 2
- 12-bit adder                                          : 1
- 2-bit adder                                           : 1
-# Counters                                             : 3
+# Counters                                             : 5
+ 12-bit up counter                                     : 1
+ 2-bit up counter                                      : 1
  4-bit up counter                                      : 2
- 8-bit updown counter                                  : 1
-# Registers                                            : 70
- 1-bit register                                        : 67
+ 5-bit up counter                                      : 1
+# Registers                                            : 58
+ 1-bit register                                        : 55
  2-bit register                                        : 2
  3-bit register                                        : 1
 # Tristates                                            : 5
@@ -392,20 +391,21 @@ Advanced HDL Synthesis Report
 
 Macro Statistics
 # FSMs                                                 : 4
-# Adders/Subtractors                                   : 2
- 12-bit adder                                          : 1
- 2-bit adder                                           : 1
-# Counters                                             : 3
+# Counters                                             : 5
+ 12-bit up counter                                     : 1
+ 2-bit up counter                                      : 1
  4-bit up counter                                      : 2
- 8-bit updown counter                                  : 1
-# Registers                                            : 48
- Flip-Flops                                            : 48
+ 5-bit up counter                                      : 1
+# Registers                                            : 46
+ Flip-Flops                                            : 46
 
 =========================================================================
 
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
+WARNING:Xst:2677 - Node <C8Mr_1> of sequential type is unconnected in block <CNT>.
+WARNING:Xst:2677 - Node <C8Mr_0> of sequential type is unconnected in block <CNT>.
 
 Optimizing unit <WarpSE> ...
 
@@ -447,11 +447,19 @@ Optimizing unit <IOBM> ...
 
 Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : IS_FSM_FFd1
-  implementation constraint: INIT=r	 : IS_FSM_FFd2
+  implementation constraint: INIT=r	 : Wait_4
+  implementation constraint: INIT=r	 : Wait_0
+  implementation constraint: INIT=r	 : Wait_1
+  implementation constraint: INIT=r	 : Wait_2
+  implementation constraint: INIT=r	 : Wait_3
   implementation constraint: INIT=r	 : Timer_3
+  implementation constraint: INIT=r	 : IS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
   implementation constraint: INIT=r	 : Timer_2
+WARNING:Xst:2677 - Node <BACTr_2> of sequential type is unconnected in block <fsb>.
+WARNING:Xst:2677 - Node <BACTr_1> of sequential type is unconnected in block <fsb>.
+WARNING:Xst:2677 - Node <WS> of sequential type is unconnected in block <fsb>.
 
 =========================================================================
 *                           Partition Report                            *
@@ -483,24 +491,24 @@ Design Statistics
 # IOs                              : 75
 
 Cell Usage :
-# BELS                             : 705
-#      AND2                        : 223
-#      AND3                        : 27
-#      AND4                        : 11
-#      AND5                        : 2
+# BELS                             : 618
+#      AND2                        : 197
+#      AND3                        : 25
+#      AND4                        : 9
+#      AND5                        : 3
 #      AND7                        : 1
-#      AND8                        : 4
+#      AND8                        : 3
 #      GND                         : 6
-#      INV                         : 265
-#      OR2                         : 115
-#      OR3                         : 15
+#      INV                         : 232
+#      OR2                         : 101
+#      OR3                         : 14
 #      OR4                         : 4
 #      VCC                         : 1
-#      XOR2                        : 31
-# FlipFlops/Latches                : 109
-#      FD                          : 68
+#      XOR2                        : 22
+# FlipFlops/Latches                : 103
+#      FD                          : 67
 #      FDC                         : 2
-#      FDCE                        : 38
+#      FDCE                        : 33
 #      FDP                         : 1
 # IO Buffers                       : 70
 #      IBUF                        : 35
@@ -511,13 +519,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.99 secs
+Total CPU time to Xst completion: 4.87 secs
  
 --> 
 
-Total memory usage is 263668 kilobytes
+Total memory usage is 267300 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    7 (   0 filtered)
+Number of warnings :   14 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
