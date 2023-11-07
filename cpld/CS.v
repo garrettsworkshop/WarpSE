@@ -56,6 +56,6 @@ module CS(
 				   A[23:20]==4'h6 || // empty
 				   A[23:20]==4'h5 || // SCSI
 				  (A[23:20]==4'h4 && Overlay) || // ROM once
-				   VidRAMCSWR64k; // Write to video RAM
-	assign IOPWCS = VidRAMCSWR64k;
+				   VidRAMCSWR; // Write to video RAM
+	assign IOPWCS = VidRAMCSWR;
 endmodule

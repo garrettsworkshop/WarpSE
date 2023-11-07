@@ -1,23 +1,25 @@
 module CNT(
-	/* FSB clock, C8M clock, E clock inputs */
+	/* FSB clock and E clock inputs */
 	input CLK, input C8M, input E,
 	/* Refresh request */
-	output RefClk,
+	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
 	output reg nRESout, input nIPL2, 
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* Sound QoS */
-	input BACT, input SndRAMCSWR, output reg QoSReady);
+	input BACT, input WS, input nWE,
+	input SndROMCS, input SndRAMCSWR, input RAMCS, 
+	output reg QoSReady);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
 	wire EFall = Er[1] && !Er[0];
-
+	
 	/* C8M clock synchronization */
 	reg [1:0] C8Mr; always @(posedge CLK) C8Mr[1:0] <= { C8Mr[0], C8M };
 	wire C8MFall = C8Mr[1] && !C8Mr[0];
-
+	
 	/* NMI button synchronization */
 	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
 	
@@ -47,50 +49,42 @@ module CNT(
 		if (EFall) begin
 			if (TimerTC) Timer <= 0;
 			else Timer <= Timer+1;
+			RefUrg <= Timer==8 || Timer==9;
+			RefReq <= Timer!=10;
 			TimerTC <= Timer==9;
 		end
 	end
-	assign RefClk = Timer[3];
-
-	/* Long timer counts from 0 to 4095.
-	 * 4096 states == 57.516 ms */
+	
+	/* During init (IS!=3) long timer counts from 0 to 4095.
+	 * 4096 states == 57.516 ms 
+	 * During operation (IS==3) long timer counts from 0 to 3
+	 * starting at first sound RAM access.
+	 * Period is 28.124 us - 42.240 us */
 	reg [11:0] LTimer;
 	reg LTimerTC;
 	always @(posedge CLK) begin
-		if (EFall && TimerTC) LTimer <= LTimer+1;
-		LTimerTC <= LTimer[11:0]==12'hFFE;
-	end
-
-	/* Sound QoS trigger
-	 * Sound timer counts from 1 to 3
-	 * starting at first sound RAM access.
-	 * Period is 28.124 us - 42.240 us */
-	reg [1:0] STimer;
-	reg SndSlowEN;
-	always @(posedge CLK) begin
-		if (BACT && SndRAMCSWR) begin
-			STimer <= 1;
-			SndSlowEN <= 1;
-		end else if (STimer==0) begin
-			STimer <= 0;
-			SndSlowEN <= 0;
-		end else if (EFall && TimerTC) begin
+		if (EFall && TimerTC) begin
 			LTimer <= LTimer+1;
-			SndSlowEN <= STimer!=3;
+			LTimerTC <= LTimer[11:0]==12'hFFE;
 		end
 	end
-
-	/* Sound QoS */
-	wire SndSlowEN = LTimer[1:0]!=0;
-	reg [6:0] Credits;
+	
+	/* Sound QoS trigger */
+	reg [1:0] QS;
+	wire QoSEN = QS!=0;
 	always @(posedge CLK) begin
-		if (!SndSlowEN) Credits <= 8;
-		else if (!C8MFall && !FSBW) Credits <= Credits+1;
-		else if ( C8MFall && !FSBW) Credits <= Credits;
-		else if (!C8MFall &&  FSBW) Credits <= Credits;
-		else if ( C8MFall &&  FSBW) Credits <= Credits-1;
+		if (BACT && SndRAMCSWR) QS[1:0] <= 1;
+		else if (QS==0) QS[1:0] <= 0;
+		else if (EFall && TimerTC) QS[1:0] <= QS+1;
 	end
-	always @(posedge CLK) if (!BACT || !QoSReady) QoSReady <= Credits[6:3]==0;
+	
+	/* Sound QoS */
+	reg [4:0] Wait = 0;
+	always @(posedge CLK) begin
+		if (!BACT) Wait <= 0;
+		else Wait <= Wait+1;
+		if (!BACT || !QoSReady) QoSReady <= !QoSEN || (Wait==16);
+	end
 
 	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;
@@ -116,4 +110,5 @@ module CNT(
 			end
 		endcase
 	end
+
 endmodule
