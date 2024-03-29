@@ -10,7 +10,7 @@ module RAM(
 	input RefReqIn, input RefUrgIn,
 	/* DRAM and NOR flash interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
-	output nLWE, output nUWE, output reg nOE, output nROMCS, output nROMWE);
+	output nLWE, output nUWE, output reg nOE, output nROMOE, output nROMWE);
 
 	/* BACT and /DTACK registration */
 	reg DTACKr; always @(posedge CLK) DTACKr <= !nDTACK;
@@ -35,13 +35,11 @@ module RAM(
 	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrr || RASrf);
 	assign nLWE = !(!nLDS && !nWE && RASEL);
 	assign nUWE = !(!nUDS && !nWE && RASEL);
+	always @(posedge CLK) nOE <= !(BACT && nWE && !(BACTr && DTACKr));
 
 	/* ROM control signals */
-	assign nROMCS = !ROMCS;
-	assign nROMWE = !(!nAS && !nWE);
-
-	/* Shared ROM and RAM /OE control */
-	always @(posedge CLK) nOE <= !(BACT && nWE && !(BACTr && DTACKr));
+	assign nROMOE = !(ROMCS && !nAS &&  nWE);
+	assign nROMWE = !(ROMCS && !nAS && !nWE);
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.

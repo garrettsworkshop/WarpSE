@@ -22,7 +22,7 @@ module WarpSE(
 	input nBERR_IOB,
 	inout nRES,
 	input nIPL2,
-	output nROMCS,
+	output nROMOE,
 	output nRAMLWE,
 	output nRAMUWE,
 	output nROMWE,
@@ -86,7 +86,7 @@ module WarpSE(
 		RefReq, RefUrg, 
 		/* DRAM and NOR flash interface */
 		RA[11:0], nRAS, nCAS,
-		nRAMLWE, nRAMUWE, nOE, nROMCS, nROMWE);
+		nRAMLWE, nRAMUWE, nOE, nROMOE, nROMWE);
 
 	wire IONPReady, IOPWReady;
 	wire IORDREQ, IOWRREQ;

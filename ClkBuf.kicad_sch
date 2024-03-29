@@ -4,6 +4,13 @@
 
   (paper "A4")
 
+  (title_block
+    (title "WarpSE (GW4410A)")
+    (date "2024-03-27")
+    (rev "1.0")
+    (company "Garrett's Workshop")
+  )
+
   (lib_symbols
     (symbol "Device:C_Small" (pin_numbers hide) (pin_names (offset 0.254) hide) (in_bom yes) (on_board yes)
       (property "Reference" "C" (at 0.254 1.778 0)
@@ -235,7 +242,7 @@
     (uuid 00f39b0e-0aed-4b24-a2e2-a9c9b824f8cd)
   )
   (junction (at 133.35 138.43) (diameter 0) (color 0 0 0 0)
-    (uuid 9a68c344-66a2-4175-abc0-6bf94315e5ea)
+    (uuid 10d26858-c79a-4fdb-aafc-073a5307ef6a)
   )
   (junction (at 123.19 133.35) (diameter 0) (color 0 0 0 0)
     (uuid c756a70c-92e7-4fb8-9b0b-ed747e568d90)
@@ -317,7 +324,7 @@
   (symbol (lib_id "Device:C_Small") (at 113.03 135.89 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 162509bc-62f6-43aa-9778-dcb0500e3a76)
-    (property "Reference" "C26" (at 114.3 134.62 0)
+    (property "Reference" "C48" (at 114.3 134.62 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "2u2" (at 114.3 137.16 0)
@@ -336,9 +343,6 @@
     (pin "2" (uuid 93ab25f4-7521-4dd1-b646-1aa4154b249c))
     (instances
       (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-00005f723173"
-          (reference "C26") (unit 1)
-        )
         (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
           (reference "C48") (unit 1)
         )
@@ -378,7 +382,7 @@
   (symbol (lib_id "Device:R_Small") (at 146.05 88.9 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 1fc41112-0e0c-4d25-806e-cd201d34d6d8)
-    (property "Reference" "R2" (at 146.05 85.09 90)
+    (property "Reference" "R18" (at 146.05 85.09 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "47" (at 146.05 87.63 90)
@@ -397,12 +401,6 @@
     (pin "2" (uuid 6287653c-81a2-4db1-9f6b-6a24f6816ed0))
     (instances
       (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061350d21"
-          (reference "R2") (unit 1)
-        )
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061aa52c4"
-          (reference "R20") (unit 1)
-        )
         (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
           (reference "R18") (unit 1)
         )
@@ -460,42 +458,10 @@
     )
   )
 
-  (symbol (lib_id "Device:C_Small") (at 133.35 135.89 0) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no)
-    (uuid 6445de36-399d-4395-a340-6144ff8e4de7)
-    (property "Reference" "C28" (at 134.62 134.62 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "2u2" (at 134.62 137.16 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "stdpads:C_0603" (at 133.35 135.89 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 133.35 135.89 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "LCSC Part" "C23630" (at 133.35 135.89 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 640c16e5-872a-44be-bd5c-44a0677fc6de))
-    (pin "2" (uuid bb914f95-3f12-4a54-8ea5-e7ef9d5e06ef))
-    (instances
-      (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-00005f723173"
-          (reference "C28") (unit 1)
-        )
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
-          (reference "C55") (unit 1)
-        )
-      )
-    )
-  )
-
   (symbol (lib_id "power:GND") (at 133.35 138.43 0) (mirror y) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 6fc26917-0234-48cd-9c6d-d98338822069)
-    (property "Reference" "#PWR0159" (at 133.35 144.78 0)
+    (property "Reference" "#PWR019" (at 133.35 144.78 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (at 133.35 142.24 0)
@@ -510,11 +476,37 @@
     (pin "1" (uuid 94d51cc1-7d13-4b87-b5e5-37484853de53))
     (instances
       (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-00005f723173"
-          (reference "#PWR0159") (unit 1)
-        )
         (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
           (reference "#PWR019") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Device:C_Small") (at 133.35 135.89 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid 718c5f2f-1d57-4202-a796-5136469f08e7)
+    (property "Reference" "C21" (at 134.62 134.62 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Value" "2u2" (at 134.62 137.16 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "stdpads:C_0603" (at 133.35 135.89 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 133.35 135.89 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "LCSC Part" "C23630" (at 133.35 135.89 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid f11109d3-8b5d-4299-90cd-6c2d8eebec06))
+    (pin "2" (uuid 0fda7c91-8683-429f-bec6-1a33af67ead1))
+    (instances
+      (project "WarpSE"
+        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
+          (reference "C21") (unit 1)
         )
       )
     )
@@ -523,7 +515,7 @@
   (symbol (lib_id "Device:R_Small") (at 146.05 104.14 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 7c06195b-0fa9-437b-9b79-cf5e5efbabb1)
-    (property "Reference" "R2" (at 146.05 100.33 90)
+    (property "Reference" "R17" (at 146.05 100.33 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "47" (at 146.05 102.87 90)
@@ -542,12 +534,6 @@
     (pin "2" (uuid a70976df-2c19-406d-bf3b-a64935b1ef94))
     (instances
       (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061350d21"
-          (reference "R2") (unit 1)
-        )
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061aa52c4"
-          (reference "R20") (unit 1)
-        )
         (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
           (reference "R17") (unit 1)
         )
@@ -558,7 +544,7 @@
   (symbol (lib_id "Device:C_Small") (at 123.19 135.89 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 80948367-5a1c-4ed0-a3b4-d5c216f5fabd)
-    (property "Reference" "C27" (at 124.46 134.62 0)
+    (property "Reference" "C54" (at 124.46 134.62 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "2u2" (at 124.46 137.16 0)
@@ -577,9 +563,6 @@
     (pin "2" (uuid e442da70-f9b7-49f8-8a97-9b8db887c231))
     (instances
       (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-00005f723173"
-          (reference "C27") (unit 1)
-        )
         (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
           (reference "C54") (unit 1)
         )
@@ -590,7 +573,7 @@
   (symbol (lib_id "power:+3V3") (at 113.03 133.35 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 84038a3a-ec03-4561-af51-4c2bf6577707)
-    (property "Reference" "#PWR0158" (at 113.03 137.16 0)
+    (property "Reference" "#PWR018" (at 113.03 137.16 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3V3" (at 113.03 129.54 0)
@@ -605,9 +588,6 @@
     (pin "1" (uuid 0c09ed82-7797-4e39-a3f0-32d1205e0707))
     (instances
       (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-00005f723173"
-          (reference "#PWR0158") (unit 1)
-        )
         (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
           (reference "#PWR018") (unit 1)
         )
@@ -751,7 +731,7 @@
   (symbol (lib_id "Device:R_Small") (at 146.05 119.38 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid af63e236-063d-4e9a-91c6-e1aaeb08194d)
-    (property "Reference" "R2" (at 146.05 115.57 90)
+    (property "Reference" "R7" (at 146.05 115.57 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "47" (at 146.05 118.11 90)
@@ -770,12 +750,6 @@
     (pin "2" (uuid 61d514de-d6de-408a-9f75-fa865b17984d))
     (instances
       (project "WarpSE"
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061350d21"
-          (reference "R2") (unit 1)
-        )
-        (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061aa52c4"
-          (reference "R20") (unit 1)
-        )
         (path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
           (reference "R7") (unit 1)
         )
