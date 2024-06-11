@@ -51,6 +51,7 @@ gerber:
 	zip -r $(F_ZIP) $@/
 
 stencil: gerber
+	rm -f $(F_STENCIL)
 	zip $(F_STENCIL) -xi gerber/WarpSE-F_Paste.gtp
 
 Documentation:
