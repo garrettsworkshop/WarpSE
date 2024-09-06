@@ -1,5 +1,6 @@
 module WarpSE(
 	input [23:1] A_FSB,
+	output [23:22] GA,
 	input nAS_FSB,
 	input nLDS_FSB,
 	input nUDS_FSB,
@@ -36,12 +37,23 @@ module WarpSE(
 	output nDoutOE,
 	output nDinOE,
 	output nDinLE,
-	input [3:1] SW,
-	input C20MEN,
-	output C25MEN);
+	output MCKE,
+	output [5:0] DBG);
 
-	/* FSB clock oscillator enable */
-	assign C25MEN = 1;
+	/* MC68k clock enable */
+	assign MCKE = 1;
+
+	/* DBG outuput */
+	assign DBG[5:0] = 6'h00;
+
+	/* GA gated (translated) address output */
+	assign GA[23:22] = (
+		// $800000-$8FFFFF to $000000-$0FFFFF (1 MB)
+		(A_FSB[23:20]==4'h8) ||
+		// $700000-$7EFFFF to $300000-$3EFFFF (960 kB)
+		(A_FSB[23:20]==4'h7 && A_FSB[19:16]!=4'hF) ||
+		// $600000-$6FFFFF to $200000-$2FFFFF (1 MB)
+		(A_FSB[23:20]==4'h6)) ? 2'b00 : A_FSB[23:22];
 
 	/* Reset input and open-drain output */
 	wire nRESin = nRES;
@@ -51,7 +63,6 @@ module WarpSE(
 	/* AS cycle detection */
 	wire BACT;
 	wire BACTr;
-	wire WS;
 
 	/* Refresh request/ack signals */
 	wire RefReq, RefUrg;
@@ -59,7 +70,7 @@ module WarpSE(
 	/* FSB chip select signals */
 	wire Overlay;
 	wire IOCS, IOPWCS, IACS;
-	wire ROMCS, ROMCS4X, SndROMCS;
+	wire ROMCS, ROMCS4X;
 	wire RAMCS, RAMCS0X, SndRAMCSWR;
 	CS cs(
 		/* MC68HC000 interface */
@@ -143,15 +154,15 @@ module WarpSE(
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
 		/* Sound QoS */
-		BACT, WS, nWE_FSB,
-		SndROMCS, SndRAMCSWR, RAMCS0X,
+		BACT,
+		SndRAMCSWR, RAMCS0X,
 		QoSReady);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
 		FCLK, nAS_FSB, nDTACK_FSB, nVPA_FSB,
 		/* FSB cycle detection */
-		BACT, BACTr, WS,
+		BACT, BACTr,
 		/* Ready inputs */
 		ROMCS4X,
 		RAMCS0X, RAMReady,

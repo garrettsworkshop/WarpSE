@@ -3,14 +3,14 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.91 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.91 secs
  
 --> Reading design: WarpSE.prj
 
@@ -250,11 +250,8 @@ Unit <IOBM> synthesized.
 
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
-WARNING:Xst:647 - Input <SndROMCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <WS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <nWE> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <C8M> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <RAMCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:646 - Signal <C8MFall> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found finite state machine <FSM_3> for signal <IS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
@@ -272,7 +269,6 @@ WARNING:Xst:646 - Signal <C8MFall> is assigned but never used. This unconnected 
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <QoSReady>.
-    Found 2-bit register for signal <C8Mr>.
     Found 2-bit register for signal <Er>.
     Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTC>.
@@ -291,10 +287,9 @@ Unit <CNT> synthesized.
 Synthesizing Unit <FSB>.
     Related source file is "../FSB.v".
     Found 1-bit register for signal <nVPA>.
+    Found 1-bit register for signal <BACTr>.
     Found 1-bit register for signal <nDTACK>.
-    Found 1-bit register for signal <WS>.
     Found 1-bit register for signal <ASrf>.
-    Found 3-bit register for signal <BACTr>.
     Summary:
 	inferred   4 D-type flip-flop(s).
 Unit <FSB> synthesized.
@@ -302,10 +297,7 @@ Unit <FSB> synthesized.
 
 Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
-WARNING:Xst:647 - Input <C20MEN> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SW> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:653 - Signal <SndROMCS> is used but never assigned. This sourceless signal will be automatically connected to value 0.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nLDS_IOB>.
     Found 1-bit tristate buffer for signal <nRES>.
@@ -325,10 +317,9 @@ Macro Statistics
  2-bit up counter                                      : 1
  4-bit up counter                                      : 2
  5-bit up counter                                      : 1
-# Registers                                            : 58
+# Registers                                            : 56
  1-bit register                                        : 55
- 2-bit register                                        : 2
- 3-bit register                                        : 1
+ 2-bit register                                        : 1
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
 
@@ -404,8 +395,6 @@ Macro Statistics
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
-WARNING:Xst:2677 - Node <C8Mr_1> of sequential type is unconnected in block <CNT>.
-WARNING:Xst:2677 - Node <C8Mr_0> of sequential type is unconnected in block <CNT>.
 
 Optimizing unit <WarpSE> ...
 
@@ -446,20 +435,17 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd5
 
 Optimizing unit <CNT> ...
-  implementation constraint: INIT=r	 : IS_FSM_FFd1
+  implementation constraint: INIT=r	 : IS_FSM_FFd2
   implementation constraint: INIT=r	 : Wait_4
   implementation constraint: INIT=r	 : Wait_0
   implementation constraint: INIT=r	 : Wait_1
   implementation constraint: INIT=r	 : Wait_2
   implementation constraint: INIT=r	 : Wait_3
   implementation constraint: INIT=r	 : Timer_3
-  implementation constraint: INIT=r	 : IS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
+  implementation constraint: INIT=r	 : IS_FSM_FFd1
   implementation constraint: INIT=r	 : Timer_2
-WARNING:Xst:2677 - Node <BACTr_2> of sequential type is unconnected in block <fsb>.
-WARNING:Xst:2677 - Node <BACTr_1> of sequential type is unconnected in block <fsb>.
-WARNING:Xst:2677 - Node <WS> of sequential type is unconnected in block <fsb>.
 
 =========================================================================
 *                           Partition Report                            *
@@ -488,19 +474,19 @@ Clock Enable                       : YES
 wysiwyg                            : NO
 
 Design Statistics
-# IOs                              : 75
+# IOs                              : 79
 
 Cell Usage :
-# BELS                             : 618
-#      AND2                        : 197
-#      AND3                        : 25
+# BELS                             : 634
+#      AND2                        : 201
+#      AND3                        : 27
 #      AND4                        : 9
-#      AND5                        : 3
+#      AND5                        : 4
 #      AND7                        : 1
 #      AND8                        : 3
 #      GND                         : 6
-#      INV                         : 232
-#      OR2                         : 101
+#      INV                         : 238
+#      OR2                         : 104
 #      OR3                         : 14
 #      OR4                         : 4
 #      VCC                         : 1
@@ -510,22 +496,22 @@ Cell Usage :
 #      FDC                         : 2
 #      FDCE                        : 33
 #      FDP                         : 1
-# IO Buffers                       : 70
+# IO Buffers                       : 78
 #      IBUF                        : 35
 #      IOBUFE                      : 1
-#      OBUF                        : 30
+#      OBUF                        : 38
 #      OBUFE                       : 4
 =========================================================================
 
 
-Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.87 secs
+Total REAL time to Xst completion: 50.00 secs
+Total CPU time to Xst completion: 49.19 secs
  
 --> 
 
-Total memory usage is 267300 kilobytes
+Total memory usage is 294896 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   14 (   0 filtered)
+Number of warnings :    3 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

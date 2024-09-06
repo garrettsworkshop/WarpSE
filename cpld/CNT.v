@@ -1,6 +1,6 @@
 module CNT(
 	/* FSB clock and E clock inputs */
-	input CLK, input C8M, input E,
+	input CLK, input E,
 	/* Refresh request */
 	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
@@ -8,17 +8,13 @@ module CNT(
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* Sound QoS */
-	input BACT, input WS, input nWE,
-	input SndROMCS, input SndRAMCSWR, input RAMCS, 
+	input BACT,
+	input SndRAMCSWR,
 	output reg QoSReady);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
 	wire EFall = Er[1] && !Er[0];
-	
-	/* C8M clock synchronization */
-	reg [1:0] C8Mr; always @(posedge CLK) C8Mr[1:0] <= { C8Mr[0], C8M };
-	wire C8MFall = C8Mr[1] && !C8Mr[0];
 	
 	/* NMI button synchronization */
 	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
