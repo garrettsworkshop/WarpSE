@@ -29,54 +29,26 @@
 </head>
 
 <body onload="WaveDrom.ProcessAll()">
-<h1>Garrett's Workshop Warp-SE 20/25 MHz 68HC000 Accelerator Documentation</h1>
-
-<h2>System Block Diagram</h2>
-<img src="CPLD.png" style="width:1000px;" />
-
-<h2>Relevant Timing Parameters</h2>
-<p>Some relevant timing parameters to which the bus timings were designed are as follows:</p>
-<table>
-<tr><th>Parameter</th><th>Value</th><th>Description</th></tr>
-<tr><td>tPD_CPLD</td>	<td>10ns</td>	<td>asynchronous propagation delay</td></tr>
-<tr><td>tCO_CPLD</td>	<td>6ns</td>	<td>clock-to-output delay</td></tr>
-<tr><td>tSU_CPLD</td>	<td>6ns</td>	<td>global clock setup time</td></tr>
-<tr><td>tRAS_DRAM</td>	<td>60ns</td>	<td>RAS pulse width / access time</td></tr>
-<tr><td>tASR_DRAM</td>	<td>0ns</td>	<td>row address setup time before RAS</td></tr>
-<tr><td>tRAH_DRAM</td>	<td>10ns</td>	<td>row address hold time after RAS</td></tr>
-<tr><td>tRCD_DRAM</td>	<td>20ns</td>	<td>minimum RAS-to-CAS delay</td></tr>
-<tr><td>tASC_DRAM</td>	<td>0ns</td>	<td>column address setup time before CAS</td></tr>
-<tr><td>tCAH_DRAM</td>	<td>10ns</td>	<td>column address hold time after CAS</td></tr>
-<tr><td>tCAS_DRAM</td>	<td>20ns</td>	<td>CAS pulse width / access time</td></tr>
-<tr><td>tRP_DRAM</td>	<td>40ns</td>	<td>RAS precharge time</td></tr>
-<tr><td>tCP_DRAM</td>	<td>10ns</td>	<td>CAS precharge time</td></tr>
-<tr><td>tRC_DRAM</td>	<td>120ns</td>	<td>minimum RAS cycle time</td></tr>
-<tr><td>tACC_ROM</td>	<td>70ns</td>	<td>ROM access time</td></tr>
-<tr><td>tOE_ROM</td>	<td>40ns</td>	<td>ROM OE access time</td></tr>
-<tr><td>tPD_573</td>	<td>20ns</td>	<td>74AHCT573 propagation delay after LE or D</td></tr>
-<tr><td>tSU_573</td>	<td>5ns</td>	<td>74AHCT573 setup time before LE</td></tr>
-<tr><td>tH_573</td>		<td>2ns</td>	<td>74AHCT573 hold time after LE</td></tr>
-</table>
+<h1>Garrett's Workshop WarpSE 25 MHz 68HC000 Accelerator Documentation</h1>
 
 
-<h2>Timing Diagrams</h2><p>
-	Below I am presenting some timing diagrams showing the relevant signals for various interesting bus cycle cases. <br/>
-	We are beginning with the timing of the accelerated processor bus, or the front-side bus (FSB), and proceeding on to the timing of the master port on the Mac SE bus, or the I/O Bus (IOB). <br/>
-	The timing diagrams are scaled for a 25 MHz FSB clock frequency and the standard 7.8336 MHz Mac SE bus.
-</p>
 
 
 <h3 id="t0">0. Generic MC68000 bus cycle detection</h3>
 <script type="WaveDrom">{signal: [
-{name: 'FCLK',     wave: 'p.....',					phase: 0.00, period: 2},
-{name: 'A',        wave: 'x2..x.',					phase: 0.25, period: 2},
-{name: 'R/W',      wave: 'x..1....x...',			phase: 0.25, period: 1},
-{name: '/AS',      wave: '1...x0........x1....x2.',	phase:-0.25, period: 0.5},
-{name: '/DS (RD)', wave: '1...x0........x1....x..',	phase:-0.25, period: 0.5},
-{name: '/DS (WR)', wave: '1.......x0....x1....x..',	phase:-0.25, period: 0.5},
-{name: '/AS',      wave: '1...x0........x1....x..',	phase:-0.25, period: 0.5},
-{name: '/ASrf',    wave: '1...x.....0.......1...x',	phase:-0.25, period: 0.5},
-{name: 'BACT',     wave: '0...x.1...........0.x.2',	phase:-0.25, period: 0.5},
+{name: 'FCLK',     wave: 'p.......................',	phase: 0.00, period: 1},
+{name: 'CS',       wave: '222222222222222222222222',	phase: 0.00, period: 1,
+ data:[0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3,0,1,2,3]},
+{name: 'MCLK',     wave: 'p.....',						phase: 0.00, period: 4},
+{name: 'A',        wave: 'x2..x.',						phase: 0.25, period: 4},
+{name: 'R/W',      wave: 'x..1....x...',				phase: 0.25, period: 2},
+{name: '/AS',      wave: '1...x0........x1....x2.',		phase:-0.25, period: 1},
+{name: '/DS (RD)', wave: '1...x0........x1....x..',		phase:-0.25, period: 1},
+{name: '/DS (WR)', wave: '1.......x0....x1....x..',		phase:-0.25, period: 1},
+{name: 'RCMD (RD)',wave: '222222222222222222222222',	phase: 0.00, period: 1,
+ data:['NOP','NOP','NOP','NOP','NOP','NOP','NOP','ACT','NOP','RD','NOP','NOP','NOP','PC','NOP','REF','NOP','NOP','NOP','NOP','NOP']},
+{name: 'RCMD (WR)',wave: '222222222222222222222222',	phase: 0.00, period: 1,
+ data:['NOP','NOP','NOP','NOP','NOP','NOP','NOP','ACT','NOP','NOP','NOP','WR','NOP','PC','NOP','REF','NOP','NOP','NOP','NOP','NOP']},
 ]}
 </script><br/><p>
 For starters, it is instructive to look at a generic MC68000 bus cycle. <br/>
@@ -790,6 +762,53 @@ the IOBS has received indication from the IOBM that the previous write has begun
 {name: 'MCLK',		wave: 'p....|..|.....|..|..', period: 2},
 {name: 'IOSTART',	wave: '1010.|..|.....|..|..', period: 2, phase:-0.3},
 {name: 'PS',		wave: '22222|22|22222|22|22', period: 2, data:[0,3,2,2,2,2,1,1,0,3,2,2,2,1,1,0], phase:-0.3},
+{name: 'IOACT',		wave: '0....|1.|0....|1.|0.', phase:-0.3, period: 2},
+{name: 'IOREQ',		wave: '01...|..|.....|.0|..', phase:-0.3, period: 2},
+{name: 'ALE1',		wave: '1...0|..|....1|..|..', phase:-0.3, period: 2},
+{name: 'IORW1',		wave: '2..0.|..|.....|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU1',		wave: '2...2|..|.....|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'ALE0',		wave: '1.0..|.1|...0.|.1|..', phase:-0.3, period: 2},
+{name: 'IORW0',		wave: '20...|..|..0..|..|..', phase:-0.3, period: 2, data:['R/W', 'R/W']},
+{name: 'IOLU0',		wave: '2.2..|..|...2.|..|..', phase:-0.3, period: 2, data:['LDS, UDS', 'LDS, UDS']},
+{name: 'IOWRReady',	wave: '1...0|..|....1|..|..', phase:-0.3, period: 2},
+]}
+</script><p>
+Similar to the previous case (again). This is the closest write timing allowed, even faster than MC68k can do.
+</p>
+
+<script type="text/javascript">
+document.querySelectorAll('script[type=wavedrom]').forEach(function(dgm) {
+	var dj;
+	eval('dj = ' + dgm.text + ';');
+	var lines = {};
+	var table = {};
+	dj.signal.forEach(function(line) {
+		lines[line.name] = '';
+		for (var symbol = 0; symbol < line.wave.length; symbol++) {
+			for (var reps = 0; reps < line.period / 0.5; reps++) {
+				if (line.wave.charAt(symbol) === '.' ||
+					line.wave.charAt(symbol) === '|') { 
+					var previndex = lines[line.name].charAt.length-1;
+					
+					if (previndex <= 0) {
+						lines[line.name] += '1';
+					} else {
+						lines[line.name] += lines[line.name].charAt(previndex);
+					}
+				} else {
+					lines[line.name] += line.wave.charAt(symbol);
+				}
+			}
+		}
+		//alert(lines[line.name]);
+	});
+});
+</script>
+
+</body>
+
+</html>
+', period: 2, data:[0,3,2,2,2,2,1,1,0,3,2,2,2,1,1,0], phase:-0.3},
 {name: 'IOACT',		wave: '0....|1.|0....|1.|0.', phase:-0.3, period: 2},
 {name: 'IOREQ',		wave: '01...|..|.....|.0|..', phase:-0.3, period: 2},
 {name: 'ALE1',		wave: '1...0|..|....1|..|..', phase:-0.3, period: 2},
