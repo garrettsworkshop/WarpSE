@@ -86,10 +86,12 @@ module WarpSE(
 		/* MC68HC000 interface */
 		FCLK, A_FSB[21:1], nWE_FSB,
 		nAS_FSB, nLDS_FSB, nUDS_FSB, nDTACK_FSB,
-		/* AS cycle detection */
+		/* AS cycle detection inputs */
 		BACT, BACTr,
-		/* Select and ready signals */
-		RAMCS, RAMCS0X, ROMCS, RAMReady,
+		/* RAM and ROM select inputs */
+		RAMCS, RAMCS0X, ROMCS, ROMCS4X,
+		/* RAM ready output */
+		RAMReady,
 		/* Refresh Counter Interface */
 		RefReq, RefUrg, 
 		/* DRAM and NOR flash interface */

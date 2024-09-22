@@ -5,7 +5,9 @@ module RAM(
 	/* AS cycle detection */
 	input BACT, input BACTr,
 	/* Select and ready signals */
-	input RAMCS, input RAMCS0X, input ROMCS, output reg RAMReady,
+	input RAMCS, input RAMCS0X, input ROMCS, input ROMCS4X,
+	/* RAM ready output */
+	output reg RAMReady,
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgIn,
 	/* DRAM and NOR flash interface */
@@ -39,7 +41,7 @@ module RAM(
 
 	/* ROM control signals */
 	assign nROMOE = !(ROMCS && !nAS &&  nWE);
-	assign nROMWE = !(ROMCS && !nAS && !nWE);
+	assign nROMWE = !(ROMCS4X && !nAS && !nWE);
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.
