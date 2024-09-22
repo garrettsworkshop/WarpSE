@@ -43,7 +43,6 @@ module CS(
 		((A[15:12]==4'hA) && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
 
 	/* Select signals - IOB domain */
-	assign IACS =  A[23:16]==8'hFF; // IACK
 	assign IOCS =  A[23:20]==4'hF || // IACK
 				   A[23:20]==4'hE || // VIA
 				   A[23:20]==4'hD || // IWM
@@ -58,4 +57,5 @@ module CS(
 				  (A[23:20]==4'h4 && Overlay) || // ROM once
 				   VidRAMCSWR; // Write to video RAM
 	assign IOPWCS = VidRAMCSWR;
+	assign IACS = A[23:20]==4'hF; // IACK
 endmodule
