@@ -38,13 +38,10 @@ module WarpSE(
 	output nDinOE,
 	output nDinLE,
 	output MCKE,
-	output [5:0] DBG);
+	input [5:0] DBG);
 
 	/* MC68k clock enable */
 	assign MCKE = 1;
-
-	/* DBG outuput */
-	assign DBG[5:0] = 6'h00;
 
 	/* GA gated (translated) address output */
 	assign GA[23:22] = (
