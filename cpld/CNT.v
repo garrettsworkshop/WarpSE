@@ -53,10 +53,7 @@ module CNT(
 	end
 	
 	/* During init (IS!=3) long timer counts from 0 to 4095.
-	 * 4096 states == 57.516 ms 
-	 * During operation (IS==3) long timer counts from 0 to 3
-	 * starting at first sound RAM access.
-	 * Period is 28.124 us - 42.240 us */
+	 * 4096 states == 57.516 ms */
 	reg [11:0] LTimer;
 	reg LTimerTC;
 	always @(posedge CLK) begin
