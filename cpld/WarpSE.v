@@ -152,10 +152,10 @@ module WarpSE(
 		nRESout, nIPL2, 
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
-		/* Sound QoS */
 		BACT,
 		SndRAMCSWR, RAMCS0X,
 		QoSReady);
+		/* QoS control */
 	
 	FSB fsb(
 		/* MC68HC000 interface */

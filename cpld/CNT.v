@@ -7,7 +7,7 @@ module CNT(
 	output reg nRESout, input nIPL2, 
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
-	/* Sound QoS */
+	/* QoS control */
 	input BACT,
 	input SndRAMCSWR,
 	output reg QoSReady);
