@@ -4,7 +4,7 @@ module IOBS(
 	/* AS cycle detection */
 	input BACT,
 	/* Select signals */
-	input IOCS, input IOPWCS, input Overlay,
+	input IOCS, input IORealCS, input IOPWCS,
 	/* FSB cycle termination outputs */
 	output reg IONPReady, output IOPWReady, output reg nBERR_FSB,
 	/* Read data OE control */
@@ -25,7 +25,7 @@ module IOBS(
 	wire IODONE = IODONEr;
 
 	/* Read data OE control */
-	assign nDinOE = !(!nAS && IOCS && nWE && !Overlay);
+	assign nDinOE = !(!nAS && IORealCS && nWE);
 	
 	/* I/O transfer state
 	 * TS0 - I/O bridge idle:

@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.91 secs
+Total CPU time to Xst completion: 1.08 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 1.00 secs
-Total CPU time to Xst completion: 0.91 secs
+Total CPU time to Xst completion: 1.09 secs
  
 --> Reading design: WarpSE.prj
 
@@ -144,7 +144,7 @@ Performing bidirectional port resolution...
 
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
-    Found 1-bit register for signal <nOverlay>.
+    Found 1-bit register for signal <Overlay>.
 Unit <CS> synthesized.
 
 
@@ -250,8 +250,6 @@ Unit <IOBM> synthesized.
 
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
-WARNING:Xst:647 - Input <C8M> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <RAMCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found finite state machine <FSM_3> for signal <IS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
@@ -266,21 +264,22 @@ WARNING:Xst:647 - Input <RAMCS> is never used. This port will be preserved and l
     Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
+    Found 1-bit register for signal <QoSEN>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
-    Found 1-bit register for signal <QoSReady>.
     Found 2-bit register for signal <Er>.
     Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTC>.
     Found 1-bit register for signal <nIPL2r>.
+    Found 1-bit register for signal <nRESr>.
+    Found 1-bit register for signal <QoSCSr>.
     Found 2-bit up counter for signal <QS>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTC>.
-    Found 5-bit up counter for signal <Wait>.
     Summary:
 	inferred   1 Finite State Machine(s).
-	inferred   4 Counter(s).
-	inferred   9 D-type flip-flop(s).
+	inferred   3 Counter(s).
+	inferred  11 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
 
@@ -298,6 +297,7 @@ Unit <FSB> synthesized.
 Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <DBG> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nLDS_IOB>.
     Found 1-bit tristate buffer for signal <nRES>.
@@ -312,13 +312,12 @@ Unit <WarpSE> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# Counters                                             : 5
+# Counters                                             : 4
  12-bit up counter                                     : 1
  2-bit up counter                                      : 1
  4-bit up counter                                      : 2
- 5-bit up counter                                      : 1
-# Registers                                            : 56
- 1-bit register                                        : 55
+# Registers                                            : 58
+ 1-bit register                                        : 57
  2-bit register                                        : 1
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
@@ -382,13 +381,12 @@ Advanced HDL Synthesis Report
 
 Macro Statistics
 # FSMs                                                 : 4
-# Counters                                             : 5
+# Counters                                             : 4
  12-bit up counter                                     : 1
  2-bit up counter                                      : 1
  4-bit up counter                                      : 2
- 5-bit up counter                                      : 1
-# Registers                                            : 46
- Flip-Flops                                            : 46
+# Registers                                            : 48
+ Flip-Flops                                            : 48
 
 =========================================================================
 
@@ -399,7 +397,6 @@ Macro Statistics
 Optimizing unit <WarpSE> ...
 
 Optimizing unit <CS> ...
-  implementation constraint: INIT=r	 : nOverlay
 
 Optimizing unit <RAM> ...
   implementation constraint: INIT=s	 : RS_FSM_FFd8
@@ -435,17 +432,12 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd5
 
 Optimizing unit <CNT> ...
-  implementation constraint: INIT=r	 : IS_FSM_FFd2
-  implementation constraint: INIT=r	 : Wait_4
-  implementation constraint: INIT=r	 : Wait_0
-  implementation constraint: INIT=r	 : Wait_1
-  implementation constraint: INIT=r	 : Wait_2
-  implementation constraint: INIT=r	 : Wait_3
   implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
-  implementation constraint: INIT=r	 : IS_FSM_FFd1
+  implementation constraint: INIT=r	 : IS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_2
+  implementation constraint: INIT=r	 : IS_FSM_FFd1
 
 =========================================================================
 *                           Partition Report                            *
@@ -477,41 +469,41 @@ Design Statistics
 # IOs                              : 79
 
 Cell Usage :
-# BELS                             : 634
-#      AND2                        : 201
-#      AND3                        : 27
-#      AND4                        : 9
-#      AND5                        : 4
+# BELS                             : 621
+#      AND2                        : 193
+#      AND3                        : 29
+#      AND4                        : 11
+#      AND5                        : 3
 #      AND7                        : 1
-#      AND8                        : 3
+#      AND8                        : 1
 #      GND                         : 6
 #      INV                         : 238
-#      OR2                         : 104
-#      OR3                         : 14
+#      OR2                         : 100
+#      OR3                         : 16
 #      OR4                         : 4
 #      VCC                         : 1
-#      XOR2                        : 22
-# FlipFlops/Latches                : 103
-#      FD                          : 67
+#      XOR2                        : 18
+# FlipFlops/Latches                : 100
+#      FD                          : 63
 #      FDC                         : 2
-#      FDCE                        : 33
+#      FDCE                        : 34
 #      FDP                         : 1
-# IO Buffers                       : 78
+# IO Buffers                       : 72
 #      IBUF                        : 35
 #      IOBUFE                      : 1
-#      OBUF                        : 38
+#      OBUF                        : 32
 #      OBUFE                       : 4
 =========================================================================
 
 
-Total REAL time to Xst completion: 50.00 secs
-Total CPU time to Xst completion: 49.19 secs
+Total REAL time to Xst completion: 57.00 secs
+Total CPU time to Xst completion: 56.69 secs
  
 --> 
 
-Total memory usage is 294896 kilobytes
+Total memory usage is 296080 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    3 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

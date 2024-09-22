@@ -4,13 +4,13 @@ module CNT(
 	/* Refresh request */
 	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
-	output reg nRESout, input nIPL2, 
+	output reg nRESout, input nRESin, input nIPL2, 
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* QoS control */
 	input BACT,
-	input SndRAMCSWR,
-	output reg QoSReady);
+	input QoSCS,
+	output reg QoSEN);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
@@ -62,23 +62,25 @@ module CNT(
 			LTimerTC <= LTimer[11:0]==12'hFFE;
 		end
 	end
+
+	/* QoS select latch */
+	reg QoSCSr;
+	always @(posedge CLK) if (BACT) QoSCSr <= QoSCS;
 	
-	/* Sound QoS trigger */
+	/* QoS timer
+	 * In the absence of a QoS trigger, QS==0.
+	 * When Qos triggered, QS is set to 1 and counts 1, 2, 3, 0.
+	 * While QS!=0, QoS is enabled.
+	 * QoS enable period is 28.124 us - 42.240 us */
 	reg [1:0] QS;
-	wire QoSEN = QS!=0;
 	always @(posedge CLK) begin
-		if (BACT && SndRAMCSWR) QS[1:0] <= 1;
+		if (nRESr || QoSCSr) QS[1:0] <= 1;
 		else if (QS==0) QS[1:0] <= 0;
 		else if (EFall && TimerTC) QS[1:0] <= QS+1;
 	end
-	
-	/* Sound QoS */
-	reg [4:0] Wait = 0;
-	always @(posedge CLK) begin
-		if (!BACT) Wait <= 0;
-		else Wait <= Wait+1;
-		if (!BACT || !QoSReady) QoSReady <= !QoSEN || (Wait==16);
-	end
+
+	/* QoS enable control */
+	always @(posedge CLK) if (!BACT) QoSEN <= QoSCSr || QS!=0;
 
 	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;

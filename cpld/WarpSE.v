@@ -44,6 +44,7 @@ module WarpSE(
 	assign MCKE = 1;
 
 	/* GA gated (translated) address output */
+	//assign GA[23:22] = A_FSB[23:22];
 	assign GA[23:22] = (
 		// $800000-$8FFFFF to $000000-$0FFFFF (1 MB)
 		(A_FSB[23:20]==4'h8) ||
@@ -64,22 +65,24 @@ module WarpSE(
 	/* Refresh request/ack signals */
 	wire RefReq, RefUrg;
 	
+	/* QoS enable */
+	wire QoSEN;
+	
 	/* FSB chip select signals */
-	wire Overlay;
-	wire IOCS, IOPWCS, IACS;
+	wire IOCS, IORealCS, IOPWCS, IACS;
 	wire ROMCS, ROMCS4X;
-	wire RAMCS, RAMCS0X, SndRAMCSWR;
+	wire RAMCS, RAMCS0X, QoSCS;
 	CS cs(
 		/* MC68HC000 interface */
 		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
 		/* /AS cycle detection */
 		BACT,
-		/* Overlay */
-		Overlay,
+		/* QoS enable input */
+		QoSEN,
 		/* Device select outputs */
-		IOCS, IOPWCS, IACS,
+		IOCS, IORealCS, IOPWCS, IACS,
 		ROMCS, ROMCS4X,
-		RAMCS, RAMCS0X, SndRAMCSWR);
+		RAMCS, RAMCS0X, QoSCS);
 
 	wire RAMReady;
 	RAM ram(
@@ -111,7 +114,7 @@ module WarpSE(
 		/* AS cycle detection */
 		BACT,
 		/* Select signals */
-		IOCS, IOPWCS, Overlay,
+		IOCS, IORealCS, IOPWCS,
 		/* FSB cycle termination outputs */
 		IONPReady, IOPWReady, nBERR_FSB,
 		/* Read data OE control */
@@ -142,20 +145,17 @@ module WarpSE(
 		IORDREQ, IOWRREQ, IOL0, IOU0,
 		IOACT, IODONE, IOBERR);
 
-	wire QoSReady;
 	CNT cnt(
 		/* FSB clock and E clock inputs */
 		FCLK, E,
 		/* Refresh request */
 		RefReq, RefUrg,
 		/* Reset, button */
-		nRESout, nIPL2, 
+		nRESout, nRESin, nIPL2, 
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
-		BACT,
-		SndRAMCSWR, RAMCS0X,
-		QoSReady);
 		/* QoS control */
+		BACT, QoSCS, QoSEN);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
@@ -166,7 +166,7 @@ module WarpSE(
 		ROMCS4X,
 		RAMCS0X, RAMReady,
 		IOPWCS, IOPWReady, IONPReady,
-		QoSReady,
+		QoSEN,
 		/* Interrupt acknowledge select */
 		IACS);
 
