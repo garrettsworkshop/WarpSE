@@ -146,7 +146,7 @@ module WarpSE(
 	wire QoSReady;
 	CNT cnt(
 		/* FSB clock and E clock inputs */
-		FCLK, C8M, E,
+		FCLK, E,
 		/* Refresh request */
 		RefReq, RefUrg,
 		/* Reset, button */
