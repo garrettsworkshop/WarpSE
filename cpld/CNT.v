@@ -16,8 +16,9 @@ module CNT(
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
 	wire EFall = Er[1] && !Er[0];
 	
-	/* NMI button synchronization */
+	/* NMI and reset synchronization */
 	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
+	reg nRESr; always @(posedge CLK) nRESr <= nRESin;
 	
 	/* Startup sequence state */
 	reg [1:0] IS = 0;
