@@ -1,7 +1,7 @@
  
 cpldfit:  version P.20131013                        Xilinx Inc.
                                   Fitter Report
-Design Name: WarpSE                              Date:  9-23-2024,  4:23AM
+Design Name: WarpSE                              Date:  9-24-2024,  4:57AM
 Device Used: XC95144XL-10-TQ100
 Fitting Status: Successful
 
@@ -1076,17 +1076,17 @@ cnt/LTimerTC_CE <= (cnt/TimerTC AND NOT cnt/Er(0) AND cnt/Er(1));
 
 FTCPE_cnt/QS0: FTCPE port map (cnt/QS(0),cnt/QS_T(0),FCLK,'0','0');
 cnt/QS_T(0) <= ((NOT cnt/QS(0) AND cnt/QoSCSr)
-	OR (NOT cnt/QS(0) AND cnt/nRESr)
+	OR (NOT cnt/QS(0) AND NOT cnt/nRESr)
 	OR (NOT cnt/QS(0) AND cnt/QS(1) AND cnt/TimerTC AND NOT cnt/Er(0) AND 
 	cnt/Er(1))
 	OR (cnt/QS(0) AND NOT cnt/QoSCSr AND cnt/TimerTC AND 
-	NOT cnt/Er(0) AND cnt/Er(1) AND NOT cnt/nRESr));
+	NOT cnt/Er(0) AND cnt/Er(1) AND cnt/nRESr));
 
 FTCPE_cnt/QS1: FTCPE port map (cnt/QS(1),cnt/QS_T(1),FCLK,'0','0');
 cnt/QS_T(1) <= ((cnt/QS(1) AND cnt/QoSCSr)
-	OR (cnt/QS(1) AND cnt/nRESr)
+	OR (cnt/QS(1) AND NOT cnt/nRESr)
 	OR (cnt/QS(0) AND NOT cnt/QoSCSr AND cnt/TimerTC AND 
-	NOT cnt/Er(0) AND cnt/Er(1) AND NOT cnt/nRESr));
+	NOT cnt/Er(0) AND cnt/Er(1) AND cnt/nRESr));
 
 FDCPE_cnt/QoSCSr: FDCPE port map (cnt/QoSCSr,cnt/QoSCSr_D,FCLK,'0','0');
 cnt/QoSCSr_D <= ((A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND 

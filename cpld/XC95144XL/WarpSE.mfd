@@ -110,11 +110,11 @@ INPUTS | 7 | cnt/QS<0>  | cnt/QoSCSr  | cnt/nRESr  | cnt/QS<1>  | cnt/TimerTC  |
 INPUTMC | 7 | 0 | 17 | 6 | 0 | 0 | 5 | 0 | 16 | 3 | 0 | 0 | 8 | 2 | 6
 EQ | 7 | 
    cnt/QS<0>.T = !cnt/QS<0> & cnt/QoSCSr
-	# !cnt/QS<0> & cnt/nRESr
+	# !cnt/QS<0> & !cnt/nRESr
 	# !cnt/QS<0> & cnt/QS<1> & cnt/TimerTC & !cnt/Er<0> & 
 	cnt/Er<1>
 	# cnt/QS<0> & !cnt/QoSCSr & cnt/TimerTC & 
-	!cnt/Er<0> & cnt/Er<1> & !cnt/nRESr;
+	!cnt/Er<0> & cnt/Er<1> & cnt/nRESr;
    cnt/QS<0>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -125,9 +125,9 @@ INPUTS | 7 | cnt/QS<0>  | cnt/QoSCSr  | cnt/TimerTC  | cnt/Er<0>  | cnt/Er<1>  |
 INPUTMC | 7 | 0 | 17 | 6 | 0 | 3 | 0 | 0 | 8 | 2 | 6 | 0 | 5 | 0 | 16
 EQ | 5 | 
    cnt/QS<1>.T = cnt/QS<1> & cnt/QoSCSr
-	# cnt/QS<1> & cnt/nRESr
+	# cnt/QS<1> & !cnt/nRESr
 	# cnt/QS<0> & !cnt/QoSCSr & cnt/TimerTC & 
-	!cnt/Er<0> & cnt/Er<1> & !cnt/nRESr;
+	!cnt/Er<0> & cnt/Er<1> & cnt/nRESr;
    cnt/QS<1>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 

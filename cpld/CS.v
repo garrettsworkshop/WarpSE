@@ -43,7 +43,7 @@ module CS(
 		//A[15:12]==4'hB || // 4096 bytes video
 		//A[15:12]==4'hC || // 4096 bytes video
 		//A[15:12]==4'hD || // 4096 bytes video
-		//A[15:12]==4'hE || // 4096 bytes videoz
+		//A[15:12]==4'hE || // 4096 bytes video
 		//A[15:12]==4'hF); // 3200 bytes video, 128 bytes RAM (system error space), 768 bytes sound
 	wire SndRAMCSWR = VidRAMCSWR64k && (
 		((A[15:12]==4'hF) && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||

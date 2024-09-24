@@ -74,7 +74,7 @@ module CNT(
 	 * QoS enable period is 28.124 us - 42.240 us */
 	reg [1:0] QS;
 	always @(posedge CLK) begin
-		if (nRESr || QoSCSr) QS[1:0] <= 1;
+		if (!nRESr || QoSCSr) QS[1:0] <= 1;
 		else if (QS==0) QS[1:0] <= 0;
 		else if (EFall && TimerTC) QS[1:0] <= QS+1;
 	end

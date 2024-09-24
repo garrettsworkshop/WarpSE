@@ -338,17 +338,17 @@ FDCPE_cnt/LTimerTC: FDCPE port map (cnt/LTimerTC,cnt/LTimerTC_D,FCLK,'0','0',cnt
 </td></tr><tr><td>
 FTCPE_cnt/QS0: FTCPE port map (cnt/QS(0),cnt/QS_T(0),FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/QS_T(0) <= ((NOT cnt/QS(0) AND cnt/QoSCSr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/QS(0) AND cnt/nRESr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/QS(0) AND NOT cnt/nRESr)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (NOT cnt/QS(0) AND cnt/QS(1) AND cnt/TimerTC AND NOT cnt/Er(0) AND 
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cnt/Er(1))
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/QS(0) AND NOT cnt/QoSCSr AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1) AND NOT cnt/nRESr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1) AND cnt/nRESr));
 </td></tr><tr><td>
 FTCPE_cnt/QS1: FTCPE port map (cnt/QS(1),cnt/QS_T(1),FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/QS_T(1) <= ((cnt/QS(1) AND cnt/QoSCSr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/QS(1) AND cnt/nRESr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/QS(1) AND NOT cnt/nRESr)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (cnt/QS(0) AND NOT cnt/QoSCSr AND cnt/TimerTC AND 
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1) AND NOT cnt/nRESr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	NOT cnt/Er(0) AND cnt/Er(1) AND cnt/nRESr));
 </td></tr><tr><td>
 FDCPE_cnt/QoSCSr: FDCPE port map (cnt/QoSCSr,cnt/QoSCSr_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cnt/QoSCSr_D <= ((A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND A_FSB(17) AND 
