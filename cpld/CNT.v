@@ -71,53 +71,26 @@ module CNT(
 		end
 	end
 
-	/* I/O QoS select register */
-	reg IOQoSCSr;
-	always @(posedge CLK) IOQoSCSr <= IOQoSCS;
-
 	/* QoS select register */
-	reg SndQoSCSr;
-	always @(posedge CLK) SndQoSCSr <= SndQoSCS;
+	reg QoSCSr;
+	always @(posedge CLK) QoSCSr <= IOQoSCS || SndQoSCS;
 	
 	/* I/O QoS timer */
 	reg [2:0] IOQS;
 	always @(posedge CLK) begin
-		if (!nRESr || (BACTr && (IOQoSCSr || SndQoSCSr))) IOQS[2:0] <= 1;
+		if (!nRESr || (BACTr && QoSCSr)) IOQS[2:0] <= 1;
 		else if (IOQS==0) IOQS[2:0] <= 0;
 		else if (EFall && TimerTC) IOQS[2:0] <= IOQS[2] ? 0 : IOQS+1;
-	end
-	
-	/* Sound QoS timer */
-	reg [1:0] SndQS;
-	always @(posedge CLK) begin
-		if (BACTr && SndQoSCSr) SndQS[1:0] <= 1;
-		else if (BACTr && IOQoSCSr) SndQS[1:0] <= 0;
-		else if (SndQS==0) SndQS[1:0] <= 0;
-		else if (EFall && TimerTC) SndQS[1:0] <= SndQS+1;
 	end
 
 	/* I/O QoS enable */
 	always @(posedge CLK) if (!BACT) IOQoSEN <= IOQS!=0;
 
-	/* Sound QoS enable */
-	always @(posedge CLK) if (!BACT) SndQoSEN <= SndQS!=0;
-
 	/* MC68K clock enable */
 	always @(posedge CLK) MCKE <= BACT || BACTr || (IOQS==0) || C8MFall;
 
-	/* Sound QoS wait state control */
-	reg [4:0] Wait;
-	always @(posedge CLK) begin
-		if (!BACT) Wait <= 0;
-		else Wait <= Wait+1;
-	end
-
-	/* Sound QoS ready control */
-	always @(posedge CLK) begin
-		if (!BACT) SndQoSReady <= !SndQoSEN;
-		else if (BACTr) IOQoSCSr <= 1;
-		else if (Wait==5'h1F) SndQoSReady <= 1;
-	end
+	/* Sound QoS removed */
+	assign SndQoSReady = 1;
 
 	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;
