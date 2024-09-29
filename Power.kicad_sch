@@ -146,7 +146,7 @@
 				)
 			)
 		)
-		(symbol "GW_Power:MAX40200AUK"
+		(symbol "GW_Power:LM66100DCK"
 			(pin_names
 				(offset 1.016)
 			)
@@ -161,7 +161,7 @@
 					)
 				)
 			)
-			(property "Value" "MAX40200AUK"
+			(property "Value" "LM66100DCK"
 				(at 0 -6.35 0)
 				(effects
 					(font
@@ -195,7 +195,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "MAX40200AUK_0_1"
+			(symbol "LM66100DCK_0_1"
 				(rectangle
 					(start -6.35 5.08)
 					(end 6.35 -5.08)
@@ -208,7 +208,7 @@
 					)
 				)
 			)
-			(symbol "MAX40200AUK_1_1"
+			(symbol "LM66100DCK_1_1"
 				(pin power_in line
 					(at -11.43 2.54 0)
 					(length 5.08)
@@ -248,7 +248,7 @@
 				(pin input line
 					(at -11.43 0 0)
 					(length 5.08)
-					(name "En"
+					(name "~{CE}"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -281,6 +281,24 @@
 						)
 					)
 				)
+				(pin output line
+					(at 11.43 0 180)
+					(length 5.08)
+					(name "ST"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 				(pin power_out line
 					(at 11.43 2.54 180)
 					(length 5.08)
@@ -291,7 +309,7 @@
 							)
 						)
 					)
-					(number "5"
+					(number "6"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -778,6 +796,12 @@
 		)
 	)
 	(junction
+		(at 100.33 102.87)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "0f19063e-a9aa-44d9-a607-629676396837")
+	)
+	(junction
 		(at 153.67 60.96)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -806,6 +830,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "7c3fa13a-5250-4394-8d82-80430597df04")
+	)
+	(junction
+		(at 100.33 107.95)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7dd710fe-bc23-444b-b1de-4c7c57cbde36")
 	)
 	(junction
 		(at 143.51 53.34)
@@ -842,6 +872,24 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f368b66f-c8a4-4ccf-b925-3f03c13bf28f")
+	)
+	(junction
+		(at 110.49 107.95)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f6997ea9-298e-41f6-8501-1eecb7d2fa49")
+	)
+	(no_connect
+		(at 121.92 88.9)
+		(uuid "0c0ac526-0518-48fc-b7ee-37b3a6a1f03e")
+	)
+	(no_connect
+		(at 111.76 86.36)
+		(uuid "93b5ba88-46e0-43bc-9b80-024295da6fc8")
+	)
+	(no_connect
+		(at 121.92 86.36)
+		(uuid "9b361cf6-b0ee-452f-ae7c-c1fdcf215e3a")
 	)
 	(no_connect
 		(at 111.76 88.9)
@@ -919,16 +967,6 @@
 	)
 	(wire
 		(pts
-			(xy 86.36 83.82) (xy 88.9 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "39885295-c262-45e9-95b0-5ab15b88506a")
-	)
-	(wire
-		(pts
 			(xy 118.11 59.69) (xy 118.11 60.96)
 		)
 		(stroke
@@ -976,16 +1014,6 @@
 			(type default)
 		)
 		(uuid "75b0aef6-fcee-4461-a833-3483a1b0bdb1")
-	)
-	(wire
-		(pts
-			(xy 86.36 86.36) (xy 88.9 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7bffcf9d-f3bd-4b91-b54c-32476508ea4d")
 	)
 	(wire
 		(pts
@@ -1059,6 +1087,16 @@
 	)
 	(wire
 		(pts
+			(xy 100.33 102.87) (xy 110.49 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c0f40de3-b779-4a90-8672-0e274cb12803")
+	)
+	(wire
+		(pts
 			(xy 143.51 53.34) (xy 143.51 54.61)
 		)
 		(stroke
@@ -1076,16 +1114,6 @@
 			(type default)
 		)
 		(uuid "c546008e-7661-419e-94b3-0bbb9fd14ec8")
-	)
-	(wire
-		(pts
-			(xy 86.36 83.82) (xy 86.36 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c92c2116-19db-42b6-af3a-8a10e7ac20b3")
 	)
 	(wire
 		(pts
@@ -1117,9 +1145,29 @@
 		)
 		(uuid "d545442f-50b0-4b83-a1a6-14023c5e60d0")
 	)
+	(wire
+		(pts
+			(xy 100.33 107.95) (xy 110.49 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d6c9ac79-ec85-4d16-9b28-b300e6afb5b3")
+	)
+	(wire
+		(pts
+			(xy 90.17 107.95) (xy 100.33 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f14bb97a-9a51-4ec7-a8de-4f9b8ed83f66")
+	)
 	(global_label "+5Vin"
 		(shape input)
-		(at 86.36 83.82 180)
+		(at 88.9 83.82 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -1129,7 +1177,95 @@
 		)
 		(uuid "1039f3ba-8555-4a68-ab2c-066300a7576a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 78.4047 83.82 0)
+			(at 80.9447 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "USB5V"
+		(shape input)
+		(at 144.78 83.82 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "9522361d-2a4e-45e5-8a47-61bbdbf08b90")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 153.2191 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "USB5V"
+		(shape input)
+		(at 88.9 86.36 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "bd434d58-5fcd-4083-814c-3165d5e1597c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 80.4609 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "+5Vin"
+		(shape input)
+		(at 144.78 86.36 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c6824016-94f6-49d7-a7d5-b91b0632f2b7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 152.7353 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "USB5V"
+		(shape input)
+		(at 90.17 102.87 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "cfb225c6-1307-45fc-8014-8047f9e8b9b3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 81.7309 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1586,82 +1722,6 @@
 		)
 	)
 	(symbol
-		(lib_id "GW_Power:MAX40200AUK")
-		(at 100.33 86.36 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0e1f7152-2837-436e-840b-622fbc82feef")
-		(property "Reference" "U4"
-			(at 100.33 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "MAX40200AUK"
-			(at 100.33 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "stdpads:SOT-353"
-			(at 100.33 80.01 0)
-			(effects
-				(font
-					(size 0.508 0.508)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 100.33 88.9 0)
-			(effects
-				(font
-					(size 1.524 1.524)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 100.33 86.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "7a525ae7-9c47-4884-b434-14dd3fce8ec1")
-		)
-		(pin "1"
-			(uuid "ef8643fb-2776-4ecd-8f67-c67ed9c6a922")
-		)
-		(pin "2"
-			(uuid "6cc2e121-279b-4d73-b733-daeb4543ce59")
-		)
-		(pin "4"
-			(uuid "5e8b7f78-be04-499d-a446-4f00624f879d")
-		)
-		(pin "5"
-			(uuid "030b78a3-aeca-4d9c-91ca-4964da0b764d")
-		)
-		(instances
-			(project "WarpSE"
-				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
-					(reference "U4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C_Small")
 		(at 163.83 57.15 0)
 		(mirror y)
@@ -1806,6 +1866,151 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 110.49 107.95 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "48c8d4aa-be78-4917-99ba-7a73ec89ac7c")
+		(property "Reference" "#PWR033"
+			(at 110.49 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 110.49 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 110.49 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 110.49 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 110.49 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1c00d6a1-3f8f-4b3b-9c32-e2743c9a8256")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "#PWR033")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "GW_Power:LM66100DCK")
+		(at 100.33 86.36 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "52295d84-3c81-4742-8519-f46598f86505")
+		(property "Reference" "U25"
+			(at 100.33 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LM66100DCK"
+			(at 100.33 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "stdpads:SOT-363"
+			(at 100.33 80.01 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 100.33 88.9 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 100.33 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "89f9bb07-4c77-4a3d-8e37-0ee375433ef4")
+		)
+		(pin "6"
+			(uuid "49971d3a-40a0-475a-8043-bdc520dd547a")
+		)
+		(pin "1"
+			(uuid "2255a197-80eb-4a49-87ef-8e9543451663")
+		)
+		(pin "2"
+			(uuid "26e0ade9-7127-43fd-b8ac-796d5e0c5073")
+		)
+		(pin "3"
+			(uuid "aec54353-41cf-4951-bcfb-82df9bdd1480")
+		)
+		(pin "4"
+			(uuid "039970bc-20dc-4c25-8650-55ab0eab51f5")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "U25")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+5V")
 		(at 111.76 83.82 0)
 		(unit 1)
@@ -1936,6 +2141,150 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 144.78 88.9 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6a8eb6a2-c45e-4f8e-bd79-02edd3542aa4")
+		(property "Reference" "#PWR032"
+			(at 144.78 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 144.78 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 144.78 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 144.78 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 144.78 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "004afd34-e8fd-494d-b64b-9f89be4482d6")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "#PWR032")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 110.49 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "6f71106b-62dd-424f-b5b7-7436eb0027de")
+		(property "Reference" "C45"
+			(at 111.76 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "2u2"
+			(at 111.76 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "stdpads:C_0603"
+			(at 110.49 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 110.49 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 110.49 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C23630"
+			(at 110.49 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c2aeb6f8-d7b5-4f46-80f5-a69609a29158")
+		)
+		(pin "2"
+			(uuid "d36ef7ad-5100-4e91-94d3-ae6a7558f0c2")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "C45")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C_Small")
 		(at 107.95 57.15 0)
 		(unit 1)
@@ -2008,6 +2357,86 @@
 			(project "WarpSE"
 				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
 					(reference "C4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "GW_Power:LM66100DCK")
+		(at 133.35 86.36 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "9798f706-a570-468d-8e66-8a86b4d3ca04")
+		(property "Reference" "U4"
+			(at 133.35 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LM66100DCK"
+			(at 133.35 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "stdpads:SOT-363"
+			(at 133.35 80.01 0)
+			(effects
+				(font
+					(size 0.508 0.508)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 133.35 88.9 0)
+			(effects
+				(font
+					(size 1.524 1.524)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 133.35 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "5"
+			(uuid "11d13dcf-f512-44c4-952f-6013d4f2ea78")
+		)
+		(pin "6"
+			(uuid "04860d52-6808-4999-b85e-c63d826d06ae")
+		)
+		(pin "1"
+			(uuid "d7f5da18-3f37-4ce5-8fb8-8c56d8c13b66")
+		)
+		(pin "2"
+			(uuid "a901f85a-883e-4625-8c77-2fe8c08a71a4")
+		)
+		(pin "3"
+			(uuid "539731eb-49ce-47c5-a8d3-2fa49c7c2c6d")
+		)
+		(pin "4"
+			(uuid "0c135d5e-a433-4c49-88d9-15f8e58c6f8a")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "U4")
 					(unit 1)
 				)
 			)
@@ -2087,6 +2516,292 @@
 			(project "WarpSE"
 				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
 					(reference "C10")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 100.33 102.87 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cbf60658-a8b2-4596-89c6-6367739e8250")
+		(property "Reference" "#PWR034"
+			(at 100.33 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 100.33 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 100.33 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 100.33 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 100.33 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5a604fc0-ddb0-4ed8-b8c6-0be090eee34d")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "#PWR034")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 90.17 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f1d07d04-ad4d-4629-b2e7-5ab14cfc657c")
+		(property "Reference" "C50"
+			(at 91.44 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "2u2"
+			(at 91.44 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "stdpads:C_0603"
+			(at 90.17 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 90.17 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 90.17 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C23630"
+			(at 90.17 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "be332a1c-da6e-4567-9ab2-674e6c63e040")
+		)
+		(pin "2"
+			(uuid "f6b59992-779d-48a3-9ea6-6a4ece324fec")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "C50")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 100.33 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f50fdc24-6948-4eb9-a030-764cd5f6d948")
+		(property "Reference" "C19"
+			(at 101.6 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "2u2"
+			(at 101.6 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "stdpads:C_0603"
+			(at 100.33 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 100.33 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 100.33 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part" "C23630"
+			(at 100.33 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "0b0da459-c5e2-4e71-9228-0de833eb7ab9")
+		)
+		(pin "2"
+			(uuid "a6f349b7-f518-407b-990e-13448bb081d4")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "C19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 121.92 83.82 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f8473525-6251-40a2-beea-c37dfeb72c93")
+		(property "Reference" "#PWR031"
+			(at 121.92 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 121.92 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 121.92 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 121.92 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 121.92 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1058acb0-d2ad-4429-bde5-cfdbc7a73d99")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
