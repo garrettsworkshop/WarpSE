@@ -40,18 +40,15 @@ module WarpSE(
 	output MCKE,
 	input [5:0] DBG);
 
-	/* MC68k clock enable */
-	assign MCKE = 1;
-
 	/* GA gated (translated) address output */
-	//assign GA[23:22] = A_FSB[23:22];
-	assign GA[23:22] = (
+	assign GA[23:22] = A_FSB[23:22];
+	/*assign GA[23:22] = (
 		// $800000-$8FFFFF to $000000-$0FFFFF (1 MB)
 		(A_FSB[23:20]==4'h8) ||
 		// $700000-$7EFFFF to $300000-$3EFFFF (960 kB)
 		(A_FSB[23:20]==4'h7 && A_FSB[19:16]!=4'hF) ||
 		// $600000-$6FFFFF to $200000-$2FFFFF (1 MB)
-		(A_FSB[23:20]==4'h6)) ? 2'b00 : A_FSB[23:22];
+		(A_FSB[23:20]==4'h6)) ? 2'b00 : A_FSB[23:22];*/
 
 	/* Reset input and open-drain output */
 	wire nRESin = nRES;
@@ -59,30 +56,34 @@ module WarpSE(
 	assign nRES = !nRESout ? 1'b0 : 1'bZ;
 
 	/* AS cycle detection */
-	wire BACT;
-	wire BACTr;
+	wire BACT, BACTr;
+
+	/* MC68k clock enable */
+	wire MCKEi;
 
 	/* Refresh request/ack signals */
 	wire RefReq, RefUrg;
 	
 	/* QoS enable */
-	wire QoSEN;
+	wire IOQoSEN;
 	
 	/* FSB chip select signals */
 	wire IOCS, IORealCS, IOPWCS, IACS;
 	wire ROMCS, ROMCS4X;
-	wire RAMCS, RAMCS0X, QoSCS;
+	wire RAMCS, RAMCS0X;
+	wire IOQoSCS, SndQoSCS;
 	CS cs(
 		/* MC68HC000 interface */
 		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
 		/* /AS cycle detection */
 		BACT,
 		/* QoS enable input */
-		QoSEN,
+		IOQoSEN,
 		/* Device select outputs */
 		IOCS, IORealCS, IOPWCS, IACS,
 		ROMCS, ROMCS4X,
-		RAMCS, RAMCS0X, QoSCS);
+		RAMCS, RAMCS0X,
+		IOQoSCS, SndQoSCS);
 
 	wire RAMReady;
 	RAM ram(
@@ -147,7 +148,7 @@ module WarpSE(
 
 	CNT cnt(
 		/* FSB clock and E clock inputs */
-		FCLK, E,
+		FCLK, C8M, E,
 		/* Refresh request */
 		RefReq, RefUrg,
 		/* Reset, button */
@@ -155,18 +156,22 @@ module WarpSE(
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
 		/* QoS control */
-		BACT, QoSCS, QoSEN);
+		BACT, BACTr,
+		IOQoSCS, SndQoSCS,
+		IOQoSEN, SndQoSReady, MCKEi);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
 		FCLK, nAS_FSB, nDTACK_FSB, nVPA_FSB,
+		/* MC68HC000 clock enable */
+		MCKEi, MCKE,
 		/* FSB cycle detection */
 		BACT, BACTr,
 		/* Ready inputs */
 		ROMCS4X,
 		RAMCS0X, RAMReady,
 		IOPWCS, IOPWReady, IONPReady,
-		QoSEN,
+		IOQoSEN, SndQoSReady,
 		/* Interrupt acknowledge select */
 		IACS);
 

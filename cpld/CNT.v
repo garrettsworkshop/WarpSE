@@ -1,6 +1,6 @@
 module CNT(
 	/* FSB clock and E clock inputs */
-	input CLK, input E,
+	input CLK, input C8M, input E,
 	/* Refresh request */
 	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
@@ -9,12 +9,20 @@ module CNT(
 	output reg AoutOE, output reg nBR_IOB,
 	/* QoS control */
 	input BACT,
-	input QoSCS,
-	output reg QoSEN);
+	input BACTr,
+	input IOQoSCS,
+	input SndQoSCS,
+	output reg IOQoSEN,
+	output SndQoSReady,
+	output reg MCKE);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
 	wire EFall = Er[1] && !Er[0];
+	
+	/* C8M clock synchronization */
+	reg [1:0] C8Mr; always @(posedge CLK) C8Mr[1:0] <= { C8Mr[0], C8M };
+	wire C8MFall = C8Mr[1] && !C8Mr[0];
 	
 	/* NMI and reset synchronization */
 	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
@@ -63,24 +71,26 @@ module CNT(
 		end
 	end
 
-	/* QoS select latch */
+	/* QoS select register */
 	reg QoSCSr;
-	always @(posedge CLK) if (BACT) QoSCSr <= QoSCS;
+	always @(posedge CLK) QoSCSr <= IOQoSCS || SndQoSCS;
 	
-	/* QoS timer
-	 * In the absence of a QoS trigger, QS==0.
-	 * When Qos triggered, QS is set to 1 and counts 1, 2, 3, 0.
-	 * While QS!=0, QoS is enabled.
-	 * QoS enable period is 28.124 us - 42.240 us */
-	reg [1:0] QS;
+	/* I/O QoS timer */
+	reg [2:0] IOQS;
 	always @(posedge CLK) begin
-		if (!nRESr || QoSCSr) QS[1:0] <= 1;
-		else if (QS==0) QS[1:0] <= 0;
-		else if (EFall && TimerTC) QS[1:0] <= QS+1;
+		if (!nRESr || (BACTr && QoSCSr)) IOQS[2:0] <= 1;
+		else if (IOQS==0) IOQS[2:0] <= 0;
+		else if (EFall && TimerTC) IOQS[2:0] <= IOQS[2] ? 0 : IOQS+1;
 	end
 
-	/* QoS enable control */
-	always @(posedge CLK) if (!BACT) QoSEN <= QoSCSr || QS!=0;
+	/* I/O QoS enable */
+	always @(posedge CLK) if (!BACT) IOQoSEN <= IOQS!=0;
+
+	/* MC68K clock enable */
+	always @(posedge CLK) MCKE <= BACT || BACTr || (IOQS==0) || C8MFall;
+
+	/* Sound QoS removed */
+	assign SndQoSReady = 1;
 
 	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;
@@ -106,5 +116,4 @@ module CNT(
 			end
 		endcase
 	end
-
 endmodule

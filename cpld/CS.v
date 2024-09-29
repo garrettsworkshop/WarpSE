@@ -4,11 +4,12 @@ module CS(
 	/* AS cycle detection */
 	input BACT,
 	/* QoS enable input */
-	input QoSEN,
+	input IOQoSEN,
 	/* Device select outputs */
 	output IOCS, output IORealCS, output IOPWCS, output IACS,
 	output ROMCS, output ROMCS4X,
-	output RAMCS, output RAMCS0X, output QoSCS);
+	output RAMCS, output RAMCS0X,
+	output IOQoSCS, output SndQoSCS);
 
 	/* Overlay control */
 	reg Overlay;
@@ -45,10 +46,16 @@ module CS(
 		//A[15:12]==4'hD || // 4096 bytes video
 		//A[15:12]==4'hE || // 4096 bytes video
 		//A[15:12]==4'hF); // 3200 bytes video, 128 bytes RAM (system error space), 768 bytes sound
-	wire SndRAMCSWR = VidRAMCSWR64k && (
+	assign SndQoSCS = VidRAMCSWR64k && (
 		((A[15:12]==4'hF) && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||
 		((A[15:12]==4'hA) && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
-	assign QoSCS = IACKCS || VIACS || IWMCS || SCCCS || SCSICS || SndRAMCSWR;
+	assign IOQoSCS = 
+		IACKCS 
+		|| VIACS 
+		|| IWMCS 
+		|| SCCCS 
+		|| SCSICS
+		;
 
 	/* Select signals - IOB domain */
 	assign IACS = A[23:20]==4'hF; // IACK
@@ -64,6 +71,6 @@ module CS(
 		A[23:20]==4'h7 || // empty (expansion RAM)
 		A[23:20]==4'h6 || // empty (expansion RAM)
 		A[23:20]==4'h5;   // SCSI
-	assign IOCS = IORealCS || VidRAMCSWR || QoSEN;
-	assign IOPWCS = VidRAMCSWR64k && !QoSEN; // Posted write to video RAM only when QoS disabled
+	assign IOCS = IORealCS || VidRAMCSWR || IOQoSEN;
+	assign IOPWCS = VidRAMCSWR64k && !IOQoSEN; // Posted write to video RAM only when QoS disabled
 endmodule
