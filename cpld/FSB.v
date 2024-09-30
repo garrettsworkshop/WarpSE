@@ -9,9 +9,9 @@ module FSB(
 	input ROMCS,
 	input RAMCS, input RAMReady,
 	input IOPWCS, input IOPWReady, input IONPReady,
-	input IOQoSEN, input SndQoSReady,
+	input IOQoSEN,
 	/* Interrupt acknowledge select */
-	input IACS);
+	input IACKCS);
 
 	/* MC68k clock enable */
 	always @(negedge FCLK) MCKE <= MCKEi;
@@ -27,11 +27,11 @@ module FSB(
 	wire Ready = (RAMCS && !IOQoSEN && RAMReady && !IOPWCS) ||
                  (RAMCS && !IOQoSEN && RAMReady &&  IOPWCS && IOPWReady) ||
                  (ROMCS && !IOQoSEN) ||
-                 (IONPReady && SndQoSReady);
-	always @(posedge FCLK) nDTACK <= !(Ready && BACT && !IACS);
+                 (IONPReady);
+	always @(posedge FCLK) nDTACK <= !(Ready && BACT && !IACKCS);
 	always @(posedge FCLK, posedge nAS) begin
 		if (nAS) nVPA <= 1;
-		else nVPA <= !(Ready && BACT && IACS);
+		else nVPA <= !(Ready && BACT && IACKCS);
 	end
 	
 endmodule

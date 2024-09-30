@@ -12,8 +12,8 @@ module CNT(
 	input BACTr,
 	input IOQoSCS,
 	input SndQoSCS,
+	input IACKCS,
 	output reg IOQoSEN,
-	output SndQoSReady,
 	output reg MCKE);
 	
 	/* E clock synchronization */
@@ -61,37 +61,43 @@ module CNT(
 	end
 	
 	/* During init (IS!=3) long timer counts from 0 to 4095.
-	 * 4096 states == 57.516 ms */
-	reg [11:0] LTimer;
+	 * 1024 states == 14.379 ms */
+	reg [10:0] LTimer;
 	reg LTimerTC;
 	always @(posedge CLK) begin
 		if (EFall && TimerTC) begin
 			LTimer <= LTimer+1;
-			LTimerTC <= LTimer[11:0]==12'hFFE;
+			LTimerTC <= LTimer[10:0]==11'h7FE;
 		end
 	end
 
-	/* QoS select register */
-	reg QoSCSr;
-	always @(posedge CLK) QoSCSr <= IOQoSCS || SndQoSCS;
+	/* QoS select registers */
+	reg IACKCSr, IOQoSCSr;
+	always @(posedge CLK) IACKCSr <= (BACT && IACKCS) || !nRESr;
+	always @(posedge CLK) IOQoSCSr <= BACT && (IOQoSCS || SndQoSCS);
 	
 	/* I/O QoS timer */
-	reg [2:0] IOQS;
+	reg [3:0] IOQS;
 	always @(posedge CLK) begin
-		if (!nRESr || (BACTr && QoSCSr)) IOQS[2:0] <= 1;
-		else if (IOQS==0) IOQS[2:0] <= 0;
-		else if (EFall && TimerTC) IOQS[2:0] <= IOQS[2] ? 0 : IOQS+1;
+		if (IACKCSr) IOQS <= 4'hF;
+		else if (IOQoSCSr) IOQS <= 4'hF;
+		else if (IOQS==0) IOQS <= 0;
+		else if (EFall && TimerTC) IOQS <= IOQS-1;
 	end
 
 	/* I/O QoS enable */
 	always @(posedge CLK) if (!BACT) IOQoSEN <= IOQS!=0;
 
 	/* MC68K clock enable */
-	always @(posedge CLK) MCKE <= BACT || BACTr || (IOQS==0) || C8MFall;
-
-	/* Sound QoS removed */
-	assign SndQoSReady = 1;
-
+	always @(posedge CLK) MCKE <= BACT || BACTr || !IOQoSEN || C8MFall;
+	
+	/* */
+	reg LookReset;
+	always @(posedge CLK) begin
+		if (!nRESout) LookReset <= 0;
+		else if (EFall) LookReset <= 1;
+	end
+	
 	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;
 	always @(posedge CLK) begin
@@ -112,7 +118,7 @@ module CNT(
 				if (ISTC) IS <= 3;
 			end 3: begin
 				nRESout <= 1; // Release reset
-				IS <= 3;
+				if (LookReset && !nRESr) IS <= 0;
 			end
 		endcase
 	end

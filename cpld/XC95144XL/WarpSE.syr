@@ -1,16 +1,16 @@
-Release 14.7 - xst P.20131013 (nt)
+Release 14.7 - xst P.20131013 (nt64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 2.00 secs
-Total CPU time to Xst completion: 1.09 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 2.00 secs
-Total CPU time to Xst completion: 1.11 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Reading design: WarpSE.prj
 
@@ -144,6 +144,7 @@ Performing bidirectional port resolution...
 
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
+WARNING:Xst:646 - Signal <SCSICS> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit register for signal <Overlay>.
 Unit <CS> synthesized.
 
@@ -253,8 +254,8 @@ Synthesizing Unit <CNT>.
     Found finite state machine <FSM_3> for signal <IS>.
     -----------------------------------------------------------------------
     | States             | 4                                              |
-    | Transitions        | 8                                              |
-    | Inputs             | 2                                              |
+    | Transitions        | 10                                             |
+    | Inputs             | 4                                              |
     | Outputs            | 4                                              |
     | Clock              | CLK                       (rising_edge)        |
     | Power Up State     | 00                                             |
@@ -270,18 +271,20 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <MCKE>.
     Found 2-bit register for signal <C8Mr>.
     Found 2-bit register for signal <Er>.
-    Found 3-bit up counter for signal <IOQS>.
-    Found 12-bit up counter for signal <LTimer>.
+    Found 1-bit register for signal <IACKCSr>.
+    Found 1-bit register for signal <IOQoSCSr>.
+    Found 4-bit down counter for signal <IOQS>.
+    Found 1-bit register for signal <LookReset>.
+    Found 11-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTC>.
     Found 1-bit register for signal <nIPL2r>.
     Found 1-bit register for signal <nRESr>.
-    Found 1-bit register for signal <QoSCSr>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTC>.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   3 Counter(s).
-	inferred  12 D-type flip-flop(s).
+	inferred  13 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
 
@@ -316,11 +319,11 @@ HDL Synthesis Report
 
 Macro Statistics
 # Counters                                             : 4
- 12-bit up counter                                     : 1
- 3-bit up counter                                      : 1
+ 11-bit up counter                                     : 1
+ 4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 61
- 1-bit register                                        : 59
+# Registers                                            : 63
+ 1-bit register                                        : 61
  2-bit register                                        : 2
 # Tristates                                            : 5
  1-bit tristate buffer                                 : 5
@@ -385,11 +388,11 @@ Advanced HDL Synthesis Report
 Macro Statistics
 # FSMs                                                 : 4
 # Counters                                             : 4
- 12-bit up counter                                     : 1
- 3-bit up counter                                      : 1
+ 11-bit up counter                                     : 1
+ 4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 50
- Flip-Flops                                            : 50
+# Registers                                            : 51
+ Flip-Flops                                            : 51
 
 =========================================================================
 
@@ -435,12 +438,12 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd5
 
 Optimizing unit <CNT> ...
+  implementation constraint: INIT=r	 : IS_FSM_FFd1
+  implementation constraint: INIT=r	 : IS_FSM_FFd2
   implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
   implementation constraint: INIT=r	 : Timer_2
-  implementation constraint: INIT=r	 : IS_FSM_FFd2
-  implementation constraint: INIT=r	 : IS_FSM_FFd1
 
 =========================================================================
 *                           Partition Report                            *
@@ -472,23 +475,23 @@ Design Statistics
 # IOs                              : 79
 
 Cell Usage :
-# BELS                             : 630
-#      AND2                        : 194
-#      AND3                        : 32
-#      AND4                        : 10
+# BELS                             : 642
+#      AND2                        : 192
+#      AND3                        : 28
+#      AND4                        : 11
 #      AND5                        : 2
 #      AND7                        : 1
 #      AND8                        : 2
 #      GND                         : 6
-#      INV                         : 244
-#      OR2                         : 102
+#      INV                         : 255
+#      OR2                         : 108
 #      OR3                         : 14
 #      OR4                         : 4
 #      XOR2                        : 19
-# FlipFlops/Latches                : 105
-#      FD                          : 68
+# FlipFlops/Latches                : 107
+#      FD                          : 69
 #      FDC                         : 2
-#      FDCE                        : 34
+#      FDCE                        : 35
 #      FDP                         : 1
 # IO Buffers                       : 72
 #      IBUF                        : 35
@@ -498,14 +501,14 @@ Cell Usage :
 =========================================================================
 
 
-Total REAL time to Xst completion: 54.00 secs
-Total CPU time to Xst completion: 53.17 secs
+Total REAL time to Xst completion: 5.00 secs
+Total CPU time to Xst completion: 4.88 secs
  
 --> 
 
-Total memory usage is 237664 kilobytes
+Total memory usage is 265952 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    2 (   0 filtered)
+Number of warnings :    3 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

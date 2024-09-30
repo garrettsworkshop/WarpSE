@@ -6,7 +6,7 @@ module CS(
 	/* QoS enable input */
 	input IOQoSEN,
 	/* Device select outputs */
-	output IOCS, output IORealCS, output IOPWCS, output IACS,
+	output IOCS, output IORealCS, output IOPWCS, output IACKCS,
 	output ROMCS, output ROMCS4X,
 	output RAMCS, output RAMCS0X,
 	output IOQoSCS, output SndQoSCS);
@@ -19,7 +19,7 @@ module CS(
 	end
 
 	/* I/O select signals */
-	wire IACKCS = A[23:20]==4'hF;
+	assign IACKCS = A[23:20]==4'hF;
 	wire VIACS = A[23:20]==4'hE;
 	wire IWMCS = A[23:20]==4'hD;
 	wire SCCCS = A[23:20]==4'hB || A[23:20]==4'h9;
@@ -49,16 +49,10 @@ module CS(
 	assign SndQoSCS = VidRAMCSWR64k && (
 		((A[15:12]==4'hF) && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||
 		((A[15:12]==4'hA) && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
-	assign IOQoSCS = 
-		IACKCS 
-		|| VIACS 
-		|| IWMCS 
-		|| SCCCS 
-		|| SCSICS
-		;
+	assign IOQoSCS =  IWMCS || VIACS || SCCCS;// || SCSICS;
 
 	/* Select signals - IOB domain */
-	assign IACS = A[23:20]==4'hF; // IACK
+	assign IACKCS = A[23:20]==4'hF; // IACK
 	assign IORealCS =
 		A[23:20]==4'hF || // IACK
 		A[23:20]==4'hE || // VIA

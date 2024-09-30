@@ -68,7 +68,7 @@ module WarpSE(
 	wire IOQoSEN;
 	
 	/* FSB chip select signals */
-	wire IOCS, IORealCS, IOPWCS, IACS;
+	wire IOCS, IORealCS, IOPWCS, IACKCS;
 	wire ROMCS, ROMCS4X;
 	wire RAMCS, RAMCS0X;
 	wire IOQoSCS, SndQoSCS;
@@ -80,7 +80,7 @@ module WarpSE(
 		/* QoS enable input */
 		IOQoSEN,
 		/* Device select outputs */
-		IOCS, IORealCS, IOPWCS, IACS,
+		IOCS, IORealCS, IOPWCS, IACKCS,
 		ROMCS, ROMCS4X,
 		RAMCS, RAMCS0X,
 		IOQoSCS, SndQoSCS);
@@ -157,8 +157,8 @@ module WarpSE(
 		AoutOE, nBR_IOB,
 		/* QoS control */
 		BACT, BACTr,
-		IOQoSCS, SndQoSCS,
-		IOQoSEN, SndQoSReady, MCKEi);
+		IOQoSCS, SndQoSCS, IACKCS,
+		IOQoSEN, MCKEi);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
@@ -171,8 +171,8 @@ module WarpSE(
 		ROMCS4X,
 		RAMCS0X, RAMReady,
 		IOPWCS, IOPWReady, IONPReady,
-		IOQoSEN, SndQoSReady,
+		IOQoSEN,
 		/* Interrupt acknowledge select */
-		IACS);
+		IACKCS);
 
 endmodule
