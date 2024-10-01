@@ -18,6 +18,7 @@ module WarpSE(
 	output nAS_IOB,
 	output nUDS_IOB,
 	output nLDS_IOB,
+	output RnW_IOB,
 	output nBR_IOB,
 	input nBG_IOB,
 	input nBERR_IOB,
@@ -103,7 +104,7 @@ module WarpSE(
 		nRAMLWE, nRAMUWE, nOE, nROMOE, nROMWE);
 
 	wire IONPReady, IOPWReady;
-	wire IORDREQ, IOWRREQ;
+	wire IOREQ, IORW;
 	wire IOL0, IOU0;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
@@ -121,7 +122,7 @@ module WarpSE(
 		/* Read data OE control */
 		nDinOE,
 		/* IOB Master Controller Interface */
-		IORDREQ, IOWRREQ,
+		IOREQ, IORW,
 		IOACT, IODONE, IOBERR,
 		/* FIFO primary level control */
 		ALE0S, IOL0, IOU0,
@@ -130,20 +131,21 @@ module WarpSE(
 	
 	wire AoutOE;
 	assign nAoutOE = !AoutOE;
-	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
+	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, RnW_IOBout, nVMA_IOBout;
 	assign nAS_IOB = AoutOE ? nAS_IOBout : 1'bZ;
 	assign nLDS_IOB = AoutOE ? nLDS_IOBout : 1'bZ;
 	assign nUDS_IOB = AoutOE ? nUDS_IOBout : 1'bZ;
+	assign RnW_IOB = AoutOE ? RnW_IOBout : 1'bZ;
 	assign nVMA_IOB = AoutOE ? nVMA_IOBout : 1'bZ;
 	IOBM iobm(
 		/* PDS interface */
 		C16M, C8M, E,
-		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
+		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, RnW_IOBout, nVMA_IOBout,
 		nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
 		/* PDS address and data latch control */
 		AoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
-		IORDREQ, IOWRREQ, IOL0, IOU0,
+		IOREQ, IORW, IOL0, IOU0,
 		IOACT, IODONE, IOBERR);
 
 	CNT cnt(

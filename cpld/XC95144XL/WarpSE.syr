@@ -1,16 +1,16 @@
-Release 14.7 - xst P.20131013 (nt64)
+Release 14.7 - xst P.20131013 (nt)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 1.19 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 1.20 secs
  
 --> Reading design: WarpSE.prj
 
@@ -144,7 +144,6 @@ Performing bidirectional port resolution...
 
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
-WARNING:Xst:646 - Signal <SCSICS> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit register for signal <Overlay>.
 Unit <CS> synthesized.
 
@@ -190,9 +189,9 @@ Synthesizing Unit <IOBS>.
     | Encoding           | automatic                                      |
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
-    Found 1-bit register for signal <IORDREQ>.
+    Found 1-bit register for signal <IORW>.
+    Found 1-bit register for signal <IOREQ>.
     Found 1-bit register for signal <IOL0>.
-    Found 1-bit register for signal <IOWRREQ>.
     Found 1-bit register for signal <IONPReady>.
     Found 1-bit register for signal <IOU0>.
     Found 1-bit register for signal <ALE0>.
@@ -226,8 +225,9 @@ Synthesizing Unit <IOBM>.
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
     Found 1-bit register for signal <IOBERR>.
-    Found 1-bit register for signal <nASout>.
+    Found 1-bit register for signal <RnW>.
     Found 1-bit register for signal <IOACT>.
+    Found 1-bit register for signal <nAS>.
     Found 1-bit register for signal <IODONE>.
     Found 1-bit register for signal <nLDS>.
     Found 1-bit register for signal <nUDS>.
@@ -238,9 +238,8 @@ Synthesizing Unit <IOBM>.
     Found 1-bit register for signal <DoutOE>.
     Found 1-bit register for signal <Er>.
     Found 4-bit up counter for signal <ES>.
-    Found 1-bit register for signal <IORDREQr>.
+    Found 1-bit register for signal <IOREQr>.
     Found 1-bit register for signal <IOS0>.
-    Found 1-bit register for signal <IOWRREQr>.
     Found 1-bit register for signal <VPAr>.
     Summary:
 	inferred   1 Finite State Machine(s).
@@ -271,7 +270,6 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <MCKE>.
     Found 2-bit register for signal <C8Mr>.
     Found 2-bit register for signal <Er>.
-    Found 1-bit register for signal <IACKCSr>.
     Found 1-bit register for signal <IOQoSCSr>.
     Found 4-bit down counter for signal <IOQS>.
     Found 1-bit register for signal <LookReset>.
@@ -284,7 +282,7 @@ Synthesizing Unit <CNT>.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   3 Counter(s).
-	inferred  13 D-type flip-flop(s).
+	inferred  12 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
 
@@ -304,13 +302,14 @@ Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <DBG> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 1-bit tristate buffer for signal <RnW_IOB>.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nLDS_IOB>.
     Found 1-bit tristate buffer for signal <nRES>.
     Found 1-bit tristate buffer for signal <nUDS_IOB>.
     Found 1-bit tristate buffer for signal <nVMA_IOB>.
     Summary:
-	inferred   5 Tristate(s).
+	inferred   6 Tristate(s).
 Unit <WarpSE> synthesized.
 
 
@@ -322,11 +321,11 @@ Macro Statistics
  11-bit up counter                                     : 1
  4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 63
- 1-bit register                                        : 61
+# Registers                                            : 62
+ 1-bit register                                        : 60
  2-bit register                                        : 2
-# Tristates                                            : 5
- 1-bit tristate buffer                                 : 5
+# Tristates                                            : 6
+ 1-bit tristate buffer                                 : 6
 
 =========================================================================
 
@@ -363,9 +362,9 @@ Optimizing FSM <iobs/TS/FSM> on signal <TS[1:2]> with johnson encoding.
  State | Encoding
 -------------------
  00    | 00
- 11    | 01
+ 01    | 01
  10    | 11
- 01    | 10
+ 11    | 10
 -------------------
 Analyzing FSM <FSM_0> for best encoding.
 Optimizing FSM <ram/RS/FSM> on signal <RS[1:8]> with one-hot encoding.
@@ -391,8 +390,8 @@ Macro Statistics
  11-bit up counter                                     : 1
  4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 51
- Flip-Flops                                            : 51
+# Registers                                            : 50
+ Flip-Flops                                            : 50
 
 =========================================================================
 
@@ -420,8 +419,8 @@ Optimizing unit <RAM> ...
 
 Optimizing unit <IOBS> ...
   implementation constraint: INIT=r	 : IOACTr
-  implementation constraint: INIT=r	 : TS_FSM_FFd2
   implementation constraint: INIT=r	 : Sent
+  implementation constraint: INIT=r	 : TS_FSM_FFd2
   implementation constraint: INIT=r	 : TS_FSM_FFd1
 
 Optimizing unit <FSB> ...
@@ -429,8 +428,8 @@ Optimizing unit <FSB> ...
 
 Optimizing unit <IOBM> ...
   implementation constraint: INIT=s	 : IOS_FSM_FFd7
-  implementation constraint: INIT=r	 : DoutOE
   implementation constraint: INIT=r	 : IOS_FSM_FFd6
+  implementation constraint: INIT=r	 : DoutOE
   implementation constraint: INIT=r	 : IOS_FSM_FFd1
   implementation constraint: INIT=r	 : IOS_FSM_FFd2
   implementation constraint: INIT=r	 : IOS_FSM_FFd3
@@ -472,43 +471,43 @@ Clock Enable                       : YES
 wysiwyg                            : NO
 
 Design Statistics
-# IOs                              : 79
+# IOs                              : 80
 
 Cell Usage :
-# BELS                             : 642
-#      AND2                        : 192
-#      AND3                        : 28
+# BELS                             : 618
+#      AND2                        : 188
+#      AND3                        : 22
 #      AND4                        : 11
 #      AND5                        : 2
 #      AND7                        : 1
 #      AND8                        : 2
 #      GND                         : 6
-#      INV                         : 255
-#      OR2                         : 108
+#      INV                         : 246
+#      OR2                         : 101
 #      OR3                         : 14
-#      OR4                         : 4
+#      OR4                         : 6
 #      XOR2                        : 19
-# FlipFlops/Latches                : 107
-#      FD                          : 69
+# FlipFlops/Latches                : 106
+#      FD                          : 67
 #      FDC                         : 2
-#      FDCE                        : 35
+#      FDCE                        : 36
 #      FDP                         : 1
-# IO Buffers                       : 72
+# IO Buffers                       : 73
 #      IBUF                        : 35
 #      IOBUFE                      : 1
 #      OBUF                        : 32
-#      OBUFE                       : 4
+#      OBUFE                       : 5
 =========================================================================
 
 
-Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.88 secs
+Total REAL time to Xst completion: 54.00 secs
+Total CPU time to Xst completion: 53.84 secs
  
 --> 
 
-Total memory usage is 265952 kilobytes
+Total memory usage is 237344 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    3 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

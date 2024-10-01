@@ -49,7 +49,7 @@ module CS(
 	assign SndQoSCS = VidRAMCSWR64k && (
 		((A[15:12]==4'hF) && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||
 		((A[15:12]==4'hA) && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
-	assign IOQoSCS =  IWMCS || VIACS || SCCCS;// || SCSICS;
+	assign IOQoSCS =  IWMCS || VIACS || SCCCS || SCSICS;
 
 	/* Select signals - IOB domain */
 	assign IACKCS = A[23:20]==4'hF; // IACK

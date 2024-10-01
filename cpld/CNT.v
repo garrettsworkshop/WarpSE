@@ -72,15 +72,13 @@ module CNT(
 	end
 
 	/* QoS select registers */
-	reg IACKCSr, IOQoSCSr;
-	always @(posedge CLK) IACKCSr <= (BACT && IACKCS) || !nRESr;
-	always @(posedge CLK) IOQoSCSr <= BACT && (IOQoSCS || SndQoSCS);
+	reg IOQoSCSr;
+	always @(posedge CLK) IOQoSCSr <= BACT && (IOQoSCS || SndQoSCS || IACKCS) || !nRESr;
 	
 	/* I/O QoS timer */
 	reg [3:0] IOQS;
 	always @(posedge CLK) begin
-		if (IACKCSr) IOQS <= 4'hF;
-		else if (IOQoSCSr) IOQS <= 4'hF;
+		if (IOQoSCSr) IOQS <= 4'hF;
 		else if (IOQS==0) IOQS <= 0;
 		else if (EFall && TimerTC) IOQS <= IOQS-1;
 	end
