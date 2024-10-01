@@ -60,15 +60,12 @@ module CNT(
 		end
 	end
 	
-	/* During init (IS!=3) long timer counts from 0 to 4095.
-	 * 1024 states == 14.379 ms */
-	reg [10:0] LTimer;
-	reg LTimerTC;
+	/* During init (IS!=3) long timer counts from 0 to 3072.
+	 * 3073 states == 43.151 ms */
+	reg [11:0] LTimer;
+	wire LTimerTC = LTimer[11:10]==2'b11;
 	always @(posedge CLK) begin
-		if (EFall && TimerTC) begin
-			LTimer <= LTimer+1;
-			LTimerTC <= LTimer[10:0]==11'h7FE;
-		end
+		if (EFall && TimerTC) LTimer <= LTimer+1;
 	end
 
 	/* QoS select registers */
@@ -87,7 +84,7 @@ module CNT(
 	always @(posedge CLK) if (!BACT) IOQoSEN <= IOQS!=0;
 
 	/* MC68K clock enable */
-	always @(posedge CLK) MCKE <= BACT || BACTr || !IOQoSEN || C8MFall;
+	always @(posedge CLK) MCKE <= 1;//BACT || BACTr || !IOQoSEN || C8MFall;
 	
 	/* */
 	reg LookReset;
