@@ -107,10 +107,10 @@ module IOBS(
 			// Wait for IOACT (transfer started) then withdraw IOREQ and enter TS1
 			if (IOACTr) begin
 				TS <= 3;
-				IOREQ <= 1;
+				IOREQ <= 0;
 			end else begin
 				TS <= 2;
-				IOREQ <= 0;
+				IOREQ <= 1;
 			end
 			ALE0 <= 1; // Keep address latched
 		end else if (TS==3) begin

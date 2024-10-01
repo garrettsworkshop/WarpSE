@@ -1,7 +1,7 @@
  
 cpldfit:  version P.20131013                        Xilinx Inc.
                                   Fitter Report
-Design Name: WarpSE                              Date:  9-28-2024,  4:15AM
+Design Name: WarpSE                              Date:  9-30-2024, 11:58PM
 Device Used: XC95144XL-10-TQ100
 Fitting Status: Successful
 
@@ -851,7 +851,7 @@ IOREQ_D <= ((A_FSB(23) AND NOT iobs/Sent AND NOT nAS_FSB AND MCKE AND
 	NOT iobs/TS_FSM_FFd1 AND fsb/ASrf)
 	OR (NOT iobs/TS_FSM_FFd1 AND iobs/TS_FSM_FFd2)
 	OR (NOT iobs/TS_FSM_FFd1 AND NOT nADoutLE1)
-	OR (iobs/TS_FSM_FFd2 AND iobs/IOACTr)
+	OR (iobs/TS_FSM_FFd2 AND NOT iobs/IOACTr)
 	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND 
 	A_FSB(17) AND A_FSB(16) AND NOT iobs/Sent AND NOT nWE_FSB AND NOT nAS_FSB AND 
 	MCKE AND NOT iobs/TS_FSM_FFd1)
