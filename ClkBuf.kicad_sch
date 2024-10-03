@@ -676,6 +676,12 @@
 		(uuid "c756a70c-92e7-4fb8-9b0b-ed747e568d90")
 	)
 	(junction
+		(at 114.3 101.6)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "cb88b608-bb02-41dc-aea7-c77f13755776")
+	)
+	(junction
 		(at 121.92 88.9)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -686,6 +692,16 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ffca5546-1aae-44a7-a6f2-9e7ac0755ad3")
+	)
+	(wire
+		(pts
+			(xy 114.3 93.98) (xy 113.03 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "01684311-a8bb-4088-8457-c62f5e69b568")
 	)
 	(wire
 		(pts
@@ -809,6 +825,36 @@
 	)
 	(wire
 		(pts
+			(xy 114.3 100.33) (xy 114.3 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "87b15c60-2a23-4197-a0a7-7cdecc491986")
+	)
+	(wire
+		(pts
+			(xy 114.3 101.6) (xy 121.92 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d198675-99fb-4ed7-8f0e-896a092cd64b")
+	)
+	(wire
+		(pts
+			(xy 114.3 93.98) (xy 114.3 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8d493a02-6ee6-4159-a3e0-f06a651a0647")
+	)
+	(wire
+		(pts
 			(xy 119.38 104.14) (xy 121.92 104.14)
 		)
 		(stroke
@@ -846,6 +892,38 @@
 			(type default)
 		)
 		(uuid "c7ec01b5-81e6-46ec-9b11-923a91607345")
+	)
+	(wire
+		(pts
+			(xy 113.03 101.6) (xy 114.3 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ee981239-cf20-480d-9ae0-df3291d651b8")
+	)
+	(global_label "+5Vin"
+		(shape input)
+		(at 113.03 93.98 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e80511e3-66d6-4c29-815a-021745c28bae")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 105.0747 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
 	)
 	(hierarchical_label "BE"
 		(shape output)
@@ -909,7 +987,7 @@
 	)
 	(hierarchical_label "C8M"
 		(shape input)
-		(at 121.92 101.6 180)
+		(at 113.03 101.6 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2160,6 +2238,75 @@
 			(project "WarpSE"
 				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
 					(reference "R7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 114.3 97.79 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cbc21059-3615-4cea-a438-a52e620b3a3d")
+		(property "Reference" "R29"
+			(at 115.57 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "22k"
+			(at 115.57 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "stdpads:R_0805"
+			(at 114.3 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 114.3 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 114.3 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "edbb3ef2-389a-476c-89d6-edbc759ca17f")
+		)
+		(pin "2"
+			(uuid "6c89fed0-5e28-4cb5-a14b-058ba7d8f3e7")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/fe631861-deed-4e97-a528-5baf968a7cc8"
+					(reference "R29")
 					(unit 1)
 				)
 			)
