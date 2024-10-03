@@ -120,7 +120,7 @@ module CNT(
 	/* Startup sequence state control */
 	reg [1:0] IS = 0;
 	always @(posedge CLK) begin
-		if (nPOR) IS <= 0;
+		if (!nPOR) IS <= 0;
 		else case (IS[1:0])
 			0: if (LTimerTick) IS <= 1;
 			1: if (LTimerTick) IS <= 2;
