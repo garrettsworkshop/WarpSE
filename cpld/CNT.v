@@ -2,7 +2,7 @@ module CNT(
 	/* FSB clock and E clock inputs */
 	input CLK, input C8M, input E,
 	/* Refresh request */
-	output reg RefReq, output RefUrg,
+	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
 	output reg nRESout, input nRESin, input nIPL2, 
 	/* Mac PDS bus master control outputs */
@@ -34,20 +34,20 @@ module CNT(
 	 * | 5  0101 |   1    |     0     |
 	 * | 6  0110 |   1    |     0     |
 	 * | 7  0111 |   1    |     0     |
-	 * | 8  1000 |   1    |     1     |
+	 * | 8  1000 |   1    |     0     |
 	 * | 9  1001 |   1    |     1     |
 	 * | 10 1010 |   1    |     1     |
 	 * back to timer==0
 	 */
 	reg [3:0] Timer = 0;
 	wire TimerTC = Timer==10;
-	assign RefUrg = Timer[3];
 	reg TimerTick;
 	always @(posedge CLK) begin
 		if (EFall) begin
 			if (TimerTC) Timer <= 0;
 			else Timer <= Timer+1;
 			RefReq <= Timer!=10;
+			RefUrg <= Timer==8 || Timer==9;
 		end
 	end
 	always @(posedge CLK) TimerTick <= EFall && TimerTC;
