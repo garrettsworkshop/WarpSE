@@ -69,7 +69,7 @@ module WarpSE(
 	wire IOCS, IORealCS, IOPWCS, IACS;
 	wire ROMCS, ROMCS4X;
 	wire RAMCS, RAMCS0X;
-	wire QoSCS, SndQoSCS;
+	wire QoSCS, SndQoSCS, QoSEN;
 	CS cs(
 		/* MC68HC000 interface */
 		.A(A_FSB[23:08]),
@@ -198,7 +198,7 @@ module WarpSE(
 		.IODONE(IODONE),
 		.IOBERR(IOBERR));
 
-	wire QoSEN, SndQoSReady;
+	wire SndQoSReady;
 	CNT cnt(
 		/* FSB clock, 7.8336 MHz clock, and E clock inputs */
 		.CLK(FCLK),
