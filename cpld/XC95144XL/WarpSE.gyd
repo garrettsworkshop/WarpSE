@@ -14,6 +14,8 @@ A_FSB<19> S:PIN17
 A_FSB<1> S:PIN94
 A_FSB<20> S:PIN18
 A_FSB<21> S:PIN19
+A_FSB<22> S:PIN20
+A_FSB<23> S:PIN24
 A_FSB<2> S:PIN95
 A_FSB<3> S:PIN96
 A_FSB<4> S:PIN97
@@ -26,8 +28,6 @@ C16M S:PIN22
 C8M S:PIN23
 E S:PIN25
 FCLK S:PIN27
-A_FSB<22> S:PIN20
-A_FSB<23> S:PIN24
 nAS_FSB S:PIN32
 nBERR_IOB S:PIN76
 nDTACK_IOB S:PIN78
@@ -52,7 +52,6 @@ RA<6> S:PIN46
 RA<7> S:PIN52
 RA<8> S:PIN54
 RA<9> S:PIN56
-RnW_IOB S:PIN99
 nADoutLE0 S:PIN85
 nADoutLE1 S:PIN82
 nAS_IOB S:PIN81
@@ -79,44 +78,42 @@ nVPA_FSB S:PIN93
 ;The remaining section of the .gyd file is for documentation purposes only.
 ;It shows where your internal equations were placed in the last successful fit.
 
-PARTITION FB1_1 ram/RS_FSM_FFd4 ram/RASrf ram/DTACKr nRESout
-		 iobs/IOACTr iobs/Clear1 iobm/VPAr iobm/IOREQr
-		 cnt/nRESr cnt/nIPL2r cnt/LTimer<0> cnt/Er<1>
-		 ram/RS_FSM_FFd5 iobs/IOU1 iobs/IOL1 cnt/Timer<0>
-		 cnt/LookReset RefUrg
-PARTITION FB2_1 ram/RS_FSM_FFd3 RnW_IOBout ram/RS_FSM_FFd2 ram/RS_FSM_FFd1
-		 iobs/IODONEr iobm/IOS_FSM_FFd6 iobm/IOS_FSM_FFd5 iobm/IOS_FSM_FFd4
-		 iobm/IOS_FSM_FFd1 iobm/Er iobm/C8Mr cnt/Er<0>
-		 ram/RefDone iobs/TS_FSM_FFd1 iobm/IOS_FSM_FFd2 IOBERR
-		 IOU0 IOL0
-PARTITION FB3_1 cnt/IOQoSCSr EXP10_
-PARTITION FB3_8 EXP11_ nDTACK_FSB_OBUF EXP12_
-PARTITION FB3_12 fsb/ASrf ALE0S BACTr IOQoSEN
-		 ram/RS_FSM_FFd7 nROMWE_OBUF EXP13_
-PARTITION FB4_1 cnt/LTimer<9> nAoutOE_OBUF cnt/LTimer<8> cnt/LTimer<7>
-		 nDoutOE_OBUF nDinOE_OBUF cnt/LTimer<6> N0
-		 cnt/LTimer<5> cnt/LTimer<4> nVPA_FSB_OBUF cnt/LTimer<3>
-		 cnt/LTimer<2> cnt/LTimer<1> cnt/LTimer<11> cnt/LTimer<10>
-		 cnt/IS_FSM_FFd2 cnt/IS_FSM_FFd1
-PARTITION FB5_1 EXP14_ nROMOE_OBUF EXP15_ EXP16_
-		 nCAS_OBUF nOE_OBUF EXP17_ ram/RASrr
-		 RA_4_OBUF
-PARTITION FB5_11 RA_11_OBUF RA_5_OBUF RAMReady RA_2_OBUF
-		 RA_6_OBUF EXP18_ ram/RS_FSM_FFd8 ram/RASEN
+PARTITION FB1_1 ram/RS_FSM_FFd4 ram/RASrf iobs/IODONEr iobm/Er
+		 iobm/C8Mr cnt/nRESr cnt/nIPL2r cnt/IS_FSM_FFd1
+		 cnt/Er<0> ram/RS_FSM_FFd5 iobs/TS_FSM_FFd1 iobs/IOU1
+		 iobs/IOL1 iobm/IOS_FSM_FFd2 IOBERR iobm/ES<2>
+		 cnt/QS<1> cnt/QS<0>
+PARTITION FB2_11 ram/DTACKr iobs/IOACTr iobm/VPAr iobm/IOWRREQr
+		 iobm/IOS_FSM_FFd5 iobm/IOS_FSM_FFd4 iobm/IOS_FSM_FFd1 iobm/IORDREQr
 		
-PARTITION FB6_1 iobm/IOS_FSM_FFd7 nVMA_IOBout iobm/IOS_FSM_FFd3 iobm/ES<2>
-		 iobm/ES<0> iobm/ES<3> iobm/ES<1> IODONE
-		 nLDS_IOBout ALE0M nUDS_IOBout nAS_IOBout
-		 iobm/IOS0 nADoutLE1_OBUF nADoutLE0_OBUF iobm/DoutOE
+PARTITION FB3_1 ram/RS_FSM_FFd3 ram/RS_FSM_FFd2 ram/RS_FSM_FFd1 nRESout
+		 fsb/ASrf cnt/LTimer<0> cnt/Er<1> ram/RefDone
+		 nDTACK_FSB_OBUF cnt/LTimer<6> cnt/LTimer<5> cnt/LTimer<4>
+		 cnt/LTimer<3> cnt/LTimer<2> cnt/LTimer<1> cnt/IS_FSM_FFd2
+		 nROMWE_OBUF ram/RS_FSM_FFd7
+PARTITION FB4_1 cnt/TimerTC nAoutOE_OBUF cnt/Timer<0> cnt/LTimerTC
+		 nDoutOE_OBUF nDinOE_OBUF cnt/LTimer<9> N0
+		 cnt/LTimer<8> cnt/LTimer<7> nVPA_FSB_OBUF cnt/LTimer<11>
+		 cnt/LTimer<10> RefUrg RefReq cnt/Timer<1>
+		 cnt/Timer<3> cnt/Timer<2>
+PARTITION FB5_1 ram/RS_FSM_FFd8 nROMOE_OBUF EXP10_ EXP11_
+		 nCAS_OBUF nOE_OBUF EXP12_ ram/RS_FSM_FFd6
+		 RA_4_OBUF ram/RASEN RA_11_OBUF RA_5_OBUF
+		 RAMReady RA_2_OBUF RA_6_OBUF iobs/Load1
+		 EXP13_ ram/RASrr
+PARTITION FB6_1 iobm/IOS_FSM_FFd6 nVMA_IOBout iobm/IOS_FSM_FFd7 iobm/IOS_FSM_FFd3
+		 iobm/ES<0> iobm/ES<3> iobm/ES<1> iobm/DoutOE
+		 nLDS_IOBout IODONE nUDS_IOBout nAS_IOBout
+		 iobm/IOS0 nADoutLE1_OBUF nADoutLE0_OBUF ALE0M
 		 nDinLE_OBUF IOACT
-PARTITION FB7_1 cnt/TimerTC RA_1_OBUF cnt/IOQS<3> RefReq
-		 RA_7_OBUF RA_0_OBUF cnt/IOQS<2> RA_8_OBUF
-		 RA_10_OBUF cnt/Timer<1> RA_9_OBUF MCKE_OBUF
-		 cnt/IOQS<1> cnt/Timer<3> GA_23_OBUF$BUF0 cnt/Timer<2>
-		 GA_22_OBUF$BUF0 cnt/IOQS<0>
-PARTITION FB8_1 EXP19_ RA_11_OBUF$BUF0 iobs/Sent IONPReady
-		 nRAS_OBUF nRAMLWE_OBUF iobs/TS_FSM_FFd2 nRAMUWE_OBUF
-		 cs/Overlay iobs/IORW1 iobs/Load1 nBERR_FSB_OBUF
-		 IORW ram/RASEL nBR_IOB_OBUF ram/RS_FSM_FFd6
-		 IOREQ EXP20_
+PARTITION FB7_1 cnt/QoSCSr RA_1_OBUF iobs/Clear1 ALE0S
+		 RA_7_OBUF RA_0_OBUF QoSEN RA_8_OBUF
+		 RA_10_OBUF ram/RASEL RA_9_OBUF MCKE_OBUF
+		 cs/Overlay IONPReady GA_23_OBUF iobs/Sent
+		 GA_22_OBUF EXP14_
+PARTITION FB8_1 IOL0 RA_11_OBUF$BUF0 EXP15_ BACTr
+		 nRAS_OBUF nRAMLWE_OBUF IORDREQ nRAMUWE_OBUF
+		 iobs/IORW1 EXP16_ iobs/TS_FSM_FFd2 nBERR_FSB_OBUF
+		 EXP17_ IOWRREQ nBR_IOB_OBUF IOU0
+		 EXP18_ EXP19_
 
