@@ -12,7 +12,7 @@ module RAM(
 	input RefReqIn, input RefUrgIn,
 	/* DRAM and NOR flash interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
-	output nLWE, output nUWE, output reg nOE, output nROMOE, output nROMWE);
+	output nLWE, output nUWE, output nOE, output nROMOE, output nROMWE);
 
 	/* RAM control state */
 	reg [2:0] RS;
