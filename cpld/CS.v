@@ -8,7 +8,8 @@ module CS(
 	/* Device select outputs */
 	output IOCS, output IORealCS, output IOPWCS, output IACS,
 	output ROMCS, output ROMCS4X,
-	output RAMCS, output RAMCS0X, output QoSCS);
+	output RAMCS, output RAMCS0X,
+	output QoSCS, output SndQoSCS);
 
 	/* Overlay control */
 	reg Overlay;
@@ -49,6 +50,7 @@ module CS(
 		((A[15:12]==4'hF) && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||
 		((A[15:12]==4'hA) && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
 	assign QoSCS = IACKCS || VIACS || IWMCS || SCCCS || SCSICS || SndRAMCSWR;
+	assign SndQoSCS = SndRAMCSWR;
 
 	/* Select signals - IOB domain */
 	assign IACS = A[23:20]==4'hF; // IACK

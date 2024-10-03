@@ -7,7 +7,7 @@ module FSB(
 	input ROMCS,
 	input RAMCS, input RAMReady,
 	input IOPWCS, input IOPWReady, input IONPReady,
-	input QoSEN,
+	input QoSEN, input SndQoSReady,
 	/* Interrupt acknowledge select */
 	input IACS);
 
@@ -21,7 +21,7 @@ module FSB(
 	wire Ready = (RAMCS && !QoSEN && RAMReady && !IOPWCS) ||
                  (RAMCS && !QoSEN && RAMReady &&  IOPWCS && IOPWReady) ||
                  (ROMCS && !QoSEN) ||
-                 (IONPReady);
+                 (IONPReady && SndQoSReady);
 	always @(posedge FCLK) nDTACK <= !(Ready && BACT && !IACS);
 	always @(posedge FCLK, posedge nAS) begin
 		if (nAS) nVPA <= 1;
