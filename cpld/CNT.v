@@ -1,6 +1,6 @@
 module CNT(
 	/* FSB clock and E clock inputs */
-	input CLK, input C8M, input E,
+	input CLK, input E,
 	/* Refresh request */
 	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
@@ -9,20 +9,12 @@ module CNT(
 	output reg AoutOE, output reg nBR_IOB,
 	/* QoS control */
 	input BACT,
-	input BACTr,
-	input IOQoSCS,
-	input SndQoSCS,
-	input IACKCS,
-	output reg IOQoSEN,
-	output reg MCKE);
+	input QoSCS,
+	output reg QoSEN);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
 	wire EFall = Er[1] && !Er[0];
-	
-	/* C8M clock synchronization */
-	reg [1:0] C8Mr; always @(posedge CLK) C8Mr[1:0] <= { C8Mr[0], C8M };
-	wire C8MFall = C8Mr[1] && !C8Mr[0];
 	
 	/* NMI and reset synchronization */
 	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
@@ -60,39 +52,36 @@ module CNT(
 		end
 	end
 	
-	/* During init (IS!=3) long timer counts from 0 to 3072.
-	 * 3073 states == 43.151 ms */
+	/* During init (IS!=3) long timer counts from 0 to 4095.
+	 * 4096 states == 57.516 ms */
 	reg [11:0] LTimer;
-	wire LTimerTC = LTimer[11:10]==2'b11;
+	reg LTimerTC;
 	always @(posedge CLK) begin
-		if (EFall && TimerTC) LTimer <= LTimer+1;
+		if (EFall && TimerTC) begin
+			LTimer <= LTimer+1;
+			LTimerTC <= LTimer[11:0]==12'hFFE;
+		end
 	end
 
-	/* QoS select registers */
-	reg IOQoSCSr;
-	always @(posedge CLK) IOQoSCSr <= (BACT && (IOQoSCS || SndQoSCS || IACKCS)) || !nRESr;
+	/* QoS select latch */
+	reg QoSCSr;
+	always @(posedge CLK) if (BACT) QoSCSr <= QoSCS;
 	
-	/* I/O QoS timer */
-	reg [3:0] IOQS;
+	/* QoS timer
+	 * In the absence of a QoS trigger, QS==0.
+	 * When Qos triggered, QS is set to 1 and counts 1, 2, 3, 0.
+	 * While QS!=0, QoS is enabled.
+	 * QoS enable period is 28.124 us - 42.240 us */
+	reg [1:0] QS;
 	always @(posedge CLK) begin
-		if (IOQoSCSr) IOQS <= 4'hF;
-		else if (IOQS==0) IOQS <= 0;
-		else if (EFall && TimerTC) IOQS <= IOQS-1;
+		if (!nRESr || QoSCSr) QS[1:0] <= 1;
+		else if (QS==0) QS[1:0] <= 0;
+		else if (EFall && TimerTC) QS[1:0] <= QS+1;
 	end
 
-	/* I/O QoS enable */
-	always @(posedge CLK) if (!BACT) IOQoSEN <= IOQS!=0;
+	/* QoS enable control */
+	always @(posedge CLK) if (!BACT) QoSEN <= QoSCSr || QS!=0;
 
-	/* MC68K clock enable */
-	always @(posedge CLK) MCKE <= 1;//BACT || BACTr || !IOQoSEN || C8MFall;
-	
-	/* */
-	reg LookReset;
-	always @(posedge CLK) begin
-		if (!nRESout) LookReset <= 0;
-		else if (EFall) LookReset <= 1;
-	end
-	
 	/* Startup sequence state control */
 	wire ISTC = EFall && TimerTC && LTimerTC;
 	always @(posedge CLK) begin
@@ -113,8 +102,9 @@ module CNT(
 				if (ISTC) IS <= 3;
 			end 3: begin
 				nRESout <= 1; // Release reset
-				if (LookReset && !nRESr) IS <= 0;
+				IS <= 3;
 			end
 		endcase
 	end
+
 endmodule

@@ -18,7 +18,6 @@ module WarpSE(
 	output nAS_IOB,
 	output nUDS_IOB,
 	output nLDS_IOB,
-	output RnW_IOB,
 	output nBR_IOB,
 	input nBG_IOB,
 	input nBERR_IOB,
@@ -41,15 +40,18 @@ module WarpSE(
 	output MCKE,
 	input [5:0] DBG);
 
+	/* MC68k clock enable */
+	assign MCKE = 1;
+
 	/* GA gated (translated) address output */
-	assign GA[23:22] = A_FSB[23:22];
-	/*assign GA[23:22] = (
+	//assign GA[23:22] = A_FSB[23:22];
+	assign GA[23:22] = (
 		// $800000-$8FFFFF to $000000-$0FFFFF (1 MB)
 		(A_FSB[23:20]==4'h8) ||
 		// $700000-$7EFFFF to $300000-$3EFFFF (960 kB)
 		(A_FSB[23:20]==4'h7 && A_FSB[19:16]!=4'hF) ||
 		// $600000-$6FFFFF to $200000-$2FFFFF (1 MB)
-		(A_FSB[23:20]==4'h6)) ? 2'b00 : A_FSB[23:22];*/
+		(A_FSB[23:20]==4'h6)) ? 2'b00 : A_FSB[23:22];
 
 	/* Reset input and open-drain output */
 	wire nRESin = nRES;
@@ -57,34 +59,30 @@ module WarpSE(
 	assign nRES = !nRESout ? 1'b0 : 1'bZ;
 
 	/* AS cycle detection */
-	wire BACT, BACTr;
-
-	/* MC68k clock enable */
-	wire MCKEi;
+	wire BACT;
+	wire BACTr;
 
 	/* Refresh request/ack signals */
 	wire RefReq, RefUrg;
 	
 	/* QoS enable */
-	wire IOQoSEN;
+	wire QoSEN;
 	
 	/* FSB chip select signals */
-	wire IOCS, IORealCS, IOPWCS, IACKCS;
+	wire IOCS, IORealCS, IOPWCS, IACS;
 	wire ROMCS, ROMCS4X;
-	wire RAMCS, RAMCS0X;
-	wire IOQoSCS, SndQoSCS;
+	wire RAMCS, RAMCS0X, QoSCS;
 	CS cs(
 		/* MC68HC000 interface */
 		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
 		/* /AS cycle detection */
 		BACT,
 		/* QoS enable input */
-		IOQoSEN,
+		QoSEN,
 		/* Device select outputs */
-		IOCS, IORealCS, IOPWCS, IACKCS,
+		IOCS, IORealCS, IOPWCS, IACS,
 		ROMCS, ROMCS4X,
-		RAMCS, RAMCS0X,
-		IOQoSCS, SndQoSCS);
+		RAMCS, RAMCS0X, QoSCS);
 
 	wire RAMReady;
 	RAM ram(
@@ -104,7 +102,7 @@ module WarpSE(
 		nRAMLWE, nRAMUWE, nOE, nROMOE, nROMWE);
 
 	wire IONPReady, IOPWReady;
-	wire IOREQ, IORW;
+	wire IORDREQ, IOWRREQ;
 	wire IOL0, IOU0;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
@@ -122,7 +120,7 @@ module WarpSE(
 		/* Read data OE control */
 		nDinOE,
 		/* IOB Master Controller Interface */
-		IOREQ, IORW,
+		IORDREQ, IOWRREQ,
 		IOACT, IODONE, IOBERR,
 		/* FIFO primary level control */
 		ALE0S, IOL0, IOU0,
@@ -131,26 +129,25 @@ module WarpSE(
 	
 	wire AoutOE;
 	assign nAoutOE = !AoutOE;
-	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, RnW_IOBout, nVMA_IOBout;
+	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
 	assign nAS_IOB = AoutOE ? nAS_IOBout : 1'bZ;
 	assign nLDS_IOB = AoutOE ? nLDS_IOBout : 1'bZ;
 	assign nUDS_IOB = AoutOE ? nUDS_IOBout : 1'bZ;
-	assign RnW_IOB = AoutOE ? RnW_IOBout : 1'bZ;
 	assign nVMA_IOB = AoutOE ? nVMA_IOBout : 1'bZ;
 	IOBM iobm(
 		/* PDS interface */
 		C16M, C8M, E,
-		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, RnW_IOBout, nVMA_IOBout,
+		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout,
 		nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
 		/* PDS address and data latch control */
 		AoutOE, nDoutOE, ALE0M, nDinLE,
 		/* IO bus slave port interface */
-		IOREQ, IORW, IOL0, IOU0,
+		IORDREQ, IOWRREQ, IOL0, IOU0,
 		IOACT, IODONE, IOBERR);
 
 	CNT cnt(
 		/* FSB clock and E clock inputs */
-		FCLK, C8M, E,
+		FCLK, E,
 		/* Refresh request */
 		RefReq, RefUrg,
 		/* Reset, button */
@@ -158,23 +155,19 @@ module WarpSE(
 		/* Mac PDS bus master control outputs */
 		AoutOE, nBR_IOB,
 		/* QoS control */
-		BACT, BACTr,
-		IOQoSCS, SndQoSCS, IACKCS,
-		IOQoSEN, MCKEi);
+		BACT, QoSCS, QoSEN);
 	
 	FSB fsb(
 		/* MC68HC000 interface */
 		FCLK, nAS_FSB, nDTACK_FSB, nVPA_FSB,
-		/* MC68HC000 clock enable */
-		MCKEi, MCKE,
 		/* FSB cycle detection */
 		BACT, BACTr,
 		/* Ready inputs */
 		ROMCS4X,
 		RAMCS0X, RAMReady,
 		IOPWCS, IOPWReady, IONPReady,
-		IOQoSEN,
+		QoSEN,
 		/* Interrupt acknowledge select */
-		IACKCS);
+		IACS);
 
 endmodule

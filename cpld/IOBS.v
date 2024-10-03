@@ -10,7 +10,7 @@ module IOBS(
 	/* Read data OE control */
 	output nDinOE,
 	/* IOB master controller interface */
-	output reg IOREQ, output reg IORW,
+	output reg IORDREQ, output reg IOWRREQ,
 	input IOACT, input IODONEin, input IOBERR,
 	/* FIFO primary level control */
 	output reg ALE0, output reg IOL0, output reg IOU0,
@@ -56,7 +56,7 @@ module IOBS(
 	always @(posedge CLK) begin // ALE clear control
 		// Make address latch transparent in cycle after TS3
 		// (i.e. first TS2 cycle that's not part of current write)
-		if (TS==1) Clear1 <= 1;
+		if (TS==3) Clear1 <= 1;
 		else Clear1 <= 0;
 	end
 	always @(posedge CLK) begin // LDS, UDS, ALE control
@@ -70,32 +70,30 @@ module IOBS(
 	/* FIFO primary level control */
 	always @(posedge CLK) begin
 		if (TS==0) begin
-			// Start IOREQ if FIFO secondary level occupied or FSB request
-			if (ALE1 || (BACT && IOCS && !ALE1 && !Sent)) begin 
-				// Request transfer from IOBM
-				TS <= 1;
-				IOREQ <= 1;
-			end else begin // Otherwise stay in idle
-				TS <= 0;
-				IOREQ <= 0;
-			end
-			// Latch R/W and data strobes from FIFO secondary or FSB
-			if (ALE1) begin
-				IORW <= IORW1;
+			if (ALE1) begin // If FIFO secondary level occupied
+				// Request transfer from IOBM and latch R/W from FIFO
+				TS <= 3;
+				IORDREQ <= IORW1;
+				IOWRREQ <= !IORW1;
 				IOL0 <= IOL1;
 				IOU0 <= IOU1;
-			end else begin
-				IORW <= nWE;
+			end else if (BACT && IOCS && !ALE1 && !Sent) begin // FSB request
+				// Request transfer from IOBM and latch R/W from FSB
+				TS <= 3;
+				IORDREQ <= nWE;
+				IOWRREQ <= !nWE;
 				IOL0 <= !nLDS;
 				IOU0 <= !nUDS;
+			end else begin // Otherwise stay in idle
+				TS <= 0;
+				IORDREQ <= 0;
+				IOWRREQ <= 0;
 			end
-
 			ALE0 <= 0;
-		end else if (TS==1) begin
-			TS <= 2; // Always go to TS2
-			IOREQ <= 1; // Keep IOREQ active
+		end else if (TS==3) begin
+			TS <= 2; // Always go to TS2. Keep IORDREQ/IOWRREQ active
 			ALE0 <= 1; // Latch address (and data)
-			// Latch data strobes again from FIFO or FSB as appropriate
+			// Latch data strobes from FIFO or FSB as appropriate
 			if (ALE1) begin
 				IOL0 <= IOL1;
 				IOU0 <= IOU1;
@@ -104,20 +102,19 @@ module IOBS(
 				IOU0 <= !nUDS;
 			end
 		end else if (TS==2) begin
-			// Wait for IOACT (transfer started) then withdraw IOREQ and enter TS1
+			// Wait for IOACT then withdraw IOREQ and enter TS1
 			if (IOACTr) begin
-				TS <= 3;
-				IOREQ <= 0;
-			end else begin
-				TS <= 2;
-				IOREQ <= 1;
-			end
+				TS <= 1;
+				IORDREQ <= 0;
+				IOWRREQ <= 0;
+			end else TS <= 2;
 			ALE0 <= 1; // Keep address latched
-		end else if (TS==3) begin
+		end else if (TS==1) begin
 			// Wait for IOACT low (transfer over) before going back to idle
 			if (!IOACTr) TS <= 0;
-			else TS <= 3;
-			IOREQ <= 0;
+			else TS <= 1;
+			IORDREQ <= 0;
+			IOWRREQ <= 0;
 			ALE0 <= 0; // Release addr latch since it's controlled by IOBM now
 		end
 	end
