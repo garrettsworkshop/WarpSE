@@ -126,7 +126,7 @@ module WarpSE(
 		.nROMWE(nROMWE));
 
 	wire IONPReady, IOPWReady;
-	wire IORDREQ, IOWRREQ;
+	wire IOREQ, IORW;
 	wire IOL0, IOU0;
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
@@ -152,8 +152,8 @@ module WarpSE(
 		/* Read data OE control */
 		.nDinOE(nDinOE),
 		/* IOB Master Controller Interface */
-		.IORDREQ(IORDREQ),
-		.IOWRREQ(IOWRREQ),
+		.IOREQ(IOREQ),
+		.IORW(IORW),
 		.IOACT(IOACT),
 		.IODONEin(IODONE),
 		.IOBERR(IOBERR),
@@ -166,8 +166,9 @@ module WarpSE(
 
 	wire AoutOE;
 	assign nAoutOE = !AoutOE;
-	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
+	wire nAS_IOBout, RnW_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
 	assign nAS_IOB = AoutOE ? nAS_IOBout : 1'bZ;
+	assign RnW_IOB = AoutOE ? RnW_IOBout : 1'bZ;
 	assign nLDS_IOB = AoutOE ? nLDS_IOBout : 1'bZ;
 	assign nUDS_IOB = AoutOE ? nUDS_IOBout : 1'bZ;
 	assign nVMA_IOB = AoutOE ? nVMA_IOBout : 1'bZ;
@@ -176,7 +177,8 @@ module WarpSE(
 		.C16M(C16M),
 		.C8M(C8M),
 		.E(E),
-		.nASout(nAS_IOBout),
+		.nAS(nAS_IOBout),
+		.RnW(RnW_IOBout),
 		.nLDS(nLDS_IOBout),
 		.nUDS(nUDS_IOBout),
 		.nVMA(nVMA_IOBout),
@@ -190,8 +192,8 @@ module WarpSE(
 		.ALE0(ALE0M),
 		.nDinLE(nDinLE),
 		/* IO bus slave port interface */
-		.IORDREQ(IORDREQ),
-		.IOWRREQ(IOWRREQ),
+		.IOREQ(IOREQ),
+		.IORW(IORW),
 		.IOLDS(IOL0),
 		.IOUDS(IOU0),
 		.IOACT(IOACT),
