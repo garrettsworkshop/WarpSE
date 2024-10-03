@@ -22,10 +22,6 @@ module CNT(
 	/* C8M clock synchronization */
 	reg [3:0] C8Mr; always @(posedge CLK) C8Mr[3:0] <= { C8Mr[2:0], C8M };
 	
-	/* NMI and reset synchronization */
-	reg nIPL2r; always @(posedge CLK) nIPL2r <= nIPL2;
-	reg nRESr; always @(posedge CLK) nRESr <= nRESin;
-	
 	/* Timer counts from 0 to 1010 (10) -- 11 states == 14.042 us
     *	Refresh timer sequence
 	 * |  Timer  | RefReq |   RefUrg  |
@@ -50,34 +46,38 @@ module CNT(
 		if (EFall) begin
 			if (TimerTC) Timer <= 0;
 			else Timer <= Timer+1;
-			RefUrg <= Timer==8 || Timer==9;
 			RefReq <= Timer!=10;
+			RefUrg <= Timer==8 || Timer==9;
 		end
 	end
 	always @(posedge CLK) TimerTick <= EFall && TimerTC;
 
-	/* QoS select latch */
-	reg QoSCSr;
-	always @(posedge CLK) QoSCSr <= (BACT && (QoSCS || SndQoSCS)) || !nRESr;
+	/* QoS select latches */
+	reg QoSCSr, SndQoSCSr;
+	always @(posedge CLK) QoSCSr <= (BACT && QoSCS) || !nRESin;
+	always @(posedge CLK) SndQoSCSr <= BACT && SndQoSCS;
+
+	/* Wait state timer */
+	reg [3:0] Wait;
+	always @(posedge CLK) begin
+		if (!BACT) Wait <= 0;
+		else Wait <= Wait+1;
+	end
 	
 	/* QoS timer
 	 * In the absence of a QoS trigger, QS==0.
 	 * When Qos triggered, QS is set to 1 and counts 1, 2, 3, 0.
 	 * While QS!=0, QoS is enabled.
-	 * QoS enable period is 28.124 us - 42.240 us */
+	 * QoS enable period is 196.588 us - 210.630 us */
 	reg [3:0] QS;
 	always @(posedge CLK) begin
-		if (QoSCSr) QS <= 15;
+		if (SndQoSCSr || QoSCSr) QS <= 15;
 		else if (QS==0) QS <= 0;
 		else if (TimerTick) QS <= QS-1;
 	end
 
 	/* QoS enable control */
 	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;
-
-	/* Sound QoS select latch */
-	reg SndQoSCSr;
-	always @(posedge CLK) SndQoSCSr <= BACT && SndQoSCS;
 	
 	/* Sound QoS timer */
 	reg [1:0] SndQS;
@@ -88,17 +88,10 @@ module CNT(
 		else if (TimerTick) SndQS <= SndQS-1;
 	end
 
-	/* Wait state timer */
-	reg [3:0] Wait;
-	always @(posedge CLK) begin
-		if (!BACT) Wait <= 0;
-		else Wait <= Wait+1;
-	end
-
 	/* Sound QoS ready control */
 	always @(posedge CLK) begin
 		if (!BACT) SndQoSReady <= SndQS==0;
-		else if (QoSCSr && !SndQoSCSr) SndQoSReady <= 1;
+		else if (QoSCSr) SndQoSReady <= 1;
 		else if (Wait==15) SndQoSReady <= 1;
 	end
 	
@@ -120,11 +113,11 @@ module CNT(
 	/* Startup sequence state control */
 	reg [1:0] IS = 0;
 	always @(posedge CLK) begin
-		if (nPOR) IS <= 0;
+		if (!nPOR) IS <= 0;
 		else case (IS[1:0])
 			0: if (LTimerTick) IS <= 1;
 			1: if (LTimerTick) IS <= 2;
-			2: if (LTimerTick && nIPL2r) IS <= 3;
+			2: if (LTimerTick && nIPL2) IS[0] <= 1;
 			3: IS <= 3;
 		endcase
 	end
@@ -139,7 +132,7 @@ module CNT(
 			end 2: begin
 				AoutOE <= 0;
 				nRESout <= 0;
-				if (!nIPL2r) nBR_IOB <= 1; // Disable bus request if NMI pressed
+				if (!nIPL2) nBR_IOB <= 1; // Disable bus request if NMI pressed
 			end 3: begin
 				AoutOE <= !nBR_IOB;
 				if (LTimerTick) nRESout <= 1; // Release reset after a while
