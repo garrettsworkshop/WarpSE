@@ -189,9 +189,9 @@ Synthesizing Unit <IOBS>.
     | Encoding           | automatic                                      |
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
-    Found 1-bit register for signal <IORW>.
-    Found 1-bit register for signal <IOREQ>.
+    Found 1-bit register for signal <IORDREQ>.
     Found 1-bit register for signal <IOL0>.
+    Found 1-bit register for signal <IOWRREQ>.
     Found 1-bit register for signal <IONPReady>.
     Found 1-bit register for signal <IOU0>.
     Found 1-bit register for signal <ALE0>.
@@ -225,9 +225,8 @@ Synthesizing Unit <IOBM>.
     | Implementation     | automatic                                      |
     -----------------------------------------------------------------------
     Found 1-bit register for signal <IOBERR>.
-    Found 1-bit register for signal <RnW>.
+    Found 1-bit register for signal <nASout>.
     Found 1-bit register for signal <IOACT>.
-    Found 1-bit register for signal <nAS>.
     Found 1-bit register for signal <IODONE>.
     Found 1-bit register for signal <nLDS>.
     Found 1-bit register for signal <nUDS>.
@@ -238,8 +237,9 @@ Synthesizing Unit <IOBM>.
     Found 1-bit register for signal <DoutOE>.
     Found 1-bit register for signal <Er>.
     Found 4-bit up counter for signal <ES>.
-    Found 1-bit register for signal <IOREQr>.
+    Found 1-bit register for signal <IORDREQr>.
     Found 1-bit register for signal <IOS0>.
+    Found 1-bit register for signal <IOWRREQr>.
     Found 1-bit register for signal <VPAr>.
     Summary:
 	inferred   1 Finite State Machine(s).
@@ -250,38 +250,27 @@ Unit <IOBM> synthesized.
 
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
-WARNING:Xst:647 - Input <BACTr> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:646 - Signal <C8MFall> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-    Found finite state machine <FSM_3> for signal <IS>.
-    -----------------------------------------------------------------------
-    | States             | 4                                              |
-    | Transitions        | 10                                             |
-    | Inputs             | 4                                              |
-    | Outputs            | 4                                              |
-    | Clock              | CLK                       (rising_edge)        |
-    | Power Up State     | 00                                             |
-    | Encoding           | automatic                                      |
-    | Implementation     | automatic                                      |
-    -----------------------------------------------------------------------
-    Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
-    Found 1-bit register for signal <IOQoSEN>.
+    Found 1-bit register for signal <QoSEN>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
-    Found 2-bit register for signal <C8Mr>.
+    Found 1-bit register for signal <SndQoSReady>.
+    Found 4-bit register for signal <C8Mr>.
     Found 2-bit register for signal <Er>.
-    Found 1-bit register for signal <IOQoSCSr>.
-    Found 4-bit down counter for signal <IOQS>.
-    Found 1-bit register for signal <LookReset>.
+    Found 2-bit register for signal <IS>.
     Found 12-bit up counter for signal <LTimer>.
-    Found 1-bit register for signal <nIPL2r>.
-    Found 1-bit register for signal <nRESr>.
+    Found 1-bit register for signal <LTimerTick>.
+    Found 1-bit register for signal <nPOR>.
+    Found 1-bit register for signal <QoSCSr>.
+    Found 4-bit down counter for signal <QS>.
+    Found 1-bit register for signal <SndQoSCSr>.
+    Found 2-bit down counter for signal <SndQS>.
     Found 4-bit up counter for signal <Timer>.
-    Found 1-bit register for signal <TimerTC>.
+    Found 1-bit register for signal <TimerTick>.
+    Found 4-bit up counter for signal <Wait>.
     Summary:
-	inferred   1 Finite State Machine(s).
-	inferred   3 Counter(s).
+	inferred   5 Counter(s).
 	inferred  10 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
@@ -291,10 +280,9 @@ Synthesizing Unit <FSB>.
     Found 1-bit register for signal <nVPA>.
     Found 1-bit register for signal <BACTr>.
     Found 1-bit register for signal <nDTACK>.
-    Found 1-bit register for signal <MCKE>.
     Found 1-bit register for signal <ASrf>.
     Summary:
-	inferred   5 D-type flip-flop(s).
+	inferred   4 D-type flip-flop(s).
 Unit <FSB> synthesized.
 
 
@@ -302,14 +290,13 @@ Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <DBG> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-    Found 1-bit tristate buffer for signal <RnW_IOB>.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nLDS_IOB>.
     Found 1-bit tristate buffer for signal <nRES>.
     Found 1-bit tristate buffer for signal <nUDS_IOB>.
     Found 1-bit tristate buffer for signal <nVMA_IOB>.
     Summary:
-	inferred   6 Tristate(s).
+	inferred   5 Tristate(s).
 Unit <WarpSE> synthesized.
 
 
@@ -317,15 +304,17 @@ Unit <WarpSE> synthesized.
 HDL Synthesis Report
 
 Macro Statistics
-# Counters                                             : 4
+# Counters                                             : 6
  12-bit up counter                                     : 1
+ 2-bit down counter                                    : 1
  4-bit down counter                                    : 1
- 4-bit up counter                                      : 2
-# Registers                                            : 60
- 1-bit register                                        : 58
- 2-bit register                                        : 2
-# Tristates                                            : 6
- 1-bit tristate buffer                                 : 6
+ 4-bit up counter                                      : 3
+# Registers                                            : 61
+ 1-bit register                                        : 59
+ 2-bit register                                        : 1
+ 4-bit register                                        : 1
+# Tristates                                            : 5
+ 1-bit tristate buffer                                 : 5
 
 =========================================================================
 
@@ -333,16 +322,6 @@ Macro Statistics
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
-Analyzing FSM <FSM_3> for best encoding.
-Optimizing FSM <cnt/IS/FSM> on signal <IS[1:2]> with johnson encoding.
--------------------
- State | Encoding
--------------------
- 00    | 00
- 01    | 01
- 10    | 11
- 11    | 10
--------------------
 Analyzing FSM <FSM_2> for best encoding.
 Optimizing FSM <iobm/IOS/FSM> on signal <IOS[1:7]> with one-hot encoding.
 -------------------
@@ -362,9 +341,9 @@ Optimizing FSM <iobs/TS/FSM> on signal <TS[1:2]> with johnson encoding.
  State | Encoding
 -------------------
  00    | 00
- 01    | 01
+ 11    | 01
  10    | 11
- 11    | 10
+ 01    | 10
 -------------------
 Analyzing FSM <FSM_0> for best encoding.
 Optimizing FSM <ram/RS/FSM> on signal <RS[1:8]> with one-hot encoding.
@@ -380,28 +359,25 @@ Optimizing FSM <ram/RS/FSM> on signal <RS[1:8]> with one-hot encoding.
  110   | 01000000
  111   | 10000000
 -------------------
-WARNING:Xst:1426 - The value init of the FF/Latch 0 hinder the constant cleaning in the block MCKE.
-   You should achieve better results by setting this init to 1.
 
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# FSMs                                                 : 4
-# Counters                                             : 4
+# FSMs                                                 : 3
+# Counters                                             : 6
  12-bit up counter                                     : 1
+ 2-bit down counter                                    : 1
  4-bit down counter                                    : 1
- 4-bit up counter                                      : 2
-# Registers                                            : 48
- Flip-Flops                                            : 48
+ 4-bit up counter                                      : 3
+# Registers                                            : 47
+ Flip-Flops                                            : 47
 
 =========================================================================
 
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
-WARNING:Xst:2677 - Node <C8Mr_1> of sequential type is unconnected in block <CNT>.
-WARNING:Xst:2677 - Node <C8Mr_0> of sequential type is unconnected in block <CNT>.
 
 Optimizing unit <WarpSE> ...
 
@@ -423,8 +399,8 @@ Optimizing unit <RAM> ...
 
 Optimizing unit <IOBS> ...
   implementation constraint: INIT=r	 : IOACTr
-  implementation constraint: INIT=r	 : Sent
   implementation constraint: INIT=r	 : TS_FSM_FFd2
+  implementation constraint: INIT=r	 : Sent
   implementation constraint: INIT=r	 : TS_FSM_FFd1
 
 Optimizing unit <FSB> ...
@@ -432,8 +408,8 @@ Optimizing unit <FSB> ...
 
 Optimizing unit <IOBM> ...
   implementation constraint: INIT=s	 : IOS_FSM_FFd7
-  implementation constraint: INIT=r	 : IOS_FSM_FFd6
   implementation constraint: INIT=r	 : DoutOE
+  implementation constraint: INIT=r	 : IOS_FSM_FFd6
   implementation constraint: INIT=r	 : IOS_FSM_FFd1
   implementation constraint: INIT=r	 : IOS_FSM_FFd2
   implementation constraint: INIT=r	 : IOS_FSM_FFd3
@@ -441,14 +417,13 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd5
 
 Optimizing unit <CNT> ...
-  implementation constraint: INIT=r	 : IS_FSM_FFd1
-  implementation constraint: INIT=r	 : Timer_3
-  implementation constraint: INIT=r	 : IS_FSM_FFd2
+  implementation constraint: INIT=r	 : IS_0
+  implementation constraint: INIT=r	 : IS_1
+  implementation constraint: INIT=r	 : nPOR
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
+  implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_2
-WARNING:Xst:1426 - The value init of the FF/Latch MCKE hinder the constant cleaning in the block fsb.
-   You should achieve better results by setting this init to 1.
 
 =========================================================================
 *                           Partition Report                            *
@@ -477,44 +452,44 @@ Clock Enable                       : YES
 wysiwyg                            : NO
 
 Design Statistics
-# IOs                              : 80
+# IOs                              : 79
 
 Cell Usage :
-# BELS                             : 611
-#      AND2                        : 185
-#      AND3                        : 21
-#      AND4                        : 12
-#      AND5                        : 2
+# BELS                             : 672
+#      AND2                        : 200
+#      AND3                        : 29
+#      AND4                        : 14
+#      AND5                        : 3
 #      AND7                        : 1
-#      AND8                        : 1
+#      AND8                        : 2
 #      GND                         : 6
-#      INV                         : 244
-#      OR2                         : 98
+#      INV                         : 262
+#      OR2                         : 112
 #      OR3                         : 14
-#      OR4                         : 6
+#      OR4                         : 4
 #      VCC                         : 1
-#      XOR2                        : 20
-# FlipFlops/Latches                : 103
-#      FD                          : 64
+#      XOR2                        : 24
+# FlipFlops/Latches                : 112
+#      FD                          : 73
 #      FDC                         : 2
 #      FDCE                        : 36
 #      FDP                         : 1
-# IO Buffers                       : 73
+# IO Buffers                       : 72
 #      IBUF                        : 35
 #      IOBUFE                      : 1
 #      OBUF                        : 32
-#      OBUFE                       : 5
+#      OBUFE                       : 4
 =========================================================================
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.85 secs
+Total CPU time to Xst completion: 4.98 secs
  
 --> 
 
-Total memory usage is 265632 kilobytes
+Total memory usage is 265312 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    8 (   0 filtered)
+Number of warnings :    2 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
