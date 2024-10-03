@@ -140,7 +140,7 @@ module WarpSE(
 		.nLDS(nLDS_FSB),
 		.nUDS(nUDS_FSB),
 		/* AS cycle detection */
-		.BACT(BACT),
+		.BACT(BACT), .BACTr(BACTr),
 		/* Select signals */
 		.IOCS(IOCS),
 		.IORealCS(IORealCS),

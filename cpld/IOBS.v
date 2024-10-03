@@ -2,7 +2,7 @@ module IOBS(
 	/* MC68HC000 interface */
 	input CLK, input nWE, input nAS, input nLDS, input nUDS,
 	/* AS cycle detection */
-	input BACT,
+	input BACT, input BACTr,
 	/* Select signals */
 	input IOCS, input IORealCS, input IOPWCS,
 	/* FSB cycle termination outputs */
@@ -25,7 +25,7 @@ module IOBS(
 	wire IODONE = IODONEr;
 
 	/* Read data OE control */
-	assign nDinOE = !(!nAS && IORealCS && nWE);
+	assign nDinOE = !(!nAS && BACTr && IORealCS && nWE);
 	
 	/* I/O transfer state
 	 * TS0 - I/O bridge idle:
