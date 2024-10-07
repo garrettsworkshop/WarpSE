@@ -10,9 +10,11 @@ module RAM(
 	output RAMReady,
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgIn,
-	/* DRAM and NOR flash interface */
+	/* DRAM interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
-	output nLWE, output nUWE, output nOE, output nROMOE, output nROMWE);
+	output nLWE, output nUWE, output reg nOE,
+	/* NOR flash interface */
+	output nROMOE, output nROMWE);
 
 	/* RAM control state */
 	reg [2:0] RS;
@@ -35,8 +37,10 @@ module RAM(
 	reg RAMReadyReg;
 	assign RAMReady = RAMReadyReg;//!RS[2];
 
-	/* RAM control signals */
-	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrf);
+	/* RAM /RAS */
+	assign nRAS = !((!nAS && RAMCS   && RASEN) || RASrf);
+	
+	/* RAM /WE */
 	assign nLWE = !(!nLDS && RASEL   && !nWE);
 	assign nUWE = !(!nUDS && RASEL   && !nWE);
 	
