@@ -32,7 +32,7 @@ module IOBM(
 	/* ETACK and VMA generation */
 	wire ETACK = (ES==8) && !nVMA;
 	always @(posedge C8M) begin
-		if ((ES==5) && IOACT && VPAr) nVMA <= 0;
+		if ((ES==4) && IOACT && VPAr) nVMA <= 0;
 		else if(ES==0) nVMA <= 1;
 	end
 	
