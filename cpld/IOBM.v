@@ -33,7 +33,7 @@ module IOBM(
 	wire ETACK = (ES==8) && !nVMA;
 	always @(posedge C8M) begin
 		if ((ES==4) && IOACT && VPAr) nVMA <= 0;
-		else if(ES==0) nVMA <= 1;
+		else if (ES==0) nVMA <= 1;
 	end
 	
 	/* DTACK and BERR synchronization */
@@ -50,6 +50,8 @@ module IOBM(
 	/* I/O bus state */
 	reg [2:0] IOS = 0;
 	reg IOS0;
+
+	/* I/O bus control */
 	always @(posedge C16M) case (IOS[2:0])
 		3'h0: begin
 			if (IOREQr && !C8Mr && AoutOE) begin // "IOS1"
