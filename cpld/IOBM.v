@@ -39,22 +39,17 @@ module IOBM(
 	/* I/O bus state */
 	reg [2:0] IOS = 0;
 	reg IOS0;
-
-	/* Cycle termination signal enable */
-	reg TermEN;
-	always @(posedge C16M) begin
-		TermEN <= IOS==2 || IOS==3 || IOS==4 || IOS==5;
-	end
-
-	/* DTACK/"ETACK"/BERR/reset falling edge synchronization */
+	
+	/* DTACK/"ETACK"/BERR/reset synchronization */
 	reg IODONEr;
-	always @(negedge C8M, posedge nAS) begin
-		if (nAS) IODONEr <= 0;
-		else IODONEr <= TermEN && (!nDTACK || ETACK || !nBERR || !nRES);
+	always @(posedge C16M) begin
+		if ((IOS==3 || IOS==5) && !C8Mr) begin
+			IODONEr <= !nDTACK || ETACK || !nBERR || !nRES;
+		end else if (IOS==0) IODONEr <= 0;
 	end
 
 	/* DTACK/"ETACK"/BERR/reset output */
-	assign IODONE = IODONEr && TermEN;
+	assign IODONE = IODONEr;
 
 	/* I/O bus control */
 	always @(posedge C16M) case (IOS[2:0])
