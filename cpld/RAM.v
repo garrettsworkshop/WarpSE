@@ -7,7 +7,7 @@ module RAM(
 	/* Select and ready signals */
 	input RAMCS, input RAMCS0X, input ROMCS, input ROMCS4X,
 	/* RAM ready output */
-	output reg RAMReady,
+	output RAMReady,
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgIn,
 	/* DRAM and NOR flash interface */
@@ -30,6 +30,10 @@ module RAM(
 	end
 	wire RefReq = RefReqIn && !RefDone;
 	wire RefUrg = RefUrgIn && !RefDone;
+	
+	/* RAM ready control */
+	reg RAMReadyReg;
+	assign RAMReady = RAMReadyReg;//!RS[2];
 
 	/* RAM control signals */
 	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrf);
@@ -75,31 +79,31 @@ module RAM(
 				RASEL <= BACT && RAMCS;
 				RefCAS <= RS0toRef;
 				RASEN <= !RS0toRef;
-				RAMReady <= !RS0toRef;
+				RAMReadyReg <= !RS0toRef;
 			end 1: begin // RAM access
 				if (!nDTACK || !BACT) RS <= 2; // Cycle ending
 				else RS <= 1; // Cycle not ending yet
 				RASEL <= 1;
 				RefCAS <= 0;
 				RASEN <= nDTACK;
-				RAMReady <= 1;
+				RAMReadyReg <= 1;
 			end 2: begin // finish RAM access
 				RS <= 3;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReady <= 1;
+				RAMReadyReg <= 1;
 			end 3: begin  //AS cycle complete
 				if (RefUrg)  begin // Refresh RAS
 					RS <= 4;
 					RefCAS <= 1;
 					RASEN <= 0;
-					RAMReady <= 0;
+					RAMReadyReg <= 0;
 				end else begin // Cycle ended so go back to idle/ready
 					RS <= 0;
 					RefCAS <= 0;
 					RASEN <= 1;
-					RAMReady <= 1;
+					RAMReadyReg <= 1;
 				end
 				RASEL <= 0;
 			end 4: begin // Refresh RAS I
@@ -107,25 +111,25 @@ module RAM(
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReady <= 0;
+				RAMReadyReg <= 0;
 			end 5: begin // Refresh RAS II
 				RS <= 6;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReady <= 0;
+				RAMReadyReg <= 0;
 			end 6: begin // Refresh precharge I
 				RS <= 7;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReady <= 0;
+				RAMReadyReg <= 0;
 			end 7: begin // Reenable RAM and go to idle/ready
 				RS <= 0;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 1;
-				RAMReady <= 1;
+				RAMReadyReg <= 1;
 			end
 		endcase
 	end
