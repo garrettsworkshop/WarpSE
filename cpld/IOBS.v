@@ -11,7 +11,7 @@ module IOBS(
 	output nDinOE,
 	/* IOB master controller interface */
 	output reg IOREQ, output reg IORW,
-	input IOACT, input IODONEin, input IOBERR,
+	input IOACT, input IODONEin, input nBERR_IOB,
 	/* FIFO primary level control */
 	output reg ALE0, output reg IOL0, output reg IOU0,
 	/* FIFO secondary level control */
@@ -139,6 +139,6 @@ module IOBS(
 	/* BERR control */
 	always @(posedge CLK) begin
 		if (!BACT) nBERR_FSB <= 1;
-		else if (Sent && IOBERR) nBERR_FSB <= 0;
+		else if (Sent && IODONE && nBERR_IOB) nBERR_FSB <= 0;
 	end
 endmodule

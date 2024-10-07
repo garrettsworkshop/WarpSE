@@ -7,7 +7,7 @@ module IOBM(
 	input AoutOE, output nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
 	input IOREQ, input IORW, input IOLDS, input IOUDS,
-	output reg IOACT, output reg IODONE, output reg IOBERR);
+	output reg IOACT, output IODONE);
 
 	/* C8M clock registration */
 	reg C8Mr; always @(posedge C16M) C8Mr <= C8M;
@@ -36,20 +36,25 @@ module IOBM(
 		else if (ES==0) nVMA <= 1;
 	end
 	
-	/* DTACK and BERR synchronization */
-	always @(negedge C8M, posedge nAS) begin
-		if (nAS) begin
-			IODONE <= 0;
-			IOBERR <= 0;
-		end else begin
-			IODONE <= (!nDTACK || ETACK || !nRES);
-			IOBERR <= !nBERR;
-		end
-	end
-
 	/* I/O bus state */
 	reg [2:0] IOS = 0;
 	reg IOS0;
+
+	/* Cycle termination signal enable */
+	reg TermEN;
+	always @(posedge C16M) begin
+		TermEN <= IOS==2 || IOS==3 || IOS==4 || IOS==5;
+	end
+
+	/* DTACK/"ETACK"/BERR/reset falling edge synchronization */
+	reg IODONEr;
+	always @(negedge C8M, posedge nAS) begin
+		if (nAS) IODONEr <= 0;
+		else IODONEr <= TermEN && (!nDTACK || ETACK || !nBERR || !nRES);
+	end
+
+	/* DTACK/"ETACK"/BERR/reset output */
+	assign IODONE = IODONEr && TermEN;
 
 	/* I/O bus control */
 	always @(posedge C16M) case (IOS[2:0])
@@ -79,7 +84,7 @@ module IOBM(
 			IOACT <= 1;
 			ALE0 <= 1;
 		end 3'h5: begin
-			if (!C8Mr && (IODONE || IOBERR)) begin
+			if (!C8Mr && IODONEr) begin
 				IOS <= 6;
 				IOACT <= 0;
 			end else begin

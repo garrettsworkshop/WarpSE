@@ -132,7 +132,7 @@ module WarpSE(
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
 	assign nADoutLE1 = ~ALE1;
-	wire IOACT, IODONE, IOBERR;
+	wire IOACT, IODONE;
 	IOBS iobs(
 		/* MC68HC000 interface */
 		.CLK(FCLK),
@@ -157,7 +157,7 @@ module WarpSE(
 		.IORW(IORW),
 		.IOACT(IOACT),
 		.IODONEin(IODONE),
-		.IOBERR(IOBERR),
+		.nBERR_IOB(!nBERR_IOB),
 		/* FIFO primary level control */
 		.ALE0(ALE0S),
 		.IOL0(IOL0),
@@ -198,8 +198,7 @@ module WarpSE(
 		.IOLDS(IOL0),
 		.IOUDS(IOU0),
 		.IOACT(IOACT),
-		.IODONE(IODONE),
-		.IOBERR(IOBERR));
+		.IODONE(IODONE));
 
 	wire SndQoSReady;
 	CNT cnt(
