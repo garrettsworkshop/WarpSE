@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.09 secs
  
 --> Reading design: WarpSE.prj
 
@@ -141,7 +141,6 @@ Module <FSB> is correct for synthesis.
 =========================================================================
 
 Performing bidirectional port resolution...
-INFO:Xst:2679 - Register <QoSEN> in unit <CNT> has a constant value of 1 during circuit operation. The register is replaced by logic.
 
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
@@ -153,6 +152,7 @@ Synthesizing Unit <RAM>.
     Related source file is "../RAM.v".
     Found 8x3-bit ROM for signal <RS$rom0000>.
     Found 1-bit register for signal <nCAS>.
+    Found 1-bit register for signal <nOE>.
     Found 1-bit register for signal <CASEndEN>.
     Found 1-bit register for signal <RAMReadyReg>.
     Found 1-bit register for signal <RASEL>.
@@ -244,6 +244,7 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
+    Found 1-bit register for signal <QoSEN>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <SndQoSReady>.
@@ -262,7 +263,7 @@ Synthesizing Unit <CNT>.
     Found 4-bit up counter for signal <Wait>.
     Summary:
 	inferred   5 Counter(s).
-	inferred  10 D-type flip-flop(s).
+	inferred  11 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
 
@@ -303,8 +304,8 @@ Macro Statistics
  2-bit down counter                                    : 1
  4-bit down counter                                    : 1
  4-bit up counter                                      : 3
-# Registers                                            : 61
- 1-bit register                                        : 57
+# Registers                                            : 63
+ 1-bit register                                        : 59
  2-bit register                                        : 2
  3-bit register                                        : 1
  4-bit register                                        : 1
@@ -340,13 +341,6 @@ Optimizing FSM <iobs/TS/FSM> on signal <TS[1:2]> with johnson encoding.
  10    | 11
  01    | 10
 -------------------
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <IORW1>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <0>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <0>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <IOL1>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <0> (without init value) has a constant value of 0 in block <IOU1>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <0> is unconnected in block <0>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <0> is unconnected in block <RAMReadyReg>.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -360,18 +354,14 @@ Macro Statistics
  2-bit down counter                                    : 1
  4-bit down counter                                    : 1
  4-bit up counter                                      : 3
-# Registers                                            : 45
- Flip-Flops                                            : 45
+# Registers                                            : 46
+ Flip-Flops                                            : 46
 
 =========================================================================
 
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
-WARNING:Xst:2677 - Node <QS_3> of sequential type is unconnected in block <CNT>.
-WARNING:Xst:2677 - Node <QS_2> of sequential type is unconnected in block <CNT>.
-WARNING:Xst:2677 - Node <QS_1> of sequential type is unconnected in block <CNT>.
-WARNING:Xst:2677 - Node <QS_0> of sequential type is unconnected in block <CNT>.
 
 Optimizing unit <WarpSE> ...
 
@@ -402,18 +392,11 @@ Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : IS_0
   implementation constraint: INIT=r	 : IS_1
   implementation constraint: INIT=r	 : nPOR
-  implementation constraint: INIT=r	 : Timer_2
-  implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
-WARNING:Xst:1710 - FF/Latch <Load1> (without init value) has a constant value of 0 in block <iobs>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1710 - FF/Latch <IORW1> (without init value) has a constant value of 0 in block <iobs>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <ALE1> (without init value) has a constant value of 0 in block <iobs>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IOU1> (without init value) has a constant value of 0 in block <iobs>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IOL1> (without init value) has a constant value of 0 in block <iobs>. This FF/Latch will be trimmed during the optimization process.
+  implementation constraint: INIT=r	 : Timer_3
+  implementation constraint: INIT=r	 : Timer_2
 WARNING:Xst:2677 - Node <RnW> of sequential type is unconnected in block <iobm>.
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <Clear1> is unconnected in block <iobs>.
-WARNING:Xst:2677 - Node <RAMReadyReg> of sequential type is unconnected in block <ram>.
 
 =========================================================================
 *                           Partition Report                            *
@@ -445,23 +428,23 @@ Design Statistics
 # IOs                              : 79
 
 Cell Usage :
-# BELS                             : 569
-#      AND2                        : 173
-#      AND3                        : 25
-#      AND4                        : 10
+# BELS                             : 688
+#      AND2                        : 206
+#      AND3                        : 30
+#      AND4                        : 13
 #      AND5                        : 3
 #      AND7                        : 1
 #      AND8                        : 2
 #      GND                         : 6
-#      INV                         : 226
-#      OR2                         : 87
+#      INV                         : 274
+#      OR2                         : 114
 #      OR3                         : 9
 #      OR4                         : 4
 #      VCC                         : 1
-#      XOR2                        : 22
-# FlipFlops/Latches                : 95
-#      FD                          : 62
-#      FDCE                        : 30
+#      XOR2                        : 25
+# FlipFlops/Latches                : 108
+#      FD                          : 66
+#      FDCE                        : 39
 #      FDCP                        : 1
 #      FDP                         : 2
 # IO Buffers                       : 72
@@ -473,13 +456,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.90 secs
+Total CPU time to Xst completion: 4.99 secs
  
 --> 
 
-Total memory usage is 262496 kilobytes
+Total memory usage is 263648 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   22 (   0 filtered)
-Number of infos    :    1 (   0 filtered)
+Number of warnings :    4 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
 
