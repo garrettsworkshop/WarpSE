@@ -37,9 +37,14 @@ module RAM(
 
 	/* RAM control signals */
 	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrf);
-	assign nOE =  0;//!( !nAS && RAMCS   && BACTr);
 	assign nLWE = !(!nLDS && RASEL   && !nWE);
 	assign nUWE = !(!nUDS && RASEL   && !nWE);
+	
+	/* RAM /OE control */
+	always @(posedge CLK) begin
+		if (nAS) nOE <= 1;
+		else nOE <= !(BACT && RAMCS0X && nWE);
+	end
 
 	/* ROM control signals */
 	assign nROMOE = !(!nAS && ROMCS   &&  nWE);
