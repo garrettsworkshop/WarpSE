@@ -16,7 +16,7 @@ module WarpSE(
 	input nVPA_IOB,
 	output nVMA_IOB,
 	output nAS_IOB,
-	output RnW_IOB,
+	//output RnW_IOB,
 	output nUDS_IOB,
 	output nLDS_IOB,
 	output nBR_IOB,
@@ -169,7 +169,7 @@ module WarpSE(
 	assign nAoutOE = !AoutOE;
 	wire nAS_IOBout, RnW_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
 	assign nAS_IOB = AoutOE ? nAS_IOBout : 1'bZ;
-	assign RnW_IOB = AoutOE ? RnW_IOBout : 1'bZ;
+	//assign RnW_IOB = AoutOE ? RnW_IOBout : 1'bZ;
 	assign nLDS_IOB = AoutOE ? nLDS_IOBout : 1'bZ;
 	assign nUDS_IOB = AoutOE ? nUDS_IOBout : 1'bZ;
 	assign nVMA_IOB = AoutOE ? nVMA_IOBout : 1'bZ;
