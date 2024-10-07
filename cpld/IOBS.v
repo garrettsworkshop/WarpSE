@@ -21,8 +21,9 @@ module IOBS(
 	reg IOACTr = 0; always @(posedge CLK) IOACTr <= IOACT;
 
 	/* IODTACK input synchronization */
+	reg IODONErf; always @(negedge CLK) IODONErf <= IODONEin;
 	reg [1:0] IODONEr;
-	always @(posedge CLK) IODONEr[1:0] <= {IODONEr[0], IODONEin};
+	always @(posedge CLK) IODONEr[1:0] <= {IODONEr[0], IODONErf};
 	wire IODONE = !IODONEr[1] && IODONEr[0];
 
 	/* Read data OE control */
