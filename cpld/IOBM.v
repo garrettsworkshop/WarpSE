@@ -105,8 +105,8 @@ module IOBM(
 	always @(negedge C16M) begin nDinLE = IOS==4 || IOS==5; end
 	reg DoutOE = 0;
 	always @(posedge C16M) begin
-		DoutOE <= (IOS==0 && IOREQr && !IORW && !C8Mr) ||
-				  (DoutOE && (IOS==2 || IOS==3 || IOS==4 || IOS==5));
+		DoutOE <= ((IOS==0 && IOREQr && !IORW && !C8Mr) ||
+				   (DoutOE && (IOS==2 || IOS==3 || IOS==4 || IOS==5)));
 	end
 	assign nDoutOE = !(AoutOE && (DoutOE || (IOS0 && !IOREQr)));
 
