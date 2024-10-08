@@ -47,7 +47,7 @@ module RAM(
 	/* RAM /OE control */
 	always @(posedge CLK) begin
 		if (nAS) nOE <= 1;
-		else nOE <= !(BACT && RAMCS0X && nWE);
+		else nOE <= !(BACT && RAMCS && nWE);
 	end
 
 	/* ROM control signals */
