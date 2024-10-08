@@ -121,11 +121,11 @@ module IOBM(
 			(IOS==5));
 		RnW <= !(
 			(IOS==0 && IOREQr && !IORW && !C8Mr) || 
-			(!IORW && IOS==2) || 
-			(!IORW && IOS==3) || 
-			(!IORW && IOS==4) || 
-			(!IORW && IOS==5) || 
-			(!IORW && IOS==6));
+			(!RnW && IOS==2) || 
+			(!RnW && IOS==3) || 
+			(!RnW && IOS==4) || 
+			(!RnW && IOS==5) || 
+			(!RnW && IOS==6));
 		nLDS <= !(
 			(IOS==0 && IOREQr && IORW && IOLDS && !C8Mr) ||
 			(IOS==2 && IOLDS) ||
