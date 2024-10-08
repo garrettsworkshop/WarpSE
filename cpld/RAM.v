@@ -38,11 +38,11 @@ module RAM(
 	assign RAMReady = RAMReadyReg;//!RS[2];
 
 	/* RAM /RAS */
-	assign nRAS = !((!nAS && RAMCS   && RASEN) || RASrf);
+	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrf);
 	
 	/* RAM /WE */
-	assign nLWE = !(!nLDS && RASEL   && !nWE);
-	assign nUWE = !(!nUDS && RASEL   && !nWE);
+	assign nLWE = !(!nLDS && RASEL && !nWE);
+	assign nUWE = !(!nUDS && RASEL && !nWE);
 	
 	/* RAM /OE control */
 	always @(posedge CLK) begin
