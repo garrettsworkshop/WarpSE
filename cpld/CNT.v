@@ -13,7 +13,7 @@ module CNT(
 	input SndQoSCS,
 	/* QoS outputs */
 	output reg QoSEN,
-	output reg SndQoSReady);
+	output SndQoSReady);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
@@ -57,13 +57,6 @@ module CNT(
 	always @(posedge CLK) QoSCSr <= (BACT && QoSCS) || !nRESin;
 	always @(posedge CLK) SndQoSCSr <= BACT && SndQoSCS;
 
-	/* Wait state timer */
-	reg [3:0] Wait;
-	always @(posedge CLK) begin
-		if (!BACT) Wait <= 0;
-		else Wait <= Wait+1;
-	end
-	
 	/* QoS timer
 	 * In the absence of a QoS trigger, QS==0.
 	 * When Qos triggered, QS is set to 1 and counts 1, 2, 3, 0.
@@ -78,22 +71,7 @@ module CNT(
 
 	/* QoS enable control */
 	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;
-	
-	/* Sound QoS timer */
-	reg [1:0] SndQS;
-	always @(posedge CLK) begin
-		if (SndQoSCSr) SndQS <= 3;
-		else if (QoSCSr) SndQS <= 0;
-		else if (SndQS==0) SndQS <= 0;
-		else if (TimerTick) SndQS <= SndQS-1;
-	end
-
-	/* Sound QoS ready control */
-	always @(posedge CLK) begin
-		if (!BACT) SndQoSReady <= SndQS==0;
-		else if (QoSCSr) SndQoSReady <= 1;
-		else if (Wait==15) SndQoSReady <= 1;
-	end
+	assign SndQoSReady = 1;
 	
 	/* Long timer counts from 0 to 4095.
 	 * 4096 states == 57.516 ms */
