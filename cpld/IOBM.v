@@ -40,7 +40,7 @@ module IOBM(
 	reg [2:0] IOS = 0;
 	reg IOS0;
 	
-	/* DTACK/"ETACK"/BERR/reset synchronization */
+	/* IODONE DTACK/"ETACK"/BERR/reset synchronization */
 	reg IODONEr;
 	always @(posedge C16M) begin
 		if ((IOS==3 || IOS==5) && !C8Mr) begin
@@ -48,7 +48,7 @@ module IOBM(
 		end else if (IOS==0) IODONEr <= 0;
 	end
 
-	/* DTACK/"ETACK"/BERR/reset output */
+	/* IODONE output */
 	assign IODONE = IODONEr;
 
 	/* I/O bus control */
