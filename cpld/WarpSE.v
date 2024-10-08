@@ -16,7 +16,7 @@ module WarpSE(
 	input nVPA_IOB,
 	output nVMA_IOB,
 	output nAS_IOB,
-	//output RnW_IOB,
+	output RnW_IOB,
 	output nUDS_IOB,
 	output nLDS_IOB,
 	output nBR_IOB,
