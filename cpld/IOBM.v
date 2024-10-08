@@ -108,7 +108,8 @@ module IOBM(
 		DoutOE <= ((IOS==0 && IOREQr && !IORW && !C8Mr) ||
 				   (DoutOE && (IOS==2 || IOS==3 || IOS==4 || IOS==5)));
 	end
-	assign nDoutOE = !(AoutOE && (DoutOE || (IOS0 && !IOREQr)));
+	//assign nDoutOE = !(AoutOE && (DoutOE || (IOS0 && !IOREQr)));
+	assign nDoutOE = !(AoutOE && DoutOE);
 
 	/* AS, DS, RW control */
 	always @(negedge C16M) begin
