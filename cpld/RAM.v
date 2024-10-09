@@ -52,7 +52,7 @@ module RAM(
 
 	/* ROM /OE and /WE control */
 	assign nROMOE = !(!nAS && ROMCS   &&  nWE);
-	assign nROMWE = !(!nAS && ROMCS4X && !nWE && BACTr);
+	assign nROMWE = !(!nAS && ROMCS4X && !nWE);
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.
