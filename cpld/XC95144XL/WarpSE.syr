@@ -1,16 +1,16 @@
-Release 14.7 - xst P.20131013 (nt64)
+Release 14.7 - xst P.20131013 (nt)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 1.05 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 1.05 secs
  
 --> Reading design: WarpSE.prj
 
@@ -163,7 +163,7 @@ Synthesizing Unit <RAM>.
     Found 3-bit register for signal <RS>.
     Summary:
 	inferred   1 ROM(s).
-	inferred   7 D-type flip-flop(s).
+	inferred   8 D-type flip-flop(s).
 Unit <RAM> synthesized.
 
 
@@ -205,6 +205,7 @@ Unit <IOBS> synthesized.
 
 Synthesizing Unit <IOBM>.
     Related source file is "../IOBM.v".
+WARNING:Xst:646 - Signal <IOS0> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found finite state machine <FSM_1> for signal <IOS>.
     -----------------------------------------------------------------------
     | States             | 7                                              |
@@ -230,12 +231,11 @@ Synthesizing Unit <IOBM>.
     Found 4-bit up counter for signal <ES>.
     Found 1-bit register for signal <IODONEr>.
     Found 1-bit register for signal <IOREQr>.
-    Found 1-bit register for signal <IOS0>.
     Found 1-bit register for signal <VPAr>.
     Summary:
 	inferred   1 Finite State Machine(s).
 	inferred   1 Counter(s).
-	inferred  14 D-type flip-flop(s).
+	inferred  13 D-type flip-flop(s).
 Unit <IOBM> synthesized.
 
 
@@ -247,7 +247,6 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <QoSEN>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
-    Found 1-bit register for signal <SndQoSReady>.
     Found 4-bit register for signal <C8Mr>.
     Found 2-bit register for signal <Er>.
     Found 2-bit register for signal <IS>.
@@ -257,13 +256,11 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <QoSCSr>.
     Found 4-bit down counter for signal <QS>.
     Found 1-bit register for signal <SndQoSCSr>.
-    Found 2-bit down counter for signal <SndQS>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTick>.
-    Found 4-bit up counter for signal <Wait>.
     Summary:
-	inferred   5 Counter(s).
-	inferred  11 D-type flip-flop(s).
+	inferred   3 Counter(s).
+	inferred  10 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
 
@@ -282,14 +279,14 @@ Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <DBG> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:646 - Signal <RnW_IOBout> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Found 1-bit tristate buffer for signal <RnW_IOB>.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nLDS_IOB>.
     Found 1-bit tristate buffer for signal <nRES>.
     Found 1-bit tristate buffer for signal <nUDS_IOB>.
     Found 1-bit tristate buffer for signal <nVMA_IOB>.
     Summary:
-	inferred   5 Tristate(s).
+	inferred   6 Tristate(s).
 Unit <WarpSE> synthesized.
 
 
@@ -299,18 +296,17 @@ HDL Synthesis Report
 Macro Statistics
 # ROMs                                                 : 1
  8x3-bit ROM                                           : 1
-# Counters                                             : 6
+# Counters                                             : 4
  12-bit up counter                                     : 1
- 2-bit down counter                                    : 1
  4-bit down counter                                    : 1
- 4-bit up counter                                      : 3
-# Registers                                            : 63
- 1-bit register                                        : 59
+ 4-bit up counter                                      : 2
+# Registers                                            : 61
+ 1-bit register                                        : 57
  2-bit register                                        : 2
  3-bit register                                        : 1
  4-bit register                                        : 1
-# Tristates                                            : 5
- 1-bit tristate buffer                                 : 5
+# Tristates                                            : 6
+ 1-bit tristate buffer                                 : 6
 
 =========================================================================
 
@@ -349,13 +345,12 @@ Macro Statistics
 # FSMs                                                 : 2
 # ROMs                                                 : 1
  8x3-bit ROM                                           : 1
-# Counters                                             : 6
+# Counters                                             : 4
  12-bit up counter                                     : 1
- 2-bit down counter                                    : 1
  4-bit down counter                                    : 1
- 4-bit up counter                                      : 3
-# Registers                                            : 46
- Flip-Flops                                            : 46
+ 4-bit up counter                                      : 2
+# Registers                                            : 45
+ Flip-Flops                                            : 45
 
 =========================================================================
 
@@ -392,11 +387,10 @@ Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : IS_0
   implementation constraint: INIT=r	 : IS_1
   implementation constraint: INIT=r	 : nPOR
-  implementation constraint: INIT=r	 : Timer_0
-  implementation constraint: INIT=r	 : Timer_1
-  implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_2
-WARNING:Xst:2677 - Node <RnW> of sequential type is unconnected in block <iobm>.
+  implementation constraint: INIT=r	 : Timer_3
+  implementation constraint: INIT=r	 : Timer_1
+  implementation constraint: INIT=r	 : Timer_0
 
 =========================================================================
 *                           Partition Report                            *
@@ -425,44 +419,44 @@ Clock Enable                       : YES
 wysiwyg                            : NO
 
 Design Statistics
-# IOs                              : 79
+# IOs                              : 80
 
 Cell Usage :
-# BELS                             : 688
-#      AND2                        : 206
-#      AND3                        : 30
-#      AND4                        : 13
+# BELS                             : 643
+#      AND2                        : 193
+#      AND3                        : 27
+#      AND4                        : 12
 #      AND5                        : 3
-#      AND7                        : 1
 #      AND8                        : 2
 #      GND                         : 6
-#      INV                         : 274
-#      OR2                         : 114
-#      OR3                         : 9
+#      INV                         : 258
+#      OR2                         : 107
+#      OR3                         : 8
 #      OR4                         : 4
+#      OR5                         : 1
 #      VCC                         : 1
-#      XOR2                        : 25
-# FlipFlops/Latches                : 108
-#      FD                          : 66
-#      FDCE                        : 39
+#      XOR2                        : 21
+# FlipFlops/Latches                : 101
+#      FD                          : 61
+#      FDCE                        : 36
 #      FDCP                        : 1
-#      FDP                         : 2
-# IO Buffers                       : 72
+#      FDP                         : 3
+# IO Buffers                       : 73
 #      IBUF                        : 35
 #      IOBUFE                      : 1
 #      OBUF                        : 32
-#      OBUFE                       : 4
+#      OBUFE                       : 5
 =========================================================================
 
 
-Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.99 secs
+Total REAL time to Xst completion: 53.00 secs
+Total CPU time to Xst completion: 52.75 secs
  
 --> 
 
-Total memory usage is 263648 kilobytes
+Total memory usage is 235808 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    4 (   0 filtered)
+Number of warnings :    3 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
