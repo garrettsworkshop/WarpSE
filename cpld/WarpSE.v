@@ -201,6 +201,8 @@ module WarpSE(
 		.IODONE(IODONE));
 
 	wire SndQoSReady;
+	wire nBR_IOBout;
+	assign nBR_IOB = nBR_IOBout ? 1'bZ : 1'b0;
 	CNT cnt(
 		/* FSB clock, 7.8336 MHz clock, and E clock inputs */
 		.CLK(FCLK),
@@ -215,7 +217,7 @@ module WarpSE(
 		.nIPL2(nIPL2),
 		/* Mac PDS bus master control outputs */
 		.AoutOE(AoutOE),
-		.nBR_IOB(nBR_IOB),
+		.nBR_IOB(nBR_IOBout),
 		/* QoS select inputs */
 		.BACT(BACT),
 		.QoSCS(QoSCS),
