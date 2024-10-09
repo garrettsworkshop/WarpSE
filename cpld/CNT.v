@@ -8,12 +8,15 @@ module CNT(
 	/* Mac PDS bus master control outputs */
 	output reg AoutOE, output reg nBR_IOB,
 	/* QoS select inputs */
+	input nAS,
+	input ASrf,
 	input BACT,
 	input QoSCS,
 	input SndQoSCS,
 	/* QoS outputs */
 	output reg QoSEN,
-	output SndQoSReady);
+	output SndQoSReady,
+	output reg MCKE);
 	
 	/* E clock synchronization */
 	reg [1:0] Er; always @(posedge CLK) Er[1:0] <= { Er[0], E };
@@ -21,6 +24,7 @@ module CNT(
 	
 	/* C8M clock synchronization */
 	reg [3:0] C8Mr; always @(posedge CLK) C8Mr[3:0] <= { C8Mr[2:0], C8M };
+	wire C8MFall =  C8Mr[1] && !C8Mr[0]; // C8M falling edge detect
 	
 	/* Timer counts from 0 to 1010 (10) -- 11 states == 14.042 us
     *	Refresh timer sequence
@@ -72,6 +76,12 @@ module CNT(
 	/* QoS enable control */
 	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;
 	assign SndQoSReady = 1;
+	
+	/* MC68k clock gating during QoS */
+	always @(negedge CLK, negedge nAS) begin
+		if (!nAS) MCKE <= 1;
+		else MCKE <= ASrf || !QoSEN || C8MFall;
+	end
 	
 	/* Long timer counts from 0 to 4095.
 	 * 4096 states == 57.516 ms */

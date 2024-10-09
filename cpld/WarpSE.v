@@ -41,9 +41,6 @@ module WarpSE(
 	output MCKE,
 	input [5:0] DBG);
 
-	/* MC68k clock enable */
-	assign MCKE = 1;
-
 	/* GA gated (translated) address output */
 	assign GA[23:22] = A_FSB[23:22];
 	/*assign GA[23:22] = (
@@ -218,12 +215,15 @@ module WarpSE(
 		.AoutOE(AoutOE),
 		.nBR_IOB(nBR_IOBout),
 		/* QoS select inputs */
+		.nAS(nAS_FSB),
+		.ASrf(ASrf),
 		.BACT(BACT),
 		.QoSCS(QoSCS),
 		.SndQoSCS(SndQoSCS),
 		/* QoS outputs */
 		.QoSEN(QoSEN),
-		.SndQoSReady(SndQoSReady));
+		.SndQoSReady(SndQoSReady),
+		.MCKE(MCKE));
 	
 	FSB fsb(
 		/* MC68HC000 interface */
