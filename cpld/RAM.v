@@ -27,7 +27,7 @@ module RAM(
 	/* Refresh command generation */
 	reg RefDone; // Refresh done "remember"
 	always @(posedge CLK) begin
-		if (!RefReqIn && !RefUrgIn) RefDone <= 0;
+		if (!RefReqIn) RefDone <= 0;
 		else if (RS[2]) RefDone <= 1;
 	end
 	wire RefReq = RefReqIn && !RefDone;
