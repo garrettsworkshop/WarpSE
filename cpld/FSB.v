@@ -2,7 +2,7 @@ module FSB(
 	/* MC68HC000 interface */
 	input FCLK, input nAS, output reg nDTACK, output reg nVPA,
 	/* AS cycle detection */
-	output BACT, output reg BACTr,
+	output reg ASrf, output BACT, output reg BACTr,
 	/* Ready inputs */
 	input ROMCS,
 	input RAMCS, input RAMReady,
@@ -12,7 +12,6 @@ module FSB(
 	input IACS);
 
 	/* AS cycle detection */
-	reg ASrf = 0;
 	always @(negedge FCLK) begin ASrf <= !nAS; end
 	assign BACT = !nAS || ASrf; // BACT - bus active
 	always @(posedge FCLK) BACTr <= BACT;

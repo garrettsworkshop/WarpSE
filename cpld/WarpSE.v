@@ -60,8 +60,7 @@ module WarpSE(
 	assign nRES = !nRESout ? 1'b0 : 1'bZ;
 
 	/* AS cycle detection */
-	wire BACT;
-	wire BACTr;
+	wire ASrf, BACT, BACTr;
 
 	/* Refresh request/ack signals */
 	wire RefReq, RefUrg;
@@ -233,6 +232,7 @@ module WarpSE(
 		.nDTACK(nDTACK_FSB),
 		.nVPA(nVPA_FSB),
 		/* FSB cycle detection */
+		.ASrf(ASrf),
 		.BACT(BACT),
 		.BACTr(BACTr),
 		/* Ready inputs */
