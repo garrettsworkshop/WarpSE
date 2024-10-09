@@ -45,9 +45,9 @@ module RAM(
 	assign nUWE = !(!nUDS && RASEL && !nWE);
 	
 	/* RAM /OE control */
-	always @(posedge CLK) begin
+	always @(posedge CLK, posedge nAS) begin
 		if (nAS) nOE <= 1;
-		else nOE <= !(BACT && RAMCS && nWE);
+		else nOE <= !(RAMCS && nWE);
 	end
 
 	/* ROM /OE and /WE control */
