@@ -37,10 +37,10 @@ module RAM(
 	reg RAMReadyReg;
 	assign RAMReady = RAMReadyReg;//!RS[2];
 
-	/* RAM /RAS */
+	/* RAM /RAS control */
 	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrf);
 	
-	/* RAM /WE */
+	/* RAM /WE control */
 	assign nLWE = !(!nLDS && RASEL && !nWE);
 	assign nUWE = !(!nUDS && RASEL && !nWE);
 	
@@ -50,7 +50,7 @@ module RAM(
 		else nOE <= !(BACT && RAMCS && nWE);
 	end
 
-	/* ROM control signals */
+	/* ROM /OE and /WE control */
 	assign nROMOE = !(!nAS && ROMCS   &&  nWE);
 	assign nROMWE = !(!nAS && ROMCS4X && !nWE && BACTr);
 
