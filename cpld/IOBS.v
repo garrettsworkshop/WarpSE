@@ -51,7 +51,7 @@ module IOBS(
 		// I/O selected, and FIFO secondary level empty
 		if (BACT && IOPWCS && !ALE1 && !Sent && TS!=0) begin
 			// Latch R/W now but latch address and LDS/UDS next cycle
-			IORW1 <= nWE || !IORealCS;
+			IORW1 <= nWE;// || !IORealCS;
 			Load1 <= 1;
 		end else Load1 <= 0;
 	end
@@ -87,7 +87,7 @@ module IOBS(
 				IOL0 <= IOL1;
 				IOU0 <= IOU1;
 			end else begin // FSB request
-				IORW <= nWE || !IORealCS;
+				IORW <= nWE;// || !IORealCS;
 				IOL0 <= !nLDS;
 				IOU0 <= !nUDS;
 			end
