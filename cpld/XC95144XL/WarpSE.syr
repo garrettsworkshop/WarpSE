@@ -247,6 +247,7 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <QoSEN>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
+    Found 1-bit register for signal <MCKE>.
     Found 4-bit register for signal <C8Mr>.
     Found 2-bit register for signal <Er>.
     Found 2-bit register for signal <IS>.
@@ -260,7 +261,7 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <TimerTick>.
     Summary:
 	inferred   3 Counter(s).
-	inferred  10 D-type flip-flop(s).
+	inferred  11 D-type flip-flop(s).
 Unit <CNT> synthesized.
 
 
@@ -301,8 +302,8 @@ Macro Statistics
  12-bit up counter                                     : 1
  4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 61
- 1-bit register                                        : 57
+# Registers                                            : 62
+ 1-bit register                                        : 58
  2-bit register                                        : 2
  3-bit register                                        : 1
  4-bit register                                        : 1
@@ -350,8 +351,8 @@ Macro Statistics
  12-bit up counter                                     : 1
  4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 45
- Flip-Flops                                            : 45
+# Registers                                            : 46
+ Flip-Flops                                            : 46
 
 =========================================================================
 
@@ -364,7 +365,6 @@ Optimizing unit <WarpSE> ...
 Optimizing unit <CS> ...
 
 Optimizing unit <FSB> ...
-  implementation constraint: INIT=r	 : ASrf
 
 Optimizing unit <RAM> ...
 
@@ -385,13 +385,13 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd4
 
 Optimizing unit <CNT> ...
+  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : IS_0
   implementation constraint: INIT=r	 : IS_1
   implementation constraint: INIT=r	 : nPOR
-  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : Timer_3
-  implementation constraint: INIT=r	 : Timer_1
   implementation constraint: INIT=r	 : Timer_0
+  implementation constraint: INIT=r	 : Timer_1
 
 =========================================================================
 *                           Partition Report                            *
@@ -423,25 +423,24 @@ Design Statistics
 # IOs                              : 80
 
 Cell Usage :
-# BELS                             : 642
-#      AND2                        : 193
+# BELS                             : 647
+#      AND2                        : 194
 #      AND3                        : 27
 #      AND4                        : 12
 #      AND5                        : 3
 #      AND8                        : 2
 #      GND                         : 6
-#      INV                         : 258
+#      INV                         : 262
 #      OR2                         : 106
-#      OR3                         : 8
+#      OR3                         : 9
 #      OR4                         : 4
 #      OR5                         : 1
-#      VCC                         : 1
 #      XOR2                        : 21
-# FlipFlops/Latches                : 101
+# FlipFlops/Latches                : 102
 #      FD                          : 61
 #      FDCE                        : 36
 #      FDCP                        : 1
-#      FDP                         : 3
+#      FDP                         : 4
 # IO Buffers                       : 73
 #      IBUF                        : 35
 #      IOBUFE                      : 1
@@ -451,11 +450,11 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.03 secs
+Total CPU time to Xst completion: 5.10 secs
  
 --> 
 
-Total memory usage is 262432 kilobytes
+Total memory usage is 262560 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    3 (   0 filtered)
