@@ -1,5 +1,6 @@
 module SET(
 	input CLK,
+	input nPOR,
 	input BACT,
 	input [11:1] A,
 	input SetCSWR,
@@ -15,7 +16,16 @@ module SET(
 	reg SetWRr; always @(posedge CLK) SetWRr <= BACT && SetCSWR;
 
 	always @(posedge CLK) begin
-		if (SetWRr) begin
+		if (!nPOR) begin
+			SlowTimeout[3:0] <= 4'hF;
+			SlowIACK <= 1;
+			SlowVIA  <= 1;
+			SlowIWM  <= 1;
+			SlowSCC  <= 1;
+			SlowSCSI <= 1;
+			SlowSnd  <= 1;
+			SlowClockGate <= 1;
+		end else if (SetWRr) begin
 			SlowTimeout[3:0] <= A[11:8];
 			SlowIACK <= A[7];
 			SlowVIA  <= A[6];

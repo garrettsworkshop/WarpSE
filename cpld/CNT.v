@@ -1,6 +1,8 @@
 module CNT(
 	/* FSB clock and E clock inputs */
 	input CLK, input C8M, input E,
+	/* Power-on reset */
+	output reg nPOR,
 	/* Refresh request */
 	output reg RefReq, output reg RefUrg,
 	/* Reset, button */
@@ -110,7 +112,6 @@ module CNT(
 	always @(posedge CLK) LTimerTick <= TimerTick && LTimerTC;
 
 	/* C8M duty cycle check and power-on reset */
-	reg nPOR = 0;
 	always @(posedge CLK) begin
 		if (C8Mr[3:0]==4'b0000 || C8Mr[3:0]==4'b1111) nPOR <= 0;
 		else if (C8Mr[1:0]==2'b01) nPOR <= 1;

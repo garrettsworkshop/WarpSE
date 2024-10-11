@@ -55,6 +55,9 @@ module WarpSE(
 	wire nRESin = nRES;
 	wire nRESout;
 	assign nRES = !nRESout ? 1'b0 : 1'bZ;
+	
+	/* Power-on reset */
+	wire nPOR;
 
 	/* AS cycle detection */
 	wire ASrf, BACT, BACTr;
@@ -208,6 +211,7 @@ module WarpSE(
 	wire [3:0] SlowTimeout;
 	SET set(
 		.CLK(FCLK),
+		.nPOR(nPOR),
 		.BACT(BACT), 
 		.A(A_FSB[11:1]), 
 		.SetCSWR(SetCSWR),
@@ -227,6 +231,8 @@ module WarpSE(
 		.CLK(FCLK),
 		.C8M(C8M),
 		.E(E),
+		/* Power-on reset */
+		.nPOR(nPOR),
 		/* Refresh request */
 		.RefReq(RefReq),
 		.RefUrg(RefUrg),
