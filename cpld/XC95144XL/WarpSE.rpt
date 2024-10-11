@@ -1,7 +1,7 @@
  
 cpldfit:  version P.20131013                        Xilinx Inc.
                                   Fitter Report
-Design Name: WarpSE                              Date: 10-11-2024,  5:39PM
+Design Name: WarpSE                              Date: 10-11-2024,  5:42PM
 Device Used: XC95144XL-10-TQ100
 Fitting Status: Successful
 
@@ -982,8 +982,8 @@ RnW_IOB <= RnW_IOB_I when RnW_IOB_OE = '1' else 'Z';
 RnW_IOB_OE <= NOT nAoutOE;
 
 FDCPE_SlowClockGate: FDCPE port map (SlowClockGate,SlowClockGate_D,FCLK,'0','0');
-SlowClockGate_D <= ((nPOR AND NOT SlowClockGate AND NOT set/SetWRr)
-	OR (nPOR AND NOT A_FSB(1) AND set/SetWRr));
+SlowClockGate_D <= ((nPOR AND SlowClockGate AND NOT set/SetWRr)
+	OR (nPOR AND A_FSB(1) AND set/SetWRr));
 
 FDCPE_SlowIACK: FDCPE port map (SlowIACK,SlowIACK_D,FCLK,'0','0');
 SlowIACK_D <= ((nPOR AND NOT SlowIACK AND NOT set/SetWRr)
