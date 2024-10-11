@@ -647,8 +647,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<0>  | set/SetWRr  | A_FSB<8>
 INPUTMC | 3 | 0 | 17 | 0 | 10 | 6 | 3
 INPUTP | 1 | 11
 EQ | 3 | 
-   !SlowTimeout<0>.D = nPOR & !SlowTimeout<0> & !set/SetWRr
-	# nPOR & !A_FSB<8> & set/SetWRr;
+   SlowTimeout<0>.D = nPOR & SlowTimeout<0> & !set/SetWRr
+	# nPOR & A_FSB<8> & set/SetWRr;
    SlowTimeout<0>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -659,8 +659,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<1>  | set/SetWRr  | A_FSB<9>
 INPUTMC | 3 | 0 | 17 | 0 | 9 | 6 | 3
 INPUTP | 1 | 12
 EQ | 3 | 
-   !SlowTimeout<1>.D = nPOR & !SlowTimeout<1> & !set/SetWRr
-	# nPOR & !A_FSB<9> & set/SetWRr;
+   SlowTimeout<1>.D = nPOR & SlowTimeout<1> & !set/SetWRr
+	# nPOR & A_FSB<9> & set/SetWRr;
    SlowTimeout<1>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 

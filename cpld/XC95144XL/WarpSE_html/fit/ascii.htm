@@ -3,7 +3,7 @@
  
 cpldfit:  version P.20131013                        Xilinx Inc.
                                   Fitter Report
-Design Name: WarpSE                              Date: 10-11-2024,  5:32PM
+Design Name: WarpSE                              Date: 10-11-2024,  5:39PM
 Device Used: XC95144XL-10-TQ100
 Fitting Status: Successful
 
@@ -1008,12 +1008,12 @@ SlowSnd_D <= ((nPOR AND NOT SlowSnd AND NOT set/SetWRr)
 	OR (nPOR AND NOT A_FSB(2) AND set/SetWRr));
 
 FDCPE_SlowTimeout0: FDCPE port map (SlowTimeout(0),SlowTimeout_D(0),FCLK,'0','0');
-SlowTimeout_D(0) <= ((nPOR AND NOT SlowTimeout(0) AND NOT set/SetWRr)
-	OR (nPOR AND NOT A_FSB(8) AND set/SetWRr));
+SlowTimeout_D(0) <= ((nPOR AND SlowTimeout(0) AND NOT set/SetWRr)
+	OR (nPOR AND A_FSB(8) AND set/SetWRr));
 
 FDCPE_SlowTimeout1: FDCPE port map (SlowTimeout(1),SlowTimeout_D(1),FCLK,'0','0');
-SlowTimeout_D(1) <= ((nPOR AND NOT SlowTimeout(1) AND NOT set/SetWRr)
-	OR (nPOR AND NOT A_FSB(9) AND set/SetWRr));
+SlowTimeout_D(1) <= ((nPOR AND SlowTimeout(1) AND NOT set/SetWRr)
+	OR (nPOR AND A_FSB(9) AND set/SetWRr));
 
 FDCPE_SlowTimeout2: FDCPE port map (SlowTimeout(2),SlowTimeout_D(2),FCLK,'0','0');
 SlowTimeout_D(2) <= ((A_FSB(10) AND nPOR AND set/SetWRr)
