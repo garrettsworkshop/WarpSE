@@ -575,8 +575,8 @@ INPUTS | 4 | nPOR  | SlowClockGate  | set/SetWRr  | A_FSB<1>
 INPUTMC | 3 | 0 | 17 | 0 | 16 | 6 | 3
 INPUTP | 1 | 149
 EQ | 3 | 
-   SlowClockGate.D = nPOR & SlowClockGate & !set/SetWRr
-	# nPOR & A_FSB<1> & set/SetWRr;
+   !SlowClockGate.D = nPOR & !SlowClockGate & !set/SetWRr
+	# nPOR & !A_FSB<1> & set/SetWRr;
    SlowClockGate.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -623,8 +623,8 @@ INPUTS | 4 | nPOR  | SlowSCSI  | set/SetWRr  | A_FSB<3>
 INPUTMC | 3 | 0 | 17 | 0 | 12 | 6 | 3
 INPUTP | 1 | 155
 EQ | 3 | 
-   !SlowSCSI.D = nPOR & !SlowSCSI & !set/SetWRr
-	# nPOR & !A_FSB<3> & set/SetWRr;
+   SlowSCSI.D = nPOR & SlowSCSI & !set/SetWRr
+	# nPOR & A_FSB<3> & set/SetWRr;
    SlowSCSI.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -647,8 +647,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<0>  | set/SetWRr  | A_FSB<8>
 INPUTMC | 3 | 0 | 17 | 0 | 10 | 6 | 3
 INPUTP | 1 | 11
 EQ | 3 | 
-   SlowTimeout<0>.D = nPOR & SlowTimeout<0> & !set/SetWRr
-	# nPOR & A_FSB<8> & set/SetWRr;
+   !SlowTimeout<0>.D = nPOR & !SlowTimeout<0> & !set/SetWRr
+	# nPOR & !A_FSB<8> & set/SetWRr;
    SlowTimeout<0>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -659,8 +659,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<1>  | set/SetWRr  | A_FSB<9>
 INPUTMC | 3 | 0 | 17 | 0 | 9 | 6 | 3
 INPUTP | 1 | 12
 EQ | 3 | 
-   SlowTimeout<1>.D = nPOR & SlowTimeout<1> & !set/SetWRr
-	# nPOR & A_FSB<9> & set/SetWRr;
+   !SlowTimeout<1>.D = nPOR & !SlowTimeout<1> & !set/SetWRr
+	# nPOR & !A_FSB<9> & set/SetWRr;
    SlowTimeout<1>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -671,8 +671,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<2>  | set/SetWRr  | A_FSB<10>
 INPUTMC | 3 | 0 | 17 | 3 | 12 | 6 | 3
 INPUTP | 1 | 13
 EQ | 3 | 
-   SlowTimeout<2>.D = A_FSB<10> & nPOR & set/SetWRr
-	# nPOR & SlowTimeout<2> & !set/SetWRr;
+   !SlowTimeout<2>.D = !A_FSB<10> & nPOR & set/SetWRr
+	# nPOR & !SlowTimeout<2> & !set/SetWRr;
    SlowTimeout<2>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -683,8 +683,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<3>  | set/SetWRr  | A_FSB<11>
 INPUTMC | 3 | 0 | 17 | 3 | 11 | 6 | 3
 INPUTP | 1 | 15
 EQ | 3 | 
-   SlowTimeout<3>.D = A_FSB<11> & nPOR & set/SetWRr
-	# nPOR & SlowTimeout<3> & !set/SetWRr;
+   !SlowTimeout<3>.D = !A_FSB<11> & nPOR & set/SetWRr
+	# nPOR & !SlowTimeout<3> & !set/SetWRr;
    SlowTimeout<3>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
