@@ -11,11 +11,23 @@ module CNT(
 	input nAS,
 	input ASrf,
 	input BACT,
-	input QoSCS,
-	input SndQoSCS,
+	input IACKCS,
+	input VIACS,
+	input IWMCS,
+	input SCCCS,
+	input SCSICS,
+	input SndCSWR,
+	/* QoS settings inputs */
+	input SlowIACK,
+	input SlowVIA,
+	input SlowIWM,
+	input SlowSCC,
+	input SlowSCSI,
+	input SlowSnd,
+	input SlowClockGate,
+	input [3:0] SlowTimeout,
 	/* QoS outputs */
 	output reg QoSEN,
-	output SndQoSReady,
 	output reg MCKE);
 	
 	/* E clock synchronization */
@@ -57,9 +69,16 @@ module CNT(
 	always @(posedge CLK) TimerTick <= EFall && TimerTC;
 
 	/* QoS select latches */
-	reg QoSCSr, SndQoSCSr;
-	always @(posedge CLK) QoSCSr <= (BACT && QoSCS) || !nRESin;
-	always @(posedge CLK) SndQoSCSr <= BACT && SndQoSCS;
+	reg QoSCSr;
+	always @(posedge CLK) begin
+		QoSCSr <= !nRESin ||
+			(!nAS && SlowIACK  && IACKCS) ||
+			(!nAS && SlowVIA   && VIACS) ||
+			(!nAS && SlowIWM   && IWMCS) ||
+			(!nAS && SlowSCC   && SCCCS) ||
+			(!nAS && SlowSCSI  && SCSICS) ||
+			(!nAS && SlowSnd   && SndCSWR);
+	end
 
 	/* QoS timer
 	 * In the absence of a QoS trigger, QS==0.
@@ -68,19 +87,18 @@ module CNT(
 	 * QoS enable period is 196.588 us - 210.630 us */
 	reg [3:0] QS;
 	always @(posedge CLK) begin
-		if (SndQoSCSr || QoSCSr) QS <= 15;
+		if (QoSCSr) QS <= 15;
 		else if (QS==0) QS <= 0;
 		else if (TimerTick) QS <= QS-1;
 	end
 
 	/* QoS enable control */
-	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;
-	assign SndQoSReady = 1;
+	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0 || SlowTimeout==0;
 	
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
 		if (!nAS) MCKE <= 1;
-		else MCKE <= ASrf || !QoSEN || C8MFall;
+		else MCKE <= ASrf || !QoSEN || C8MFall || !SlowClockGate;
 	end
 	
 	/* Long timer counts from 0 to 4095.

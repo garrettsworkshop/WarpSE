@@ -63,10 +63,12 @@ module WarpSE(
 	wire RefReq, RefUrg;
 	
 	/* FSB chip select signals */
-	wire IOCS, IORealCS, IOPWCS, IACS;
+	wire IOCS, IORealCS, IOPWCS;
 	wire ROMCS, ROMCS4X;
 	wire RAMCS, RAMCS0X;
-	wire QoSCS, SndQoSCS, QoSEN;
+	wire QoSEN;
+	wire IACKCS, VIACS, IWMCS, SCCCS, SCSICS, SndCSWR;
+	wire SetCSWR;
 	CS cs(
 		/* MC68HC000 interface */
 		.A(A_FSB[23:08]),
@@ -81,13 +83,19 @@ module WarpSE(
 		.IOCS(IOCS),
 		.IORealCS(IORealCS),
 		.IOPWCS(IOPWCS),
-		.IACS(IACS),
 		.ROMCS(ROMCS),
 		.ROMCS4X(ROMCS4X),
 		.RAMCS(RAMCS),
 		.RAMCS0X(RAMCS0X),
-		.QoSCS(QoSCS),
-		.SndQoSCS(SndQoSCS));
+		/* Motherboard I/O device select outputs  */
+		.IACKCS(IACKCS),
+		.VIACS(VIACS),
+		.IWMCS(IWMCS),
+		.SCCCS(SCCCS),
+		.SCSICS(SCSICS),
+		.SndCSWR(SndCSWR),
+		/* Settings register select output */
+		.SetCSWR(SetCSWR));
 
 	wire RAMReady;
 	RAM ram(
@@ -196,7 +204,22 @@ module WarpSE(
 		.IOACT(IOACT),
 		.IODONE(IODONE));
 
-	wire SndQoSReady;
+	wire SlowIACK, SlowVIA, SlowIWM, SlowSCC, SlowSCSI, SlowSnd, SlowClockGate;
+	wire [3:0] SlowTimeout;
+	SET set(
+		.CLK(FCLK),
+		.BACT(BACT), 
+		.A(A_FSB[11:1]), 
+		.SetCSWR(SetCSWR),
+		.SlowIACK(SlowIACK),
+		.SlowVIA(SlowVIA),
+		.SlowIWM(SlowIWM),
+		.SlowSCC(SlowSCC),
+		.SlowSCSI(SlowSCSI),
+		.SlowSnd(SlowSnd),
+		.SlowClockGate(SlowClockGate),
+		.SlowTimeout(SlowTimeout));
+
 	wire nBR_IOBout;
 	assign nBR_IOB = nBR_IOBout ? 1'bZ : 1'b0;
 	CNT cnt(
@@ -218,11 +241,23 @@ module WarpSE(
 		.nAS(nAS_FSB),
 		.ASrf(ASrf),
 		.BACT(BACT),
-		.QoSCS(QoSCS),
-		.SndQoSCS(SndQoSCS),
+		.IACKCS(IACKCS),
+		.VIACS(VIACS),
+		.IWMCS(IWMCS),
+		.SCCCS(SCCCS),
+		.SCSICS(SCSICS),
+		.SndCSWR(SndCSWR),
+		/* QoS settings inputs */
+		.SlowIACK(SlowIACK),
+		.SlowVIA(SlowVIA),
+		.SlowIWM(SlowIWM),
+		.SlowSCC(SlowSCC),
+		.SlowSCSI(SlowSCSI),
+		.SlowSnd(SlowSnd),
+		.SlowClockGate(SlowClockGate),
+		.SlowTimeout(SlowTimeout),
 		/* QoS outputs */
 		.QoSEN(QoSEN),
-		.SndQoSReady(SndQoSReady),
 		.MCKE(MCKE));
 	
 	FSB fsb(
@@ -243,9 +278,8 @@ module WarpSE(
 		.IOPWReady(IOPWReady),
 		.IONPReady(IONPReady),
 		.QoSEN(QoSEN),
-		.SndQoSReady(SndQoSReady),
 		/* Interrupt acknowledge select */
-		.IACS(IACS));
+		.IACKCS(IACKCS));
 
 
 endmodule
