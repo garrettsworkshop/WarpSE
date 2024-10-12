@@ -3,7 +3,7 @@
  
 cpldfit:  version P.20131013                        Xilinx Inc.
                                   Fitter Report
-Design Name: WarpSE                              Date: 10-12-2024,  2:16AM
+Design Name: WarpSE                              Date: 10-12-2024,  2:18AM
 Device Used: XC95144XL-10-TQ100
 Fitting Status: Successful
 
@@ -984,24 +984,24 @@ RnW_IOB <= RnW_IOB_I when RnW_IOB_OE = '1' else 'Z';
 RnW_IOB_OE <= NOT nAoutOE;
 
 FDCPE_SlowClockGate: FDCPE port map (SlowClockGate,SlowClockGate_D,FCLK,'0','0');
-SlowClockGate_D <= ((nPOR AND SlowClockGate AND NOT set/SetWRr)
-	OR (nPOR AND A_FSB(1) AND set/SetWRr));
+SlowClockGate_D <= ((nPOR AND NOT SlowClockGate AND NOT set/SetWRr)
+	OR (nPOR AND NOT A_FSB(1) AND set/SetWRr));
 
 FDCPE_SlowIACK: FDCPE port map (SlowIACK,SlowIACK_D,FCLK,'0','0');
-SlowIACK_D <= ((nPOR AND SlowIACK AND NOT set/SetWRr)
-	OR (nPOR AND A_FSB(7) AND set/SetWRr));
+SlowIACK_D <= ((nPOR AND NOT SlowIACK AND NOT set/SetWRr)
+	OR (nPOR AND NOT A_FSB(7) AND set/SetWRr));
 
 FDCPE_SlowIWM: FDCPE port map (SlowIWM,SlowIWM_D,FCLK,'0','0');
 SlowIWM_D <= ((nPOR AND NOT SlowIWM AND NOT set/SetWRr)
 	OR (nPOR AND NOT A_FSB(5) AND set/SetWRr));
 
 FDCPE_SlowSCC: FDCPE port map (SlowSCC,SlowSCC_D,FCLK,'0','0');
-SlowSCC_D <= ((nPOR AND SlowSCC AND NOT set/SetWRr)
-	OR (nPOR AND A_FSB(4) AND set/SetWRr));
+SlowSCC_D <= ((nPOR AND NOT SlowSCC AND NOT set/SetWRr)
+	OR (nPOR AND NOT A_FSB(4) AND set/SetWRr));
 
 FDCPE_SlowSCSI: FDCPE port map (SlowSCSI,SlowSCSI_D,FCLK,'0','0');
-SlowSCSI_D <= ((nPOR AND SlowSCSI AND NOT set/SetWRr)
-	OR (nPOR AND A_FSB(3) AND set/SetWRr));
+SlowSCSI_D <= ((nPOR AND NOT SlowSCSI AND NOT set/SetWRr)
+	OR (nPOR AND NOT A_FSB(3) AND set/SetWRr));
 
 FDCPE_SlowSnd: FDCPE port map (SlowSnd,SlowSnd_D,FCLK,'0','0');
 SlowSnd_D <= ((nPOR AND NOT SlowSnd AND NOT set/SetWRr)
