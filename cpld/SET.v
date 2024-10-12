@@ -17,7 +17,7 @@ module SET(
 
 	always @(posedge CLK) begin
 		if (!nPOR) begin
-			SlowTimeout[3:0] <= 4'h3;
+			SlowTimeout[3:0] <= 4'hF;
 			SlowIACK <= 0;
 			SlowVIA  <= 1;
 			SlowIWM  <= 1;
