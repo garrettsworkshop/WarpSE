@@ -218,8 +218,8 @@ FTCPE_RnW_IOB: FTCPE port map (RnW_IOB_I,RnW_IOB_T,NOT C16M,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RnW_IOB_OE <= NOT nAoutOE;
 </td></tr><tr><td>
 FDCPE_SlowClockGate: FDCPE port map (SlowClockGate,SlowClockGate_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowClockGate_D <= ((nPOR AND SlowClockGate AND NOT set/SetWRr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND A_FSB(1) AND set/SetWRr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowClockGate_D <= ((nPOR AND NOT SlowClockGate AND NOT set/SetWRr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT A_FSB(1) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowIACK: FDCPE port map (SlowIACK,SlowIACK_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowIACK_D <= ((nPOR AND SlowIACK AND NOT set/SetWRr)
@@ -234,8 +234,8 @@ FDCPE_SlowSCC: FDCPE port map (SlowSCC,SlowSCC_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND A_FSB(4) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowSCSI: FDCPE port map (SlowSCSI,SlowSCSI_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowSCSI_D <= ((nPOR AND NOT SlowSCSI AND NOT set/SetWRr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT A_FSB(3) AND set/SetWRr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowSCSI_D <= ((nPOR AND SlowSCSI AND NOT set/SetWRr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND A_FSB(3) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowSnd: FDCPE port map (SlowSnd,SlowSnd_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowSnd_D <= ((nPOR AND NOT SlowSnd AND NOT set/SetWRr)
