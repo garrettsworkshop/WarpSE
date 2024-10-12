@@ -575,8 +575,8 @@ INPUTS | 4 | nPOR  | SlowClockGate  | set/SetWRr  | A_FSB<1>
 INPUTMC | 3 | 0 | 17 | 0 | 16 | 6 | 3
 INPUTP | 1 | 149
 EQ | 3 | 
-   SlowClockGate.D = nPOR & SlowClockGate & !set/SetWRr
-	# nPOR & A_FSB<1> & set/SetWRr;
+   !SlowClockGate.D = nPOR & !SlowClockGate & !set/SetWRr
+	# nPOR & !A_FSB<1> & set/SetWRr;
    SlowClockGate.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -587,8 +587,8 @@ INPUTS | 4 | nPOR  | SlowIACK  | set/SetWRr  | A_FSB<7>
 INPUTMC | 3 | 0 | 17 | 0 | 15 | 6 | 3
 INPUTP | 1 | 8
 EQ | 3 | 
-   !SlowIACK.D = nPOR & !SlowIACK & !set/SetWRr
-	# nPOR & !A_FSB<7> & set/SetWRr;
+   SlowIACK.D = nPOR & SlowIACK & !set/SetWRr
+	# nPOR & A_FSB<7> & set/SetWRr;
    SlowIACK.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
