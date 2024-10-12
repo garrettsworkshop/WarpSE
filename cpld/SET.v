@@ -24,7 +24,7 @@ module SET(
 			SlowSCC  <= 1;
 			SlowSCSI <= 0;
 			SlowSnd  <= 1;
-			SlowClockGate <= 1;
+			SlowClockGate <= 0;
 		end else if (SetWRr) begin
 			SlowTimeout[3:0] <= A[11:8];
 			SlowIACK <= A[7];
