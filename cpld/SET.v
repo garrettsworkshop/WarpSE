@@ -17,13 +17,13 @@ module SET(
 
 	always @(posedge CLK) begin
 		if (!nPOR) begin
-			SlowTimeout[3:0] <= 4'h3;
-			SlowIACK <= 1;
-			SlowVIA  <= 1;
-			SlowIWM  <= 1;
-			SlowSCC  <= 1;
-			SlowSCSI <= 1;
-			SlowSnd  <= 1;
+			SlowTimeout[3:0] <= 4'hF;
+			SlowIACK <= 0;
+			SlowVIA  <= 0;
+			SlowIWM  <= 0;
+			SlowSCC  <= 0;
+			SlowSCSI <= 0;
+			SlowSnd  <= 0;
 			SlowClockGate <= 0;
 		end else if (SetWRr) begin
 			SlowTimeout[3:0] <= A[11:8];
