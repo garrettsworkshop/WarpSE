@@ -587,8 +587,8 @@ INPUTS | 4 | nPOR  | SlowIACK  | set/SetWRr  | A_FSB<7>
 INPUTMC | 3 | 0 | 17 | 0 | 15 | 6 | 3
 INPUTP | 1 | 8
 EQ | 3 | 
-   !SlowIACK.D = nPOR & !SlowIACK & !set/SetWRr
-	# nPOR & !A_FSB<7> & set/SetWRr;
+   SlowIACK.D = nPOR & SlowIACK & !set/SetWRr
+	# nPOR & A_FSB<7> & set/SetWRr;
    SlowIACK.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -623,8 +623,8 @@ INPUTS | 4 | nPOR  | SlowSCSI  | set/SetWRr  | A_FSB<3>
 INPUTMC | 3 | 0 | 17 | 0 | 12 | 6 | 3
 INPUTP | 1 | 155
 EQ | 3 | 
-   SlowSCSI.D = nPOR & SlowSCSI & !set/SetWRr
-	# nPOR & A_FSB<3> & set/SetWRr;
+   !SlowSCSI.D = nPOR & !SlowSCSI & !set/SetWRr
+	# nPOR & !A_FSB<3> & set/SetWRr;
    SlowSCSI.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -671,8 +671,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<2>  | set/SetWRr  | A_FSB<10>
 INPUTMC | 3 | 0 | 17 | 3 | 12 | 6 | 3
 INPUTP | 1 | 13
 EQ | 3 | 
-   SlowTimeout<2>.D = A_FSB<10> & nPOR & set/SetWRr
-	# nPOR & SlowTimeout<2> & !set/SetWRr;
+   !SlowTimeout<2>.D = !A_FSB<10> & nPOR & set/SetWRr
+	# nPOR & !SlowTimeout<2> & !set/SetWRr;
    SlowTimeout<2>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 
@@ -683,8 +683,8 @@ INPUTS | 4 | nPOR  | SlowTimeout<3>  | set/SetWRr  | A_FSB<11>
 INPUTMC | 3 | 0 | 17 | 3 | 11 | 6 | 3
 INPUTP | 1 | 15
 EQ | 3 | 
-   SlowTimeout<3>.D = A_FSB<11> & nPOR & set/SetWRr
-	# nPOR & SlowTimeout<3> & !set/SetWRr;
+   !SlowTimeout<3>.D = !A_FSB<11> & nPOR & set/SetWRr
+	# nPOR & !SlowTimeout<3> & !set/SetWRr;
    SlowTimeout<3>.CLK = FCLK;	// GCK
 GLOBALS | 1 | 2 | FCLK
 

@@ -222,8 +222,8 @@ FDCPE_SlowClockGate: FDCPE port map (SlowClockGate,SlowClockGate_D,FCLK,'0','0')
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT A_FSB(1) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowIACK: FDCPE port map (SlowIACK,SlowIACK_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowIACK_D <= ((nPOR AND NOT SlowIACK AND NOT set/SetWRr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT A_FSB(7) AND set/SetWRr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowIACK_D <= ((nPOR AND SlowIACK AND NOT set/SetWRr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND A_FSB(7) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowIWM: FDCPE port map (SlowIWM,SlowIWM_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowIWM_D <= ((nPOR AND NOT SlowIWM AND NOT set/SetWRr)
@@ -234,8 +234,8 @@ FDCPE_SlowSCC: FDCPE port map (SlowSCC,SlowSCC_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT A_FSB(4) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowSCSI: FDCPE port map (SlowSCSI,SlowSCSI_D,FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowSCSI_D <= ((nPOR AND SlowSCSI AND NOT set/SetWRr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND A_FSB(3) AND set/SetWRr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowSCSI_D <= ((nPOR AND NOT SlowSCSI AND NOT set/SetWRr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT A_FSB(3) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowSnd: FDCPE port map (SlowSnd,SlowSnd_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowSnd_D <= ((nPOR AND NOT SlowSnd AND NOT set/SetWRr)
@@ -250,12 +250,12 @@ FDCPE_SlowTimeout1: FDCPE port map (SlowTimeout(1),SlowTimeout_D(1),FCLK,'0','0'
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT A_FSB(9) AND set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowTimeout2: FDCPE port map (SlowTimeout(2),SlowTimeout_D(2),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowTimeout_D(2) <= ((A_FSB(10) AND nPOR AND set/SetWRr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND SlowTimeout(2) AND NOT set/SetWRr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowTimeout_D(2) <= ((NOT A_FSB(10) AND nPOR AND set/SetWRr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT SlowTimeout(2) AND NOT set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowTimeout3: FDCPE port map (SlowTimeout(3),SlowTimeout_D(3),FCLK,'0','0');
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowTimeout_D(3) <= ((A_FSB(11) AND nPOR AND set/SetWRr)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND SlowTimeout(3) AND NOT set/SetWRr));
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowTimeout_D(3) <= ((NOT A_FSB(11) AND nPOR AND set/SetWRr)
+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	OR (nPOR AND NOT SlowTimeout(3) AND NOT set/SetWRr));
 </td></tr><tr><td>
 FDCPE_SlowVIA: FDCPE port map (SlowVIA,SlowVIA_D,FCLK,'0','0');
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SlowVIA_D <= ((nPOR AND NOT SlowVIA AND NOT set/SetWRr)
