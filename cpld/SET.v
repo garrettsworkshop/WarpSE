@@ -22,9 +22,9 @@ module SET(
 			SlowVIA  <= 1;
 			SlowIWM  <= 1;
 			SlowSCC  <= 1;
-			SlowSCSI <= 1;
+			SlowSCSI <= 0;
 			SlowSnd  <= 1;
-			SlowClockGate <= 0;
+			SlowClockGate <= 1;
 		end else if (SetWRr) begin
 			SlowTimeout[3:0] <= A[11:8];
 			SlowIACK <= A[7];
