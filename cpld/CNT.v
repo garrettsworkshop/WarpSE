@@ -90,7 +90,7 @@ module CNT(
 	 * QoS enable period is 196.588 us - 210.630 us */
 	reg [3:0] QS;
 	always @(posedge CLK) begin
-		if (QoSCSr) QS <= 15;
+		if (QoSCSr) QS <= SlowTimeout[3:0];
 		else if (SndQoSCSr) QS <= 15;
 		else if (QS==0) QS <= 0;
 		else if (TimerTick) QS <= QS-1;
