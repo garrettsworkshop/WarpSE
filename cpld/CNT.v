@@ -98,11 +98,20 @@ module CNT(
 
 	/* QoS enable control */
 	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0 || SlowTimeout==0;
+
+	/* Was last slowdown trigger from sound? */
+	reg LastWasSound;
+	always @(posedge CLK) begin
+		if (QoSCSr) LastWasSound <= 0;
+		else if (SndQoSCSr) LastWasSound <= 1;
+	end
 	
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
 		if (!nAS) MCKE <= 1;
-		else MCKE <= ASrf || !QoSEN || C8MFall || !SlowClockGate;
+		else MCKE <= SlowClockGate ? 
+			!(QoSEN && !ASrf && !C8MFall) : 
+			!(QoSEN && !ASrf && !C8MFall && LastWasSound);
 	end
 	
 	/* Long timer counts from 0 to 4095.
