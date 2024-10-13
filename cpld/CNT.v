@@ -71,16 +71,17 @@ module CNT(
 	always @(posedge CLK) TimerTick <= EFall && TimerTC;
 
 	/* QoS select latches */
-	reg QoSCSr;
+	reg QoSCSr, SndQoSCSr;
 	always @(posedge CLK) begin
 		QoSCSr <= !nRESin ||
-			(!nAS && SlowIACK  && IACKCS) ||
-			(!nAS && SlowVIA   && VIACS) ||
-			(!nAS && SlowIWM   && IWMCS) ||
-			(!nAS && SlowSCC   && SCCCS) ||
-			(!nAS && SlowSCSI  && SCSICS) ||
-			(!nAS && SlowSnd   && SndCSWR);
+			(BACT && SlowIACK  && IACKCS) ||
+			(BACT && SlowVIA   && VIACS) ||
+			(BACT && SlowIWM   && IWMCS) ||
+			(BACT && SlowSCC   && SCCCS) ||
+			(BACT && SlowSCSI  && SCSICS) || 
+			(BACT && SlowSnd   && SndCSWR);
 	end
+	always @(posedge CLK) SndQoSCSr <= BACT && SlowSnd && SndCSWR;
 
 	/* QoS timer
 	 * In the absence of a QoS trigger, QS==0.
@@ -90,6 +91,7 @@ module CNT(
 	reg [3:0] QS;
 	always @(posedge CLK) begin
 		if (QoSCSr) QS <= 15;
+		else if (SndQoSCSr) QS <= 15;
 		else if (QS==0) QS <= 0;
 		else if (TimerTick) QS <= QS-1;
 	end
