@@ -208,8 +208,8 @@ module WarpSE(
 		.IODONE(IODONE));
 
 	wire SlowIACK, SlowVIA, SlowIWM, SlowSCC, SlowSCSI, SlowSnd, SlowClockGate;
-	wire [3:0] SlowTimeout;
-	SET set(
+	wire [3:0] SlowInterval;
+	/*SET set(
 		.CLK(FCLK),
 		.nPOR(nPOR),
 		.BACT(BACT), 
@@ -222,7 +222,7 @@ module WarpSE(
 		.SlowSCSI(SlowSCSI),
 		.SlowSnd(SlowSnd),
 		.SlowClockGate(SlowClockGate),
-		.SlowTimeout(SlowTimeout));
+		.SlowInterval(SlowInterval));*/
 
 	wire nBR_IOBout;
 	assign nBR_IOB = nBR_IOBout ? 1'bZ : 1'b0;
@@ -261,7 +261,7 @@ module WarpSE(
 		.SlowSCSI(SlowSCSI),
 		.SlowSnd(SlowSnd),
 		.SlowClockGate(SlowClockGate),
-		.SlowTimeout(SlowTimeout),
+		.SlowInterval(SlowInterval),
 		/* QoS outputs */
 		.QoSEN(QoSEN),
 		.MCKE(MCKE));

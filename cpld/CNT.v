@@ -27,7 +27,7 @@ module CNT(
 	input SlowSCSI,
 	input SlowSnd,
 	input SlowClockGate,
-	input [3:0] SlowTimeout,
+	input [3:0] SlowInterval,
 	/* QoS outputs */
 	output reg QoSEN,
 	output reg MCKE);
@@ -71,17 +71,15 @@ module CNT(
 	always @(posedge CLK) TimerTick <= EFall && TimerTC;
 
 	/* QoS select latches */
-	reg QoSCSr, SndQoSCSr;
-	always @(posedge CLK) begin
-		QoSCSr <= !nRESin ||
-			(BACT && SlowIACK  && IACKCS) ||
-			(BACT && SlowVIA   && VIACS) ||
-			(BACT && SlowIWM   && IWMCS) ||
-			(BACT && SlowSCC   && SCCCS) ||
-			(BACT && SlowSCSI  && SCSICS) || 
-			(BACT && SlowSnd   && SndCSWR);
-	end
-	always @(posedge CLK) SndQoSCSr <= BACT && SlowSnd && SndCSWR;
+	reg IACKCSr, VIACSr, IWMCSr, SCCCSr, SCSICSr, SndCSWRr;
+	reg nRESr;
+	always @(posedge CLK) nRESr <= nRESin;
+	always @(posedge CLK) IACKCSr <= BACT && IACKCS;
+	always @(posedge CLK) VIACSr <= BACT && VIACS;
+	always @(posedge CLK) IWMCSr <= BACT && IWMCS;
+	always @(posedge CLK) SCCCSr <= BACT && SCCCS;
+	always @(posedge CLK) SCSICSr <= BACT && SCSICS;
+	always @(posedge CLK) SndCSWRr <= BACT && SndCSWR;
 
 	/* QoS timer
 	 * In the absence of a QoS trigger, QS==0.
@@ -90,28 +88,30 @@ module CNT(
 	 * QoS enable period is 196.588 us - 210.630 us */
 	reg [3:0] QS;
 	always @(posedge CLK) begin
-		if (QoSCSr) QS <= SlowTimeout[3:0];
-		else if (SndQoSCSr) QS <= 15;
+		if (!nRESr) QS <= 4'h2;
+		//else if (SCSICSr) QS <= 0;
+		else if (IACKCSr) QS <= 4'hF;
+		else if (VIACSr) QS[1] <= 1;
+		else if (IWMCSr) QS[1] <= 1;
+		else if (SCCCSr) QS[1] <= 1;
+		else if (SndCSWRr) QS <= 4'hF;
 		else if (QS==0) QS <= 0;
 		else if (TimerTick) QS <= QS-1;
 	end
+	
+	reg ClockGateEN;
+	always @(posedge CLK) begin
+		if (!nRESr || IACKCSr || VIACSr || IWMCSr || SCCCSr || SCSICSr) ClockGateEN <= 0;
+		else if (SndCSWRr) ClockGateEN <= 1;
+	end
 
 	/* QoS enable control */
-	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0 || SlowTimeout==0;
+	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;
 
-	/* Was last slowdown trigger from sound? */
-	reg LastWasSound;
-	always @(posedge CLK) begin
-		if (QoSCSr) LastWasSound <= 0;
-		else if (SndQoSCSr) LastWasSound <= 1;
-	end
-	
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
 		if (!nAS) MCKE <= 1;
-		else MCKE <= SlowClockGate ? 
-			!(QoSEN && !ASrf && !C8MFall) : 
-			!(QoSEN && !ASrf && !C8MFall && LastWasSound);
+		else MCKE <= !(QoSEN && !ASrf && !C8MFall && ClockGateEN);
 	end
 	
 	/* Long timer counts from 0 to 4095.

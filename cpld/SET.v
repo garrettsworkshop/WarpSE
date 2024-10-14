@@ -4,29 +4,39 @@ module SET(
 	input BACT,
 	input [11:1] A,
 	input SetCSWR,
-	output reg SlowIACK,
-	output reg SlowVIA,
-	output reg SlowIWM,
-	output reg SlowSCC,
-	output reg SlowSCSI,
-	output reg SlowSnd,
-	output reg SlowClockGate,
-	output reg [3:0] SlowTimeout);
+	output SlowIACK,
+	output SlowVIA,
+	output SlowIWM,
+	output SlowSCC,
+	output SlowSCSI,
+	output SlowSnd,
+	output SlowClockGate,
+	output [3:0] SlowInterval);
 	
-	reg SetWRr; always @(posedge CLK) SetWRr <= BACT && SetCSWR;
+	//reg SetWRr; always @(posedge CLK) SetWRr <= BACT && SetCSWR;
+	
+	
+	assign SlowInterval[3:0] = 4'hF;
+	assign SlowIACK = 1;
+	assign SlowVIA  = 1;
+	assign SlowIWM  = 1;
+	assign SlowSCC  = 1;
+	assign SlowSCSI = 1;
+	assign SlowSnd  = 1;
+	assign SlowClockGate = 0;
 
-	always @(posedge CLK) begin
+	/*always @(posedge CLK) begin
 		if (!nPOR) begin
-			SlowTimeout[3:0] <= 4'hF;
+			SlowInterval[3:0] <= 4'hF;
 			SlowIACK <= 1;
 			SlowVIA  <= 1;
 			SlowIWM  <= 1;
 			SlowSCC  <= 1;
-			SlowSCSI <= 0;
+			SlowSCSI <= 1;
 			SlowSnd  <= 1;
 			SlowClockGate <= 0;
 		end else if (SetWRr) begin
-			SlowTimeout[3:0] <= A[11:8];
+			SlowInterval[3:0] <= A[11:8];
 			SlowIACK <= A[7];
 			SlowVIA  <= A[6];
 			SlowIWM  <= A[5];
@@ -35,6 +45,6 @@ module SET(
 			SlowSnd  <= A[2];
 			SlowClockGate <= A[1];
 		end
-	end
+	end*/
 
 endmodule

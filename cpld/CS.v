@@ -52,7 +52,7 @@ module CS(
 		((A[15:12]==4'hF) && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||
 		((A[15:12]==4'hA) && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
 
-	assign SetCSWR = A[23:20]==4'hF && !A[19];
+	assign SetCSWR = A[23:20]==4'hF && !A[19] && !nWE;
 
 	/* Select signals - IOB domain */
 	assign IACS = A[23:20]==4'hF; // IACK

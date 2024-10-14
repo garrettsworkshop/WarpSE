@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total CPU time to Xst completion: 0.08 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total CPU time to Xst completion: 0.08 secs
  
 --> Reading design: WarpSE.prj
 
@@ -75,9 +75,7 @@ wysiwyg                            : NO
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling verilog file "../SET.v" in library work
 Compiling verilog file "../RAM.v" in library work
-Module <SET> compiled
 Compiling verilog file "../IOBS.v" in library work
 Module <RAM> compiled
 Compiling verilog file "../IOBM.v" in library work
@@ -108,8 +106,6 @@ Analyzing hierarchy for module <IOBS> in library <work>.
 
 Analyzing hierarchy for module <IOBM> in library <work>.
 
-Analyzing hierarchy for module <SET> in library <work>.
-
 Analyzing hierarchy for module <CNT> in library <work>.
 
 Analyzing hierarchy for module <FSB> in library <work>.
@@ -132,9 +128,6 @@ Module <IOBS> is correct for synthesis.
  
 Analyzing module <IOBM> in library <work>.
 Module <IOBM> is correct for synthesis.
- 
-Analyzing module <SET> in library <work>.
-Module <SET> is correct for synthesis.
  
 Analyzing module <CNT> in library <work>.
 Module <CNT> is correct for synthesis.
@@ -246,24 +239,16 @@ WARNING:Xst:646 - Signal <IOS0> is assigned but never used. This unconnected sig
 Unit <IOBM> synthesized.
 
 
-Synthesizing Unit <SET>.
-    Related source file is "../SET.v".
-    Found 1-bit register for signal <SlowSCC>.
-    Found 1-bit register for signal <SlowIACK>.
-    Found 1-bit register for signal <SlowIWM>.
-    Found 1-bit register for signal <SlowSnd>.
-    Found 4-bit register for signal <SlowTimeout>.
-    Found 1-bit register for signal <SlowSCSI>.
-    Found 1-bit register for signal <SlowVIA>.
-    Found 1-bit register for signal <SlowClockGate>.
-    Found 1-bit register for signal <SetWRr>.
-    Summary:
-	inferred   1 D-type flip-flop(s).
-Unit <SET> synthesized.
-
-
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
+WARNING:Xst:647 - Input <SlowSCC> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SlowInterval> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SlowIACK> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SlowIWM> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SlowSnd> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SlowSCSI> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SlowVIA> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SlowClockGate> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
@@ -272,18 +257,27 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <MCKE>.
+    Found 4-bit subtractor for signal <$sub0000> created at line 99.
     Found 4-bit register for signal <C8Mr>.
+    Found 1-bit register for signal <ClockGateEN>.
     Found 2-bit register for signal <Er>.
+    Found 1-bit register for signal <IACKCSr>.
     Found 2-bit register for signal <IS>.
+    Found 1-bit register for signal <IWMCSr>.
     Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTick>.
-    Found 1-bit register for signal <QoSCSr>.
-    Found 4-bit down counter for signal <QS>.
+    Found 1-bit register for signal <nRESr>.
+    Found 4-bit register for signal <QS>.
+    Found 1-bit register for signal <SCCCSr>.
+    Found 1-bit register for signal <SCSICSr>.
+    Found 1-bit register for signal <SndCSWRr>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTick>.
+    Found 1-bit register for signal <VIACSr>.
     Summary:
-	inferred   3 Counter(s).
-	inferred  10 D-type flip-flop(s).
+	inferred   2 Counter(s).
+	inferred  16 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
 Unit <CNT> synthesized.
 
 
@@ -302,6 +296,16 @@ Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <DBG> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:646 - Signal <nPOR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+WARNING:Xst:653 - Signal <SlowVIA> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <SlowSnd> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <SlowSCSI> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <SlowSCC> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <SlowInterval> is used but never assigned. This sourceless signal will be automatically connected to value 0000.
+WARNING:Xst:653 - Signal <SlowIWM> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <SlowIACK> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:653 - Signal <SlowClockGate> is used but never assigned. This sourceless signal will be automatically connected to value 0.
+WARNING:Xst:646 - Signal <SetCSWR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit tristate buffer for signal <RnW_IOB>.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nBR_IOB>.
@@ -320,15 +324,16 @@ HDL Synthesis Report
 Macro Statistics
 # ROMs                                                 : 1
  8x3-bit ROM                                           : 1
-# Counters                                             : 4
+# Adders/Subtractors                                   : 1
+ 4-bit subtractor                                      : 1
+# Counters                                             : 3
  12-bit up counter                                     : 1
- 4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 70
- 1-bit register                                        : 65
+# Registers                                            : 72
+ 1-bit register                                        : 68
  2-bit register                                        : 2
  3-bit register                                        : 1
- 4-bit register                                        : 2
+ 4-bit register                                        : 1
 # Tristates                                            : 7
  1-bit tristate buffer                                 : 7
 
@@ -369,12 +374,13 @@ Macro Statistics
 # FSMs                                                 : 2
 # ROMs                                                 : 1
  8x3-bit ROM                                           : 1
-# Counters                                             : 4
+# Adders/Subtractors                                   : 1
+ 4-bit subtractor                                      : 1
+# Counters                                             : 3
  12-bit up counter                                     : 1
- 4-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 46
- Flip-Flops                                            : 46
+# Registers                                            : 51
+ Flip-Flops                                            : 51
 
 =========================================================================
 
@@ -396,8 +402,6 @@ Optimizing unit <IOBS> ...
   implementation constraint: INIT=r	 : Sent
   implementation constraint: INIT=r	 : TS_FSM_FFd1
 
-Optimizing unit <SET> ...
-
 Optimizing unit <IOBM> ...
   implementation constraint: INIT=s	 : IOS_FSM_FFd7
   implementation constraint: INIT=r	 : DoutOE
@@ -409,9 +413,9 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd4
 
 Optimizing unit <CNT> ...
-  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : IS_0
   implementation constraint: INIT=r	 : IS_1
+  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
@@ -446,23 +450,23 @@ Design Statistics
 # IOs                              : 80
 
 Cell Usage :
-# BELS                             : 691
-#      AND2                        : 209
+# BELS                             : 683
+#      AND2                        : 211
 #      AND3                        : 26
 #      AND4                        : 13
 #      AND5                        : 3
+#      AND6                        : 2
 #      AND8                        : 2
-#      GND                         : 7
-#      INV                         : 278
-#      OR2                         : 116
+#      GND                         : 6
+#      INV                         : 276
+#      OR2                         : 108
 #      OR3                         : 10
 #      OR4                         : 4
 #      OR5                         : 1
-#      OR6                         : 1
 #      XOR2                        : 21
-# FlipFlops/Latches                : 113
-#      FD                          : 61
-#      FDCE                        : 47
+# FlipFlops/Latches                : 108
+#      FD                          : 66
+#      FDCE                        : 37
 #      FDCP                        : 1
 #      FDP                         : 4
 # IO Buffers                       : 73
@@ -474,13 +478,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.00 secs
+Total CPU time to Xst completion: 4.93 secs
  
 --> 
 
-Total memory usage is 263520 kilobytes
+Total memory usage is 262048 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    3 (   0 filtered)
+Number of warnings :   21 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 
