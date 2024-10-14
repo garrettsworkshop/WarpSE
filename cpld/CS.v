@@ -4,12 +4,14 @@ module CS(
 	/* AS cycle detection */
 	input BACT,
 	/* QoS enable input */
-	input IOQoSEN,
+	input QoSEN,
 	/* Device select outputs */
-	output IOCS, output IORealCS, output IOPWCS, output IACKCS,
+	output IOCS, output IORealCS, output IOPWCS, output IACS,
 	output ROMCS, output ROMCS4X,
 	output RAMCS, output RAMCS0X,
-	output IOQoSCS, output SndQoSCS);
+	output IACKCS, output VIACS, output IWMCS, 
+	output SCCCS, output SCSICS, output SndCSWR,
+	output SetCSWR);
 
 	/* Overlay control */
 	reg Overlay;
@@ -20,10 +22,10 @@ module CS(
 
 	/* I/O select signals */
 	assign IACKCS = A[23:20]==4'hF;
-	wire VIACS = A[23:20]==4'hE;
-	wire IWMCS = A[23:20]==4'hD;
-	wire SCCCS = A[23:20]==4'hB || A[23:20]==4'h9;
-	wire SCSICS = A[23:20]==4'h5;
+	assign VIACS = A[23:20]==4'hE;
+	assign IWMCS = A[23:20]==4'hD;
+	assign SCCCS = A[23:20]==4'hB || A[23:20]==4'h9;
+	assign SCSICS = A[23:20]==4'h5;
 
 	/* ROM select signals */
 	assign ROMCS4X = A[23:20]==4'h4;
@@ -46,13 +48,14 @@ module CS(
 		//A[15:12]==4'hD || // 4096 bytes video
 		//A[15:12]==4'hE || // 4096 bytes video
 		//A[15:12]==4'hF); // 3200 bytes video, 128 bytes RAM (system error space), 768 bytes sound
-	assign SndQoSCS = VidRAMCSWR64k && (
+	assign SndCSWR = VidRAMCSWR64k && (
 		((A[15:12]==4'hF) && (A[11:8]==4'hD || A[11:8]==4'hE || A[11:8]==4'hF)) ||
 		((A[15:12]==4'hA) && (A[11:8]==4'h1 || A[11:8]==4'h2 || A[11:8]==4'h3)));
-	assign IOQoSCS =  IWMCS || VIACS || SCCCS || SCSICS;
+
+	assign SetCSWR = A[23:20]==4'hF && !A[19] && !nWE;
 
 	/* Select signals - IOB domain */
-	assign IACKCS = A[23:20]==4'hF; // IACK
+	assign IACS = A[23:20]==4'hF; // IACK
 	assign IORealCS =
 		A[23:20]==4'hF || // IACK
 		A[23:20]==4'hE || // VIA
@@ -65,6 +68,6 @@ module CS(
 		A[23:20]==4'h7 || // empty (expansion RAM)
 		A[23:20]==4'h6 || // empty (expansion RAM)
 		A[23:20]==4'h5;   // SCSI
-	assign IOCS = IORealCS || VidRAMCSWR || IOQoSEN;
-	assign IOPWCS = VidRAMCSWR64k && !IOQoSEN; // Posted write to video RAM only when QoS disabled
+	assign IOCS = IORealCS || VidRAMCSWR || QoSEN;
+	assign IOPWCS = VidRAMCSWR64k && !QoSEN; // Posted write to video RAM only when QoS disabled
 endmodule

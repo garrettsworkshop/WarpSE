@@ -16,9 +16,9 @@ module WarpSE(
 	input nVPA_IOB,
 	output nVMA_IOB,
 	output nAS_IOB,
+	output RnW_IOB,
 	output nUDS_IOB,
 	output nLDS_IOB,
-	output RnW_IOB,
 	output nBR_IOB,
 	input nBG_IOB,
 	input nBERR_IOB,
@@ -55,53 +55,83 @@ module WarpSE(
 	wire nRESin = nRES;
 	wire nRESout;
 	assign nRES = !nRESout ? 1'b0 : 1'bZ;
+	
+	/* Power-on reset */
+	wire nPOR;
 
 	/* AS cycle detection */
-	wire BACT, BACTr;
-
-	/* MC68k clock enable */
-	wire MCKEi;
+	wire ASrf, BACT, BACTr;
 
 	/* Refresh request/ack signals */
 	wire RefReq, RefUrg;
 	
-	/* QoS enable */
-	wire IOQoSEN;
-	
 	/* FSB chip select signals */
-	wire IOCS, IORealCS, IOPWCS, IACKCS;
+	wire IOCS, IORealCS, IOPWCS;
 	wire ROMCS, ROMCS4X;
 	wire RAMCS, RAMCS0X;
-	wire IOQoSCS, SndQoSCS;
+	wire QoSEN;
+	wire IACKCS, VIACS, IWMCS, SCCCS, SCSICS, SndCSWR;
+	wire SetCSWR;
 	CS cs(
 		/* MC68HC000 interface */
-		A_FSB[23:08], FCLK, nRESin, nWE_FSB,
+		.A(A_FSB[23:08]),
+		.CLK(FCLK),
+		.nRES(nRESin),
+		.nWE(nWE_FSB),
 		/* /AS cycle detection */
-		BACT,
+		.BACT(BACT),
 		/* QoS enable input */
-		IOQoSEN,
+		.QoSEN(QoSEN),
 		/* Device select outputs */
-		IOCS, IORealCS, IOPWCS, IACKCS,
-		ROMCS, ROMCS4X,
-		RAMCS, RAMCS0X,
-		IOQoSCS, SndQoSCS);
+		.IOCS(IOCS),
+		.IORealCS(IORealCS),
+		.IOPWCS(IOPWCS),
+		.ROMCS(ROMCS),
+		.ROMCS4X(ROMCS4X),
+		.RAMCS(RAMCS),
+		.RAMCS0X(RAMCS0X),
+		/* Motherboard I/O device select outputs  */
+		.IACKCS(IACKCS),
+		.VIACS(VIACS),
+		.IWMCS(IWMCS),
+		.SCCCS(SCCCS),
+		.SCSICS(SCSICS),
+		.SndCSWR(SndCSWR),
+		/* Settings register select output */
+		.SetCSWR(SetCSWR));
 
 	wire RAMReady;
 	RAM ram(
 		/* MC68HC000 interface */
-		FCLK, A_FSB[21:1], nWE_FSB,
-		nAS_FSB, nLDS_FSB, nUDS_FSB, nDTACK_FSB,
+		.CLK(FCLK),
+		.A(A_FSB[21:1]),
+		.nWE(nWE_FSB),
+		.nAS(nAS_FSB),
+		.nLDS(nLDS_FSB),
+		.nUDS(nUDS_FSB),
+		.nDTACK(nDTACK_FSB),
 		/* AS cycle detection inputs */
-		BACT, BACTr,
+		.BACT(BACT),
+		.BACTr(BACTr),
 		/* RAM and ROM select inputs */
-		RAMCS, RAMCS0X, ROMCS, ROMCS4X,
+		.RAMCS(RAMCS),
+		.RAMCS0X(RAMCS0X),
+		.ROMCS(ROMCS),
+		.ROMCS4X(ROMCS4X),
 		/* RAM ready output */
-		RAMReady,
+		.RAMReady(RAMReady),
 		/* Refresh Counter Interface */
-		RefReq, RefUrg, 
+		.RefReqIn(RefReq),
+		.RefUrgIn(RefUrg), 
 		/* DRAM and NOR flash interface */
-		RA[11:0], nRAS, nCAS,
-		nRAMLWE, nRAMUWE, nOE, nROMOE, nROMWE);
+		.RA(RA[11:0]),
+		.nRAS(nRAS),
+		.nCAS(nCAS),
+		.nLWE(nRAMLWE),
+		.nUWE(nRAMUWE),
+		.nOE(nOE),
+		.nROMOE(nROMOE),
+		.nROMWE(nROMWE));
 
 	wire IONPReady, IOPWReady;
 	wire IOREQ, IORW;
@@ -109,72 +139,153 @@ module WarpSE(
 	wire ALE0S, ALE0M, ALE1;
 	assign nADoutLE0 = ~(ALE0S || ALE0M);
 	assign nADoutLE1 = ~ALE1;
-	wire IOACT, IODONE, IOBERR;
+	wire IOACT, IODONE;
 	IOBS iobs(
 		/* MC68HC000 interface */
-		FCLK, nWE_FSB, nAS_FSB, nLDS_FSB, nUDS_FSB,
+		.CLK(FCLK),
+		.nWE(nWE_FSB),
+		.nAS(nAS_FSB),
+		.nLDS(nLDS_FSB),
+		.nUDS(nUDS_FSB),
 		/* AS cycle detection */
-		BACT,
+		.BACT(BACT), .BACTr(BACTr),
 		/* Select signals */
-		IOCS, IORealCS, IOPWCS,
+		.IOCS(IOCS),
+		.IORealCS(IORealCS),
+		.IOPWCS(IOPWCS),
 		/* FSB cycle termination outputs */
-		IONPReady, IOPWReady, nBERR_FSB,
+		.IONPReady(IONPReady),
+		.IOPWReady(IOPWReady),
+		.nBERR_FSB(nBERR_FSB),
 		/* Read data OE control */
-		nDinOE,
+		.nDinOE(nDinOE),
 		/* IOB Master Controller Interface */
-		IOREQ, IORW,
-		IOACT, IODONE, IOBERR,
+		.IOREQ(IOREQ),
+		.IORW(IORW),
+		.IOACT(IOACT),
+		.IODONEin(IODONE),
+		.nBERR_IOB(!nBERR_IOB),
 		/* FIFO primary level control */
-		ALE0S, IOL0, IOU0,
+		.ALE0(ALE0S),
+		.IOL0(IOL0),
+		.IOU0(IOU0),
 		/* FIFO secondary level control */
-		ALE1);
-	
+		.ALE1(ALE1));
+
 	wire AoutOE;
 	assign nAoutOE = !AoutOE;
-	wire nAS_IOBout, nLDS_IOBout, nUDS_IOBout, RnW_IOBout, nVMA_IOBout;
+	wire nAS_IOBout, RnW_IOBout, nLDS_IOBout, nUDS_IOBout, nVMA_IOBout;
 	assign nAS_IOB = AoutOE ? nAS_IOBout : 1'bZ;
+	assign RnW_IOB = AoutOE ? RnW_IOBout : 1'bZ;
 	assign nLDS_IOB = AoutOE ? nLDS_IOBout : 1'bZ;
 	assign nUDS_IOB = AoutOE ? nUDS_IOBout : 1'bZ;
-	assign RnW_IOB = AoutOE ? RnW_IOBout : 1'bZ;
 	assign nVMA_IOB = AoutOE ? nVMA_IOBout : 1'bZ;
 	IOBM iobm(
 		/* PDS interface */
-		C16M, C8M, E,
-		nAS_IOBout, nLDS_IOBout, nUDS_IOBout, RnW_IOBout, nVMA_IOBout,
-		nDTACK_IOB, nVPA_IOB, nBERR_IOB, nRESin,
+		.C16M(C16M),
+		.C8M(C8M),
+		.E(E),
+		.nAS(nAS_IOBout),
+		.RnW(RnW_IOBout),
+		.nLDS(nLDS_IOBout),
+		.nUDS(nUDS_IOBout),
+		.nVMA(nVMA_IOBout),
+		.nDTACK(nDTACK_IOB),
+		.nVPA(nVPA_IOB),
+		.nBERR(nBERR_IOB),
+		.nRES(nRESin),
 		/* PDS address and data latch control */
-		AoutOE, nDoutOE, ALE0M, nDinLE,
+		.AoutOE(AoutOE),
+		.nDoutOE(nDoutOE),
+		.ALE0(ALE0M),
+		.nDinLE(nDinLE),
 		/* IO bus slave port interface */
-		IOREQ, IORW, IOL0, IOU0,
-		IOACT, IODONE, IOBERR);
+		.IOREQ(IOREQ),
+		.IORW(IORW),
+		.IOLDS(IOL0),
+		.IOUDS(IOU0),
+		.IOACT(IOACT),
+		.IODONE(IODONE));
 
+	wire SlowIACK, SlowVIA, SlowIWM, SlowSCC, SlowSCSI, SlowSnd, SlowClockGate;
+	wire [3:0] SlowInterval;
+	/*SET set(
+		.CLK(FCLK),
+		.nPOR(nPOR),
+		.BACT(BACT), 
+		.A(A_FSB[11:1]), 
+		.SetCSWR(SetCSWR),
+		.SlowIACK(SlowIACK),
+		.SlowVIA(SlowVIA),
+		.SlowIWM(SlowIWM),
+		.SlowSCC(SlowSCC),
+		.SlowSCSI(SlowSCSI),
+		.SlowSnd(SlowSnd),
+		.SlowClockGate(SlowClockGate),
+		.SlowInterval(SlowInterval));*/
+
+	wire nBR_IOBout;
+	assign nBR_IOB = nBR_IOBout ? 1'bZ : 1'b0;
 	CNT cnt(
-		/* FSB clock and E clock inputs */
-		FCLK, C8M, E,
+		/* FSB clock, 7.8336 MHz clock, and E clock inputs */
+		.CLK(FCLK),
+		.C8M(C8M),
+		.E(E),
+		/* Power-on reset */
+		.nPOR(nPOR),
 		/* Refresh request */
-		RefReq, RefUrg,
+		.RefReq(RefReq),
+		.RefUrg(RefUrg),
 		/* Reset, button */
-		nRESout, nRESin, nIPL2, 
+		.nRESout(nRESout),
+		.nRESin(nRESin),
+		.nIPL2(nIPL2),
 		/* Mac PDS bus master control outputs */
-		AoutOE, nBR_IOB,
-		/* QoS control */
-		BACT, BACTr,
-		IOQoSCS, SndQoSCS, IACKCS,
-		IOQoSEN, MCKEi);
+		.AoutOE(AoutOE),
+		.nBR_IOB(nBR_IOBout),
+		/* QoS select inputs */
+		.nAS(nAS_FSB),
+		.ASrf(ASrf),
+		.BACT(BACT),
+		.IACKCS(IACKCS),
+		.VIACS(VIACS),
+		.IWMCS(IWMCS),
+		.SCCCS(SCCCS),
+		.SCSICS(SCSICS),
+		.SndCSWR(SndCSWR),
+		/* QoS settings inputs */
+		.SlowIACK(SlowIACK),
+		.SlowVIA(SlowVIA),
+		.SlowIWM(SlowIWM),
+		.SlowSCC(SlowSCC),
+		.SlowSCSI(SlowSCSI),
+		.SlowSnd(SlowSnd),
+		.SlowClockGate(SlowClockGate),
+		.SlowInterval(SlowInterval),
+		/* QoS outputs */
+		.QoSEN(QoSEN),
+		.MCKE(MCKE));
 	
 	FSB fsb(
 		/* MC68HC000 interface */
-		FCLK, nAS_FSB, nDTACK_FSB, nVPA_FSB,
-		/* MC68HC000 clock enable */
-		MCKEi, MCKE,
+		.FCLK(FCLK),
+		.nAS(nAS_FSB),
+		.nDTACK(nDTACK_FSB),
+		.nVPA(nVPA_FSB),
 		/* FSB cycle detection */
-		BACT, BACTr,
+		.ASrf(ASrf),
+		.BACT(BACT),
+		.BACTr(BACTr),
 		/* Ready inputs */
-		ROMCS4X,
-		RAMCS0X, RAMReady,
-		IOPWCS, IOPWReady, IONPReady,
-		IOQoSEN,
+		.ROMCS(ROMCS4X),
+		.RAMCS(RAMCS0X),
+		.RAMReady(RAMReady),
+		.IOPWCS(IOPWCS),
+		.IOPWReady(IOPWReady),
+		.IONPReady(IONPReady),
+		.QoSEN(QoSEN),
 		/* Interrupt acknowledge select */
-		IACKCS);
+		.IACKCS(IACKCS));
+
 
 endmodule

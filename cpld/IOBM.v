@@ -1,13 +1,13 @@
 module IOBM(
 	/* PDS interface */
 	input C16M, input C8M, input E,
-	output reg nAS, output reg nLDS, output reg nUDS, output reg RnW, output reg nVMA,
+	output reg nAS, output reg RnW, output reg nLDS, output reg nUDS, output reg nVMA,
 	input nDTACK, input nVPA, input nBERR, input nRES,
 	/* PDS address and data latch control */
 	input AoutOE, output nDoutOE, output reg ALE0, output reg nDinLE,
 	/* IO bus slave port interface */
 	input IOREQ, input IORW, input IOLDS, input IOUDS,
-	output reg IOACT, output reg IODONE, output reg IOBERR);
+	output reg IOACT, output IODONE);
 
 	/* C8M clock registration */
 	reg C8Mr; always @(posedge C16M) C8Mr <= C8M;
@@ -31,25 +31,27 @@ module IOBM(
 
 	/* ETACK and VMA generation */
 	wire ETACK = (ES==8) && !nVMA;
-	always @(posedge C8M) begin
-		if ((ES==5) && IOACT && VPAr) nVMA <= 0;
-		else if(ES==0) nVMA <= 1;
+	always @(negedge C8M) begin
+		if ((ES==3) && IOACT && VPAr) nVMA <= 0;
+		else if (ES==0) nVMA <= 1;
 	end
 	
-	/* DTACK and BERR synchronization */
-	always @(negedge C8M, posedge nAS) begin
-		if (nAS) begin
-			IODONE <= 0;
-			IOBERR <= 0;
-		end else begin
-			IODONE <= (!nDTACK || ETACK || !nRES);
-			IOBERR <= !nBERR;
-		end
-	end
-
 	/* I/O bus state */
 	reg [2:0] IOS = 0;
 	reg IOS0;
+	
+	/* IODONE DTACK/"ETACK"/BERR/reset synchronization */
+	reg IODONEr;
+	always @(posedge C16M) begin
+		if ((IOS==3 || IOS==5) && !C8Mr) begin
+			IODONEr <= !nDTACK || ETACK || !nBERR || !nRES;
+		end else if (IOS==0) IODONEr <= 0;
+	end
+
+	/* IODONE output */
+	assign IODONE = IODONEr;
+
+	/* I/O bus control */
 	always @(posedge C16M) case (IOS[2:0])
 		3'h0: begin
 			if (IOREQr && !C8Mr && AoutOE) begin // "IOS1"
@@ -77,7 +79,7 @@ module IOBM(
 			IOACT <= 1;
 			ALE0 <= 1;
 		end 3'h5: begin
-			if (!C8Mr && (IODONE || IOBERR)) begin
+			if (!C8Mr && IODONEr) begin
 				IOS <= 6;
 				IOACT <= 0;
 			end else begin
@@ -103,10 +105,11 @@ module IOBM(
 	always @(negedge C16M) begin nDinLE = IOS==4 || IOS==5; end
 	reg DoutOE = 0;
 	always @(posedge C16M) begin
-		DoutOE <= (IOS==0 && IOREQr && !IORW && !C8Mr) ||
-				  (DoutOE && (IOS==2 || IOS==3 || IOS==4 || IOS==5));
+		DoutOE <= ((IOS==0 && IOREQr && !IORW && !C8Mr) ||
+				   (DoutOE && (IOS==2 || IOS==3 || IOS==4 || IOS==5)));
 	end
-	assign nDoutOE = !(AoutOE && (DoutOE || (IOS0 && !IOREQr)));
+	//assign nDoutOE = !(AoutOE && (DoutOE || (IOS0 && !IOREQr)));
+	assign nDoutOE = !(AoutOE && DoutOE);
 
 	/* AS, DS, RW control */
 	always @(negedge C16M) begin
@@ -118,11 +121,11 @@ module IOBM(
 			(IOS==5));
 		RnW <= !(
 			(IOS==0 && IOREQr && !IORW && !C8Mr) || 
-			(!IORW && IOS==2) || 
-			(!IORW && IOS==3) || 
-			(!IORW && IOS==4) || 
-			(!IORW && IOS==5) || 
-			(!IORW && IOS==6));
+			(!RnW && IOS==2) || 
+			(!RnW && IOS==3) || 
+			(!RnW && IOS==4) || 
+			(!RnW && IOS==5) || 
+			(!RnW && IOS==6));
 		nLDS <= !(
 			(IOS==0 && IOREQr && IORW && IOLDS && !C8Mr) ||
 			(IOS==2 && IOLDS) ||

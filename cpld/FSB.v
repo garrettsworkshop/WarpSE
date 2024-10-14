@@ -1,37 +1,32 @@
 module FSB(
 	/* MC68HC000 interface */
 	input FCLK, input nAS, output reg nDTACK, output reg nVPA,
-	/* MC68HC000 clock enable */
-	input MCKEi, output reg MCKE,
 	/* AS cycle detection */
-	output BACT, output reg BACTr,
+	output reg ASrf, output BACT, output reg BACTr,
 	/* Ready inputs */
 	input ROMCS,
 	input RAMCS, input RAMReady,
 	input IOPWCS, input IOPWReady, input IONPReady,
-	input IOQoSEN,
+	input QoSEN,
 	/* Interrupt acknowledge select */
 	input IACKCS);
 
-	/* MC68k clock enable */
-	always @(negedge FCLK) MCKE <= MCKEi;
-
 	/* AS cycle detection */
-	reg ASrf = 0;
 	always @(negedge FCLK) begin ASrf <= !nAS; end
-	assign BACTu = !nAS || ASrf;
-	assign BACT = BACTu && MCKE;
+	assign BACT = !nAS || ASrf; // BACT - bus active
 	always @(posedge FCLK) BACTr <= BACT;
 
 	/* DTACK/VPA control */
-	wire Ready = (RAMCS && !IOQoSEN && RAMReady && !IOPWCS) ||
-                 (RAMCS && !IOQoSEN && RAMReady &&  IOPWCS && IOPWReady) ||
-                 (ROMCS && !IOQoSEN) ||
-                 (IONPReady);
-	always @(posedge FCLK) nDTACK <= !(Ready && BACT && !IACKCS);
+	wire Ready = (RAMCS && !QoSEN && RAMReady && !IOPWCS) ||
+                 (RAMCS && !QoSEN && RAMReady &&  IOPWCS && IOPWReady) ||
+                 (ROMCS && !QoSEN) || (IONPReady);
+	always @(posedge FCLK, posedge nAS) begin
+		if (nAS) nDTACK <= 1;
+		else nDTACK <= !(Ready && !IACKCS);
+	end
 	always @(posedge FCLK, posedge nAS) begin
 		if (nAS) nVPA <= 1;
-		else nVPA <= !(Ready && BACT && IACKCS);
+		else nVPA <= !(Ready && IACKCS);
 	end
 	
 endmodule
