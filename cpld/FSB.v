@@ -22,11 +22,11 @@ module FSB(
                  (ROMCS && !QoSEN) || (IONPReady);
 	always @(posedge FCLK, posedge nAS) begin
 		if (nAS) nDTACK <= 1;
-		else nDTACK <= !(Ready && !IACKCS);
+		else if (!IACKCS && Ready) nDTACK <= 0;
 	end
 	always @(posedge FCLK, posedge nAS) begin
 		if (nAS) nVPA <= 1;
-		else nVPA <= !(Ready && IACKCS);
+		else if (IACKCS && IOPWReady) nVPA <= 0;
 	end
 	
 endmodule
