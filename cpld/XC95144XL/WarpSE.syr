@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.11 secs
+Total CPU time to Xst completion: 0.10 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.11 secs
+Total CPU time to Xst completion: 0.10 secs
  
 --> Reading design: WarpSE.prj
 
@@ -141,7 +141,6 @@ Module <FSB> is correct for synthesis.
 =========================================================================
 
 Performing bidirectional port resolution...
-INFO:Xst:2679 - Register <QoSEN> in unit <CNT> has a constant value of 1 during circuit operation. The register is replaced by logic.
 
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
@@ -243,31 +242,36 @@ Unit <IOBM> synthesized.
 
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
-WARNING:Xst:646 - Signal <nRESr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <VIACSr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <SndCSWRr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <SCSICSr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <SCCCSr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <IWMCSr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <IACK1CSr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:646 - Signal <IACK0CSr> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
     Found 1-bit register for signal <nPOR>.
+    Found 1-bit register for signal <QoSEN>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <MCKE>.
+    Found 4-bit subtractor for signal <$sub0000> created at line 100.
     Found 4-bit register for signal <C8Mr>.
+    Found 1-bit register for signal <ClockGateEN>.
     Found 2-bit register for signal <Er>.
+    Found 1-bit register for signal <IACK0CSr>.
+    Found 1-bit register for signal <IACK1CSr>.
     Found 2-bit register for signal <IS>.
+    Found 1-bit register for signal <IWMCSr>.
     Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTick>.
+    Found 1-bit register for signal <nRESr>.
+    Found 4-bit register for signal <QS>.
+    Found 1-bit register for signal <SCCCSr>.
+    Found 1-bit register for signal <SCSICSr>.
+    Found 1-bit register for signal <SndCSWRr>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTick>.
+    Found 1-bit register for signal <VIACSr>.
     Summary:
 	inferred   2 Counter(s).
-	inferred   8 D-type flip-flop(s).
+	inferred  17 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
 Unit <CNT> synthesized.
 
 
@@ -305,11 +309,13 @@ HDL Synthesis Report
 Macro Statistics
 # ROMs                                                 : 1
  8x3-bit ROM                                           : 1
+# Adders/Subtractors                                   : 1
+ 4-bit subtractor                                      : 1
 # Counters                                             : 3
  12-bit up counter                                     : 1
  4-bit up counter                                      : 2
-# Registers                                            : 59
- 1-bit register                                        : 55
+# Registers                                            : 73
+ 1-bit register                                        : 69
  2-bit register                                        : 2
  3-bit register                                        : 1
  4-bit register                                        : 1
@@ -345,7 +351,6 @@ Optimizing FSM <iobs/TS/FSM> on signal <TS[1:2]> with johnson encoding.
  10    | 11
  01    | 10
 -------------------
-WARNING:Xst:1898 - Due to constant pushing, FF/Latch <0> is unconnected in block <RAMReadyReg>.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -354,11 +359,13 @@ Macro Statistics
 # FSMs                                                 : 2
 # ROMs                                                 : 1
  8x3-bit ROM                                           : 1
+# Adders/Subtractors                                   : 1
+ 4-bit subtractor                                      : 1
 # Counters                                             : 3
  12-bit up counter                                     : 1
  4-bit up counter                                      : 2
-# Registers                                            : 43
- Flip-Flops                                            : 43
+# Registers                                            : 52
+ Flip-Flops                                            : 52
 
 =========================================================================
 
@@ -393,11 +400,10 @@ Optimizing unit <IOBM> ...
 Optimizing unit <CNT> ...
   implementation constraint: INIT=r	 : IS_0
   implementation constraint: INIT=r	 : IS_1
+  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
-  implementation constraint: INIT=r	 : Timer_2
-WARNING:Xst:2677 - Node <RAMReadyReg> of sequential type is unconnected in block <ram>.
 
 =========================================================================
 *                           Partition Report                            *
@@ -429,22 +435,23 @@ Design Statistics
 # IOs                              : 80
 
 Cell Usage :
-# BELS                             : 539
-#      AND2                        : 168
-#      AND3                        : 21
-#      AND4                        : 8
-#      AND5                        : 3
-#      AND8                        : 1
+# BELS                             : 685
+#      AND2                        : 214
+#      AND3                        : 26
+#      AND4                        : 13
+#      AND5                        : 4
+#      AND6                        : 1
+#      AND8                        : 2
 #      GND                         : 7
-#      INV                         : 215
-#      OR2                         : 85
-#      OR3                         : 8
+#      INV                         : 272
+#      OR2                         : 110
+#      OR3                         : 10
 #      OR4                         : 4
 #      OR5                         : 1
-#      XOR2                        : 18
-# FlipFlops/Latches                : 94
-#      FD                          : 58
-#      FDCE                        : 31
+#      XOR2                        : 21
+# FlipFlops/Latches                : 109
+#      FD                          : 67
+#      FDCE                        : 37
 #      FDCP                        : 1
 #      FDP                         : 2
 #      FDPE                        : 2
@@ -457,13 +464,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.96 secs
+Total CPU time to Xst completion: 4.94 secs
  
 --> 
 
-Total memory usage is 260640 kilobytes
+Total memory usage is 263072 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   15 (   0 filtered)
-Number of infos    :    1 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
 
