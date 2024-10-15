@@ -92,38 +92,18 @@ module CNT(
 	reg [3:0] QS;
 	always @(posedge CLK) begin
 		if (!nRESr) QS <= 2;
-		else if (IACK0CSr) QS <= 15;
-		else if (VIACSr) QS[1] <= 1;
-		else if (IWMCSr) QS[1] <= 1;
-		else if (SndCSWRr) QS <= 15;
 		else if (QS==0) QS <= 0;
 		else if (TimerTick) QS <= QS-1;
 	end
 	
-	/*reg [1:0] QFS;
-	always @(posedge CLK) begin
-		if (!nRESr) QFS <= 0;
-		else if (IACK1CSr) QFS <= 2;
-		else if (IACK0CSr) QFS <= 0;
-		else if (VIACSr) QFS <= 0;
-		else if (SCCCSr) QFS <= 2;
-		else if (QFS==0) QFS <= 0;
-		else if (TimerTick) QFS <= QFS-1;
-	end*/
-	
-	reg ClockGateEN;
-	always @(posedge CLK) begin
-		if (!nRESr || IACK1CSr || VIACSr || IWMCSr || SCCCSr || SCSICSr) ClockGateEN <= 0;
-		else if (IACK0CSr || SndCSWRr) ClockGateEN <= 1;
-	end
+	wire ClockGateEN = 0;
 
 	/* QoS enable control */
 	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;// && QFS==0;
 
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
-		if (!nAS) MCKE <= 1;
-		else MCKE <= !(QoSEN && !ASrf && !C8MFall && ClockGateEN);
+		MCKE <= 1;
 	end
 	
 	/* Long timer counts from 0 to 4095.
