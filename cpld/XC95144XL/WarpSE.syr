@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.10 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.08 secs
+Total CPU time to Xst completion: 0.10 secs
  
 --> Reading design: WarpSE.prj
 
@@ -144,6 +144,7 @@ Performing bidirectional port resolution...
 
 Synthesizing Unit <CS>.
     Related source file is "../CS.v".
+WARNING:Xst:647 - Input <A<7:3>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit register for signal <Overlay>.
 Unit <CS> synthesized.
 
@@ -241,14 +242,6 @@ Unit <IOBM> synthesized.
 
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
-WARNING:Xst:647 - Input <SlowSCC> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SlowInterval> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SlowIACK> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SlowIWM> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SlowSnd> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SlowSCSI> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SlowVIA> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <SlowClockGate> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
@@ -257,11 +250,12 @@ WARNING:Xst:647 - Input <SlowClockGate> is never used. This port will be preserv
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <MCKE>.
-    Found 4-bit subtractor for signal <$sub0000> created at line 99.
+    Found 4-bit subtractor for signal <$sub0000> created at line 100.
     Found 4-bit register for signal <C8Mr>.
     Found 1-bit register for signal <ClockGateEN>.
     Found 2-bit register for signal <Er>.
-    Found 1-bit register for signal <IACKCSr>.
+    Found 1-bit register for signal <IACK0CSr>.
+    Found 1-bit register for signal <IACK1CSr>.
     Found 2-bit register for signal <IS>.
     Found 1-bit register for signal <IWMCSr>.
     Found 12-bit up counter for signal <LTimer>.
@@ -276,7 +270,7 @@ WARNING:Xst:647 - Input <SlowClockGate> is never used. This port will be preserv
     Found 1-bit register for signal <VIACSr>.
     Summary:
 	inferred   2 Counter(s).
-	inferred  16 D-type flip-flop(s).
+	inferred  17 D-type flip-flop(s).
 	inferred   1 Adder/Subtractor(s).
 Unit <CNT> synthesized.
 
@@ -297,15 +291,6 @@ Synthesizing Unit <WarpSE>.
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <DBG> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:646 - Signal <nPOR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
-WARNING:Xst:653 - Signal <SlowVIA> is used but never assigned. This sourceless signal will be automatically connected to value 0.
-WARNING:Xst:653 - Signal <SlowSnd> is used but never assigned. This sourceless signal will be automatically connected to value 0.
-WARNING:Xst:653 - Signal <SlowSCSI> is used but never assigned. This sourceless signal will be automatically connected to value 0.
-WARNING:Xst:653 - Signal <SlowSCC> is used but never assigned. This sourceless signal will be automatically connected to value 0.
-WARNING:Xst:653 - Signal <SlowInterval> is used but never assigned. This sourceless signal will be automatically connected to value 0000.
-WARNING:Xst:653 - Signal <SlowIWM> is used but never assigned. This sourceless signal will be automatically connected to value 0.
-WARNING:Xst:653 - Signal <SlowIACK> is used but never assigned. This sourceless signal will be automatically connected to value 0.
-WARNING:Xst:653 - Signal <SlowClockGate> is used but never assigned. This sourceless signal will be automatically connected to value 0.
-WARNING:Xst:646 - Signal <SetCSWR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit tristate buffer for signal <RnW_IOB>.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nBR_IOB>.
@@ -329,8 +314,8 @@ Macro Statistics
 # Counters                                             : 3
  12-bit up counter                                     : 1
  4-bit up counter                                      : 2
-# Registers                                            : 72
- 1-bit register                                        : 68
+# Registers                                            : 73
+ 1-bit register                                        : 69
  2-bit register                                        : 2
  3-bit register                                        : 1
  4-bit register                                        : 1
@@ -379,8 +364,8 @@ Macro Statistics
 # Counters                                             : 3
  12-bit up counter                                     : 1
  4-bit up counter                                      : 2
-# Registers                                            : 51
- Flip-Flops                                            : 51
+# Registers                                            : 52
+ Flip-Flops                                            : 52
 
 =========================================================================
 
@@ -450,25 +435,26 @@ Design Statistics
 # IOs                              : 80
 
 Cell Usage :
-# BELS                             : 683
-#      AND2                        : 211
+# BELS                             : 685
+#      AND2                        : 214
 #      AND3                        : 26
 #      AND4                        : 13
-#      AND5                        : 3
-#      AND6                        : 2
+#      AND5                        : 4
+#      AND6                        : 1
 #      AND8                        : 2
-#      GND                         : 6
-#      INV                         : 276
-#      OR2                         : 108
+#      GND                         : 7
+#      INV                         : 272
+#      OR2                         : 110
 #      OR3                         : 10
 #      OR4                         : 4
 #      OR5                         : 1
 #      XOR2                        : 21
-# FlipFlops/Latches                : 108
-#      FD                          : 66
+# FlipFlops/Latches                : 109
+#      FD                          : 67
 #      FDCE                        : 37
 #      FDCP                        : 1
-#      FDP                         : 4
+#      FDP                         : 2
+#      FDPE                        : 2
 # IO Buffers                       : 73
 #      IBUF                        : 35
 #      IOBUFE                      : 1
@@ -478,13 +464,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.93 secs
+Total CPU time to Xst completion: 4.94 secs
  
 --> 
 
-Total memory usage is 262048 kilobytes
+Total memory usage is 263072 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   21 (   0 filtered)
+Number of warnings :    5 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

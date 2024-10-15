@@ -1,6 +1,6 @@
 module CS(
 	/* MC68HC000 interface */
-	input [23:08] A, input CLK, input nRES, input nWE, 
+	input [23:1] A, input CLK, input nRES, input nWE, 
 	/* AS cycle detection */
 	input BACT,
 	/* QoS enable input */
@@ -9,7 +9,8 @@ module CS(
 	output IOCS, output IORealCS, output IOPWCS, output IACS,
 	output ROMCS, output ROMCS4X,
 	output RAMCS, output RAMCS0X,
-	output IACKCS, output VIACS, output IWMCS, 
+	output IACKCS, output IACK0CS, output IACK1CS,
+	output VIACS, output IWMCS, 
 	output SCCCS, output SCSICS, output SndCSWR,
 	output SetCSWR);
 
@@ -22,6 +23,8 @@ module CS(
 
 	/* I/O select signals */
 	assign IACKCS = A[23:20]==4'hF;
+	assign IACK0CS = IACKCS && A[1];
+	assign IACK1CS = IACKCS && A[2];
 	assign VIACS = A[23:20]==4'hE;
 	assign IWMCS = A[23:20]==4'hD;
 	assign SCCCS = A[23:20]==4'hB || A[23:20]==4'h9;
@@ -69,5 +72,5 @@ module CS(
 		A[23:20]==4'h6 || // empty (expansion RAM)
 		A[23:20]==4'h5;   // SCSI
 	assign IOCS = IORealCS || VidRAMCSWR || QoSEN;
-	assign IOPWCS = VidRAMCSWR64k && !QoSEN; // Posted write to video RAM only when QoS disabled
+	assign IOPWCS = IACKCS || (VidRAMCSWR64k && !QoSEN); // Posted write to video RAM only when QoS disabled
 endmodule

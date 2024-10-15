@@ -70,11 +70,12 @@ module WarpSE(
 	wire ROMCS, ROMCS4X;
 	wire RAMCS, RAMCS0X;
 	wire QoSEN;
-	wire IACKCS, VIACS, IWMCS, SCCCS, SCSICS, SndCSWR;
-	wire SetCSWR;
+	wire IACKCS, IACK0CS, IACK1CS;
+	wire VIACS, IWMCS, SCCCS, SCSICS, SndCSWR;
+	//wire SetCSWR;
 	CS cs(
 		/* MC68HC000 interface */
-		.A(A_FSB[23:08]),
+		.A(A_FSB[23:1]),
 		.CLK(FCLK),
 		.nRES(nRESin),
 		.nWE(nWE_FSB),
@@ -92,13 +93,15 @@ module WarpSE(
 		.RAMCS0X(RAMCS0X),
 		/* Motherboard I/O device select outputs  */
 		.IACKCS(IACKCS),
+		.IACK0CS(IACK0CS),
+		.IACK1CS(IACK1CS),
 		.VIACS(VIACS),
 		.IWMCS(IWMCS),
 		.SCCCS(SCCCS),
 		.SCSICS(SCSICS),
-		.SndCSWR(SndCSWR),
+		.SndCSWR(SndCSWR)/*,*/
 		/* Settings register select output */
-		.SetCSWR(SetCSWR));
+		/*.SetCSWR(SetCSWR)*/);
 
 	wire RAMReady;
 	RAM ram(
@@ -207,8 +210,8 @@ module WarpSE(
 		.IOACT(IOACT),
 		.IODONE(IODONE));
 
-	wire SlowIACK, SlowVIA, SlowIWM, SlowSCC, SlowSCSI, SlowSnd, SlowClockGate;
-	wire [3:0] SlowInterval;
+	//wire SlowIACK, SlowVIA, SlowIWM, SlowSCC, SlowSCSI, SlowSnd, SlowClockGate;
+	//wire [3:0] SlowInterval;
 	/*SET set(
 		.CLK(FCLK),
 		.nPOR(nPOR),
@@ -247,21 +250,22 @@ module WarpSE(
 		.nAS(nAS_FSB),
 		.ASrf(ASrf),
 		.BACT(BACT),
-		.IACKCS(IACKCS),
+		.IACK0CS(IACK0CS),
+		.IACK1CS(IACK1CS),
 		.VIACS(VIACS),
 		.IWMCS(IWMCS),
 		.SCCCS(SCCCS),
 		.SCSICS(SCSICS),
 		.SndCSWR(SndCSWR),
 		/* QoS settings inputs */
-		.SlowIACK(SlowIACK),
+		/*.SlowIACK(SlowIACK),
 		.SlowVIA(SlowVIA),
 		.SlowIWM(SlowIWM),
 		.SlowSCC(SlowSCC),
 		.SlowSCSI(SlowSCSI),
 		.SlowSnd(SlowSnd),
 		.SlowClockGate(SlowClockGate),
-		.SlowInterval(SlowInterval),
+		.SlowInterval(SlowInterval),*/
 		/* QoS outputs */
 		.QoSEN(QoSEN),
 		.MCKE(MCKE));
