@@ -83,27 +83,16 @@ module CNT(
 	always @(posedge CLK) SCCCSr <= BACT && SCCCS;
 	always @(posedge CLK) SCSICSr <= BACT && SCSICS;
 	always @(posedge CLK) SndCSWRr <= BACT && SndCSWR;
-
-	/* QoS timer
-	 * In the absence of a QoS trigger, QS==0.
-	 * When Qos triggered, QS is set to 1 and counts 1, 2, 3, 0.
-	 * While QS!=0, QoS is enabled.
-	 * QoS enable period is 196.588 us - 210.630 us */
-	reg [3:0] QS;
-	always @(posedge CLK) begin
-		if (!nRESr) QS <= 2;
-		else if (QS==0) QS <= 0;
-		else if (TimerTick) QS <= QS-1;
-	end
 	
-	wire ClockGateEN = 0;
+	wire ClockGateEN = 1;
 
 	/* QoS enable control */
-	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;// && QFS==0;
+	always @(posedge CLK) if (!BACT) QoSEN <= 1;
 
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
-		MCKE <= 1;
+		if (!nAS) MCKE <= 1;
+		else MCKE <= !(QoSEN && !ASrf && !C8MFall && ClockGateEN);
 	end
 	
 	/* Long timer counts from 0 to 4095.
