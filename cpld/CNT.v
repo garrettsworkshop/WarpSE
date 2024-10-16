@@ -79,6 +79,8 @@ module CNT(
 	always @(posedge CLK) begin
 		if (!nRESin) QS <= 3;
 		else if (BACT && IACK0CS) QS <= 15;
+		else if (BACT && IACK1CS) QS <= 15;
+		else if (BACT && SCCCS)   QS <= 15;
 		else if (BACT && VIACS)   QS[1] <= 1;
 		else if (BACT && IWMCS)   QS[1] <= 1;
 		else if (SndCSWRr)        QS <= 15;
