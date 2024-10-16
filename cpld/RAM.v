@@ -12,7 +12,7 @@ module RAM(
 	input RefReqIn, input RefUrgIn,
 	/* DRAM interface */
 	output [11:0] RA, output nRAS, output reg nCAS,
-	output nLWE, output nUWE, output reg nOE,
+	output nLWE, output nUWE, output nOE,
 	/* NOR flash interface */
 	output nROMOE, output nROMWE);
 
@@ -34,9 +34,10 @@ module RAM(
 	wire RefUrg = RefUrgIn && !RefDone;
 	
 	/* RAM ready control */
-	reg RAMReadyReg;
-	assign RAMReady = RAMReadyReg;//!RS[2];
-
+	//reg RAMReadyReg;
+	//assign RAMReady = RAMReadyReg;
+	assign RAMReady = !RS[2];
+	
 	/* RAM /RAS control */
 	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrf);
 	
@@ -45,10 +46,12 @@ module RAM(
 	assign nUWE = !(!nUDS && RASEL && !nWE);
 	
 	/* RAM /OE control */
+	assign nOE = 0;
+	/*reg nOEr; assign nOE = nOEr;
 	always @(posedge CLK, posedge nAS) begin
-		if (nAS) nOE <= 1;
-		else nOE <= !(RAMCS && nWE);
-	end
+		if (nAS) nOEr <= 1;
+		else nOEr <= !(RAMCS && nWE);
+	end*/
 
 	/* ROM /OE and /WE control */
 	assign nROMOE = !(!nAS && ROMCS   &&  nWE);
@@ -88,31 +91,31 @@ module RAM(
 				RASEL <= BACT && RAMCS;
 				RefCAS <= RS0toRef;
 				RASEN <= !RS0toRef;
-				RAMReadyReg <= !RS0toRef;
+				//RAMReadyReg <= !RS0toRef;
 			end 1: begin // RAM access
 				if (!nDTACK || !BACT) RS <= 2; // Cycle ending
 				else RS <= 1; // Cycle not ending yet
 				RASEL <= 1;
 				RefCAS <= 0;
 				RASEN <= nDTACK;
-				RAMReadyReg <= 1;
+				//RAMReadyReg <= 1;
 			end 2: begin // finish RAM access
 				RS <= 3;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReadyReg <= 1;
+				//RAMReadyReg <= 1;
 			end 3: begin  //AS cycle complete
 				if (RefUrg)  begin // Refresh RAS
 					RS <= 4;
 					RefCAS <= 1;
 					RASEN <= 0;
-					RAMReadyReg <= 0;
+					//RAMReadyReg <= 0;
 				end else begin // Cycle ended so go back to idle/ready
 					RS <= 0;
 					RefCAS <= 0;
 					RASEN <= 1;
-					RAMReadyReg <= 1;
+					//RAMReadyReg <= 1;
 				end
 				RASEL <= 0;
 			end 4: begin // Refresh RAS I
@@ -120,25 +123,25 @@ module RAM(
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReadyReg <= 0;
+				//RAMReadyReg <= 0;
 			end 5: begin // Refresh RAS II
 				RS <= 6;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReadyReg <= 0;
+				//RAMReadyReg <= 0;
 			end 6: begin // Refresh precharge I
 				RS <= 7;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				RAMReadyReg <= 0;
+				//RAMReadyReg <= 0;
 			end 7: begin // Reenable RAM and go to idle/ready
 				RS <= 0;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 1;
-				RAMReadyReg <= 1;
+				//RAMReadyReg <= 1;
 			end
 		endcase
 	end

@@ -74,48 +74,31 @@ module CNT(
 
 	/* QoS select latch */
 	reg SndCSWRr; always @(posedge CLK) SndCSWRr <= BACT && SndCSWR;
-	reg nRESr; always @(posedge CLK) nRESr <= nRESin;
 
 	reg [3:0] QS;
 	always @(posedge CLK) begin
-		if (!nRESr) QS <= 3;
-		else if (BACT && BACTr) begin
-			if (SndCSWRr)     QS <= 15;
-			else if (IACK0CS) QS <= 15;
-			else if (VIACS)   QS[1] <= 1;
-			else if (IWMCS)   QS[1] <= 1;
-		end else if (QS!=0 && TimerTick) QS <= QS-1;
-	end
-	
-	reg [1:0] QFS;
-	always @(posedge CLK) begin
-		if (!nRESr) QFS <= 0;
-		else if (BACT && BACTr) begin
-			if (SndCSWRr)     QFS <= 0;
-			else if (IACK1CS) QFS <= 2;
-			else if (IACK0CS) QFS <= 0;
-			else if (VIACS)   QFS <= 0;
-			else if (IWMCS)   QFS <= 0;
-			else if (SCCCS)   QFS <= 2;
-		end else if (QFS!=0 && TimerTick) QFS <= QFS-1;
+		if (!nRESin) QS <= 3;
+		else if (BACT && IACK0CS) QS <= 15;
+		else if (BACT && VIACS)   QS[1] <= 1;
+		else if (BACT && IWMCS)   QS[1] <= 1;
+		else if (SndCSWRr)        QS <= 15;
+		else if (QS!=0 && TimerTick) QS <= QS-1;
 	end
 	
 	reg ClockGateEN;
 	always @(posedge CLK) begin
-		if (!nRESr) ClockGateEN <= 0;
-		else if (BACT && BACTr) begin
-			if (SndCSWRr)     ClockGateEN <= 1;
-			else if (IACK1CS) ClockGateEN <= 0;
-			else if (IACK0CS) ClockGateEN <= 0;
-			else if (VIACS)   ClockGateEN <= 0;
-			else if (IWMCS)   ClockGateEN <= 0;
-			else if (SCCCS)   ClockGateEN <= 0;
-			else if (SCSICS)  ClockGateEN <= 0;
-		end
+		if (!nRESin) ClockGateEN <= 0;
+		else if (SndCSWRr)        ClockGateEN <= 1;
+		else if (BACT && IACK1CS) ClockGateEN <= 0;
+		else if (BACT && IACK0CS) ClockGateEN <= 0;
+		else if (BACT && VIACS)   ClockGateEN <= 0;
+		else if (BACT && IWMCS)   ClockGateEN <= 0;
+		else if (BACT && SCCCS)   ClockGateEN <= 0;
+		else if (BACT && SCSICS)  ClockGateEN <= 0;
 	end
 
 	/* QoS enable control */
-	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0 && QFS==0;
+	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;
 
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
