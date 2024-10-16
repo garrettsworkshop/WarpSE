@@ -250,6 +250,7 @@ module WarpSE(
 		.nAS(nAS_FSB),
 		.ASrf(ASrf),
 		.BACT(BACT),
+		.BACTr(BACTr),
 		.IACK0CS(IACK0CS),
 		.IACK1CS(IACK1CS),
 		.VIACS(VIACS),
