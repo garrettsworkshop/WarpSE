@@ -3,13 +3,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.09 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.08 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
+Total REAL time to Xst completion: 1.00 secs
 Total CPU time to Xst completion: 0.09 secs
  
 --> Reading design: WarpSE.prj
@@ -249,19 +249,20 @@ WARNING:Xst:647 - Input <BACTr> is never used. This port will be preserved and l
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <MCKE>.
-    Found 4-bit subtractor for signal <$sub0000> created at line 87.
+    Found 4-bit subtractor for signal <$sub0000> created at line 85.
     Found 4-bit register for signal <C8Mr>.
     Found 1-bit register for signal <ClockGateEN>.
     Found 2-bit register for signal <Er>.
     Found 2-bit register for signal <IS>.
     Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTick>.
+    Found 2-bit down counter for signal <QFS>.
     Found 4-bit register for signal <QS>.
     Found 1-bit register for signal <SndCSWRr>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTick>.
     Summary:
-	inferred   2 Counter(s).
+	inferred   3 Counter(s).
 	inferred  10 D-type flip-flop(s).
 	inferred   1 Adder/Subtractor(s).
 Unit <CNT> synthesized.
@@ -303,8 +304,9 @@ Macro Statistics
  8x3-bit ROM                                           : 1
 # Adders/Subtractors                                   : 1
  4-bit subtractor                                      : 1
-# Counters                                             : 3
+# Counters                                             : 4
  12-bit up counter                                     : 1
+ 2-bit down counter                                    : 1
  4-bit up counter                                      : 2
 # Registers                                            : 64
  1-bit register                                        : 60
@@ -353,8 +355,9 @@ Macro Statistics
  8x3-bit ROM                                           : 1
 # Adders/Subtractors                                   : 1
  4-bit subtractor                                      : 1
-# Counters                                             : 3
+# Counters                                             : 4
  12-bit up counter                                     : 1
+ 2-bit down counter                                    : 1
  4-bit up counter                                      : 2
 # Registers                                            : 43
  Flip-Flops                                            : 43
@@ -390,9 +393,9 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd4
 
 Optimizing unit <CNT> ...
+  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : IS_0
   implementation constraint: INIT=r	 : IS_1
-  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
@@ -427,23 +430,23 @@ Design Statistics
 # IOs                              : 80
 
 Cell Usage :
-# BELS                             : 691
-#      AND2                        : 206
-#      AND3                        : 27
+# BELS                             : 722
+#      AND2                        : 221
+#      AND3                        : 29
 #      AND4                        : 13
-#      AND5                        : 4
+#      AND5                        : 3
 #      AND6                        : 1
 #      AND8                        : 2
 #      GND                         : 7
-#      INV                         : 285
-#      OR2                         : 109
-#      OR3                         : 11
+#      INV                         : 291
+#      OR2                         : 116
+#      OR3                         : 12
 #      OR4                         : 4
 #      OR5                         : 1
-#      XOR2                        : 21
-# FlipFlops/Latches                : 100
+#      XOR2                        : 22
+# FlipFlops/Latches                : 102
 #      FD                          : 59
-#      FDCE                        : 37
+#      FDCE                        : 39
 #      FDCP                        : 1
 #      FDP                         : 1
 #      FDPE                        : 2
@@ -460,7 +463,7 @@ Total CPU time to Xst completion: 4.97 secs
  
 --> 
 
-Total memory usage is 262176 kilobytes
+Total memory usage is 262432 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    6 (   0 filtered)

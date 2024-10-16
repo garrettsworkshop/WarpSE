@@ -3,7 +3,7 @@
  
 cpldfit:  version P.20131013                        Xilinx Inc.
                                   Fitter Report
-Design Name: WarpSE                              Date: 10-15-2024, 11:54PM
+Design Name: WarpSE                              Date: 10-16-2024,  0:03AM
 Device Used: XC95144XL-10-TQ100
 Fitting Status: Successful
 
@@ -11,22 +11,22 @@ Fitting Status: Successful
 
 Macrocells     Product Terms    Function Block   Registers      Pins           
 Used/Tot       Used/Tot         Inps Used/Tot    Used/Tot       Used/Tot       
-125/144 ( 87%) 420 /720  ( 58%) 251/432 ( 58%)   100/144 ( 69%) 73 /81  ( 90%)
+127/144 ( 88%) 438 /720  ( 61%) 266/432 ( 62%)   102/144 ( 71%) 73 /81  ( 90%)
 
 ** Function Block Resources **
 
 Function    Mcells      FB Inps     Pterms      IO          
 Block       Used/Tot    Used/Tot    Used/Tot    Used/Tot    
-FB1          18/18*      17/54       31/90      11/11*
-FB2           9/18        9/54        9/90       8/10
-FB3          17/18       39/54       73/90      10/10*
-FB4          18/18*      36/54       33/90      10/10*
+FB1          18/18*      36/54       34/90      11/11*
+FB2          10/18       10/54       10/90       8/10
+FB3          18/18*      39/54       70/90      10/10*
+FB4          18/18*      35/54       34/90      10/10*
 FB5          14/18       37/54       82/90       8/10
-FB6          18/18*      37/54       66/90      10/10*
-FB7          18/18*      38/54       44/90      10/10*
-FB8          13/18       38/54       82/90       6/10
+FB6          18/18*      32/54       67/90      10/10*
+FB7          18/18*      38/54       59/90      10/10*
+FB8          13/18       39/54       82/90       6/10
              -----       -----       -----      -----    
-            125/144     251/432     420/720     73/81 
+            127/144     266/432     438/720     73/81 
 
 * - Resource is exhausted
 
@@ -53,7 +53,7 @@ GSR           :    0           0    |
 
 ** Power Data **
 
-There are 125 macrocells in high performance mode (MCHP).
+There are 127 macrocells in high performance mode (MCHP).
 There are 0 macrocells in low power mode (MCLP).
 End of Mapped Resource Summary
 **************************  Errors and Warnings  ***************************
@@ -134,103 +134,105 @@ nRAMUWE             1     3     FB8_8   66   I/O     O       STD  SLOW
 nBERR_FSB           3     7     FB8_12  70   I/O     O       STD  SLOW RESET
 nBR_IOB             1     1     FB8_15  72   I/O     O       STD  SLOW 
 
-** 87 Buried Nodes **
+** 89 Buried Nodes **
 
 Signal              Total Total Loc     Pwr  Reg Init
 Name                Pts   Inps          Mode State
 iobm/Er             1     1     FB1_1   STD  RESET
-iobm/C8Mr           1     1     FB1_2   STD  RESET
-cnt/TimerTick       1     6     FB1_3   STD  RESET
-cnt/Er<1>           1     1     FB1_4   STD  RESET
-cnt/Er<0>           1     1     FB1_5   STD  RESET
-cnt/C8Mr<0>         1     1     FB1_6   STD  RESET
-ALE0S               1     1     FB1_7   STD  RESET
-cnt/Timer<2>        2     4     FB1_8   STD  RESET
-cnt/Timer<0>        2     6     FB1_9   STD  RESET
-cnt/LTimer<7>       2     8     FB1_10  STD  RESET
-cnt/LTimer<6>       2     7     FB1_11  STD  RESET
-cnt/LTimer<5>       2     6     FB1_12  STD  RESET
-cnt/LTimer<4>       2     5     FB1_13  STD  RESET
-cnt/LTimer<3>       2     4     FB1_14  STD  RESET
+cnt/Er<0>           1     1     FB1_2   STD  RESET
+cnt/C8Mr<3>         1     1     FB1_3   STD  RESET
+cnt/C8Mr<2>         1     1     FB1_4   STD  RESET
+cnt/C8Mr<0>         1     1     FB1_5   STD  RESET
+nRESout             2     4     FB1_6   STD  RESET
+nBR_IOBout          2     4     FB1_7   STD  RESET
+iobs/IOU1           2     2     FB1_8   STD  RESET
+cnt/Timer<2>        2     4     FB1_9   STD  RESET
+cnt/LTimer<9>       2     10    FB1_10  STD  RESET
+cnt/LTimer<8>       2     9     FB1_11  STD  RESET
+cnt/LTimer<7>       2     8     FB1_12  STD  RESET
+cnt/LTimer<10>      2     11    FB1_13  STD  RESET
+cnt/IS<1>           2     4     FB1_14  STD  RESET
 RefUrg              2     5     FB1_15  STD  RESET
-RefReq              2     6     FB1_16  STD  RESET
-cnt/Timer<3>        3     6     FB1_17  STD  RESET
-cnt/Timer<1>        3     6     FB1_18  STD  RESET
-iobs/IODONErf       1     1     FB2_10  STD  RESET
-iobs/IODONEr<1>     1     1     FB2_11  STD  RESET
-iobs/IODONEr<0>     1     1     FB2_12  STD  RESET
-iobs/IOACTr         1     1     FB2_13  STD  RESET
-iobm/VPAr           1     1     FB2_14  STD  RESET
-iobm/IOS_FSM_FFd5   1     1     FB2_15  STD  RESET
-iobm/IOS_FSM_FFd4   1     1     FB2_16  STD  RESET
-iobm/IOS_FSM_FFd1   1     1     FB2_17  STD  RESET
-iobm/IOREQr         1     1     FB2_18  STD  RESET
-cnt/LTimer<0>       1     1     FB3_1   STD  RESET
-cnt/QS<3>           14    15    FB3_2   STD  RESET
+cnt/nPOR            3     5     FB1_16  STD  RESET
+cnt/IS<0>           3     5     FB1_17  STD  RESET
+IOU0                3     5     FB1_18  STD  RESET
+iobs/IODONErf       1     1     FB2_9   STD  RESET
+iobs/IODONEr<1>     1     1     FB2_10  STD  RESET
+iobs/IODONEr<0>     1     1     FB2_11  STD  RESET
+iobs/IOACTr         1     1     FB2_12  STD  RESET
+iobm/VPAr           1     1     FB2_13  STD  RESET
+iobm/IOS_FSM_FFd5   1     1     FB2_14  STD  RESET
+iobm/IOS_FSM_FFd4   1     1     FB2_15  STD  RESET
+iobm/IOS_FSM_FFd1   1     1     FB2_16  STD  RESET
+iobm/IOREQr         1     1     FB2_17  STD  RESET
+iobm/C8Mr           1     1     FB2_18  STD  RESET
+ram/RASEN           10    12    FB3_1   STD  RESET
+ALE0S               1     1     FB3_2   STD  RESET
 ram/RefDone         2     3     FB3_3   STD  RESET
 ram/RASrf           2     3     FB3_4   STD  RESET
 ram/CASEndEN        2     3     FB3_5   STD  RESET
 iobs/TS_FSM_FFd1    2     3     FB3_6   STD  RESET
-cnt/LTimer<2>       2     3     FB3_7   STD  RESET
-cnt/LTimer<1>       2     2     FB3_8   STD  RESET
-ram/RS<1>           3     6     FB3_10  STD  RESET
-ram/RASEL           3     8     FB3_11  STD  RESET
-IORW                3     5     FB3_12  STD  RESET
-ram/RefCAS          8     11    FB3_13  STD  RESET
-ram/RS<2>           9     11    FB3_15  STD  RESET
+iobs/IOL1           2     2     FB3_7   STD  RESET
+ram/RS<1>           3     6     FB3_8   STD  RESET
+ram/RASEL           3     8     FB3_10  STD  RESET
+IORW                3     5     FB3_11  STD  RESET
+IOL0                3     5     FB3_12  STD  RESET
+QoSEN               4     8     FB3_13  STD  RESET
 
 Signal              Total Total Loc     Pwr  Reg Init
 Name                Pts   Inps          Mode State
-ram/RASEN           10    12    FB3_16  STD  RESET
+ram/RS<0>           6     10    FB3_14  STD  RESET
+ram/RefCAS          8     11    FB3_15  STD  RESET
+ram/RS<2>           9     11    FB3_16  STD  RESET
 iobs/Clear1         1     2     FB3_18  STD  RESET
-cnt/LTimerTick      1     13    FB4_1   STD  RESET
-cnt/C8Mr<3>         1     1     FB4_3   STD  RESET
-cnt/C8Mr<2>         1     1     FB4_4   STD  RESET
-cnt/C8Mr<1>         1     1     FB4_7   STD  RESET
-nRESout             2     4     FB4_9   STD  RESET
-nBR_IOBout          2     4     FB4_10  STD  RESET
-cnt/LTimer<9>       2     10    FB4_12  STD  RESET
-cnt/LTimer<8>       2     9     FB4_13  STD  RESET
-cnt/LTimer<11>      2     12    FB4_14  STD  RESET
-cnt/LTimer<10>      2     11    FB4_15  STD  RESET
-cnt/IS<1>           2     4     FB4_16  STD  RESET
-cnt/nPOR            3     5     FB4_17  STD  RESET
-cnt/IS<0>           3     5     FB4_18  STD  RESET
+cnt/TimerTick       1     6     FB4_1   STD  RESET
+cnt/LTimerTick      1     13    FB4_3   STD  RESET
+cnt/Er<1>           1     1     FB4_4   STD  RESET
+cnt/Timer<0>        2     6     FB4_7   STD  RESET
+cnt/LTimer<5>       2     6     FB4_9   STD  RESET
+cnt/LTimer<4>       2     5     FB4_10  STD  RESET
+cnt/LTimer<3>       2     4     FB4_12  STD  RESET
+cnt/LTimer<2>       2     3     FB4_13  STD  RESET
+cnt/LTimer<1>       2     2     FB4_14  STD  RESET
+cnt/LTimer<11>      2     12    FB4_15  STD  RESET
+RefReq              2     6     FB4_16  STD  RESET
+cnt/Timer<3>        3     6     FB4_17  STD  RESET
+cnt/Timer<1>        3     6     FB4_18  STD  RESET
 IOREQ               12    17    FB5_3   STD  RESET
 iobs/IORW1          12    17    FB5_7   STD  RESET
 iobs/TS_FSM_FFd2    12    17    FB5_10  STD  RESET
 cnt/SndCSWRr        8     19    FB5_13  STD  RESET
 iobs/Load1          8     16    FB5_16  STD  RESET
 iobs/Sent           13    16    FB5_18  STD  RESET
-iobs/IOU1           2     2     FB6_1   STD  RESET
-iobs/IOL1           2     2     FB6_3   STD  RESET
-iobm/ES<2>          3     5     FB6_4   STD  RESET
-iobm/ES<0>          3     6     FB6_5   STD  RESET
-IOU0                3     5     FB6_6   STD  RESET
-IOL0                3     5     FB6_7   STD  RESET
-iobm/ES<3>          4     6     FB6_8   STD  RESET
-iobm/ES<1>          4     6     FB6_10  STD  RESET
-ALE0M               4     9     FB6_13  STD  RESET
-iobm/DoutOE         5     9     FB6_16  STD  RESET
+iobm/IOS_FSM_FFd2   1     3     FB6_1   STD  RESET
+iobm/IOS_FSM_FFd7   2     5     FB6_3   STD  SET
+iobm/IOS_FSM_FFd3   2     4     FB6_4   STD  RESET
+iobm/ES<2>          3     5     FB6_5   STD  RESET
+iobm/ES<0>          3     6     FB6_6   STD  RESET
+iobm/ES<3>          4     6     FB6_7   STD  RESET
+iobm/ES<1>          4     6     FB6_8   STD  RESET
+ALE0M               4     9     FB6_10  STD  RESET
+iobm/DoutOE         5     9     FB6_13  STD  RESET
+IOACT               6     11    FB6_16  STD  RESET
 IODONE              10    13    FB6_18  STD  RESET
 iobm/IOS_FSM_FFd6   1     4     FB7_1   STD  RESET
-iobm/IOS_FSM_FFd2   1     3     FB7_3   STD  RESET
-BACTr               1     2     FB7_4   STD  RESET
+cnt/QFS<0>          10    13    FB7_3   STD  RESET
+cnt/ClockGateEN     7     11    FB7_4   STD  RESET
 ASrf                1     1     FB7_7   STD  RESET
-iobm/IOS_FSM_FFd7   2     5     FB7_10  STD  SET
-iobm/IOS_FSM_FFd3   2     4     FB7_13  STD  RESET
-IOACT               6     11    FB7_16  STD  RESET
-cnt/ClockGateEN     7     11    FB7_18  STD  RESET
+BACTr               1     2     FB7_10  STD  RESET
+cnt/C8Mr<1>         1     1     FB7_13  STD  RESET
 
 Signal              Total Total Loc     Pwr  Reg Init
 Name                Pts   Inps          Mode State
-QoSEN               2     6     FB8_3   STD  RESET
-ram/RS<0>           6     10    FB8_4   STD  RESET
-IONPReady           6     16    FB8_7   STD  RESET
-cnt/QS<1>           16    15    FB8_11  STD  RESET
-cnt/QS<0>           17    15    FB8_14  STD  RESET
-cs/Overlay          3     8     FB8_16  STD  RESET
-cnt/QS<2>           22    15    FB8_18  STD  RESET
+cnt/LTimer<0>       1     1     FB7_16  STD  RESET
+cnt/QFS<1>          14    13    FB7_18  STD  RESET
+cnt/QS<0>           18    14    FB8_1   STD  RESET
+cnt/LTimer<6>       2     7     FB8_3   STD  RESET
+cs/Overlay          3     8     FB8_4   STD  RESET
+cnt/QS<1>           12    14    FB8_7   STD  RESET
+cnt/QS<3>           13    14    FB8_11  STD  RESET
+cnt/QS<2>           18    14    FB8_14  STD  RESET
+IONPReady           6     16    FB8_17  STD  RESET
 
 ** 35 Inputs **
 
@@ -288,62 +290,68 @@ Pin Type/Use - I  - Input             GCK - Global Clock
 X            - Signal used as input to the macrocell logic.
 Pin No.      - ~  - User Assigned
 *********************************** FB1  ***********************************
-Number of function block inputs used/remaining:               17/37
-Number of signals used by logic mapping into function block:  17
+Number of function block inputs used/remaining:               36/18
+Number of signals used by logic mapping into function block:  36
 Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
 Name                Pt      Pt    Pt  Pt               #    Type    Use
 iobm/Er               1       0     0   4     FB1_1         (b)     (b)
-iobm/C8Mr             1       0     0   4     FB1_2   11    I/O     I
-cnt/TimerTick         1       0     0   4     FB1_3   12    I/O     I
-cnt/Er<1>             1       0     0   4     FB1_4         (b)     (b)
-cnt/Er<0>             1       0     0   4     FB1_5   13    I/O     I
-cnt/C8Mr<0>           1       0     0   4     FB1_6   14    I/O     I
-ALE0S                 1       0     0   4     FB1_7         (b)     (b)
-cnt/Timer<2>          2       0     0   3     FB1_8   15    I/O     I
-cnt/Timer<0>          2       0     0   3     FB1_9   16    I/O     I
-cnt/LTimer<7>         2       0     0   3     FB1_10        (b)     (b)
-cnt/LTimer<6>         2       0     0   3     FB1_11  17    I/O     I
-cnt/LTimer<5>         2       0     0   3     FB1_12  18    I/O     I
-cnt/LTimer<4>         2       0     0   3     FB1_13        (b)     (b)
-cnt/LTimer<3>         2       0     0   3     FB1_14  19    I/O     I
+cnt/Er<0>             1       0     0   4     FB1_2   11    I/O     I
+cnt/C8Mr<3>           1       0     0   4     FB1_3   12    I/O     I
+cnt/C8Mr<2>           1       0     0   4     FB1_4         (b)     (b)
+cnt/C8Mr<0>           1       0     0   4     FB1_5   13    I/O     I
+nRESout               2       0     0   3     FB1_6   14    I/O     I
+nBR_IOBout            2       0     0   3     FB1_7         (b)     (b)
+iobs/IOU1             2       0     0   3     FB1_8   15    I/O     I
+cnt/Timer<2>          2       0     0   3     FB1_9   16    I/O     I
+cnt/LTimer<9>         2       0     0   3     FB1_10        (b)     (b)
+cnt/LTimer<8>         2       0     0   3     FB1_11  17    I/O     I
+cnt/LTimer<7>         2       0     0   3     FB1_12  18    I/O     I
+cnt/LTimer<10>        2       0     0   3     FB1_13        (b)     (b)
+cnt/IS<1>             2       0     0   3     FB1_14  19    I/O     I
 RefUrg                2       0     0   3     FB1_15  20    I/O     I
-RefReq                2       0     0   3     FB1_16        (b)     (b)
-cnt/Timer<3>          3       0     0   2     FB1_17  22    GCK/I/O GCK
-cnt/Timer<1>          3       0     0   2     FB1_18        (b)     (b)
+cnt/nPOR              3       0     0   2     FB1_16        (b)     (b)
+cnt/IS<0>             3       0     0   2     FB1_17  22    GCK/I/O GCK
+IOU0                  3       0     0   2     FB1_18        (b)     (b)
 
 Signals Used by Logic in Function Block
-  1: C8M                7: cnt/LTimer<2>     13: cnt/Timer<1> 
-  2: E                  8: cnt/LTimer<3>     14: cnt/Timer<2> 
-  3: cnt/Er<0>          9: cnt/LTimer<4>     15: cnt/Timer<3> 
-  4: cnt/Er<1>         10: cnt/LTimer<5>     16: cnt/TimerTick 
-  5: cnt/LTimer<0>     11: cnt/LTimer<6>     17: iobs/TS_FSM_FFd2 
-  6: cnt/LTimer<1>     12: cnt/Timer<0>     
+  1: C8M               13: cnt/LTimer<1>     25: cnt/Timer<2> 
+  2: E                 14: cnt/LTimer<2>     26: cnt/Timer<3> 
+  3: IOU0              15: cnt/LTimer<3>     27: cnt/TimerTick 
+  4: cnt/C8Mr<0>       16: cnt/LTimer<4>     28: cnt/nPOR 
+  5: cnt/C8Mr<1>       17: cnt/LTimer<5>     29: iobs/IOU1 
+  6: cnt/C8Mr<2>       18: cnt/LTimer<6>     30: iobs/Load1 
+  7: cnt/C8Mr<3>       19: cnt/LTimer<7>     31: iobs/TS_FSM_FFd1 
+  8: cnt/Er<0>         20: cnt/LTimer<8>     32: nADoutLE1 
+  9: cnt/Er<1>         21: cnt/LTimer<9>     33: nBR_IOBout 
+ 10: cnt/IS<0>         22: cnt/LTimerTick    34: nIPL2 
+ 11: cnt/IS<1>         23: cnt/Timer<0>      35: nRESout 
+ 12: cnt/LTimer<0>     24: cnt/Timer<1>      36: nUDS_FSB 
 
 Signal                        1         2         3         4 FB
 Name                0----+----0----+----0----+----0----+----0 Inputs
 iobm/Er              .X...................................... 1
-iobm/C8Mr            X....................................... 1
-cnt/TimerTick        ..XX.......XXXX......................... 6
-cnt/Er<1>            ..X..................................... 1
 cnt/Er<0>            .X...................................... 1
+cnt/C8Mr<3>          .....X.................................. 1
+cnt/C8Mr<2>          ....X................................... 1
 cnt/C8Mr<0>          X....................................... 1
-ALE0S                ................X....................... 1
-cnt/Timer<2>         ..XX.......XX........................... 4
-cnt/Timer<0>         ..XX.......XXXX......................... 6
-cnt/LTimer<7>        ....XXXXXXX....X........................ 8
-cnt/LTimer<6>        ....XXXXXX.....X........................ 7
-cnt/LTimer<5>        ....XXXXX......X........................ 6
-cnt/LTimer<4>        ....XXXX.......X........................ 5
-cnt/LTimer<3>        ....XXX........X........................ 4
-RefUrg               ..XX........XXX......................... 5
-RefReq               ..XX.......XXXX......................... 6
-cnt/Timer<3>         ..XX.......XXXX......................... 6
-cnt/Timer<1>         ..XX.......XXXX......................... 6
+nRESout              .........XX..........X............X..... 4
+nBR_IOBout           .........XX.....................XX...... 4
+iobs/IOU1            .............................X.....X.... 2
+cnt/Timer<2>         .......XX.............XX................ 4
+cnt/LTimer<9>        ...........XXXXXXXXX......X............. 10
+cnt/LTimer<8>        ...........XXXXXXXX.......X............. 9
+cnt/LTimer<7>        ...........XXXXXXX........X............. 8
+cnt/LTimer<10>       ...........XXXXXXXXXX.....X............. 11
+cnt/IS<1>            .........XX..........X.....X............ 4
+RefUrg               .......XX..............XXX.............. 5
+cnt/nPOR             ...XXXX....................X............ 5
+cnt/IS<0>            .........XX..........X.....X.....X...... 5
+IOU0                 ..X.........................X.XX...X.... 5
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *********************************** FB2  ***********************************
-Number of function block inputs used/remaining:               9/45
-Number of signals used by logic mapping into function block:  9
+Number of function block inputs used/remaining:               10/44
+Number of signals used by logic mapping into function block:  10
 Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
 Name                Pt      Pt    Pt  Pt               #    Type    Use
 (unused)              0       0     0   5     FB2_1         (b)     
@@ -354,33 +362,35 @@ Name                Pt      Pt    Pt  Pt               #    Type    Use
 (unused)              0       0     0   5     FB2_6   2     GTS/I/O I
 (unused)              0       0     0   5     FB2_7         (b)     
 (unused)              0       0     0   5     FB2_8   3     GTS/I/O I
-(unused)              0       0     0   5     FB2_9   4     GTS/I/O I
-iobs/IODONErf         1       0     0   4     FB2_10        (b)     (b)
-iobs/IODONEr<1>       1       0     0   4     FB2_11  6     I/O     I
-iobs/IODONEr<0>       1       0     0   4     FB2_12  7     I/O     I
-iobs/IOACTr           1       0     0   4     FB2_13        (b)     (b)
-iobm/VPAr             1       0     0   4     FB2_14  8     I/O     I
-iobm/IOS_FSM_FFd5     1       0     0   4     FB2_15  9     I/O     I
-iobm/IOS_FSM_FFd4     1       0     0   4     FB2_16        (b)     (b)
-iobm/IOS_FSM_FFd1     1       0     0   4     FB2_17  10    I/O     I
-iobm/IOREQr           1       0     0   4     FB2_18        (b)     (b)
+iobs/IODONErf         1       0     0   4     FB2_9   4     GTS/I/O I
+iobs/IODONEr<1>       1       0     0   4     FB2_10        (b)     (b)
+iobs/IODONEr<0>       1       0     0   4     FB2_11  6     I/O     I
+iobs/IOACTr           1       0     0   4     FB2_12  7     I/O     I
+iobm/VPAr             1       0     0   4     FB2_13        (b)     (b)
+iobm/IOS_FSM_FFd5     1       0     0   4     FB2_14  8     I/O     I
+iobm/IOS_FSM_FFd4     1       0     0   4     FB2_15  9     I/O     I
+iobm/IOS_FSM_FFd1     1       0     0   4     FB2_16        (b)     (b)
+iobm/IOREQr           1       0     0   4     FB2_17  10    I/O     I
+iobm/C8Mr             1       0     0   4     FB2_18        (b)     (b)
 
 Signals Used by Logic in Function Block
-  1: IOACT              4: iobm/IOS_FSM_FFd2   7: iobs/IODONEr<0> 
-  2: IODONE             5: iobm/IOS_FSM_FFd5   8: iobs/IODONErf 
-  3: IOREQ              6: iobm/IOS_FSM_FFd6   9: nVPA_IOB 
+  1: C8M                5: iobm/IOS_FSM_FFd2   8: iobs/IODONEr<0> 
+  2: IOACT              6: iobm/IOS_FSM_FFd5   9: iobs/IODONErf 
+  3: IODONE             7: iobm/IOS_FSM_FFd6  10: nVPA_IOB 
+  4: IOREQ            
 
 Signal                        1         2         3         4 FB
 Name                0----+----0----+----0----+----0----+----0 Inputs
-iobs/IODONErf        .X...................................... 1
-iobs/IODONEr<1>      ......X................................. 1
-iobs/IODONEr<0>      .......X................................ 1
-iobs/IOACTr          X....................................... 1
-iobm/VPAr            ........X............................... 1
-iobm/IOS_FSM_FFd5    .....X.................................. 1
-iobm/IOS_FSM_FFd4    ....X................................... 1
-iobm/IOS_FSM_FFd1    ...X.................................... 1
-iobm/IOREQr          ..X..................................... 1
+iobs/IODONErf        ..X..................................... 1
+iobs/IODONEr<1>      .......X................................ 1
+iobs/IODONEr<0>      ........X............................... 1
+iobs/IOACTr          .X...................................... 1
+iobm/VPAr            .........X.............................. 1
+iobm/IOS_FSM_FFd5    ......X................................. 1
+iobm/IOS_FSM_FFd4    .....X.................................. 1
+iobm/IOS_FSM_FFd1    ....X................................... 1
+iobm/IOREQr          ...X.................................... 1
+iobm/C8Mr            X....................................... 1
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *********************************** FB3  ***********************************
@@ -388,119 +398,120 @@ Number of function block inputs used/remaining:               39/15
 Number of signals used by logic mapping into function block:  39
 Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
 Name                Pt      Pt    Pt  Pt               #    Type    Use
-cnt/LTimer<0>         1       0   \/4   0     FB3_1         (b)     (b)
-cnt/QS<3>            14       9<-   0   0     FB3_2   23    GCK/I/O GCK/I
-ram/RefDone           2       2<- /\5   0     FB3_3         (b)     (b)
-ram/RASrf             2       0   /\2   1     FB3_4         (b)     (b)
+ram/RASEN            10       5<-   0   0     FB3_1         (b)     (b)
+ALE0S                 1       0   /\1   3     FB3_2   23    GCK/I/O GCK/I
+ram/RefDone           2       0     0   3     FB3_3         (b)     (b)
+ram/RASrf             2       0     0   3     FB3_4         (b)     (b)
 ram/CASEndEN          2       0     0   3     FB3_5   24    I/O     I
 iobs/TS_FSM_FFd1      2       0     0   3     FB3_6   25    I/O     I
-cnt/LTimer<2>         2       0     0   3     FB3_7         (b)     (b)
-cnt/LTimer<1>         2       0   \/2   1     FB3_8   27    GCK/I/O GCK
+iobs/IOL1             2       0     0   3     FB3_7         (b)     (b)
+ram/RS<1>             3       0   \/2   0     FB3_8   27    GCK/I/O GCK
 nDTACK_FSB            8       3<-   0   0     FB3_9   28    I/O     O
-ram/RS<1>             3       0   /\1   1     FB3_10        (b)     (b)
-ram/RASEL             3       0   \/1   1     FB3_11  29    I/O     I
-IORW                  3       1<- \/3   0     FB3_12  30    I/O     I
-ram/RefCAS            8       3<-   0   0     FB3_13        (b)     (b)
-(unused)              0       0   \/5   0     FB3_14  32    I/O     I
-ram/RS<2>             9       5<- \/1   0     FB3_15  33    I/O     I
-ram/RASEN            10       5<-   0   0     FB3_16        (b)     (b)
+ram/RASEL             3       0   /\1   1     FB3_10        (b)     (b)
+IORW                  3       0   \/1   1     FB3_11  29    I/O     I
+IOL0                  3       1<- \/3   0     FB3_12  30    I/O     I
+QoSEN                 4       3<- \/4   0     FB3_13        (b)     (b)
+ram/RS<0>             6       4<- \/3   0     FB3_14  32    I/O     I
+ram/RefCAS            8       3<-   0   0     FB3_15  33    I/O     I
+ram/RS<2>             9       4<-   0   0     FB3_16        (b)     (b)
 nROMWE                1       0   /\4   0     FB3_17  34    I/O     O
-iobs/Clear1           1       0     0   4     FB3_18        (b)     (b)
+iobs/Clear1           1       0   \/4   0     FB3_18        (b)     (b)
 
 Signals Used by Logic in Function Block
-  1: ASrf              14: nRES.PIN          27: iobs/IOACTr 
-  2: A_FSB<16>         15: QoSEN             28: iobs/IORW1 
-  3: A_FSB<17>         16: RefReq            29: iobs/Sent 
-  4: A_FSB<18>         17: RefUrg            30: iobs/TS_FSM_FFd1 
-  5: A_FSB<19>         18: cnt/LTimer<0>     31: iobs/TS_FSM_FFd2 
-  6: A_FSB<1>          19: cnt/LTimer<1>     32: nADoutLE1 
-  7: A_FSB<20>         20: cnt/QS<0>         33: nAS_FSB 
-  8: A_FSB<21>         21: cnt/QS<1>         34: nDTACK_FSB 
-  9: A_FSB<2>          22: cnt/QS<2>         35: nWE_FSB 
- 10: BACTr             23: cnt/QS<3>         36: ram/RS<0> 
- 11: A_FSB<22>         24: cnt/SndCSWRr      37: ram/RS<1> 
- 12: A_FSB<23>         25: cnt/TimerTick     38: ram/RS<2> 
- 13: IONPReady         26: cs/Overlay        39: ram/RefDone 
+  1: ASrf              14: RefReq            27: iobs/Sent 
+  2: A_FSB<16>         15: RefUrg            28: iobs/TS_FSM_FFd1 
+  3: A_FSB<17>         16: cnt/QFS<0>        29: iobs/TS_FSM_FFd2 
+  4: A_FSB<18>         17: cnt/QFS<1>        30: nADoutLE1 
+  5: A_FSB<19>         18: cnt/QS<0>         31: nAS_FSB 
+  6: A_FSB<20>         19: cnt/QS<1>         32: nDTACK_FSB 
+  7: A_FSB<21>         20: cnt/QS<2>         33: nLDS_FSB 
+  8: BACTr             21: cnt/QS<3>         34: nWE_FSB 
+  9: A_FSB<22>         22: cs/Overlay        35: ram/RASEN 
+ 10: A_FSB<23>         23: iobs/IOACTr       36: ram/RS<0> 
+ 11: IOL0              24: iobs/IOL1         37: ram/RS<1> 
+ 12: IONPReady         25: iobs/IORW1        38: ram/RS<2> 
+ 13: QoSEN             26: iobs/Load1        39: ram/RefDone 
 
 Signal                        1         2         3         4 FB
 Name                0----+----0----+----0----+----0----+----0 Inputs
-cnt/LTimer<0>        ........................X............... 1
-cnt/QS<3>            X....XXXX.XX.X.....XXXXXX.......X....... 15
-ram/RefDone          ...............X.....................XX. 3
+ram/RASEN            X......XXX...XX...............XX...XXXX. 12
+ALE0S                ............................X........... 1
+ram/RefDone          .............X.......................XX. 3
 ram/RASrf            ...................................XXX.. 3
 ram/CASEndEN         ...................................XXX.. 3
-iobs/TS_FSM_FFd1     ..........................X..XX......... 3
-cnt/LTimer<2>        .................XX.....X............... 3
-cnt/LTimer<1>        .................X......X............... 2
-nDTACK_FSB           .XXXX.XX..XXX.X.............X..XXXX..X.. 16
-ram/RS<1>            X...............................XX.XXX.. 6
-ram/RASEL            X.........XX.............X......X..XXX.. 8
-IORW                 ...........................X.XXX..X..... 5
-ram/RefCAS           X........XXX...XX...............X..XXXX. 11
-ram/RS<2>            X........XXX...XX...............X..XXXX. 11
-ram/RASEN            X........XXX...XX...............XX.XXXX. 12
-nROMWE               ......XX..XX....................X.X..... 6
-iobs/Clear1          .............................XX......... 2
+iobs/TS_FSM_FFd1     ......................X....XX........... 3
+iobs/IOL1            .........................X......X....... 2
+ram/RS<1>            X.............................XX...XXX.. 6
+nDTACK_FSB           .XXXXXX.XX.XX.............X..XXX.X...X.. 16
+ram/RASEL            X.......XX...........X........X....XXX.. 8
+IORW                 ........................X..XXX...X...... 5
+IOL0                 ..........X............X...X.X..X....... 5
+QoSEN                X..............XXXXXX.........X......... 8
+ram/RS<0>            X.......XX...........X........XX..XXXX.. 10
+ram/RefCAS           X......XXX...XX...............X....XXXX. 11
+ram/RS<2>            X......XXX...XX...............X....XXXX. 11
+nROMWE               .....XX.XX....................X..X...... 6
+iobs/Clear1          ...........................XX........... 2
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *********************************** FB4  ***********************************
-Number of function block inputs used/remaining:               36/18
-Number of signals used by logic mapping into function block:  36
+Number of function block inputs used/remaining:               35/19
+Number of signals used by logic mapping into function block:  35
 Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
 Name                Pt      Pt    Pt  Pt               #    Type    Use
-cnt/LTimerTick        1       0     0   4     FB4_1         (b)     (b)
+cnt/TimerTick         1       0     0   4     FB4_1         (b)     (b)
 nAoutOE               1       0     0   4     FB4_2   87    I/O     O
-cnt/C8Mr<3>           1       0     0   4     FB4_3         (b)     (b)
-cnt/C8Mr<2>           1       0     0   4     FB4_4         (b)     (b)
+cnt/LTimerTick        1       0     0   4     FB4_3         (b)     (b)
+cnt/Er<1>             1       0     0   4     FB4_4         (b)     (b)
 nDoutOE               1       0     0   4     FB4_5   89    I/O     O
 nDinOE                3       0     0   2     FB4_6   90    I/O     O
-cnt/C8Mr<1>           1       0     0   4     FB4_7         (b)     (b)
+cnt/Timer<0>          2       0     0   3     FB4_7         (b)     (b)
 nRES                  1       0     0   4     FB4_8   91    I/O     I/O
-nRESout               2       0     0   3     FB4_9   92    I/O     I
-nBR_IOBout            2       0     0   3     FB4_10        (b)     (b)
+cnt/LTimer<5>         2       0     0   3     FB4_9   92    I/O     I
+cnt/LTimer<4>         2       0     0   3     FB4_10        (b)     (b)
 nVPA_FSB              3       0     0   2     FB4_11  93    I/O     O
-cnt/LTimer<9>         2       0     0   3     FB4_12  94    I/O     I
-cnt/LTimer<8>         2       0     0   3     FB4_13        (b)     (b)
-cnt/LTimer<11>        2       0     0   3     FB4_14  95    I/O     I
-cnt/LTimer<10>        2       0     0   3     FB4_15  96    I/O     I
-cnt/IS<1>             2       0     0   3     FB4_16        (b)     (b)
-cnt/nPOR              3       0     0   2     FB4_17  97    I/O     I
-cnt/IS<0>             3       0     0   2     FB4_18        (b)     (b)
+cnt/LTimer<3>         2       0     0   3     FB4_12  94    I/O     I
+cnt/LTimer<2>         2       0     0   3     FB4_13        (b)     (b)
+cnt/LTimer<1>         2       0     0   3     FB4_14  95    I/O     I
+cnt/LTimer<11>        2       0     0   3     FB4_15  96    I/O     I
+RefReq                2       0     0   3     FB4_16        (b)     (b)
+cnt/Timer<3>          3       0     0   2     FB4_17  97    I/O     I
+cnt/Timer<1>          3       0     0   2     FB4_18        (b)     (b)
 
 Signals Used by Logic in Function Block
-  1: A_FSB<20>         13: cnt/LTimer<10>    25: cnt/TimerTick 
-  2: A_FSB<21>         14: cnt/LTimer<11>    26: cnt/nPOR 
-  3: BACTr             15: cnt/LTimer<1>     27: iobm/DoutOE 
-  4: A_FSB<22>         16: cnt/LTimer<2>     28: iobs/Sent 
-  5: A_FSB<23>         17: cnt/LTimer<3>     29: nADoutLE1 
-  6: cnt/C8Mr<0>       18: cnt/LTimer<4>     30: nAS_FSB 
-  7: cnt/C8Mr<1>       19: cnt/LTimer<5>     31: nAoutOE 
-  8: cnt/C8Mr<2>       20: cnt/LTimer<6>     32: nBR_IOBout 
-  9: cnt/C8Mr<3>       21: cnt/LTimer<7>     33: nIPL2 
- 10: cnt/IS<0>         22: cnt/LTimer<8>     34: nRESout 
- 11: cnt/IS<1>         23: cnt/LTimer<9>     35: nVPA_FSB 
- 12: cnt/LTimer<0>     24: cnt/LTimerTick    36: nWE_FSB 
+  1: A_FSB<20>         13: cnt/LTimer<1>     25: cnt/Timer<3> 
+  2: A_FSB<21>         14: cnt/LTimer<2>     26: cnt/TimerTick 
+  3: BACTr             15: cnt/LTimer<3>     27: iobm/DoutOE 
+  4: A_FSB<22>         16: cnt/LTimer<4>     28: iobs/Sent 
+  5: A_FSB<23>         17: cnt/LTimer<5>     29: nADoutLE1 
+  6: cnt/Er<0>         18: cnt/LTimer<6>     30: nAS_FSB 
+  7: cnt/Er<1>         19: cnt/LTimer<7>     31: nAoutOE 
+  8: cnt/IS<0>         20: cnt/LTimer<8>     32: nBR_IOBout 
+  9: cnt/IS<1>         21: cnt/LTimer<9>     33: nRESout 
+ 10: cnt/LTimer<0>     22: cnt/Timer<0>      34: nVPA_FSB 
+ 11: cnt/LTimer<10>    23: cnt/Timer<1>      35: nWE_FSB 
+ 12: cnt/LTimer<11>    24: cnt/Timer<2>     
 
 Signal                        1         2         3         4 FB
 Name                0----+----0----+----0----+----0----+----0 Inputs
-cnt/LTimerTick       ...........XXXXXXXXXXXX.X............... 13
-nAoutOE              .........XX....................X........ 3
-cnt/C8Mr<3>          .......X................................ 1
-cnt/C8Mr<2>          ......X................................. 1
+cnt/TimerTick        .....XX..............XXXX............... 6
+nAoutOE              .......XX......................X........ 3
+cnt/LTimerTick       .........XXXXXXXXXXXX....X.............. 13
+cnt/Er<1>            .....X.................................. 1
 nDoutOE              ..........................X...X......... 2
-nDinOE               XXXXX........................X.....X.... 7
-cnt/C8Mr<1>          .....X.................................. 1
-nRES                 .................................X...... 1
-nRESout              .........XX............X.........X...... 4
-nBR_IOBout           .........XX....................XX....... 4
-nVPA_FSB             XX.XX......................XXX....X..... 8
-cnt/LTimer<9>        ...........X..XXXXXXXX..X............... 10
-cnt/LTimer<8>        ...........X..XXXXXXX...X............... 9
-cnt/LTimer<11>       ...........XX.XXXXXXXXX.X............... 12
-cnt/LTimer<10>       ...........X..XXXXXXXXX.X............... 11
-cnt/IS<1>            .........XX............X.X.............. 4
-cnt/nPOR             .....XXXX................X.............. 5
-cnt/IS<0>            .........XX............X.X......X....... 5
+nDinOE               XXXXX........................X....X..... 7
+cnt/Timer<0>         .....XX..............XXXX............... 6
+nRES                 ................................X....... 1
+cnt/LTimer<5>        .........X..XXXX.........X.............. 6
+cnt/LTimer<4>        .........X..XXX..........X.............. 5
+nVPA_FSB             XX.XX......................XXX...X...... 8
+cnt/LTimer<3>        .........X..XX...........X.............. 4
+cnt/LTimer<2>        .........X..X............X.............. 3
+cnt/LTimer<1>        .........X...............X.............. 2
+cnt/LTimer<11>       .........XX.XXXXXXXXX....X.............. 12
+RefReq               .....XX..............XXXX............... 6
+cnt/Timer<3>         .....XX..............XXXX............... 6
+cnt/Timer<1>         .....XX..............XXXX............... 6
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *********************************** FB5  ***********************************
@@ -561,64 +572,62 @@ iobs/Sent            X......XXXXXX......XXX...XXXXXX......... 16
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *********************************** FB6  ***********************************
-Number of function block inputs used/remaining:               37/17
-Number of signals used by logic mapping into function block:  37
+Number of function block inputs used/remaining:               32/22
+Number of signals used by logic mapping into function block:  32
 Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
 Name                Pt      Pt    Pt  Pt               #    Type    Use
-iobs/IOU1             2       0   /\1   2     FB6_1         (b)     (b)
+iobm/IOS_FSM_FFd2     1       0   /\1   3     FB6_1         (b)     (b)
 nVMA_IOB              3       0     0   2     FB6_2   74    I/O     O
-iobs/IOL1             2       0     0   3     FB6_3         (b)     (b)
-iobm/ES<2>            3       0     0   2     FB6_4         (b)     (b)
-iobm/ES<0>            3       0     0   2     FB6_5   76    I/O     I
-IOU0                  3       0     0   2     FB6_6   77    I/O     I
-IOL0                  3       0     0   2     FB6_7         (b)     (b)
-iobm/ES<3>            4       0   \/1   0     FB6_8   78    I/O     I
+iobm/IOS_FSM_FFd7     2       0     0   3     FB6_3         (b)     (b)
+iobm/IOS_FSM_FFd3     2       0     0   3     FB6_4         (b)     (b)
+iobm/ES<2>            3       0     0   2     FB6_5   76    I/O     I
+iobm/ES<0>            3       0     0   2     FB6_6   77    I/O     I
+iobm/ES<3>            4       0     0   1     FB6_7         (b)     (b)
+iobm/ES<1>            4       0   \/1   0     FB6_8   78    I/O     I
 nLDS_IOB              6       1<-   0   0     FB6_9   79    I/O     O
-iobm/ES<1>            4       0   \/1   0     FB6_10        (b)     (b)
+ALE0M                 4       0   \/1   0     FB6_10        (b)     (b)
 nUDS_IOB              6       1<-   0   0     FB6_11  80    I/O     O
 nAS_IOB               4       0     0   1     FB6_12  81    I/O     O
-ALE0M                 4       0     0   1     FB6_13        (b)     (b)
+iobm/DoutOE           5       0     0   0     FB6_13        (b)     (b)
 nADoutLE1             2       0     0   3     FB6_14  82    I/O     O
-nADoutLE0             1       0     0   4     FB6_15  85    I/O     O
-iobm/DoutOE           5       0     0   0     FB6_16        (b)     (b)
+nADoutLE0             1       0   \/1   3     FB6_15  85    I/O     O
+IOACT                 6       1<-   0   0     FB6_16        (b)     (b)
 nDinLE                1       0   \/4   0     FB6_17  86    I/O     O
 IODONE               10       5<-   0   0     FB6_18        (b)     (b)
 
 Signals Used by Logic in Function Block
-  1: ALE0M             14: iobm/ES<2>         26: iobs/Clear1 
-  2: ALE0S             15: iobm/ES<3>         27: iobs/IOL1 
-  3: E                 16: iobm/Er            28: iobs/IOU1 
-  4: IOACT             17: iobm/IOREQr        29: iobs/Load1 
-  5: IODONE            18: iobm/IOS_FSM_FFd1  30: iobs/TS_FSM_FFd1 
-  6: IOL0              19: iobm/IOS_FSM_FFd2  31: nADoutLE1 
-  7: IORW              20: iobm/IOS_FSM_FFd3  32: nAoutOE 
-  8: IOU0              21: iobm/IOS_FSM_FFd4  33: nBERR_IOB 
-  9: nRES.PIN          22: iobm/IOS_FSM_FFd5  34: nDTACK_IOB 
- 10: iobm/C8Mr         23: iobm/IOS_FSM_FFd6  35: nLDS_FSB 
- 11: iobm/DoutOE       24: iobm/IOS_FSM_FFd7  36: nUDS_FSB 
- 12: iobm/ES<0>        25: iobm/VPAr          37: nVMA_IOB 
- 13: iobm/ES<1>       
+  1: ALE0M             12: iobm/ES<0>         23: iobm/IOS_FSM_FFd6 
+  2: ALE0S             13: iobm/ES<1>         24: iobm/IOS_FSM_FFd7 
+  3: E                 14: iobm/ES<2>         25: iobm/VPAr 
+  4: IOACT             15: iobm/ES<3>         26: iobs/Clear1 
+  5: IODONE            16: iobm/Er            27: iobs/Load1 
+  6: IOL0              17: iobm/IOREQr        28: nADoutLE1 
+  7: IORW              18: iobm/IOS_FSM_FFd1  29: nAoutOE 
+  8: IOU0              19: iobm/IOS_FSM_FFd2  30: nBERR_IOB 
+  9: nRES.PIN          20: iobm/IOS_FSM_FFd3  31: nDTACK_IOB 
+ 10: iobm/C8Mr         21: iobm/IOS_FSM_FFd4  32: nVMA_IOB 
+ 11: iobm/DoutOE       22: iobm/IOS_FSM_FFd5 
 
 Signal                        1         2         3         4 FB
 Name                0----+----0----+----0----+----0----+----0 Inputs
-iobs/IOU1            ............................X......X.... 2
-nVMA_IOB             ...X.......XXXX.........X......X....X... 8
-iobs/IOL1            ............................X.....X..... 2
+iobm/IOS_FSM_FFd2    ....X....X.........X.................... 3
+nVMA_IOB             ...X.......XXXX.........X...X..X........ 8
+iobm/IOS_FSM_FFd7    .........X......XX.....X....X........... 5
+iobm/IOS_FSM_FFd3    ....X....X.........XX................... 4
 iobm/ES<2>           ..X........XXX.X........................ 5
 iobm/ES<0>           ..X........XXXXX........................ 6
-IOU0                 .......X...................X.XX....X.... 5
-IOL0                 .....X....................X..XX...X..... 5
 iobm/ES<3>           ..X........XXXXX........................ 6
-nLDS_IOB             .....XX..X......X..XXXXX.......X........ 10
 iobm/ES<1>           ..X........XXXXX........................ 6
-nUDS_IOB             ......XX.X......X..XXXXX.......X........ 10
-nAS_IOB              .........X......X..XXXXX.......X........ 8
+nLDS_IOB             .....XX..X......X..XXXXX....X........... 10
 ALE0M                X...............XXXXXXXX................ 9
-nADoutLE1            .........................X..X.X......... 3
-nADoutLE0            XX...................................... 2
+nUDS_IOB             ......XX.X......X..XXXXX....X........... 10
+nAS_IOB              .........X......X..XXXXX....X........... 8
 iobm/DoutOE          ......X..XX.....X..XXXXX................ 9
+nADoutLE1            .........................XXX............ 3
+nADoutLE0            XX...................................... 2
+IOACT                ...XX....X......XXXXXXXX................ 11
 nDinLE               ...................XX................... 2
-IODONE               ....X...XX.XXXX....X.X.X........XX..X... 13
+IODONE               ....X...XX.XXXX....X.X.X.....XXX........ 13
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *********************************** FB7  ***********************************
@@ -626,116 +635,116 @@ Number of function block inputs used/remaining:               38/16
 Number of signals used by logic mapping into function block:  38
 Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
 Name                Pt      Pt    Pt  Pt               #    Type    Use
-iobm/IOS_FSM_FFd6     1       0     0   4     FB7_1         (b)     (b)
-RA<1>                 2       0     0   3     FB7_2   50    I/O     O
-iobm/IOS_FSM_FFd2     1       0     0   4     FB7_3         (b)     (b)
-BACTr                 1       0     0   4     FB7_4         (b)     (b)
-RA<7>                 2       0     0   3     FB7_5   52    I/O     O
-RA<0>                 2       0     0   3     FB7_6   53    I/O     O
+iobm/IOS_FSM_FFd6     1       0   /\4   0     FB7_1         (b)     (b)
+RA<1>                 2       0   \/3   0     FB7_2   50    I/O     O
+cnt/QFS<0>           10       5<-   0   0     FB7_3         (b)     (b)
+cnt/ClockGateEN       7       4<- /\2   0     FB7_4         (b)     (b)
+RA<7>                 2       1<- /\4   0     FB7_5   52    I/O     O
+RA<0>                 2       0   /\1   2     FB7_6   53    I/O     O
 ASrf                  1       0     0   4     FB7_7         (b)     (b)
 RA<8>                 2       0     0   3     FB7_8   54    I/O     O
 RA<10>                2       0     0   3     FB7_9   55    I/O     O
-iobm/IOS_FSM_FFd7     2       0     0   3     FB7_10        (b)     (b)
+BACTr                 1       0     0   4     FB7_10        (b)     (b)
 RA<9>                 2       0     0   3     FB7_11  56    I/O     O
 MCKE                  3       0     0   2     FB7_12  58    I/O     O
-iobm/IOS_FSM_FFd3     2       0   \/1   2     FB7_13        (b)     (b)
+cnt/C8Mr<1>           1       0   \/1   3     FB7_13        (b)     (b)
 RnW_IOB               6       1<-   0   0     FB7_14  59    I/O     O
-GA<23>                1       0   \/1   3     FB7_15  60    I/O     O
-IOACT                 6       1<-   0   0     FB7_16        (b)     (b)
-GA<22>                1       0   \/2   2     FB7_17  61    I/O     O
-cnt/ClockGateEN       7       2<-   0   0     FB7_18        (b)     (b)
+GA<23>                1       0     0   4     FB7_15  60    I/O     O
+cnt/LTimer<0>         1       0   \/1   3     FB7_16        (b)     (b)
+GA<22>                1       1<- \/5   0     FB7_17  61    I/O     O
+cnt/QFS<1>           14       9<-   0   0     FB7_18        (b)     (b)
 
 Signals Used by Logic in Function Block
-  1: ASrf              14: A_FSB<9>          27: iobm/C8Mr 
-  2: A_FSB<10>         15: A_FSB<22>         28: iobm/IOREQr 
-  3: A_FSB<14>         16: A_FSB<23>         29: iobm/IOS_FSM_FFd1 
-  4: A_FSB<15>         17: IOACT             30: iobm/IOS_FSM_FFd2 
-  5: A_FSB<17>         18: IODONE            31: iobm/IOS_FSM_FFd3 
-  6: A_FSB<18>         19: IORW              32: iobm/IOS_FSM_FFd4 
-  7: A_FSB<1>          20: nRES.PIN          33: iobm/IOS_FSM_FFd5 
-  8: A_FSB<20>         21: QoSEN             34: iobm/IOS_FSM_FFd6 
-  9: A_FSB<21>         22: RnW_IOB           35: iobm/IOS_FSM_FFd7 
- 10: A_FSB<2>          23: cnt/C8Mr<0>       36: nAS_FSB 
- 11: A_FSB<6>          24: cnt/C8Mr<1>       37: nAoutOE 
- 12: A_FSB<7>          25: cnt/ClockGateEN   38: ram/RASEL 
+  1: ASrf              14: A_FSB<9>          27: cnt/TimerTick 
+  2: A_FSB<10>         15: A_FSB<22>         28: iobm/C8Mr 
+  3: A_FSB<14>         16: A_FSB<23>         29: iobm/IOREQr 
+  4: A_FSB<15>         17: IORW              30: iobm/IOS_FSM_FFd2 
+  5: A_FSB<17>         18: nRES.PIN          31: iobm/IOS_FSM_FFd3 
+  6: A_FSB<18>         19: QoSEN             32: iobm/IOS_FSM_FFd4 
+  7: A_FSB<1>          20: RnW_IOB           33: iobm/IOS_FSM_FFd5 
+  8: A_FSB<20>         21: cnt/C8Mr<0>       34: iobm/IOS_FSM_FFd6 
+  9: A_FSB<21>         22: cnt/C8Mr<1>       35: iobm/IOS_FSM_FFd7 
+ 10: A_FSB<2>          23: cnt/ClockGateEN   36: nAS_FSB 
+ 11: A_FSB<6>          24: cnt/QFS<0>        37: nAoutOE 
+ 12: A_FSB<7>          25: cnt/QFS<1>        38: ram/RASEL 
  13: A_FSB<8>          26: cnt/SndCSWRr     
 
 Signal                        1         2         3         4 FB
 Name                0----+----0----+----0----+----0----+----0 Inputs
-iobm/IOS_FSM_FFd6    ..........................XX......X.X... 4
+iobm/IOS_FSM_FFd6    ...........................XX.....X.X... 4
 RA<1>                .X.......X...........................X.. 3
-iobm/IOS_FSM_FFd2    .................X........X...X......... 3
-BACTr                X..................................X.... 2
+cnt/QFS<0>           X.....XXXX....XX.X.....XXXX........X.... 13
+cnt/ClockGateEN      X.....XXXX....XX.X....X..X.........X.... 11
 RA<7>                ..X.......X..........................X.. 3
 RA<0>                ......X......X.......................X.. 3
 ASrf                 ...................................X.... 1
 RA<8>                .....X..X............................X.. 3
 RA<10>               ....X......X.........................X.. 3
-iobm/IOS_FSM_FFd7    ..........................XXX.....X.X... 5
+BACTr                X..................................X.... 2
 RA<9>                ...X........X........................X.. 3
-MCKE                 X...................X.XXX..........X.... 6
-iobm/IOS_FSM_FFd3    .................X........X...XX........ 4
-RnW_IOB              ..................X..X....XX.XXXXXX.X... 11
+MCKE                 X.................X.XXX............X.... 6
+cnt/C8Mr<1>          ....................X................... 1
+RnW_IOB              ................X..X.......XXXXXXXX.X... 11
 GA<23>               ...............X........................ 1
-IOACT                ................XX........XXXXXXXXX..... 11
+cnt/LTimer<0>        ..........................X............. 1
 GA<22>               ..............X......................... 1
-cnt/ClockGateEN      X.....XXXX....XX...X....XX.........X.... 11
+cnt/QFS<1>           X.....XXXX....XX.X.....XXXX........X.... 13
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *********************************** FB8  ***********************************
-Number of function block inputs used/remaining:               38/16
-Number of signals used by logic mapping into function block:  38
+Number of function block inputs used/remaining:               39/15
+Number of signals used by logic mapping into function block:  39
 Signal              Total   Imp   Exp Unused  Loc     Pin   Pin     Pin
 Name                Pt      Pt    Pt  Pt               #    Type    Use
-(unused)              0       0   /\5   0     FB8_1         (b)     (b)
+cnt/QS<0>            18      13<-   0   0     FB8_1         (b)     (b)
 RA<11>                2       2<- /\5   0     FB8_2   63    I/O     O
-QoSEN                 2       0   /\2   1     FB8_3         (b)     (b)
-ram/RS<0>             6       1<-   0   0     FB8_4         (b)     (b)
-nRAS                  2       0   /\1   2     FB8_5   64    I/O     O
-nRAMLWE               1       0   \/1   3     FB8_6   65    I/O     O
-IONPReady             6       1<-   0   0     FB8_7         (b)     (b)
-nRAMUWE               1       0   \/2   2     FB8_8   66    I/O     O
+cnt/LTimer<6>         2       0   /\2   1     FB8_3         (b)     (b)
+cs/Overlay            3       0     0   2     FB8_4         (b)     (b)
+nRAS                  2       0     0   3     FB8_5   64    I/O     O
+nRAMLWE               1       0   \/3   1     FB8_6   65    I/O     O
+cnt/QS<1>            12       7<-   0   0     FB8_7         (b)     (b)
+nRAMUWE               1       0   /\4   0     FB8_8   66    I/O     O
 (unused)              0       0   \/5   0     FB8_9   67    I/O     (b)
 (unused)              0       0   \/5   0     FB8_10        (b)     (b)
-cnt/QS<1>            16      12<- \/1   0     FB8_11  68    I/O     (b)
-nBERR_FSB             3       1<- \/3   0     FB8_12  70    I/O     O
+cnt/QS<3>            13      10<- \/2   0     FB8_11  68    I/O     (b)
+nBERR_FSB             3       2<- \/4   0     FB8_12  70    I/O     O
 (unused)              0       0   \/5   0     FB8_13        (b)     (b)
-cnt/QS<0>            17      12<-   0   0     FB8_14  71    I/O     (b)
+cnt/QS<2>            18      13<-   0   0     FB8_14  71    I/O     (b)
 nBR_IOB               1       0   /\4   0     FB8_15  72    I/O     O
-cs/Overlay            3       0   \/2   0     FB8_16        (b)     (b)
-(unused)              0       0   \/5   0     FB8_17  73    I/O     (b)
-cnt/QS<2>            22      17<-   0   0     FB8_18        (b)     (b)
+(unused)              0       0   \/4   1     FB8_16        (b)     (b)
+IONPReady             6       4<- \/3   0     FB8_17  73    I/O     (b)
+(unused)              0       0   \/5   0     FB8_18        (b)     (b)
 
 Signals Used by Logic in Function Block
-  1: ASrf              14: QoSEN             27: nBERR_IOB 
-  2: A_FSB<16>         15: cnt/QS<0>         28: nBR_IOBout 
-  3: A_FSB<17>         16: cnt/QS<1>         29: nDTACK_FSB 
-  4: A_FSB<18>         17: cnt/QS<2>         30: nLDS_FSB 
-  5: A_FSB<19>         18: cnt/QS<3>         31: nUDS_FSB 
-  6: A_FSB<1>          19: cnt/SndCSWRr      32: nWE_FSB 
-  7: A_FSB<20>         20: cnt/TimerTick     33: ram/RASEL 
-  8: A_FSB<21>         21: cs/Overlay        34: ram/RASEN 
-  9: A_FSB<2>          22: iobs/IODONEr<0>   35: ram/RASrf 
- 10: A_FSB<22>         23: iobs/IODONEr<1>   36: ram/RS<0> 
- 11: A_FSB<23>         24: iobs/Sent         37: ram/RS<1> 
- 12: IONPReady         25: nAS_FSB           38: ram/RS<2> 
- 13: nRES.PIN          26: nBERR_FSB        
+  1: ASrf              14: cnt/LTimer<0>     27: iobs/IODONEr<0> 
+  2: A_FSB<16>         15: cnt/LTimer<1>     28: iobs/IODONEr<1> 
+  3: A_FSB<17>         16: cnt/LTimer<2>     29: iobs/Sent 
+  4: A_FSB<18>         17: cnt/LTimer<3>     30: nAS_FSB 
+  5: A_FSB<19>         18: cnt/LTimer<4>     31: nBERR_FSB 
+  6: A_FSB<1>          19: cnt/LTimer<5>     32: nBERR_IOB 
+  7: A_FSB<20>         20: cnt/QS<0>         33: nBR_IOBout 
+  8: A_FSB<21>         21: cnt/QS<1>         34: nLDS_FSB 
+  9: A_FSB<22>         22: cnt/QS<2>         35: nUDS_FSB 
+ 10: A_FSB<23>         23: cnt/QS<3>         36: nWE_FSB 
+ 11: IONPReady         24: cnt/SndCSWRr      37: ram/RASEL 
+ 12: nRES.PIN          25: cnt/TimerTick     38: ram/RASEN 
+ 13: QoSEN             26: cs/Overlay        39: ram/RASrf 
 
 Signal                        1         2         3         4 FB
 Name                0----+----0----+----0----+----0----+----0 Inputs
-RA<11>               ....X.X.........................X....... 3
-QoSEN                X.............XXXX......X............... 6
-ram/RS<0>            X........XX.........X...X...X....X.XXX.. 10
-nRAS                 .........XX.........X...X........XX..... 6
-nRAMLWE              .............................X.XX....... 3
-IONPReady            XXXXX.XX.XXX.X.......XXXX......X........ 16
-nRAMUWE              ..............................XXX....... 3
-cnt/QS<1>            X....XXXXXX.X.XXXXXX....X............... 15
-nBERR_FSB            X....................XXXXXX............. 7
-cnt/QS<0>            X....XXXXXX.X.XXXXXX....X............... 15
-nBR_IOB              ...........................X............ 1
-cs/Overlay           X.....XX.XX.X.......X...X............... 8
-cnt/QS<2>            X....XXXXXX.X.XXXXXX....X............... 15
+cnt/QS<0>            X....XXXXX.X.......XXXXXX....X.......... 14
+RA<11>               ....X.X.............................X... 3
+cnt/LTimer<6>        .............XXXXXX.....X............... 7
+cs/Overlay           X.....XXXX.X.............X...X.......... 8
+nRAS                 ........XX...............X...X.......XX. 6
+nRAMLWE              .................................X.XX... 3
+cnt/QS<1>            X....XXXXX.X.......XXXXXX....X.......... 14
+nRAMUWE              ..................................XXX... 3
+cnt/QS<3>            X....XXXXX.X.......XXXXXX....X.......... 14
+nBERR_FSB            X.........................XXXXXX........ 7
+cnt/QS<2>            X....XXXXX.X.......XXXXXX....X.......... 14
+nBR_IOB              ................................X....... 1
+IONPReady            XXXXX.XXXXX.X.............XXXX.....X.... 16
                     0----+----1----+----2----+----3----+----4
                               0         0         0         0
 *******************************  Equations  ********************************
@@ -761,8 +770,6 @@ FDCPE_ASrf: FDCPE port map (ASrf,NOT nAS_FSB,NOT FCLK,'0','0');
 
 FDCPE_BACTr: FDCPE port map (BACTr,BACTr_D,FCLK,'0','0');
 BACTr_D <= (nAS_FSB AND NOT ASrf);
-
-
 
 
 
@@ -823,8 +830,8 @@ IODONE_D <= ((NOT nVMA_IOB AND NOT iobm/C8Mr AND NOT iobm/ES(0) AND
 	OR (NOT iobm/C8Mr AND iobm/IOS_FSM_FFd5 AND NOT nDTACK_IOB));
 
 FDCPE_IOL0: FDCPE port map (IOL0,IOL0_D,FCLK,'0','0');
-IOL0_D <= ((iobs/TS_FSM_FFd1 AND IOL0)
-	OR (NOT nLDS_FSB AND NOT iobs/TS_FSM_FFd1 AND nADoutLE1)
+IOL0_D <= ((NOT nLDS_FSB AND NOT iobs/TS_FSM_FFd1 AND nADoutLE1)
+	OR (iobs/TS_FSM_FFd1 AND IOL0)
 	OR (iobs/IOL1 AND NOT iobs/TS_FSM_FFd1 AND NOT nADoutLE1));
 
 FDCPE_IONPReady: FDCPE port map (IONPReady,IONPReady_D,FCLK,'0','0');
@@ -875,7 +882,9 @@ MCKE_D <= ((QoSEN AND cnt/ClockGateEN AND NOT cnt/C8Mr(1) AND NOT ASrf)
 	OR (QoSEN AND cnt/ClockGateEN AND cnt/C8Mr(0) AND NOT ASrf));
 
 FDCPE_QoSEN: FDCPE port map (QoSEN,QoSEN_D,FCLK,'0','0',QoSEN_CE);
-QoSEN_D <= (NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND NOT cnt/QS(3));
+QoSEN_D <= ((cnt/QFS(0))
+	OR (cnt/QFS(1))
+	OR (NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND NOT cnt/QS(3)));
 QoSEN_CE <= (nAS_FSB AND NOT ASrf);
 
 
@@ -907,8 +916,8 @@ RA(6) <= ((A_FSB(13) AND NOT ram/RASEL)
 	OR (ram/RASEL AND A_FSB(5)));
 
 
-RA(7) <= ((A_FSB(14) AND NOT ram/RASEL)
-	OR (ram/RASEL AND A_FSB(6)));
+RA(7) <= ((ram/RASEL AND A_FSB(6))
+	OR (A_FSB(14) AND NOT ram/RASEL));
 
 
 RA(8) <= ((A_FSB(21) AND ram/RASEL)
@@ -963,15 +972,15 @@ FDCPE_cnt/C8Mr3: FDCPE port map (cnt/C8Mr(3),cnt/C8Mr(2),FCLK,'0','0');
 
 FDCPE_cnt/ClockGateEN: FDCPE port map (cnt/ClockGateEN,cnt/ClockGateEN_D,FCLK,'0','0');
 cnt/ClockGateEN_D <= ((nRES.PIN AND cnt/SndCSWRr)
-	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND nRES.PIN AND 
-	cnt/ClockGateEN)
 	OR (A_FSB(21) AND NOT A_FSB(23) AND nRES.PIN AND 
 	cnt/ClockGateEN)
+	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND nRES.PIN AND 
+	cnt/ClockGateEN)
+	OR (nAS_FSB AND nRES.PIN AND cnt/ClockGateEN AND NOT ASrf)
 	OR (NOT A_FSB(20) AND NOT A_FSB(22) AND nRES.PIN AND 
 	cnt/ClockGateEN)
 	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND nRES.PIN AND 
 	cnt/ClockGateEN)
-	OR (nAS_FSB AND nRES.PIN AND cnt/ClockGateEN AND NOT ASrf)
 	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(22) AND nRES.PIN AND 
 	cnt/ClockGateEN AND NOT A_FSB(1) AND NOT A_FSB(2)));
 
@@ -1040,106 +1049,157 @@ cnt/LTimerTick_D <= (cnt/LTimer(0) AND cnt/LTimer(10) AND cnt/LTimer(1) AND
 	cnt/LTimer(6) AND cnt/LTimer(7) AND cnt/LTimer(8) AND cnt/LTimer(9) AND 
 	cnt/LTimer(11) AND cnt/TimerTick);
 
-FDCPE_cnt/QS0: FDCPE port map (cnt/QS(0),cnt/QS_D(0),FCLK,'0','0');
-cnt/QS_D(0) <= ((nBERR_FSB_OBUF.EXP)
-	OR (NOT A_FSB(20) AND NOT cnt/QS(0) AND nRES.PIN AND 
+FDCPE_cnt/QFS0: FDCPE port map (cnt/QFS(0),cnt/QFS_D(0),FCLK,'0','0');
+cnt/QFS_D(0) <= ((NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cnt/QFS(0) AND cnt/QFS(1) AND 
+	nRES.PIN AND cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(20) AND NOT A_FSB(22) AND NOT cnt/QFS(0) AND cnt/QFS(1) AND 
+	nRES.PIN AND cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (nAS_FSB AND NOT cnt/QFS(0) AND cnt/QFS(1) AND nRES.PIN AND 
+	cnt/TimerTick AND NOT cnt/SndCSWRr AND NOT ASrf)
+	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(22) AND cnt/QFS(0) AND 
+	nRES.PIN AND NOT cnt/TimerTick AND NOT cnt/SndCSWRr AND NOT A_FSB(1) AND 
+	NOT A_FSB(2))
+	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(22) AND NOT cnt/QFS(0) AND 
+	cnt/QFS(1) AND nRES.PIN AND cnt/TimerTick AND NOT cnt/SndCSWRr AND 
+	NOT A_FSB(1) AND NOT A_FSB(2))
+	OR (NOT A_FSB(23) AND cnt/QFS(0) AND nRES.PIN AND 
 	NOT cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(23) AND NOT cnt/QS(0) AND nRES.PIN AND 
+	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND cnt/QFS(0) AND nRES.PIN AND 
 	NOT cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND cnt/QS(0) AND nRES.PIN AND 
+	OR (NOT A_FSB(20) AND NOT A_FSB(22) AND cnt/QFS(0) AND nRES.PIN AND 
+	NOT cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(23) AND NOT cnt/QFS(0) AND cnt/QFS(1) AND nRES.PIN AND 
 	cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(20) AND NOT A_FSB(22) AND cnt/QS(0) AND nRES.PIN AND 
-	cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (nAS_FSB AND cnt/QS(0) AND nRES.PIN AND cnt/TimerTick AND 
+	OR (nAS_FSB AND cnt/QFS(0) AND nRES.PIN AND NOT cnt/TimerTick AND 
+	NOT cnt/SndCSWRr AND NOT ASrf));
+
+FDCPE_cnt/QFS1: FDCPE port map (cnt/QFS(1),cnt/QFS_D(1),FCLK,'0','0');
+cnt/QFS_D(1) <= ((A_FSB(20) AND A_FSB(23) AND NOT A_FSB(22) AND nRES.PIN AND 
+	ASrf)
+	OR (NOT A_FSB(23) AND cnt/QFS(1) AND nRES.PIN AND 
+	NOT cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND cnt/QFS(1) AND nRES.PIN AND 
+	NOT cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (nAS_FSB AND cnt/QFS(1) AND nRES.PIN AND NOT cnt/TimerTick AND 
 	NOT cnt/SndCSWRr AND NOT ASrf)
-	OR (nAS_FSB AND NOT cnt/QS(0) AND nRES.PIN AND NOT cnt/TimerTick AND 
+	OR (A_FSB(20) AND A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB AND 
+	nRES.PIN)
+	OR (NOT A_FSB(23) AND cnt/QFS(0) AND cnt/QFS(1) AND nRES.PIN AND 
+	NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(22) AND cnt/QFS(0) AND cnt/QFS(1) AND nRES.PIN AND 
+	NOT cnt/SndCSWRr)
+	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND nRES.PIN AND 
+	A_FSB(2) AND ASrf)
+	OR (nAS_FSB AND cnt/QFS(0) AND cnt/QFS(1) AND nRES.PIN AND 
 	NOT cnt/SndCSWRr AND NOT ASrf)
+	OR (NOT A_FSB(22) AND cnt/QFS(1) AND nRES.PIN AND 
+	NOT cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND NOT nAS_FSB AND 
+	nRES.PIN AND A_FSB(2))
+	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND cnt/QFS(0) AND cnt/QFS(1) AND 
+	nRES.PIN AND NOT cnt/SndCSWRr)
+	OR (A_FSB(21) AND A_FSB(20) AND cnt/QFS(0) AND cnt/QFS(1) AND 
+	nRES.PIN AND NOT cnt/SndCSWRr AND NOT A_FSB(1))
+	OR (A_FSB(21) AND A_FSB(20) AND cnt/QFS(1) AND nRES.PIN AND 
+	NOT cnt/TimerTick AND NOT cnt/SndCSWRr AND NOT A_FSB(1)));
+
+FTCPE_cnt/QS0: FTCPE port map (cnt/QS(0),cnt/QS_T(0),FCLK,'0','0');
+cnt/QS_T(0) <= ((NOT A_FSB(20) AND nRES.PIN AND NOT cnt/TimerTick AND 
+	NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(23) AND nRES.PIN AND NOT cnt/TimerTick AND 
+	NOT cnt/SndCSWRr)
 	OR (A_FSB(21) AND NOT A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
-	NOT nAS_FSB AND NOT cnt/QS(0) AND nRES.PIN)
+	nRES.PIN AND ASrf)
 	OR (NOT A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
-	NOT nAS_FSB AND NOT cnt/QS(0) AND nRES.PIN)
+	nRES.PIN AND ASrf)
+	OR (A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND cnt/QS(0) AND 
+	A_FSB(1) AND ASrf)
+	OR (IONPReady.EXP)
+	OR (cnt/QS(0) AND cnt/SndCSWRr)
+	OR (NOT A_FSB(22) AND nRES.PIN AND NOT cnt/TimerTick AND 
+	NOT cnt/SndCSWRr)
+	OR (A_FSB(21) AND NOT A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
+	NOT nAS_FSB AND nRES.PIN)
 	OR (NOT A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
-	NOT cnt/QS(0) AND nRES.PIN AND ASrf)
-	OR (NOT A_FSB(23) AND cnt/QS(0) AND nRES.PIN AND 
-	cnt/TimerTick AND NOT cnt/SndCSWRr)
+	NOT nAS_FSB AND nRES.PIN)
+	OR (A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND NOT nAS_FSB AND 
+	cnt/QS(0) AND A_FSB(1))
+	OR (nAS_FSB AND nRES.PIN AND NOT cnt/TimerTick AND 
+	NOT cnt/SndCSWRr AND NOT ASrf)
 	OR (NOT A_FSB(20) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
 	NOT cnt/QS(3) AND nRES.PIN AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(23) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND NOT cnt/QS(3) AND 
-	nRES.PIN AND cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (nAS_FSB AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND NOT cnt/QS(3) AND 
-	nRES.PIN AND cnt/TimerTick AND NOT cnt/SndCSWRr AND NOT ASrf)
-	OR (A_FSB(22) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
-	NOT cnt/QS(3) AND nRES.PIN AND NOT cnt/SndCSWRr AND NOT A_FSB(1) AND NOT A_FSB(2)));
+	OR (NOT A_FSB(23) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
+	NOT cnt/QS(3) AND nRES.PIN AND NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(22) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
+	NOT cnt/QS(3) AND nRES.PIN AND NOT cnt/SndCSWRr)
+	OR (nAS_FSB AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
+	NOT cnt/QS(3) AND nRES.PIN AND NOT cnt/SndCSWRr AND NOT ASrf));
 
 FDCPE_cnt/QS1: FDCPE port map (cnt/QS(1),cnt/QS_D(1),FCLK,'0','0');
 cnt/QS_D(1) <= ((NOT nRES.PIN)
 	OR (cnt/SndCSWRr)
-	OR (EXP16_.EXP)
-	OR (cnt/QS(0) AND cnt/QS(1))
 	OR (cnt/QS(1) AND NOT cnt/TimerTick)
-	OR (A_FSB(20) AND A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB)
-	OR (A_FSB(20) AND A_FSB(23) AND NOT nAS_FSB AND A_FSB(1))
-	OR (A_FSB(20) AND A_FSB(23) AND NOT nAS_FSB AND A_FSB(2))
-	OR (A_FSB(20) AND A_FSB(23) AND A_FSB(1) AND ASrf)
-	OR (A_FSB(20) AND A_FSB(23) AND A_FSB(2) AND ASrf));
+	OR (NOT cnt/QS(0) AND NOT cnt/QS(1) AND cnt/QS(2) AND 
+	cnt/TimerTick)
+	OR (NOT cnt/QS(0) AND NOT cnt/QS(1) AND cnt/QS(3) AND 
+	cnt/TimerTick)
+	OR (A_FSB(21) AND NOT A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
+	NOT nAS_FSB)
+	OR (A_FSB(21) AND NOT A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
+	ASrf)
+	OR (NOT A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
+	NOT nAS_FSB)
+	OR (NOT A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
+	ASrf)
+	OR (cnt/QS(0) AND cnt/QS(1))
+	OR (A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND NOT nAS_FSB AND 
+	A_FSB(1))
+	OR (A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND A_FSB(1) AND 
+	ASrf));
 
 FTCPE_cnt/QS2: FTCPE port map (cnt/QS(2),cnt/QS_T(2),FCLK,'0','0');
-cnt/QS_T(2) <= ((RA_11_OBUF$BUF0.EXP)
-	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND NOT nAS_FSB AND 
-	NOT cnt/QS(2) AND nRES.PIN AND A_FSB(1))
-	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND 
-	cnt/QS(2) AND cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(23) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
-	cnt/QS(3) AND nRES.PIN AND cnt/TimerTick)
+cnt/QS_T(2) <= ((nBERR_FSB_OBUF.EXP)
+	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cnt/QS(2) AND nRES.PIN AND 
+	cnt/SndCSWRr)
+	OR (NOT A_FSB(23) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND cnt/QS(2) AND 
+	cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(22) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND cnt/QS(2) AND 
+	cnt/TimerTick AND NOT cnt/SndCSWRr)
 	OR (NOT A_FSB(22) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
 	cnt/QS(3) AND nRES.PIN AND cnt/TimerTick)
 	OR (nAS_FSB AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND cnt/QS(2) AND 
 	cnt/TimerTick AND NOT cnt/SndCSWRr AND NOT ASrf)
-	OR (cs/Overlay.EXP)
-	OR (nAS_FSB AND NOT cnt/QS(2) AND nRES.PIN AND cnt/SndCSWRr AND 
-	NOT ASrf)
-	OR (A_FSB(20) AND A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB AND 
-	NOT cnt/QS(2) AND nRES.PIN)
-	OR (A_FSB(20) AND A_FSB(23) AND NOT A_FSB(22) AND NOT cnt/QS(2) AND 
-	nRES.PIN AND ASrf)
-	OR (NOT A_FSB(23) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND cnt/QS(2) AND 
-	cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(20) AND NOT A_FSB(22) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND 
+	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND 
 	cnt/QS(2) AND cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(23) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
+	cnt/QS(3) AND nRES.PIN AND cnt/TimerTick)
+	OR (A_FSB(21) AND A_FSB(20) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND 
+	NOT cnt/QS(2) AND cnt/QS(3) AND nRES.PIN AND cnt/TimerTick)
+	OR (nAS_FSB AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
+	cnt/QS(3) AND nRES.PIN AND cnt/TimerTick AND NOT ASrf)
 	OR (cnt/QS(2) AND NOT nRES.PIN)
 	OR (NOT A_FSB(23) AND NOT cnt/QS(2) AND nRES.PIN AND cnt/SndCSWRr)
 	OR (NOT A_FSB(22) AND NOT cnt/QS(2) AND nRES.PIN AND cnt/SndCSWRr)
 	OR (A_FSB(21) AND A_FSB(20) AND NOT cnt/QS(2) AND nRES.PIN AND 
 	cnt/SndCSWRr)
-	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cnt/QS(2) AND nRES.PIN AND 
-	cnt/SndCSWRr));
+	OR (nAS_FSB AND NOT cnt/QS(2) AND nRES.PIN AND cnt/SndCSWRr AND 
+	NOT ASrf));
 
-FDCPE_cnt/QS3: FDCPE port map (cnt/QS(3),cnt/QS_D(3),FCLK,'0','0');
-cnt/QS_D(3) <= ((NOT nRES.PIN)
-	OR (A_FSB(21) AND NOT A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
-	NOT nAS_FSB AND NOT cnt/QS(3))
-	OR (A_FSB(21) AND NOT A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
-	NOT cnt/QS(3) AND ASrf)
-	OR (NOT A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
-	NOT nAS_FSB AND NOT cnt/QS(3))
-	OR (NOT A_FSB(21) AND A_FSB(20) AND A_FSB(23) AND A_FSB(22) AND 
-	NOT cnt/QS(3) AND ASrf)
+FTCPE_cnt/QS3: FTCPE port map (cnt/QS(3),cnt/QS_T(3),FCLK,'0','0');
+cnt/QS_T(3) <= ((EXP14_.EXP)
+	OR (A_FSB(21) AND A_FSB(20) AND NOT cnt/QS(3) AND nRES.PIN AND 
+	cnt/SndCSWRr)
+	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cnt/QS(3) AND nRES.PIN AND 
+	cnt/SndCSWRr)
+	OR (nAS_FSB AND NOT cnt/QS(3) AND nRES.PIN AND cnt/SndCSWRr AND 
+	NOT ASrf)
 	OR (NOT A_FSB(23) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
-	cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(21) AND NOT A_FSB(20) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND 
-	NOT cnt/QS(2) AND cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(20) AND NOT A_FSB(22) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND 
-	NOT cnt/QS(2) AND cnt/TimerTick AND NOT cnt/SndCSWRr)
-	OR (nAS_FSB AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
-	cnt/TimerTick AND NOT cnt/SndCSWRr AND NOT ASrf)
-	OR (A_FSB(21) AND A_FSB(20) AND A_FSB(22) AND NOT cnt/QS(0) AND 
-	NOT cnt/QS(1) AND NOT cnt/QS(2) AND cnt/TimerTick AND NOT cnt/SndCSWRr AND 
-	NOT A_FSB(1) AND NOT A_FSB(2))
-	OR (NOT A_FSB(20) AND NOT cnt/QS(3) AND NOT cnt/SndCSWRr)
-	OR (NOT A_FSB(23) AND NOT cnt/QS(3) AND NOT cnt/SndCSWRr)
-	OR (nAS_FSB AND NOT cnt/QS(3) AND NOT cnt/SndCSWRr AND NOT ASrf)
-	OR (A_FSB(22) AND NOT cnt/QS(3) AND NOT cnt/SndCSWRr AND NOT A_FSB(1) AND 
-	NOT A_FSB(2)));
+	cnt/QS(3) AND cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (NOT A_FSB(22) AND NOT cnt/QS(0) AND NOT cnt/QS(1) AND NOT cnt/QS(2) AND 
+	cnt/QS(3) AND cnt/TimerTick AND NOT cnt/SndCSWRr)
+	OR (cnt/QS(3) AND NOT nRES.PIN)
+	OR (NOT A_FSB(23) AND NOT cnt/QS(3) AND nRES.PIN AND cnt/SndCSWRr)
+	OR (NOT A_FSB(22) AND NOT cnt/QS(3) AND nRES.PIN AND cnt/SndCSWRr));
 
 FDCPE_cnt/SndCSWRr: FDCPE port map (cnt/SndCSWRr,cnt/SndCSWRr_D,FCLK,'0','0');
 cnt/SndCSWRr_D <= ((A_FSB(21) AND A_FSB(20) AND A_FSB(19) AND A_FSB(18) AND 
@@ -1434,11 +1494,11 @@ FDCPE_nAoutOE: FDCPE port map (nAoutOE,nAoutOE_D,FCLK,'0','0');
 nAoutOE_D <= (cnt/IS(1) AND cnt/IS(0) AND NOT nBR_IOBout);
 
 FTCPE_nBERR_FSB: FTCPE port map (nBERR_FSB,nBERR_FSB_T,FCLK,'0','0');
-nBERR_FSB_T <= ((iobs/Sent AND NOT nBERR_IOB AND nBERR_FSB AND 
+nBERR_FSB_T <= ((NOT nAS_FSB AND iobs/Sent AND NOT nBERR_IOB AND nBERR_FSB AND 
+	iobs/IODONEr(0) AND NOT iobs/IODONEr(1))
+	OR (iobs/Sent AND NOT nBERR_IOB AND nBERR_FSB AND 
 	iobs/IODONEr(0) AND ASrf AND NOT iobs/IODONEr(1))
-	OR (nAS_FSB AND NOT nBERR_FSB AND NOT ASrf)
-	OR (NOT nAS_FSB AND iobs/Sent AND NOT nBERR_IOB AND nBERR_FSB AND 
-	iobs/IODONEr(0) AND NOT iobs/IODONEr(1)));
+	OR (nAS_FSB AND NOT nBERR_FSB AND NOT ASrf));
 
 
 nBR_IOB_I <= '0';
@@ -1564,14 +1624,14 @@ ram/RASEL_D <= ((NOT ram/RS(1) AND NOT ram/RS(2) AND ram/RS(0))
 	NOT ram/RS(2) AND ASrf));
 
 FDCPE_ram/RASEN: FDCPE port map (ram/RASEN,ram/RASEN_D,FCLK,'0','0');
-ram/RASEN_D <= ((NOT RefUrg AND NOT RefReq AND NOT ram/RS(1) AND NOT ram/RS(2) AND 
+ram/RASEN_D <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RS(1) AND NOT ram/RS(2) AND 
+	NOT ram/RS(0) AND ASrf)
+	OR (NOT RefUrg AND NOT RefReq AND NOT ram/RS(1) AND NOT ram/RS(2) AND 
 	NOT ram/RS(0))
 	OR (NOT RefUrg AND NOT ram/RS(1) AND NOT ram/RS(2) AND NOT ram/RS(0) AND 
 	BACTr)
 	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB AND NOT ram/RS(1) AND 
 	NOT ram/RS(2) AND NOT ram/RS(0))
-	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT ram/RS(1) AND NOT ram/RS(2) AND 
-	NOT ram/RS(0) AND ASrf)
 	OR (nAS_FSB AND NOT RefUrg AND NOT ram/RS(1) AND NOT ram/RS(2) AND 
 	NOT ram/RS(0) AND NOT ASrf)
 	OR (NOT RefUrg AND ram/RS(1) AND ram/RS(0))
@@ -1585,16 +1645,16 @@ ram/RASrf_D <= ((NOT ram/RS(1) AND ram/RS(2))
 	OR (NOT ram/RS(1) AND ram/RS(0)));
 
 FDCPE_ram/RS0: FDCPE port map (ram/RS(0),ram/RS_D(0),FCLK,'0','0');
-ram/RS_D(0) <= ((NOT A_FSB(23) AND NOT A_FSB(22) AND NOT cs/Overlay AND NOT ram/RS(0) AND 
-	ram/RASEN AND ASrf)
-	OR (ram/RS(1) AND NOT ram/RS(0))
-	OR (ram/RS(2) AND NOT ram/RS(0))
-	OR (NOT nAS_FSB AND nDTACK_FSB AND NOT ram/RS(1) AND NOT ram/RS(2) AND 
+ram/RS_D(0) <= ((NOT nAS_FSB AND nDTACK_FSB AND NOT ram/RS(1) AND NOT ram/RS(2) AND 
 	ram/RS(0))
 	OR (nDTACK_FSB AND NOT ram/RS(1) AND NOT ram/RS(2) AND ram/RS(0) AND 
 	ASrf)
 	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT nAS_FSB AND NOT cs/Overlay AND 
-	NOT ram/RS(0) AND ram/RASEN));
+	NOT ram/RS(0) AND ram/RASEN)
+	OR (NOT A_FSB(23) AND NOT A_FSB(22) AND NOT cs/Overlay AND NOT ram/RS(0) AND 
+	ram/RASEN AND ASrf)
+	OR (ram/RS(1) AND NOT ram/RS(0))
+	OR (ram/RS(2) AND NOT ram/RS(0)));
 
 FTCPE_ram/RS1: FTCPE port map (ram/RS(1),ram/RS_T(1),FCLK,'0','0');
 ram/RS_T(1) <= ((NOT ram/RS(0))
@@ -1604,8 +1664,6 @@ ram/RS_T(1) <= ((NOT ram/RS(0))
 FTCPE_ram/RS2: FTCPE port map (ram/RS(2),ram/RS_T(2),FCLK,'0','0');
 ram/RS_T(2) <= ((ram/RS(1) AND ram/RS(2) AND ram/RS(0))
 	OR (RefUrg AND NOT ram/RefDone AND ram/RS(1) AND ram/RS(0))
-	OR (nAS_FSB AND RefUrg AND NOT ram/RefDone AND NOT ram/RS(1) AND 
-	NOT ram/RS(2) AND NOT ram/RS(0) AND NOT ASrf)
 	OR (A_FSB(23) AND NOT ram/RefDone AND RefReq AND NOT ram/RS(1) AND 
 	NOT ram/RS(2) AND NOT ram/RS(0) AND ASrf AND NOT BACTr)
 	OR (A_FSB(22) AND NOT ram/RefDone AND RefReq AND NOT ram/RS(1) AND 
@@ -1614,6 +1672,8 @@ ram/RS_T(2) <= ((ram/RS(1) AND ram/RS(2) AND ram/RS(0))
 	NOT ram/RS(2) AND NOT ram/RS(0))
 	OR (A_FSB(22) AND RefUrg AND NOT ram/RefDone AND NOT ram/RS(1) AND 
 	NOT ram/RS(2) AND NOT ram/RS(0))
+	OR (nAS_FSB AND RefUrg AND NOT ram/RefDone AND NOT ram/RS(1) AND 
+	NOT ram/RS(2) AND NOT ram/RS(0) AND NOT ASrf)
 	OR (A_FSB(23) AND NOT nAS_FSB AND NOT ram/RefDone AND RefReq AND 
 	NOT ram/RS(1) AND NOT ram/RS(2) AND NOT ram/RS(0) AND NOT BACTr)
 	OR (A_FSB(22) AND NOT nAS_FSB AND NOT ram/RefDone AND RefReq AND 

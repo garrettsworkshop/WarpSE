@@ -79,12 +79,22 @@ module CNT(
 	always @(posedge CLK) begin
 		if (!nRESin) QS <= 3;
 		else if (BACT && IACK0CS) QS <= 15;
-		else if (BACT && IACK1CS) QS <= 15;
-		else if (BACT && SCCCS)   QS <= 15;
 		else if (BACT && VIACS)   QS[1] <= 1;
 		else if (BACT && IWMCS)   QS[1] <= 1;
 		else if (SndCSWRr)        QS <= 15;
 		else if (QS!=0 && TimerTick) QS <= QS-1;
+	end
+	
+	reg [1:0] QFS;
+	always @(posedge CLK) begin
+		if (!nRESin) QFS <= 0;
+		else if (BACT && IACK1CS)  QFS <= 2;
+		else if (BACT && IACK0CS)  QFS <= 0;
+		else if (BACT && VIACS)    QFS <= 0;
+		else if (BACT && IWMCS)    QFS <= 0;
+		else if (BACT && SCCCS)    QFS <= 2;
+		else if (SndCSWRr)         QFS <= 0;
+		else if (QFS!=0 && TimerTick) QFS <= QFS-1;
 	end
 	
 	reg ClockGateEN;
@@ -100,7 +110,7 @@ module CNT(
 	end
 
 	/* QoS enable control */
-	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0;
+	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0 && QFS==0;
 
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
