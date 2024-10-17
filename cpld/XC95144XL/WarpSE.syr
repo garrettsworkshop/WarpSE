@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.11 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.11 secs
  
 --> Reading design: WarpSE.prj
 
@@ -75,7 +75,9 @@ wysiwyg                            : NO
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
+Compiling verilog file "../SET.v" in library work
 Compiling verilog file "../RAM.v" in library work
+Module <SET> compiled
 Compiling verilog file "../IOBS.v" in library work
 Module <RAM> compiled
 Compiling verilog file "../IOBM.v" in library work
@@ -106,6 +108,8 @@ Analyzing hierarchy for module <IOBS> in library <work>.
 
 Analyzing hierarchy for module <IOBM> in library <work>.
 
+Analyzing hierarchy for module <SET> in library <work>.
+
 Analyzing hierarchy for module <CNT> in library <work>.
 
 Analyzing hierarchy for module <FSB> in library <work>.
@@ -128,6 +132,9 @@ Module <IOBS> is correct for synthesis.
  
 Analyzing module <IOBM> in library <work>.
 Module <IOBM> is correct for synthesis.
+ 
+Analyzing module <SET> in library <work>.
+Module <SET> is correct for synthesis.
  
 Analyzing module <CNT> in library <work>.
 Module <CNT> is correct for synthesis.
@@ -153,9 +160,7 @@ Synthesizing Unit <RAM>.
     Related source file is "../RAM.v".
     Found 8x3-bit ROM for signal <RS$rom0000>.
     Found 1-bit register for signal <nCAS>.
-    Found 1-bit register for signal <nOE>.
     Found 1-bit register for signal <CASEndEN>.
-    Found 1-bit register for signal <RAMReadyReg>.
     Found 1-bit register for signal <RASEL>.
     Found 1-bit register for signal <RASEN>.
     Found 1-bit register for signal <RASrf>.
@@ -164,7 +169,7 @@ Synthesizing Unit <RAM>.
     Found 3-bit register for signal <RS>.
     Summary:
 	inferred   1 ROM(s).
-	inferred   8 D-type flip-flop(s).
+	inferred   6 D-type flip-flop(s).
 Unit <RAM> synthesized.
 
 
@@ -240,8 +245,17 @@ WARNING:Xst:646 - Signal <IOS0> is assigned but never used. This unconnected sig
 Unit <IOBM> synthesized.
 
 
+Synthesizing Unit <SET>.
+    Related source file is "../SET.v".
+    Found 1-bit register for signal <SetSndSlow>.
+Unit <SET> synthesized.
+
+
 Synthesizing Unit <CNT>.
     Related source file is "../CNT.v".
+WARNING:Xst:647 - Input <BACTr> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <SCSICS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:647 - Input <IACKCS> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit register for signal <RefUrg>.
     Found 1-bit register for signal <RefReq>.
     Found 1-bit register for signal <nBR_IOB>.
@@ -250,27 +264,21 @@ Synthesizing Unit <CNT>.
     Found 1-bit register for signal <nRESout>.
     Found 1-bit register for signal <AoutOE>.
     Found 1-bit register for signal <MCKE>.
-    Found 4-bit subtractor for signal <$sub0000> created at line 100.
+    Found 4-bit subtractor for signal <$sub0000> created at line 81.
     Found 4-bit register for signal <C8Mr>.
     Found 1-bit register for signal <ClockGateEN>.
     Found 2-bit register for signal <Er>.
-    Found 1-bit register for signal <IACK0CSr>.
-    Found 1-bit register for signal <IACK1CSr>.
     Found 2-bit register for signal <IS>.
-    Found 1-bit register for signal <IWMCSr>.
     Found 12-bit up counter for signal <LTimer>.
     Found 1-bit register for signal <LTimerTick>.
-    Found 1-bit register for signal <nRESr>.
+    Found 2-bit down counter for signal <QFS>.
     Found 4-bit register for signal <QS>.
-    Found 1-bit register for signal <SCCCSr>.
-    Found 1-bit register for signal <SCSICSr>.
     Found 1-bit register for signal <SndCSWRr>.
     Found 4-bit up counter for signal <Timer>.
     Found 1-bit register for signal <TimerTick>.
-    Found 1-bit register for signal <VIACSr>.
     Summary:
-	inferred   2 Counter(s).
-	inferred  17 D-type flip-flop(s).
+	inferred   3 Counter(s).
+	inferred  10 D-type flip-flop(s).
 	inferred   1 Adder/Subtractor(s).
 Unit <CNT> synthesized.
 
@@ -290,7 +298,6 @@ Synthesizing Unit <WarpSE>.
     Related source file is "../WarpSE.v".
 WARNING:Xst:647 - Input <nBG_IOB> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <DBG> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:646 - Signal <nPOR> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
     Found 1-bit tristate buffer for signal <RnW_IOB>.
     Found 1-bit tristate buffer for signal <nAS_IOB>.
     Found 1-bit tristate buffer for signal <nBR_IOB>.
@@ -311,11 +318,12 @@ Macro Statistics
  8x3-bit ROM                                           : 1
 # Adders/Subtractors                                   : 1
  4-bit subtractor                                      : 1
-# Counters                                             : 3
+# Counters                                             : 4
  12-bit up counter                                     : 1
+ 2-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 73
- 1-bit register                                        : 69
+# Registers                                            : 65
+ 1-bit register                                        : 61
  2-bit register                                        : 2
  3-bit register                                        : 1
  4-bit register                                        : 1
@@ -361,11 +369,12 @@ Macro Statistics
  8x3-bit ROM                                           : 1
 # Adders/Subtractors                                   : 1
  4-bit subtractor                                      : 1
-# Counters                                             : 3
+# Counters                                             : 4
  12-bit up counter                                     : 1
+ 2-bit down counter                                    : 1
  4-bit up counter                                      : 2
-# Registers                                            : 52
- Flip-Flops                                            : 52
+# Registers                                            : 43
+ Flip-Flops                                            : 43
 
 =========================================================================
 
@@ -376,6 +385,8 @@ Macro Statistics
 Optimizing unit <WarpSE> ...
 
 Optimizing unit <CS> ...
+
+Optimizing unit <SET> ...
 
 Optimizing unit <FSB> ...
 
@@ -398,9 +409,9 @@ Optimizing unit <IOBM> ...
   implementation constraint: INIT=r	 : IOS_FSM_FFd4
 
 Optimizing unit <CNT> ...
+  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : IS_0
   implementation constraint: INIT=r	 : IS_1
-  implementation constraint: INIT=r	 : Timer_2
   implementation constraint: INIT=r	 : Timer_3
   implementation constraint: INIT=r	 : Timer_0
   implementation constraint: INIT=r	 : Timer_1
@@ -435,25 +446,25 @@ Design Statistics
 # IOs                              : 80
 
 Cell Usage :
-# BELS                             : 685
-#      AND2                        : 214
-#      AND3                        : 26
+# BELS                             : 712
+#      AND2                        : 217
+#      AND3                        : 28
 #      AND4                        : 13
-#      AND5                        : 4
+#      AND5                        : 3
 #      AND6                        : 1
 #      AND8                        : 2
-#      GND                         : 7
-#      INV                         : 272
-#      OR2                         : 110
+#      GND                         : 8
+#      INV                         : 287
+#      OR2                         : 116
 #      OR3                         : 10
 #      OR4                         : 4
 #      OR5                         : 1
-#      XOR2                        : 21
-# FlipFlops/Latches                : 109
-#      FD                          : 67
-#      FDCE                        : 37
+#      XOR2                        : 22
+# FlipFlops/Latches                : 103
+#      FD                          : 59
+#      FDCE                        : 40
 #      FDCP                        : 1
-#      FDP                         : 2
+#      FDP                         : 1
 #      FDPE                        : 2
 # IO Buffers                       : 73
 #      IBUF                        : 35
@@ -464,13 +475,13 @@ Cell Usage :
 
 
 Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.94 secs
+Total CPU time to Xst completion: 5.14 secs
  
 --> 
 
-Total memory usage is 263072 kilobytes
+Total memory usage is 262432 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    5 (   0 filtered)
+Number of warnings :    7 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

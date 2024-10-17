@@ -72,7 +72,7 @@ module WarpSE(
 	wire QoSEN;
 	wire IACKCS, IACK0CS, IACK1CS;
 	wire VIACS, IWMCS, SCCCS, SCSICS, SndCSWR;
-	//wire SetCSWR;
+	wire SetCSWR;
 	CS cs(
 		/* MC68HC000 interface */
 		.A(A_FSB[23:1]),
@@ -99,9 +99,9 @@ module WarpSE(
 		.IWMCS(IWMCS),
 		.SCCCS(SCCCS),
 		.SCSICS(SCSICS),
-		.SndCSWR(SndCSWR)/*,*/
+		.SndCSWR(SndCSWR),
 		/* Settings register select output */
-		/*.SetCSWR(SetCSWR)*/);
+		.SetCSWR(SetCSWR));
 
 	wire RAMReady;
 	RAM ram(
@@ -210,22 +210,14 @@ module WarpSE(
 		.IOACT(IOACT),
 		.IODONE(IODONE));
 
-	//wire SlowIACK, SlowVIA, SlowIWM, SlowSCC, SlowSCSI, SlowSnd, SlowClockGate;
-	//wire [3:0] SlowInterval;
-	/*SET set(
+	wire SetSndSlow;
+	SET set(
 		.CLK(FCLK),
 		.nPOR(nPOR),
 		.BACT(BACT), 
-		.A(A_FSB[11:1]), 
 		.SetCSWR(SetCSWR),
-		.SlowIACK(SlowIACK),
-		.SlowVIA(SlowVIA),
-		.SlowIWM(SlowIWM),
-		.SlowSCC(SlowSCC),
-		.SlowSCSI(SlowSCSI),
-		.SlowSnd(SlowSnd),
-		.SlowClockGate(SlowClockGate),
-		.SlowInterval(SlowInterval));*/
+		.A1(A_FSB[1]), 
+		.SetSndSlow(SetSndSlow));
 
 	wire nBR_IOBout;
 	assign nBR_IOB = nBR_IOBout ? 1'bZ : 1'b0;
@@ -250,6 +242,9 @@ module WarpSE(
 		.nAS(nAS_FSB),
 		.ASrf(ASrf),
 		.BACT(BACT),
+		.BACTr(BACTr),
+		.A23(A_FSB[23]),
+		.IACKCS(IACKCS),
 		.IACK0CS(IACK0CS),
 		.IACK1CS(IACK1CS),
 		.VIACS(VIACS),
@@ -258,14 +253,7 @@ module WarpSE(
 		.SCSICS(SCSICS),
 		.SndCSWR(SndCSWR),
 		/* QoS settings inputs */
-		/*.SlowIACK(SlowIACK),
-		.SlowVIA(SlowVIA),
-		.SlowIWM(SlowIWM),
-		.SlowSCC(SlowSCC),
-		.SlowSCSI(SlowSCSI),
-		.SlowSnd(SlowSnd),
-		.SlowClockGate(SlowClockGate),
-		.SlowInterval(SlowInterval),*/
+		.SetSndSlow(SetSndSlow),
 		/* QoS outputs */
 		.QoSEN(QoSEN),
 		.MCKE(MCKE));
@@ -290,6 +278,5 @@ module WarpSE(
 		.QoSEN(QoSEN),
 		/* Interrupt acknowledge select */
 		.IACKCS(IACKCS));
-
 
 endmodule
