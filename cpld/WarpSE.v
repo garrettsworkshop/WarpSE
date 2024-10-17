@@ -72,7 +72,7 @@ module WarpSE(
 	wire QoSEN;
 	wire IACKCS, IACK0CS, IACK1CS;
 	wire VIACS, IWMCS, SCCCS, SCSICS, SndCSWR;
-	//wire SetCSWR;
+	wire SetCSWR;
 	CS cs(
 		/* MC68HC000 interface */
 		.A(A_FSB[23:1]),
@@ -99,9 +99,9 @@ module WarpSE(
 		.IWMCS(IWMCS),
 		.SCCCS(SCCCS),
 		.SCSICS(SCSICS),
-		.SndCSWR(SndCSWR)/*,*/
+		.SndCSWR(SndCSWR),
 		/* Settings register select output */
-		/*.SetCSWR(SetCSWR)*/);
+		.SetCSWR(SetCSWR));
 
 	wire RAMReady;
 	RAM ram(
@@ -210,26 +210,14 @@ module WarpSE(
 		.IOACT(IOACT),
 		.IODONE(IODONE));
 
-	wire SetSCCFast;
-	wire SetVIASlow;
-	wire SetIWMSlow;
 	wire SetSndSlow;
-	wire SetClockGate;
-	wire SetSndClockGate;
-	wire SetSlow;
 	SET set(
 		.CLK(FCLK),
 		.nPOR(nPOR),
 		.BACT(BACT), 
-		.A(A_FSB[7:1]), 
 		.SetCSWR(SetCSWR),
-		.SetSCCFast(SetSCCFast),
-		.SetVIASlow(SetVIASlow),
-		.SetIWMSlow(SetIWMSlow),
-		.SetSndSlow(SetSndSlow),
-		.SetClockGate(SetClockGate),
-		.SetSndClockGate(SetSndClockGate),
-		.SetSlow(SetSlow));
+		.A1(A_FSB[1]), 
+		.SetSndSlow(SetSndSlow));
 
 	wire nBR_IOBout;
 	assign nBR_IOB = nBR_IOBout ? 1'bZ : 1'b0;
@@ -255,6 +243,8 @@ module WarpSE(
 		.ASrf(ASrf),
 		.BACT(BACT),
 		.BACTr(BACTr),
+		.A23(A_FSB[23]),
+		.IACKCS(IACKCS),
 		.IACK0CS(IACK0CS),
 		.IACK1CS(IACK1CS),
 		.VIACS(VIACS),
@@ -263,13 +253,7 @@ module WarpSE(
 		.SCSICS(SCSICS),
 		.SndCSWR(SndCSWR),
 		/* QoS settings inputs */
-		.SetSCCFast(SetSCCFast),
-		.SetVIASlow(SetVIASlow),
-		.SetIWMSlow(SetIWMSlow),
 		.SetSndSlow(SetSndSlow),
-		.SetClockGate(SetClockGate),
-		.SetSndClockGate(SetSndClockGate),
-		.SetSlow(SetSlow),
 		/* QoS outputs */
 		.QoSEN(QoSEN),
 		.MCKE(MCKE));
@@ -294,6 +278,5 @@ module WarpSE(
 		.QoSEN(QoSEN),
 		/* Interrupt acknowledge select */
 		.IACKCS(IACKCS));
-
 
 endmodule
