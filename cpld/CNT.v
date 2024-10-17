@@ -22,14 +22,13 @@ module CNT(
 	input SCSICS,
 	input SndCSWR,
 	/* QoS settings inputs */
-	/*input SlowIACK,
-	input SlowVIA,
-	input SlowIWM,
-	input SlowSCC,
-	input SlowSCSI,
-	input SlowSnd,
-	input SlowClockGate,
-	input [3:0] SlowInterval, */
+	input SetSCCFast,
+	input SetVIASlow,
+	input SetIWMSlow,
+	input SetSndSlow,
+	input SetClockGate,
+	input SetSndClockGate,
+	input SetSlow,
 	/* QoS outputs */
 	output reg QoSEN,
 	output reg MCKE);
@@ -75,47 +74,50 @@ module CNT(
 	/* QoS select latch */
 	reg SndCSWRr; always @(posedge CLK) SndCSWRr <= BACT && SndCSWR;
 
+	/* QoS state */
 	reg [3:0] QS;
 	always @(posedge CLK) begin
 		if (!nRESin) QS <= 3;
-		else if (BACT && IACK0CS) QS <= 15;
-		else if (BACT && VIACS)   QS[1] <= 1;
-		else if (BACT && IWMCS)   QS[1] <= 1;
-		else if (SndCSWRr)        QS <= 15;
+		else if (BACT && IACK0CS && SetSndSlow) QS <= 15;
+		else if (BACT && VIACS && SetVIASlow)   QS[1] <= 1;
+		else if (BACT && IWMCS && SetIWMSlow)   QS[1] <= 1;
+		else if (SndCSWRr && SetSndSlow)        QS <= 15;
 		else if (QS!=0 && TimerTick) QS <= QS-1;
 	end
 	
+	/* QoS-fast state */
 	reg [1:0] QFS;
 	always @(posedge CLK) begin
 		if (!nRESin) QFS <= 0;
-		else if (BACT && IACK1CS)  QFS <= 2;
-		else if (BACT && IACK0CS)  QFS <= 0;
-		else if (BACT && VIACS)    QFS <= 0;
-		else if (BACT && IWMCS)    QFS <= 0;
-		else if (BACT && SCCCS)    QFS <= 2;
-		else if (SndCSWRr)         QFS <= 0;
+		else if (BACT && IACK1CS && SetSCCFast) QFS <= 2;
+		else if (BACT && IACK0CS)               QFS <= 0;
+		else if (BACT && VIACS)                 QFS <= 0;
+		else if (BACT && IWMCS)                 QFS <= 0;
+		else if (BACT && SCCCS && SetSCCFast)   QFS <= 2;
+		else if (SndCSWRr)                      QFS <= 0;
 		else if (QFS!=0 && TimerTick) QFS <= QFS-1;
 	end
 	
+	/* Clock gating enable control */
 	reg ClockGateEN;
 	always @(posedge CLK) begin
 		if (!nRESin) ClockGateEN <= 0;
-		else if (SndCSWRr)        ClockGateEN <= 1;
-		else if (BACT && IACK1CS) ClockGateEN <= 0;
-		else if (BACT && IACK0CS) ClockGateEN <= 0;
-		else if (BACT && VIACS)   ClockGateEN <= 0;
-		else if (BACT && IWMCS)   ClockGateEN <= 0;
-		else if (BACT && SCCCS)   ClockGateEN <= 0;
-		else if (BACT && SCSICS)  ClockGateEN <= 0;
+		else if (SndCSWRr && SetSndClockGate) ClockGateEN <= 1;
+		else if (BACT && IACK1CS)             ClockGateEN <= 0;
+		else if (BACT && IACK0CS)             ClockGateEN <= 0;
+		else if (BACT && VIACS)               ClockGateEN <= 0;
+		else if (BACT && IWMCS)               ClockGateEN <= 0;
+		else if (BACT && SCCCS)               ClockGateEN <= 0;
+		else if (BACT && SCSICS)              ClockGateEN <= 0;
 	end
 
 	/* QoS enable control */
-	always @(posedge CLK) if (!BACT) QoSEN <= QS!=0 && QFS==0;
+	always @(posedge CLK) if (!BACT) QoSEN <= (QS!=0 && QFS==0) || SetSlow;
 
 	/* MC68k clock gating during QoS */
 	always @(negedge CLK, negedge nAS) begin
 		if (!nAS) MCKE <= 1;
-		else MCKE <= !(QoSEN && !ASrf && !C8MFall && ClockGateEN);
+		else MCKE <= !(QoSEN && !ASrf && !C8MFall && (ClockGateEN || SetClockGate));
 	end
 	
 	/* Long timer counts from 0 to 4095.

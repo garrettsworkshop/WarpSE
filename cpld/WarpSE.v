@@ -210,22 +210,26 @@ module WarpSE(
 		.IOACT(IOACT),
 		.IODONE(IODONE));
 
-	//wire SlowIACK, SlowVIA, SlowIWM, SlowSCC, SlowSCSI, SlowSnd, SlowClockGate;
-	//wire [3:0] SlowInterval;
-	/*SET set(
+	wire SetSCCFast;
+	wire SetVIASlow;
+	wire SetIWMSlow;
+	wire SetSndSlow;
+	wire SetClockGate;
+	wire SetSndClockGate;
+	wire SetSlow;
+	SET set(
 		.CLK(FCLK),
 		.nPOR(nPOR),
 		.BACT(BACT), 
-		.A(A_FSB[11:1]), 
+		.A(A_FSB[7:1]), 
 		.SetCSWR(SetCSWR),
-		.SlowIACK(SlowIACK),
-		.SlowVIA(SlowVIA),
-		.SlowIWM(SlowIWM),
-		.SlowSCC(SlowSCC),
-		.SlowSCSI(SlowSCSI),
-		.SlowSnd(SlowSnd),
-		.SlowClockGate(SlowClockGate),
-		.SlowInterval(SlowInterval));*/
+		.SetSCCFast(SetSCCFast),
+		.SetVIASlow(SetVIASlow),
+		.SetIWMSlow(SetIWMSlow),
+		.SetSndSlow(SetSndSlow),
+		.SetClockGate(SetClockGate),
+		.SetSndClockGate(SetSndClockGate),
+		.SetSlow(SetSlow));
 
 	wire nBR_IOBout;
 	assign nBR_IOB = nBR_IOBout ? 1'bZ : 1'b0;
@@ -259,14 +263,13 @@ module WarpSE(
 		.SCSICS(SCSICS),
 		.SndCSWR(SndCSWR),
 		/* QoS settings inputs */
-		/*.SlowIACK(SlowIACK),
-		.SlowVIA(SlowVIA),
-		.SlowIWM(SlowIWM),
-		.SlowSCC(SlowSCC),
-		.SlowSCSI(SlowSCSI),
-		.SlowSnd(SlowSnd),
-		.SlowClockGate(SlowClockGate),
-		.SlowInterval(SlowInterval),*/
+		.SetSCCFast(SetSCCFast),
+		.SetVIASlow(SetVIASlow),
+		.SetIWMSlow(SetIWMSlow),
+		.SetSndSlow(SetSndSlow),
+		.SetClockGate(SetClockGate),
+		.SetSndClockGate(SetSndClockGate),
+		.SetSlow(SetSlow),
 		/* QoS outputs */
 		.QoSEN(QoSEN),
 		.MCKE(MCKE));
