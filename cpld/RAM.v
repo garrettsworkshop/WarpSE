@@ -6,8 +6,10 @@ module RAM(
 	input BACT, input BACTr,
 	/* Select and ready signals */
 	input RAMCS, input RAMCS0X, input ROMCS, input ROMCS4X,
-	/* RAM ready output */
-	output RAMReady,
+	/* RAM/ROM wait state inputs */
+	input RAMWS, input ROMWS,
+	/* RAM/ROM ready output */
+	output reg RAMReady, output reg ROMReady,
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgIn,
 	/* DRAM interface */
@@ -33,11 +35,6 @@ module RAM(
 	wire RefReq = RefReqIn && !RefDone;
 	wire RefUrg = RefUrgIn && !RefDone;
 	
-	/* RAM ready control */
-	//reg RAMReadyReg;
-	//assign RAMReady = RAMReadyReg;
-	assign RAMReady = !RS[2];
-	
 	/* RAM /RAS control */
 	assign nRAS = !((!nAS && RAMCS && RASEN) || RASrf);
 	
@@ -56,6 +53,13 @@ module RAM(
 	/* ROM /OE and /WE control */
 	assign nROMOE = !(!nAS && ROMCS   &&  nWE);
 	assign nROMWE = !(!nAS && ROMCS4X && !nWE);
+
+	/* ROM ready control */
+	wire ROMReadyClear = ROMWS && nAS;
+	always @(posedge CLK, posedge ROMReadyClear) begin
+		if (ROMReadyClear) ROMReady <= 0;
+		else ROMReady <= 1;
+	end
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.
@@ -80,68 +84,88 @@ module RAM(
 					(RefUrg && !BACT) ||
 					// Urgent refresh during non-RAM access
 					(RefUrg &&  BACT && !RAMCS0X);
-	wire RS0toRAM = BACT && RAMCS && RASEN;
+	wire RS0toRAM = BACT && RAMCS;
 	
 	always @(posedge CLK) begin
 		case (RS[2:0])
 			0: begin // Idle/ready
-				if (RS0toRAM) RS <= 1; // Access RAM
-				else if (RS0toRef) RS <= 4; // To refresh
-				else RS <= 0; // Stay in idle/ready
-				RASEL <= BACT && RAMCS;
-				RefCAS <= RS0toRef;
-				RASEN <= !RS0toRef;
-				//RAMReadyReg <= !RS0toRef;
+				if (RAMReady) begin // Continue accessing RAM
+					RS <= 1; // Continue accessing RAM
+					RAMReady <= 1;
+					RASEL <= 1;
+					RefCAS <= 0;
+					RASEN <= 1;
+				end else if (RS0toRAM) begin // Wait state
+					RS <= 0;
+					RAMReady <= 1;
+					RASEL <= 0;
+					RefCAS <= 0;
+					RASEN <= 1;
+					RefCAS <= 0;
+					RASEN <= 1;
+				end else if (RS0toRef) begin // Refresh
+					RS <= 4;
+					RAMReady <= 0;
+					RASEL <= 0;
+					RefCAS <= 1;
+					RASEN <= 0;
+				end else begin // Stay in idle
+					RS <= 0;
+					RAMReady <= RAMWS ? 0 : 1;
+					RASEL <= 0;
+					RefCAS <= 0;
+					RASEN <= 1;
+				end
 			end 1: begin // RAM access
 				if (!nDTACK || !BACT) RS <= 2; // Cycle ending
 				else RS <= 1; // Cycle not ending yet
+				RAMReady <= 1;
 				RASEL <= 1;
 				RefCAS <= 0;
 				RASEN <= nDTACK;
-				//RAMReadyReg <= 1;
 			end 2: begin // finish RAM access
 				RS <= 3;
+				RAMReady <= 1;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				//RAMReadyReg <= 1;
 			end 3: begin  //AS cycle complete
 				if (RefUrg)  begin // Refresh RAS
 					RS <= 4;
+					RAMReady <= 0;
 					RefCAS <= 1;
 					RASEN <= 0;
-					//RAMReadyReg <= 0;
 				end else begin // Cycle ended so go back to idle/ready
 					RS <= 0;
+					RAMReady <= RAMWS ? 0 : 1;
 					RefCAS <= 0;
 					RASEN <= 1;
-					//RAMReadyReg <= 1;
 				end
 				RASEL <= 0;
 			end 4: begin // Refresh RAS I
 				RS <= 5;
+				RAMReady <= 0;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				//RAMReadyReg <= 0;
 			end 5: begin // Refresh RAS II
 				RS <= 6;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				//RAMReadyReg <= 0;
+				RAMReady <= 0;
 			end 6: begin // Refresh precharge I
 				RS <= 7;
+				RAMReady <= 0;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 0;
-				//RAMReadyReg <= 0;
 			end 7: begin // Reenable RAM and go to idle/ready
 				RS <= 0;
+				RAMReady <= RAMWS ? 0 : 1;
 				RASEL <= 0;
 				RefCAS <= 0;
 				RASEN <= 1;
-				//RAMReadyReg <= 1;
 			end
 		endcase
 	end

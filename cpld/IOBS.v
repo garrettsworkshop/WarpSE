@@ -5,6 +5,10 @@ module IOBS(
 	input BACT, input BACTr,
 	/* Select signals */
 	input IOCS, input IORealCS, input IOPWCS,
+	/* I/O wait state input */
+	input IOWS,
+	/* Slowdown write gate configutation */
+	input SlowdownIOWriteGate,
 	/* FSB cycle termination outputs */
 	output reg IONPReady, output IOPWReady, output reg nBERR_FSB,
 	/* Read data OE control */
@@ -20,11 +24,13 @@ module IOBS(
 	/* IOACT input synchronization */
 	reg IOACTr = 0; always @(posedge CLK) IOACTr <= IOACT;
 
-	/* IODTACK input synchronization */
+	/* IODONE input synchronization */
 	reg IODONErf; always @(negedge CLK) IODONErf <= IODONEin;
+	reg IODONErr; always @(posedge CLK) IODONErr <= IODONErf;
 	reg [1:0] IODONEr;
-	always @(posedge CLK) IODONEr[1:0] <= {IODONEr[0], IODONErf};
-	wire IODONE = !IODONEr[1] && IODONEr[0];
+	always @(posedge CLK) IODONEr[1:0] <= !IOWS ?
+		{ IODONEr[0], IODONErf } : // 0 I/O wait states
+		{ IODONEr[0], IODONErr };  // 1 I/O wait state
 
 	/* Read data OE control */
 	assign nDinOE = !(!nAS && BACTr && IORealCS && nWE);
@@ -51,7 +57,7 @@ module IOBS(
 		// I/O selected, and FIFO secondary level empty
 		if (BACT && IOPWCS && !ALE1 && !Sent && TS!=0) begin
 			// Latch R/W now but latch address and LDS/UDS next cycle
-			IORW1 <= nWE;// || !IORealCS;
+			IORW1 <= SlowdownIOWriteGate ? (!IORealCS ? 1 : nWE) : nWE;
 			Load1 <= 1;
 		end else Load1 <= 0;
 	end
@@ -87,7 +93,7 @@ module IOBS(
 				IOL0 <= IOL1;
 				IOU0 <= IOU1;
 			end else begin // FSB request
-				IORW <= nWE;// || !IORealCS;
+				IORW <= SlowdownIOWriteGate ? (!IORealCS ? 1 : nWE) : nWE;
 				IOL0 <= !nLDS;
 				IOU0 <= !nUDS;
 			end

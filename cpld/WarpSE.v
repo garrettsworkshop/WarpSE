@@ -1,6 +1,7 @@
 module WarpSE(
 	input [23:1] A_FSB,
-	output [23:22] GA,
+	inout GA23,
+	inout GA22,
 	input nAS_FSB,
 	input nLDS_FSB,
 	input nUDS_FSB,
@@ -39,7 +40,33 @@ module WarpSE(
 	output nDinOE,
 	output nDinLE,
 	output MCKE,
-	input [5:0] DBG);
+	input DBG0_ROMWS,
+	input DBG1_RAMWS,
+	inout DBG2_GA20,
+	inout DBG3_GA21,
+	input DBG4_IOWS,
+	input DBG5_GTS,
+	input DBG5_GSR);
+
+	wire SlowdownIOWriteGate;
+	wire ROMWS, RAMWS, IOWS;
+	CFG cfg(
+		/* FSB address input */
+		.A(A_FSB[23:20]),
+		/* Gated address output */
+		.GA23(GA23),
+		.GA22(GA22),
+		.GA21(DBG3_GA21),
+		.GA20(DBG2_GA20),
+		/* Wait state jumper inputs */
+		.DBG0_ROMWS(DBG0_ROMWS),
+		.DBG1_RAMWS(DBG1_RAMWS),
+		.DBG4_IOWS(DBG4_IOWS),
+		/* Wait state jumper outputs */
+		.ROMWS(ROMWS),
+		.RAMWS(RAMWS),
+		.IOWS(IOWS),
+		.SlowdownIOWriteGate(SlowdownIOWriteGate));
 
 	/* GA gated (translated) address output */
 	assign GA[23:22] = A_FSB[23:22];
@@ -103,7 +130,7 @@ module WarpSE(
 		/* Settings register select output */
 		.SetCSWR(SetCSWR));
 
-	wire RAMReady;
+	wire RAMReady, ROMReady,
 	RAM ram(
 		/* MC68HC000 interface */
 		.CLK(FCLK),
@@ -121,8 +148,12 @@ module WarpSE(
 		.RAMCS0X(RAMCS0X),
 		.ROMCS(ROMCS),
 		.ROMCS4X(ROMCS4X),
-		/* RAM ready output */
-		.RAMReady(RAMReady),
+		/* RAM/ROM wait state inputs */
+		.RAMWS(RAMWS),
+		.ROMWS(ROMWS),
+		/* RAM/ROM ready outputs */
+		.RAMReady(DBG1_RAMWS),
+		.ROMReady(DBG1_ROMWS),
 		/* Refresh Counter Interface */
 		.RefReqIn(RefReq),
 		.RefUrgIn(RefUrg), 
@@ -156,6 +187,8 @@ module WarpSE(
 		.IOCS(IOCS),
 		.IORealCS(IORealCS),
 		.IOPWCS(IOPWCS),
+		/* I/O wait state input */
+		.IOWS(IOWS),
 		/* FSB cycle termination outputs */
 		.IONPReady(IONPReady),
 		.IOPWReady(IOPWReady),
@@ -272,6 +305,7 @@ module WarpSE(
 		.ROMCS(ROMCS4X),
 		.RAMCS(RAMCS0X),
 		.RAMReady(RAMReady),
+		.ROMReady(ROMReady),
 		.IOPWCS(IOPWCS),
 		.IOPWReady(IOPWReady),
 		.IONPReady(IONPReady),
