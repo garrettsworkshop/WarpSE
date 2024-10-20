@@ -1415,6 +1415,16 @@
 	)
 	(wire
 		(pts
+			(xy 127 102.87) (xy 128.27 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bc9f7ba8-eef2-45aa-822b-c6b2b96bdbcc")
+	)
+	(wire
+		(pts
 			(xy 100.33 102.87) (xy 110.49 102.87)
 		)
 		(stroke
@@ -1546,6 +1556,28 @@
 		(uuid "1039f3ba-8555-4a68-ab2c-066300a7576a")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 80.9447 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "+5Vin"
+		(shape input)
+		(at 127 102.87 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "817acd57-6bcc-44de-a2d9-8a4f49e656e3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 119.0447 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2169,6 +2201,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R_Small")
+		(at 128.27 105.41 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1f50d35a-ce05-40df-bd48-53791b6985d3")
+		(property "Reference" "R27"
+			(at 129.54 104.14 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "680"
+			(at 129.54 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "stdpads:R_0805"
+			(at 128.27 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 128.27 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 128.27 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "609aaf01-f6e4-4abd-8b9d-4f79544a1601")
+		)
+		(pin "2"
+			(uuid "1b9efc2f-825e-41c5-9ba8-6fce3b7c8c77")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "R27")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 88.9 88.9 0)
 		(unit 1)
@@ -2251,7 +2352,7 @@
 				)
 			)
 		)
-		(property "Value" "680"
+		(property "Value" "DNP"
 			(at 80.01 118.11 90)
 			(effects
 				(font
@@ -2369,7 +2470,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 146.05 105.41 0)
+		(at 148.59 102.87 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2377,7 +2478,7 @@
 		(dnp no)
 		(uuid "4c976fd4-1f0f-4e01-b857-b0cd50bb3b1f")
 		(property "Reference" "#PWR037"
-			(at 146.05 109.22 0)
+			(at 148.59 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2386,7 +2487,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 146.05 101.6 0)
+			(at 148.59 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2394,7 +2495,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 105.41 0)
+			(at 148.59 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2403,7 +2504,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 105.41 0)
+			(at 148.59 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2412,7 +2513,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 146.05 105.41 0)
+			(at 148.59 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2513,7 +2614,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 146.05 110.49 0)
+		(at 148.59 107.95 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2522,7 +2623,7 @@
 		(dnp no)
 		(uuid "5439df25-b57f-4153-bbb1-a28f5711e5d5")
 		(property "Reference" "#PWR038"
-			(at 146.05 116.84 0)
+			(at 148.59 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2531,7 +2632,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 146.05 114.3 0)
+			(at 148.59 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2539,7 +2640,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 110.49 0)
+			(at 148.59 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2548,7 +2649,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 110.49 0)
+			(at 148.59 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2557,7 +2658,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 146.05 110.49 0)
+			(at 148.59 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2725,7 +2826,7 @@
 				)
 			)
 		)
-		(property "Value" "MMBT3904"
+		(property "Value" "DNP"
 			(at 90.17 116.84 90)
 			(effects
 				(font
@@ -2936,7 +3037,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 146.05 107.95 0)
+		(at 148.59 105.41 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2944,7 +3045,7 @@
 		(dnp no)
 		(uuid "8962d510-e067-4160-a547-bed0864bfe32")
 		(property "Reference" "R26"
-			(at 147.32 106.68 0)
+			(at 149.86 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2953,7 +3054,7 @@
 			)
 		)
 		(property "Value" "680"
-			(at 147.32 109.22 0)
+			(at 149.86 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2962,7 +3063,7 @@
 			)
 		)
 		(property "Footprint" "stdpads:R_0805"
-			(at 146.05 107.95 0)
+			(at 148.59 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2971,7 +3072,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 146.05 107.95 0)
+			(at 148.59 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2980,7 +3081,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 146.05 107.95 0)
+			(at 148.59 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3005,7 +3106,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 135.89 105.41 0)
+		(at 138.43 102.87 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3013,7 +3114,7 @@
 		(dnp no)
 		(uuid "91894f2c-6b47-4d89-8709-d9ab4caec940")
 		(property "Reference" "#PWR036"
-			(at 135.89 109.22 0)
+			(at 138.43 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3022,7 +3123,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 135.89 101.6 0)
+			(at 138.43 99.06 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3030,7 +3131,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 135.89 105.41 0)
+			(at 138.43 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3039,7 +3140,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 135.89 105.41 0)
+			(at 138.43 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3048,7 +3149,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 135.89 105.41 0)
+			(at 138.43 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3228,7 +3329,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 135.89 107.95 0)
+		(at 138.43 105.41 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3236,7 +3337,7 @@
 		(dnp no)
 		(uuid "9871f77a-f9cd-4db1-994c-9eead8e34b12")
 		(property "Reference" "R25"
-			(at 137.16 106.68 0)
+			(at 139.7 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3245,7 +3346,7 @@
 			)
 		)
 		(property "Value" "680"
-			(at 137.16 109.22 0)
+			(at 139.7 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3254,7 +3355,7 @@
 			)
 		)
 		(property "Footprint" "stdpads:R_0805"
-			(at 135.89 107.95 0)
+			(at 138.43 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3263,7 +3364,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 135.89 107.95 0)
+			(at 138.43 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3272,7 +3373,7 @@
 			)
 		)
 		(property "Description" "Resistor, small symbol"
-			(at 135.89 107.95 0)
+			(at 138.43 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3571,7 +3672,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 135.89 110.49 0)
+		(at 138.43 107.95 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -3580,7 +3681,7 @@
 		(dnp no)
 		(uuid "e15956a6-6059-42b4-bb14-fb5b33c4299c")
 		(property "Reference" "#PWR035"
-			(at 135.89 116.84 0)
+			(at 138.43 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3589,7 +3690,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 135.89 114.3 0)
+			(at 138.43 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3597,7 +3698,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 135.89 110.49 0)
+			(at 138.43 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3606,7 +3707,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 135.89 110.49 0)
+			(at 138.43 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3615,7 +3716,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 135.89 110.49 0)
+			(at 138.43 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3786,6 +3887,72 @@
 			(project "WarpSE"
 				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
 					(reference "C19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 128.27 107.95 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f691667c-0736-467e-8e35-358948f7607b")
+		(property "Reference" "#PWR049"
+			(at 128.27 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 128.27 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 128.27 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 128.27 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a23bea89-55ff-44f1-b54f-da644e1b8cbb")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061b3a5f1"
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)

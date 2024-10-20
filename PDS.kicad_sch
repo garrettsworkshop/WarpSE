@@ -146,128 +146,6 @@
 				)
 			)
 		)
-		(symbol "Device:R_Small"
-			(pin_numbers hide)
-			(pin_names
-				(offset 0.254) hide)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "R"
-				(at 0.762 0.508 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "R_Small"
-				(at 0.762 -1.016 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Resistor, small symbol"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "R resistor"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "R_*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "R_Small_0_1"
-				(rectangle
-					(start -0.762 1.778)
-					(end 0.762 -1.778)
-					(stroke
-						(width 0.2032)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "R_Small_1_1"
-				(pin passive line
-					(at 0 2.54 270)
-					(length 0.762)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -2.54 90)
-					(length 0.762)
-					(name "~"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "GW_Connector:MacSEPDS"
 			(pin_names
 				(offset 1.016)
@@ -2520,12 +2398,6 @@
 		(uuid "41fc1c23-edd4-45a5-8036-7f62b013770f")
 	)
 	(junction
-		(at 43.18 162.56)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "59d40a42-b1df-423b-88e6-7081595fc017")
-	)
-	(junction
 		(at 72.39 93.98)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3238,6 +3110,16 @@
 		)
 		(uuid "407d0ffb-4748-48d0-84ea-57fc2a5b2510")
 	)
+	(wire
+		(pts
+			(xy 31.75 157.48) (xy 33.02 157.48)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "418dfde6-db68-4136-b29d-408ecd24dcc7")
+	)
 	(bus
 		(pts
 			(xy 45.72 109.22) (xy 45.72 111.76)
@@ -3247,16 +3129,6 @@
 			(type default)
 		)
 		(uuid "4349403e-252b-4ac4-a53f-3069e143ceb6")
-	)
-	(wire
-		(pts
-			(xy 33.02 157.48) (xy 43.18 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "44cbb3fe-aa85-47be-a4ef-fbdce28ef96c")
 	)
 	(wire
 		(pts
@@ -3577,16 +3449,6 @@
 			(type default)
 		)
 		(uuid "904458cc-d4bb-4d33-beb2-102c43ad3320")
-	)
-	(wire
-		(pts
-			(xy 33.02 162.56) (xy 43.18 162.56)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "936b05b4-378e-4ab4-9fb4-9988343f3379")
 	)
 	(wire
 		(pts
@@ -4483,7 +4345,7 @@
 	)
 	(global_label "+5Vin"
 		(shape input)
-		(at 33.02 157.48 180)
+		(at 31.75 157.48 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4491,9 +4353,9 @@
 			)
 			(justify right)
 		)
-		(uuid "8fdfb83e-25bd-412b-8ea6-ba243e8cb085")
+		(uuid "5f1ce36f-c77c-4e3b-a825-089ee78bfced")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 25.0647 157.48 0)
+			(at 23.7947 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6117,72 +5979,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 43.18 162.56 0)
-		(mirror y)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-0000616f27a0")
-		(property "Reference" "#PWR0153"
-			(at 43.18 168.91 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 43.18 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 43.18 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 43.18 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 43.18 162.56 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "6075efe7-7711-4655-900f-6539e70284be")
-		)
-		(instances
-			(project "WarpSE"
-				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-00005f6da71d"
-					(reference "#PWR0153")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:-5V")
 		(at 72.39 137.16 180)
 		(unit 1)
@@ -6443,34 +6239,17 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_Small")
-		(at 43.18 160.02 0)
+		(lib_id "power:GND")
+		(at 33.02 162.56 0)
+		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9d701892-0635-4b0d-9cca-aae9bbd641d4")
-		(property "Reference" "R27"
-			(at 44.45 158.75 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "680"
-			(at 44.45 161.29 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "stdpads:R_0805"
-			(at 43.18 160.02 0)
+		(uuid "16269341-c65b-4cfb-bec4-64c43156a30b")
+		(property "Reference" "#PWR048"
+			(at 33.02 168.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6478,8 +6257,16 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
-			(at 43.18 160.02 0)
+		(property "Value" "GND"
+			(at 33.02 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 33.02 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6487,8 +6274,17 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Resistor, small symbol"
-			(at 43.18 160.02 0)
+		(property "Datasheet" ""
+			(at 33.02 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 33.02 162.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6497,15 +6293,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "63fcfb66-612b-4dd2-b6d9-059bbb839068")
-		)
-		(pin "2"
-			(uuid "8da5bb16-fc20-4df1-8b98-02d14244ee87")
+			(uuid "c872ed75-a699-40ae-a035-24863d2e7cb3")
 		)
 		(instances
 			(project "WarpSE"
 				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-00005f6da71d"
-					(reference "R27")
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
