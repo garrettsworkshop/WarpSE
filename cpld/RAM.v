@@ -6,6 +6,8 @@ module RAM(
 	input BACT, input BACTr,
 	/* Select and ready signals */
 	input RAMCS, input RAMCS0X, input ROMCS, input ROMCS4X,
+	/* ROM size inputs */
+	input [1:0] ROMSize, input [1:0] ROMBank,
 	/* RAM/ROM wait state inputs */
 	input RAMWS, input ROMWS,
 	/* RAM/ROM ready output */
@@ -13,8 +15,10 @@ module RAM(
 	/* Refresh Counter Interface */
 	input RefReqIn, input RefUrgIn,
 	/* DRAM interface */
-	output [11:0] RA, output nRAS, output reg nCAS,
+	output nRAS, output reg nCAS,
 	output nLWE, output nUWE, output nOE,
+	/* DRAM address and ROM bank address */
+	output [11:0] RA, output RowA10, output [19:18] BA,
 	/* NOR flash interface */
 	output nROMOE, output nROMWE);
 
@@ -43,7 +47,7 @@ module RAM(
 	assign nUWE = !(!nUDS && RASEL && !nWE);
 	
 	/* RAM /OE control */
-	assign nOE = 0;
+	assign nOE = !nWE;
 	/*reg nOEr; assign nOE = nOEr;
 	always @(posedge CLK, posedge nAS) begin
 		if (nAS) nOEr <= 1;
@@ -63,11 +67,12 @@ module RAM(
 
 	/* RAM address mux (and ROM address on RA8) */
 	// RA11 doesn't do anything so both should be identical.
-	assign RA[11] = !RASEL ? A[19] : A[20]; // ROM address 19
+	assign RA[11] =   !RASEL ? A[19] : A[20]; // ROM address 19
 	assign RA[03] = !RASEL ? A[19] : A[20];
 	// RA10 has only row so different rows but same column.
 	assign RA[10] = !RASEL ? A[17] : A[07];
 	assign RA[02] = !RASEL ? A[16] : A[07];
+	assign RowA10 = A[17];
 	// Remainder of RA bus is unpaired
 	assign RA[09] = !RASEL ? A[15] : A[08];
 	assign RA[08] = !RASEL ? A[18] : A[21]; // ROM address 18
@@ -77,6 +82,8 @@ module RAM(
 	assign RA[04] = !RASEL ? A[11] : A[03];
 	assign RA[01] = !RASEL ? A[10] : A[02];
 	assign RA[00] = !RASEL ? A[09] : A[01];
+
+	assign BA[19:18] = 2'b11;
 
 	wire RS0toRef = // Refresh during first clock of non-RAM access
 					(RefReq &&  BACT && !BACTr && !RAMCS0X) ||
@@ -89,14 +96,14 @@ module RAM(
 	always @(posedge CLK) begin
 		case (RS[2:0])
 			0: begin // Idle/ready
-				if (RAMReady) begin // Continue accessing RAM
+				if (RAMReady) begin // After wait state
 					RS <= 1; // Continue accessing RAM
 					RAMReady <= 1;
 					RASEL <= 1;
 					RefCAS <= 0;
 					RASEN <= 1;
 				end else if (RS0toRAM) begin // Wait state
-					RS <= 0;
+					RS <= RAMWS ? 0 : 1;
 					RAMReady <= 1;
 					RASEL <= 0;
 					RefCAS <= 0;
