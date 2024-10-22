@@ -479,7 +479,7 @@
 				)
 			)
 		)
-		(symbol "GW_Logic:Oscillator_4P"
+		(symbol "GW_Logic:SiT2001"
 			(pin_names
 				(offset 1.016)
 			)
@@ -487,15 +487,15 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "U"
-				(at 0 6.35 0)
+				(at 0 7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
 				)
 			)
-			(property "Value" "Oscillator_4P"
-				(at 0 -3.81 0)
+			(property "Value" "SiT2001"
+				(at 0 -5.08 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -529,10 +529,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "Oscillator_4P_0_1"
+			(symbol "SiT2001_0_1"
 				(rectangle
-					(start -6.35 5.08)
-					(end 6.35 -2.54)
+					(start -6.35 6.35)
+					(end 6.35 -3.81)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -542,11 +542,11 @@
 					)
 				)
 			)
-			(symbol "Oscillator_4P_1_1"
-				(pin input line
-					(at -8.89 2.54 0)
+			(symbol "SiT2001_1_1"
+				(pin power_in line
+					(at -8.89 -1.27 0)
 					(length 2.54)
-					(name "EN"
+					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -561,10 +561,10 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at -8.89 0 0)
+				(pin no_connect line
+					(at -8.89 1.27 0)
 					(length 2.54)
-					(name "GND"
+					(name "NC"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -579,10 +579,10 @@
 						)
 					)
 				)
-				(pin output line
-					(at 8.89 0 180)
+				(pin input line
+					(at -8.89 3.81 0)
 					(length 2.54)
-					(name "Output"
+					(name "OE/~{ST}"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -598,7 +598,7 @@
 					)
 				)
 				(pin power_in line
-					(at 8.89 2.54 180)
+					(at 8.89 3.81 180)
 					(length 2.54)
 					(name "Vdd"
 						(effects
@@ -608,6 +608,24 @@
 						)
 					)
 					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 8.89 -1.27 180)
+					(length 2.54)
+					(name "Output"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -877,7 +895,7 @@
 		(uuid "6b523de0-1928-4468-a14f-5db44022217c")
 	)
 	(junction
-		(at 100.33 74.93)
+		(at 100.33 72.39)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "9ad35ec8-cd30-48a0-89dd-61b718c6d652")
@@ -905,6 +923,10 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ea7f95ca-1368-4ccc-b3c5-17a85c05a2dd")
+	)
+	(no_connect
+		(at 113.03 74.93)
+		(uuid "894dcd6a-c88a-4c46-b3d9-fb2be62cb7f9")
 	)
 	(no_connect
 		(at 171.45 74.93)
@@ -1092,7 +1114,7 @@
 	)
 	(wire
 		(pts
-			(xy 97.79 74.93) (xy 100.33 74.93)
+			(xy 97.79 72.39) (xy 100.33 72.39)
 		)
 		(stroke
 			(width 0)
@@ -1302,7 +1324,7 @@
 	)
 	(wire
 		(pts
-			(xy 100.33 74.93) (xy 113.03 74.93)
+			(xy 100.33 72.39) (xy 113.03 72.39)
 		)
 		(stroke
 			(width 0)
@@ -1311,7 +1333,7 @@
 		(uuid "fee80f93-dd16-4c6f-8cc7-86636a09888e")
 	)
 	(label "CLKEN"
-		(at 113.03 74.93 180)
+		(at 113.03 72.39 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -1345,7 +1367,7 @@
 	)
 	(global_label "CLKEN"
 		(shape input)
-		(at 97.79 74.93 180)
+		(at 97.79 72.39 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -1355,7 +1377,7 @@
 		)
 		(uuid "cbd2e0a1-907a-48f1-a1ec-4160ce4cd474")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 89.4114 74.93 0)
+			(at 89.4114 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1844,7 +1866,7 @@
 	)
 	(symbol
 		(lib_id "power:+3V3")
-		(at 130.81 74.93 0)
+		(at 130.81 72.39 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -1853,7 +1875,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-000061bf0398")
 		(property "Reference" "#PWR0116"
-			(at 130.81 78.74 0)
+			(at 130.81 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1862,7 +1884,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 130.81 71.12 0)
+			(at 130.81 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1870,7 +1892,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 130.81 74.93 0)
+			(at 130.81 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1879,7 +1901,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 130.81 74.93 0)
+			(at 130.81 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1888,7 +1910,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 130.81 74.93 0)
+			(at 130.81 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1903,90 +1925,6 @@
 			(project "WarpSE"
 				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061350d21"
 					(reference "#PWR0116")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "GW_Logic:Oscillator_4P")
-		(at 121.92 77.47 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "00000000-0000-0000-0000-000061bf03a4")
-		(property "Reference" "U5"
-			(at 121.92 69.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Value" "50M"
-			(at 121.92 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "stdpads:Crystal_SMD_3225-4Pin_3.2x2.5mm"
-			(at 121.92 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 121.92 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 121.92 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC Part" "C717684"
-			(at 121.92 77.47 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "507ab6dc-4ff9-4266-ba03-bfe284e8e9d1")
-		)
-		(pin "2"
-			(uuid "778cee0e-27c6-4951-b511-2b01fbe62b2d")
-		)
-		(pin "3"
-			(uuid "9b01d706-76c4-490d-85b9-4c6efbdb4bab")
-		)
-		(pin "4"
-			(uuid "f70ab145-7d27-4f0a-b4f6-36eb6a2d5954")
-		)
-		(instances
-			(project "WarpSE"
-				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061350d21"
-					(reference "U5")
 					(unit 1)
 				)
 			)
@@ -2166,33 +2104,32 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 100.33 69.85 0)
+		(lib_id "GW_Logic:SiT2001")
+		(at 121.92 76.2 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "376d0515-9053-4da0-a13f-69871edc9402")
-		(property "Reference" "#PWR09"
-			(at 100.33 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 100.33 66.04 0)
+		(uuid "35735580-5d77-4576-a7cd-b31ecbc35d42")
+		(property "Reference" "U5"
+			(at 121.92 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" ""
-			(at 100.33 69.85 0)
+		(property "Value" "SiT2001"
+			(at 121.92 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "stdpads:SOT-23-5"
+			(at 121.92 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2201,7 +2138,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 100.33 69.85 0)
+			(at 121.92 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2210,7 +2147,84 @@
 			)
 		)
 		(property "Description" ""
-			(at 100.33 69.85 0)
+			(at 121.92 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d10089f1-718f-4395-b108-6b3293d30527")
+		)
+		(pin "4"
+			(uuid "c8d3606a-1d3a-4174-9d29-9e0a31b57830")
+		)
+		(pin "3"
+			(uuid "75358983-8760-42fe-abb7-0462b954f002")
+		)
+		(pin "1"
+			(uuid "c8a0360f-95ad-4eec-a3d1-ac569fe81cd0")
+		)
+		(pin "5"
+			(uuid "d2cc4ebc-d2f0-4563-b597-fc106195187d")
+		)
+		(instances
+			(project "WarpSE"
+				(path "/a5be2cb8-c68d-4180-8412-69a6b4c5b1d4/00000000-0000-0000-0000-000061350d21"
+					(reference "U5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 100.33 67.31 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "376d0515-9053-4da0-a13f-69871edc9402")
+		(property "Reference" "#PWR09"
+			(at 100.33 71.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 100.33 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 100.33 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 100.33 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 100.33 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2800,7 +2814,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_Small")
-		(at 100.33 72.39 180)
+		(at 100.33 69.85 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2808,7 +2822,7 @@
 		(dnp no)
 		(uuid "eba9534c-7822-4ffd-8a48-7a46c4141239")
 		(property "Reference" "R8"
-			(at 101.6 71.12 0)
+			(at 101.6 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2817,7 +2831,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 101.6 73.66 0)
+			(at 101.6 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2826,7 +2840,7 @@
 			)
 		)
 		(property "Footprint" "stdpads:R_0603"
-			(at 100.33 72.39 0)
+			(at 100.33 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2835,7 +2849,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 100.33 72.39 0)
+			(at 100.33 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2844,7 +2858,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 100.33 72.39 0)
+			(at 100.33 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2853,7 +2867,7 @@
 			)
 		)
 		(property "LCSC Part" "C21190"
-			(at 100.33 72.39 0)
+			(at 100.33 69.85 0)
 			(effects
 				(font
 					(size 1.27 1.27)
