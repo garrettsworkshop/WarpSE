@@ -119,13 +119,12 @@ module CNT(
 		else MCKE <= !(QoSEN && !ASrf && !C8MFall && ClockGateEN);
 	end
 	
-	/* Long timer counts from 0 to 4095.
-	 * 4096 states == 57.516 ms */
-	reg [11:0] LTimer;
-	wire LTimerTC = LTimer[11:0]==12'hFFF;
+	/* Long timer counts from 0 to 15.
+	 * 256 states == 3.595 ms */
+	reg [7:0] LTimer;
 	reg LTimerTick;
 	always @(posedge CLK) if (TimerTick) LTimer <= LTimer+1;
-	always @(posedge CLK) LTimerTick <= TimerTick && LTimerTC;
+	always @(posedge CLK) LTimerTick <= TimerTick && LTimer[7:0]==8'hFF;
 
 	/* C8M duty cycle check and power-on reset */
 	always @(posedge CLK) begin
