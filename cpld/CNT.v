@@ -93,6 +93,7 @@ module CNT(
 		else if (BACT && VIACS)    QFS <= 0;
 		else if (BACT && IWMCS)    QFS <= 0;
 		else if (BACT && SCCCS)    QFS <= 2;
+		else if (BACT && SCSICS)   QFS <= 2;
 		else if (SndCSWRr)         QFS <= 0;
 		else if (QFS!=0 && TimerTick) QFS <= QFS-1;
 	end
