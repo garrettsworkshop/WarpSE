@@ -79,42 +79,42 @@ nVPA_FSB S:PIN93
 ;The remaining section of the .gyd file is for documentation purposes only.
 ;It shows where your internal equations were placed in the last successful fit.
 
-PARTITION FB1_1 iobm/Er cnt/Er<0> cnt/C8Mr<3> cnt/C8Mr<2>
-		 cnt/C8Mr<0> nRESout nBR_IOBout iobs/IOU1
-		 cnt/Timer<2> cnt/LTimer<9> cnt/LTimer<8> cnt/LTimer<7>
-		 cnt/LTimer<10> cnt/IS<1> RefUrg cnt/nPOR
-		 cnt/IS<0> IOU0
-PARTITION FB2_9 iobs/IODONErf iobs/IODONEr<1> iobs/IODONEr<0> iobs/IOACTr
+PARTITION FB1_1 iobs/Clear1 iobm/Er cnt/Er<0> cnt/C8Mr<4>
+		 cnt/C8Mr<3> cnt/C8Mr<0> ALE0S ram/RefDone
+		 ram/RASrf ram/CASEndEN nRESout nBR_IOBout
+		 iobs/TS_FSM_FFd1 iobs/IOU1 cnt/IS<1> cnt/nPOR
+		 cnt/IS<0> IORW
+PARTITION FB2_8 iobs/IODONErf iobs/IODONEr<1> iobs/IODONEr<0> iobs/IOACTr
 		 iobm/VPAr iobm/IOS_FSM_FFd5 iobm/IOS_FSM_FFd4 iobm/IOS_FSM_FFd1
-		 iobm/IOREQr iobm/C8Mr
-PARTITION FB3_1 ram/RASEN ALE0S ram/RefDone ram/RASrf
-		 ram/CASEndEN iobs/TS_FSM_FFd1 iobs/IOL1 ram/RS<1>
-		 nDTACK_FSB_OBUF ram/RASEL IORW IOL0
-		 QoSEN ram/RS<0> ram/RefCAS ram/RS<2>
-		 nROMWE_OBUF iobs/Clear1
-PARTITION FB4_1 cnt/TimerTick nAoutOE_OBUF cnt/LTimerTick cnt/Er<1>
-		 nDoutOE_OBUF nDinOE_OBUF cnt/Timer<0> N0
-		 cnt/LTimer<5> cnt/LTimer<4> nVPA_FSB_OBUF cnt/LTimer<3>
-		 cnt/LTimer<2> cnt/LTimer<1> cnt/LTimer<11> RefReq
-		 cnt/Timer<3> cnt/Timer<1>
-PARTITION FB5_1 EXP10_ nROMOE_OBUF IOREQ EXP11_
-		 nCAS_OBUF nOE_OBUF iobs/IORW1 EXP12_
+		 iobm/IOREQr iobm/C8Mr cnt/Er<1>
+PARTITION FB3_1 cnt/TimerTick cnt/LTimerTick cnt/LTimer<0> cnt/Timer<2>
+		 cnt/Timer<0> cnt/LTimer<7> cnt/LTimer<6> cnt/LTimer<5>
+		 nDTACK_FSB_OBUF cnt/LTimer<4> cnt/LTimer<3> cnt/LTimer<2>
+		 cnt/LTimer<1> RefUrg RefReq cnt/Timer<3>
+		 nROMWE_OBUF cnt/Timer<1>
+PARTITION FB4_1 cnt/QFS<1> nAoutOE_OBUF ram/RS<1> ram/RASEL
+		 nDoutOE_OBUF nDinOE_OBUF QoSEN N0
+		 ram/RS<0> ram/RefCAS nVPA_FSB_OBUF EXP10_
+		 ram/RS<2> EXP11_ ram/RASEN EXP12_
+		 cnt/QFS<0> EXP13_
+PARTITION FB5_1 EXP14_ nROMOE_OBUF IOREQ EXP15_
+		 nCAS_OBUF nOE_OBUF iobs/IORW1 EXP16_
 		 RA_4_OBUF iobs/TS_FSM_FFd2 RA_11_OBUF RA_5_OBUF
 		 cnt/SndCSWRr RA_2_OBUF RA_6_OBUF iobs/Load1
-		 EXP13_ iobs/Sent
-PARTITION FB6_1 iobm/IOS_FSM_FFd2 nVMA_IOBout iobm/IOS_FSM_FFd7 iobm/IOS_FSM_FFd3
-		 iobm/ES<2> iobm/ES<0> iobm/ES<3> iobm/ES<1>
-		 nLDS_IOBout ALE0M nUDS_IOBout nAS_IOBout
-		 iobm/DoutOE nADoutLE1_OBUF nADoutLE0_OBUF IOACT
+		 EXP17_ iobs/Sent
+PARTITION FB6_1 iobm/IOS_FSM_FFd2 nVMA_IOBout iobs/IOL1 iobm/IOS_FSM_FFd7
+		 iobm/IOS_FSM_FFd3 iobm/ES<2> iobm/ES<0> IOU0
+		 nLDS_IOBout IOL0 nUDS_IOBout nAS_IOBout
+		 iobm/ES<3> nADoutLE1_OBUF nADoutLE0_OBUF iobm/ES<1>
 		 nDinLE_OBUF IODONE
-PARTITION FB7_1 iobm/IOS_FSM_FFd6 RA_1_OBUF cnt/QFS<0> cnt/ClockGateEN
-		 RA_7_OBUF RA_0_OBUF ASrf RA_8_OBUF
-		 RA_10_OBUF BACTr RA_9_OBUF MCKE_OBUF
-		 cnt/C8Mr<1> RnW_IOBout GA_23_OBUF$BUF0 cnt/LTimer<0>
-		 GA_22_OBUF$BUF0 cnt/QFS<1>
-PARTITION FB8_1 cnt/QS<0> RA_11_OBUF$BUF0 cnt/LTimer<6> cs/Overlay
+PARTITION FB7_1 iobm/IOS_FSM_FFd6 RA_1_OBUF cnt/C8Mr<2> cnt/C8Mr<1>
+		 RA_7_OBUF RA_0_OBUF BACTr RA_8_OBUF
+		 RA_10_OBUF ASrf RA_9_OBUF MCKE_OBUF
+		 ALE0M RnW_IOBout GA_23_OBUF$BUF0 iobm/DoutOE
+		 GA_22_OBUF$BUF0 IOACT
+PARTITION FB8_1 cnt/QS<2> RA_11_OBUF$BUF0 EXP18_ cs/Overlay
 		 nRAS_OBUF nRAMLWE_OBUF cnt/QS<1> nRAMUWE_OBUF
-		 EXP14_ EXP15_ cnt/QS<3> nBERR_FSB_OBUF
-		 EXP16_ cnt/QS<2> N0$BUF0 EXP17_
-		 IONPReady EXP18_
+		 EXP19_ EXP20_ cnt/QS<0> nBERR_FSB_OBUF
+		 IONPReady cnt/QS<3> N0$BUF0 EXP21_
+		 cnt/ClockGateEN EXP22_
 
