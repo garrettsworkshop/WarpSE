@@ -39,7 +39,7 @@ module CNT(
 	wire EFall = Er[1] && !Er[0];
 	
 	/* C8M clock synchronization */
-	reg [3:0] C8Mr; always @(posedge CLK) C8Mr[3:0] <= { C8Mr[2:0], C8M };
+	reg [4:0] C8Mr; always @(posedge CLK) C8Mr[4:0] <= { C8Mr[3:0], C8M };
 	wire C8MFall =  C8Mr[1] && !C8Mr[0]; // C8M falling edge detect
 	
 	/* Timer counts from 0 to 1010 (10) -- 11 states == 14.042 us
@@ -128,8 +128,8 @@ module CNT(
 
 	/* C8M duty cycle check and power-on reset */
 	always @(posedge CLK) begin
-		if (C8Mr[3:0]==4'b0000 || C8Mr[3:0]==4'b1111) nPOR <= 0;
-		else if (C8Mr[1:0]==2'b01) nPOR <= 1;
+		if (C8Mr[4:0]==5'b00000 || C8Mr[4:0]==5'b11111) nPOR <= 0;
+		else if (C8Mr[2:0]==3'b011) nPOR <= 1;
 	end
 
 	/* Startup sequence state control */
