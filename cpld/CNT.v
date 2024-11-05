@@ -154,10 +154,12 @@ module CNT(
 			end 2: begin
 				AoutOE <= 0;
 				nRESout <= 0;
-				if (!nIPL2) nBR_IOB <= 1; // Disable bus request if NMI pressed
+				if (LTimerTick && !nIPL2) nBR_IOB <= 1; // Disable bus request if NMI pressed
 			end 3: begin
-				AoutOE <= !nBR_IOB;
-				if (LTimerTick) nRESout <= 1; // Release reset after a while
+				if (LTimerTick) begin
+					AoutOE <= !nBR_IOB;
+					nRESout <= 1; // Release reset after a while
+				end
 			end
 		endcase
 	end
